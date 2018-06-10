@@ -2,6 +2,10 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
+## Getting started
+
+Install angular-cli globally by running `sudo npm install -g @angular/cli` . Install all remaining dependencies by running `npm install` in the project root. 
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
