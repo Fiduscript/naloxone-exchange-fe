@@ -1,3 +1,25 @@
-nav.navbar.navbar-extended-lg.navbar-light.bg-light
-	a.navbar-brand Naloxon Exchange
-	
+header.main-header
+  nav.navbar.brand-bar
+    a.navbar-brand 
+      img(src="/assets/logo/brand-logo.png" alt="Naloxon Exchange")
+    form.form-inline
+      .input-group
+        input.form-control.mr-sm-2(placeholder="Search" type="search")
+        .input-group-append
+          button.btn.btn-online-secondary(type="submit") Go
+  nav.navbar.navbar-expand-lg.navbar-light
+    .navbar-collapse
+      ul.navbar-nav.mr-auto
+        li.nav-item
+          a.nav-link(href="/home") Home
+        li.nav-item
+          a.nav-link(href="/buy/naloxone") Get Naloxone
+        li.nav-item
+          a.nav-link(href="/usage/naloxone") Using Naloxone
+        li.nav-item
+          a.nav-link(href="/overdose") Overdose Recognition
+        li.nav-item
+          a.nav-link(href="/about") About Us
+
+footer 
+   
