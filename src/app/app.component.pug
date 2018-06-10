@@ -1,31 +1,41 @@
 header.main-header
-  nav.navbar.brand-bar
-    a.navbar-brand 
-      img(src="/assets/logo/brand-logo.png" alt="Naloxon Exchange")
-    form.form-inline
-      .input-group
-        input.form-control.mr-sm-2(placeholder="Search" type="search")
-        .input-group-append
-          button.btn.btn-online-secondary(type="submit") Go
-  nav.navbar.navbar-expand-lg.navbar-light
-    .navbar-collapse
+  nav.navbar.brand-bar.container
+    a.navbar-brand
+      img(
+          src="/assets/logo/brand-logo.png"
+          alt="Naloxon Exchange"
+          )
+  nav.navbar.navbar-expand-lg.navbar-light.container
+    button.navbar-toggler(
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation",
+        "(click)"="toggleMenu()")
+      span.navbar-toggler-icon
+
+    #navbarSupportedContent.collapse.navbar-collapse("[ngbCollapse]"="isCollapsed")
       ul.navbar-nav.mr-auto
         li.nav-item
-          a.nav-link(href="/home") Home
+          a.nav-link(routerLink="/") Home
         li.nav-item
-          a.nav-link(href="/buy/naloxone") Get Naloxone
+          a.nav-link(routerLink="/shop") Get Naloxone
         li.nav-item
-          a.nav-link(href="/usage/naloxone") Using Naloxone
+          a.nav-link(routerLink="/usage/naloxone") Using Naloxone
         li.nav-item
-          a.nav-link(href="/overdose") Overdose Recognition
+          a.nav-link(routerLink="/overdose") Overdose Recognition
         li.nav-item
-          a.nav-link(href="/about") About Us
+          a.nav-link(routerLink="/about") About Us
 
-section.content-area
+section.container.content-area
   //- content area
+  router-outlet
 
 footer
-  nav.navbar.brand-bar
-    span
-      fa(name="copyright")
-      | Naloxone Exchange 2018
+  nav.navbar.brand-bar.navbar-light.bg-light
+    .container
+      span
+        fa.mr-1(name="copyright")
+        | Naloxone Exchange 2018
