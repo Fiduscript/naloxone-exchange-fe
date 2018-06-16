@@ -13,9 +13,9 @@ import { ProductsModule } from './products/products.module';
   imports: [
     BrowserModule,
     AngularFontAwesomeModule,
-    AppRoutingModule,
     NgbModule.forRoot(),
     ProductsModule,
+    AppRoutingModule, // this must be LAST so that other routes take president.
   ],
   declarations: [
     AppComponent,

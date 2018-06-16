@@ -3,15 +3,14 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod ; npm run grunt",
     "test": "ng test",
     "lint": "ng lint",
     "grunt": "grunt",
     "e2e": "ng e2e",
     "postinstall": "node ./ng-add-pug-loader.js",
-    "dev-all": "concurrently --kill-others \"npm run grunt w\" \"NODE_ENV=development nodemon ./bin/www --watch dist/be\" \"ng serve --proxy-config proxy.conf.json --no-progress\"",
-    "dev-be": "concurrently --kill-others \"npm run grunt w\" \"NODE_ENV=development nodemon ./bin/www --watch dist/be\""
+    "dev-server": "concurrently --kill-others \"npm run grunt w\" \"NODE_ENV=development PORT=4200 nodemon ./bin/www --watch dist/be\" \"ng serve --proxy-config proxy.conf.json --no-progress\"",
+    "prod-server": "npm run build ; node ./bin/www"
   },
   "private": true,
   "dependencies": {
