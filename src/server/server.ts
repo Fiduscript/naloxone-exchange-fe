@@ -15,7 +15,7 @@ import { ApiRouter } from "./routes/api.router";
  * @class Server
  */
 export class Server {
-  private static readonly root: string = path.join(__dirname, "../fe/naloxone-exchange");
+  private static readonly root: string = path.join(__dirname, "../public/naloxone-exchange");
 
   public app: Application;
 

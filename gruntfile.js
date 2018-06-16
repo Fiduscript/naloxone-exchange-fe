@@ -17,20 +17,20 @@ module.exports = function(grunt) {
     ts: {
       app: {
         files: [{
-          src: ["src/be/\*\*/\*.ts", "!src/be/.baseDir.ts"],
-          dest: "./dist/be"
+          src: ["src/server/\*\*/\*.ts", "!src/server/.baseDir.ts"],
+          dest: "./dist/server"
         }],
         options: {
           module: "commonjs",
           target: "es6",
           sourceMap: false,
-          rootDir: "src/be"
+          rootDir: "src/server"
         }
       }
     },
     watch: {
       ts: {
-        files: ["src/be/\*\*/\*.ts"],
+        files: ["src/server/\*\*/\*.ts"],
         tasks: ["ts"]
       }
     }

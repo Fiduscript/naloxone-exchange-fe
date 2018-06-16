@@ -2,7 +2,7 @@
 "use strict";
 
 //module dependencies
-const server = require("../dist/be/server");
+const server = require("../dist/server/server");
 const debug = require("debug")("express:server");
 const http = require("http");
 
