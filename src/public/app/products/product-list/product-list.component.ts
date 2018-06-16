@@ -13,7 +13,7 @@ import { ProductDetail } from '../model/product-detail';
 export class ProductListComponent implements OnInit {
 
   @Input()
-  private product: ProductDetail = undefined;
+  public product: ProductDetail = undefined;
 
   public constructor(
     private service: ProductsService) {
