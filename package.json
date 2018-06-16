@@ -1,16 +1,19 @@
 {
   "name": "fiduscript",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
+    "dev": "ng serve --proxy-config proxy.conf.json",
     "e2e": "ng e2e",
     "postinstall": "node ./ng-add-pug-loader.js"
   },
   "private": true,
+  "author": "Skulljack",
+  "license": "ISC",
   "dependencies": {
     "@angular/animations": "^6.0.3",
     "@angular/common": "^6.0.3",
