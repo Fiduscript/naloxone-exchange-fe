@@ -25,6 +25,7 @@
     "@angular/router": "^6.0.3",
     "@ng-bootstrap/ng-bootstrap": "^2.1.0",
     "angular-font-awesome": "^3.1.2",
+    "angular2-markdown": "^2.2.3",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
     "core-js": "^2.5.4",

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
+import { MarkdownModule } from 'angular2-markdown';
 
 import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsComponent } from './products.component';
@@ -11,7 +12,8 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
   imports: [
     CommonModule,
     HttpModule,
-    ProductsRoutingModule
+    ProductsRoutingModule,
+    MarkdownModule.forRoot()
   ],
   declarations: [
     ProductsComponent,

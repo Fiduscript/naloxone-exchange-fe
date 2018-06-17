@@ -7,30 +7,23 @@ export class ProductDetail {
   public readonly id: string = undefined;
 
   @JsonProperty("price", Number)
-  public readonly price: number = 45.00;
+  public readonly price: number = 0.0;
 
   @JsonProperty("title", String)
   public readonly title: string = undefined;
 
-  @JsonProperty("details", [String])
-  public readonly details: string[] = [];
+  @JsonProperty("details", String)
+  public readonly details: string = undefined;
+
+  @JsonProperty("detailShort", String)
+  public readonly detailShort: string = undefined;
 
   @JsonProperty("imageUri", String)
-  public readonly imageUri: string = "";
+  public readonly imageUri: string = undefined;
 
   @JsonProperty("usage", String)
-  public readonly usage: string = "";
+  public readonly usage: string = undefined;
 
-  public constructor(
-      id?: string,
-      title?: string,
-      details: string[] = [],
-      imageUri: string = "",
-      usage: string = "") {
-    this.id = id;
-    this.title = title;
-    this.details = details;
-    this.imageUri = imageUri;
-  }
+  public constructor() {}
 
 }
