@@ -13,22 +13,9 @@ import { jsonConvert } from '../util/json-convert-provider';
 })
 export class ProductsService {
 
-  private memo: {[s: string]: any} = {
-    // this is mocked data!
-    "/api/product/list": new ProductDetails([
-      new ProductDetail("abcdefg", "Naloxon Nasal Spray", ["detail 1", "detail 2", "detail 3", "detail 4"], "/assets/img/nasal-spray.png"),
-      new ProductDetail("hijlkmm", "Naloxon Suppository", ["detail 1", "detail 2", "detail 3", "detail 4"], "/assets/img/nasal-spray.png"),
-      new ProductDetail("nopqrstuv", "Naloxon Injection", ["detail 1", "detail 2", "detail 3", "detail 4"], "/assets/img/nasal-spray.png"),
-      new ProductDetail("wxyz", "Naloxon Ear Muffs", ["detail 1", "detail 2", "detail 3", "detail 4"], "/assets/img/nasal-spray.png"),
-      ])
-  };
+  private memo: {[s: string]: any} = {};
 
-  public constructor(private http: Http) {
-    this.memo["/api/product/list"].items.forEach(_.bind((item) => {
-      let k = `/api/product/${item.id}`;
-      this.memo[k] = item;
-    }, this));
-  }
+  public constructor(private http: Http) { }
 
   /**
    * Fetches products from `/api/product/list`.
@@ -46,7 +33,7 @@ export class ProductsService {
           return jsonConvert.deserialize(response.json(), ProductDetails);
         }).do(_.bind((details: ProductDetails) => {
           details.items.forEach((item) => {
-            let k = `/api/product/${item.id}`;
+            let k = `/api/product/list/${item.id}`;
             this.memo[k] = item;
           });
           this.memo[key] = details;
@@ -58,7 +45,7 @@ export class ProductsService {
    * added here.
    */
   public getProduct(id: string): Observable<ProductDetail> {
-    let key: string = `/api/product/${id}`;
+    let key: string = `/api/product/list/${id}`;
     if (this.memo[key] != null) {
       return Observable.of(this.memo[key]);
     }
