@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions, Response, URLSearchParams} from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import * as _ from 'lodash';
@@ -23,12 +23,12 @@ export class ProductsService {
    * @return observable of items
    */
   public listProducts(pageNumber: number = 1): Observable<ProductDetails> {
-    let key: string = "/api/product/list";
+    let key: string = '/api/product/list';
     if (this.memo[key] != null) {
       return Observable.of(this.memo[key]);
     }
 
-    return this.http.get("/api/product/list")
+    return this.http.get('/api/product/list')
         .map((response: Response): ProductDetails => {
           return jsonConvert.deserialize(response.json(), ProductDetails);
         }).do(_.bind((details: ProductDetails) => {

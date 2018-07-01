@@ -1,0 +1,40 @@
+div.area(*ngIf="show")
+  .alert.alert-dark.container-fluid
+    .row
+      .col-sm-12.col-md-5.pr-0
+        h5.mb-0 Subscribe to get updates for NaloxoneExchange!
+        small Don't worry, we will never share this information with third parties.
+      .col-sm-12.col-md-7.pl-0
+        form.mt-md-1(
+          "[formGroup]"="subscribeForm"
+          "(ngSubmit)"="subscribe()")
+          .form-row
+            .form-group.col-sm-12.col-md-6.col-lg-6.mb-md-0
+              input.form-control(
+                  type="email"
+                  placeholder="emal address (john.doe@email.com)"
+                  name="email"
+                  "[formControl]"="subscribeForm.controls['email']"
+                  required)
+              span.text-danger(*ngIf="subscribeForm.controls.email.touched && subscribeForm.controls.email.invalid") You must add a valid email address.
+
+            .form-group.col-sm-12.col-md-3.col-lg-3.mb-md-0
+              select.form-control.mr-lg-4(
+                  name="state"
+                  "[formControl]"="subscribeForm.controls['state']"
+                  required)
+                  option(value="" selected disabled) State
+                  option(*ngFor="let state of getStates()" "[value]"="state.name") {{state.name}}
+              span.text-danger(*ngIf="subscribeForm.controls.state.touched && subscribeForm.controls.state.invalid") State is required.
+            .form-group.col-sm-12.col-md-3.col-lg-3.mb-md-0
+              button.btn.btn-primary(
+                  "[disabled]"="!subscribeForm.valid"
+                  title="subscribe for updates"
+                  type="submit") Subscribe
+    .close-box
+      button.close.pull-right(
+          "(click)"="dismiss()"
+          title="dismiss"
+          type="button"
+          aria-label="Close")
+          span(aria-hidden="true") &times;
