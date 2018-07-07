@@ -8,8 +8,8 @@ import { AboutComponent } from './about/about.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { ProductsModule } from './products/products.module';
 import { OverdoseComponent } from './overdose/overdose.component';
+import { ProductsModule } from './products/products.module';
 import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber.component';
 
 @NgModule({
