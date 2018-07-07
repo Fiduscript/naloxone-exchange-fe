@@ -5,20 +5,20 @@ module.exports = function(grunt) {
     ts: {
       app: {
         files: [{
-          src: ["src/server/\*\*/\*.ts", "!src/server/.baseDir.ts"],
+          src: ["src/server/\*\*/\*.ts", "src/common/\*\*/\*.ts", "!src/public/\*\*/\*.ts", "!src/server/.baseDir.ts"],
           dest: "./dist/server"
         }],
         options: {
           module: "commonjs",
           target: "es6",
           sourceMap: false,
-          rootDir: "src/server"
+          rootDir: "src/"
         }
       }
     },
     watch: {
       ts: {
-        files: ["src/server/\*\*/\*.ts"],
+        files: ["src/server/\*\*/\*.ts", "src/common/\*\*/\*.ts"],
         tasks: ["ts"]
       }
     }
