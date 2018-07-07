@@ -15,12 +15,13 @@ const ddb: DynamoDB = AWSClientProvider.getDynmoClient();
 
 const validateSubscribe: ValidationChain[] = [
   check('email')
+      .isString()
       .trim()
       .isEmail()
       .withMessage("Must provide a well-formed valid email address."),
   check('state')
-      .trim()
       .isString()
+      .trim()
       .custom((s: string) => STATE_SET.has(s))
       .withMessage("Must provide a valid US state.")
 ];

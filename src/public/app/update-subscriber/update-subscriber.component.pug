@@ -1,4 +1,4 @@
-div.area(*ngIf="show")
+.area(*ngIf="show")
   .alert.alert-dark.container-fluid
     .row
       .col-sm-12.col-md-5.pr-0
@@ -12,7 +12,7 @@ div.area(*ngIf="show")
             .form-group.col-sm-12.col-md-6.col-lg-6.mb-md-0
               input.form-control(
                   type="email"
-                  placeholder="emal address (john.doe@email.com)"
+                  placeholder="email address (john.doe@email.com)"
                   name="email"
                   "[formControl]"="subscribeForm.controls['email']"
                   required)
