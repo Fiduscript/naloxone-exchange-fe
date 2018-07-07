@@ -1,21 +1,21 @@
-import * as bodyParser from "body-parser";
-import * as cookieParser from "cookie-parser";
-import * as express from "express";
-import * as requestLogger from "morgan";
-import * as path from "path";
-import * as _ from "lodash";
-import { Application, Request, Response, NextFunction } from "express";
-import errorHandler = require("errorhandler");
-import methodOverride = require("method-override");
+import * as bodyParser from 'body-parser';
+import * as cookieParser from 'cookie-parser';
+import * as errorHandler from 'errorhandler';
+import * as express from 'express';
+import { Application, NextFunction, Request, Response } from 'express';
+import * as _ from 'lodash';
+import * as methodOverride from 'method-override';
+import * as requestLogger from 'morgan';
+import * as path from 'path';
 
-import { ApiRouter } from "./routes/api.router";
+import { ApiRouter } from './routes/api.router';
 
 /**
  * The server.
  * @class Server
  */
 export class Server {
-  private static readonly root: string = path.join(__dirname, "../public/naloxone-exchange");
+  private static readonly root: string = path.join(__dirname, '../public/naloxone-exchange');
 
   public app: Application;
 
@@ -28,14 +28,14 @@ export class Server {
    */
   public static bootstrap(port: number | string): Server {
     const app: Application = express();
-    app.set("port", port);
+    app.set('port', port);
     return new Server(app).init();
   }
 
   public init = _.once((): Server => {
     this.config();
     // add api routes
-    this.app.use("/api", ApiRouter);
+    this.app.use('/api', ApiRouter);
     // add angular route handling
     this.app.use(express.static(Server.root));
     this.app.use('/', this.sendIndex);
@@ -48,7 +48,7 @@ export class Server {
   private config(): void {
     // use requestLogger middlware
     // XXX this should not be used for production.
-    this.app.use(requestLogger("dev"));
+    this.app.use(requestLogger('dev'));
 
     // use json form parser middlware
     this.app.use(bodyParser.json());
@@ -59,7 +59,7 @@ export class Server {
     }));
 
     // use cookie parser middleware
-    this.app.use(cookieParser("SECRET_GOES_HERE"));
+    this.app.use(cookieParser('SECRET_GOES_HERE'));
 
     // use override middlware
     this.app.use(methodOverride());
@@ -79,7 +79,7 @@ export class Server {
   }
 
   private sendIndex(req: Request, res: Response): void {
-      res.sendFile("index.html", {root: Server.root});
+      res.sendFile('index.html', {root: Server.root});
   }
 
 }

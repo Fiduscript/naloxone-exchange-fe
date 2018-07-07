@@ -12,6 +12,19 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `npm run dev-server` to start back-end and front-end server tasks. Navigate to `http://localhost:8080/`. The app will automatically reload if you change any of the source files.
 
+## AWS Resources
+
+In order to access AWS resources in development mode you will need to create a `.env` file in the package root directory and fill it with the following:
+
+```
+AWS_ACCESS_KEY_ID=
+AWS_ACCESS_KEY_SECRET=
+```
+
+Follow [this tutorial](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/getting-your-credentials.html) to see how to provide those credentials.
+
+__Never commit your `.env` file!__
+
 ## Production server
 
 Run `npm run prod-server` to compile code and start the server. Navigate to `http://localhost:8080/` to use the app. The server will run with the compiled files in the `dist/` directory; it will not refresh on changes to source files.

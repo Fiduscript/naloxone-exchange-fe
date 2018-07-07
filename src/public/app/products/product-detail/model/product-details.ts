@@ -5,7 +5,7 @@ import { ProductDetail } from './product-detail';
 @JsonObject
 export class ProductDetails {
 
-  @JsonProperty("items", [ProductDetail])
+  @JsonProperty('items', [ProductDetail])
   public readonly items: ProductDetail[] = [];
 
   public constructor(
