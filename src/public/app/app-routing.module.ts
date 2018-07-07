@@ -3,8 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
+import { OverdoseComponent } from './overdose/overdose.component';
 
 const routes: Routes = [
+  {path: 'overdose', component: OverdoseComponent},
   {path: 'about', component: AboutComponent},
   {path: '', component: HomeComponent},
   {path: '**', redirectTo: ''},
