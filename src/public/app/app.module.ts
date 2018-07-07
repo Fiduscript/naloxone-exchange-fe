@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ProductsModule } from './products/products.module';
 import {AboutComponent} from './about/about.component';
+import { OverdoseComponent } from './overdose/overdose.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import {AboutComponent} from './about/about.component';
   declarations: [
     AppComponent,
     HomeComponent,
-    AboutComponent
+    AboutComponent,
+    OverdoseComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
