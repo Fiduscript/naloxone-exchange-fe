@@ -7,17 +7,15 @@ const fs = require('fs');
 const commonCliConfig = 'node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/webpack-configs/common.js';
 const pugRule = '{ test: /.pug$/, use: [ { loader: "apply-loader" }, { loader: "pug-loader" } ] },';
 
-fs.readFileSync(commonCliConfig, (err, data) => {
-  if (err) { throw err; }
+const data = fs.readFileSync(commonCliConfig);
+const configText = data.toString();
 
-  const configText = data.toString();
-  // make sure we don't add the rule if it already exists
-  if (configText.indexOf(pugRule) > -1) { return; }
+// make sure we don't add the rule if it already exists
+if (configText.indexOf(pugRule) > -1) { return; }
 
-  // Insert the pug webpack rule
-  const position = configText.indexOf('rules: [') + 8;
-  const output = [configText.slice(0, position), pugRule, configText.slice(position)].join('');
-  const file = fs.openSync(commonCliConfig, 'r+');
-  fs.writeFileSync(file, output);
-  fs.closeSync(file);
-});
+// Insert the pug webpack rule
+const position = configText.indexOf('rules: [') + 8;
+const output = [configText.slice(0, position), pugRule, configText.slice(position)].join('');
+const file = fs.openSync(commonCliConfig, 'r+');
+fs.writeFileSync(file, output);
+fs.closeSync(file);
