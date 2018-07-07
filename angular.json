@@ -52,7 +52,8 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "naloxone-exchange:build",
-            "port": 8080
+            "port": 8080,
+            "host": "0.0.0.0"
           },
           "configurations": {
             "production": {
