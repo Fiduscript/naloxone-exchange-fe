@@ -1,15 +1,14 @@
-import * as _ from 'lodash';
-import * as moment from 'moment';
 import { Component, OnInit } from '@angular/core';
-import { Duration, Moment } from 'moment';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { JsonObject, JsonProperty } from 'json2typescript';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Response } from '@angular/http';
+import { JsonObject, JsonProperty } from 'json2typescript';
+import * as moment from 'moment';
+import { Duration, Moment } from 'moment';
 
+import { IState, STATES } from '../../../common/constant/states';
 import { jsonConvert } from '../util/json-convert-provider';
-import { MomentConverter } from '../util/moment-utils'
+import { MomentConverter } from '../util/moment-utils';
 import { UpdateSubscriberService } from './update-subscriber.service';
-import { STATES, IState } from '../../../common/constant/states';
 
 @Component({
   selector: 'app-update-subscriber',
@@ -38,7 +37,7 @@ export class UpdateSubscriberComponent implements OnInit {
     if (rawState == null) {
       this.show = true;
       return;
-    };
+    }
 
     const state: SubscriptionState = jsonConvert.deserialize(JSON.parse(rawState), SubscriptionState);
 
