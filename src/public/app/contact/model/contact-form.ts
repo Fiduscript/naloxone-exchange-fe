@@ -12,6 +12,8 @@ export class ContactForm {
   @JsonProperty('message', String)
   public message: string = undefined;
 
-  public constructor() {}
+  public constructor(name: string) {
+    this.name = name;
+  }
 
 }

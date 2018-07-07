@@ -4,20 +4,30 @@ header.text-center
 section
   .row.mt-2
     .col-lg-8
-      form
-        div.form-group
+      form(
+        "[formGroup]"="contactForm"
+        "(ngSubmit)"="submitContactUsForm(contactForm.value)")
+        .form-group
           label(for='name') Name:
-          input#name.form-control(type='text' name='name')
-        div.form-group
+          input#name.form-control(
+            type='text'
+            name='name'
+            "[formControl]"="contactForm.controls['name']"
+            required )
+        .form-group
           label(for='email') Email:
-          input#email.form-control(type='text' name='email')
-        div.form-group
+          input#email.form-control(
+            type='email'
+            name='email'
+            "[formControl]"="contactForm.controls['email']"
+            required )
+        .form-group
           label(for='message') Message:
-          input#message.form-control(type='text' name='message')
-        button.btn.btn-primary('(click)'='onSubmit()') Contact Us
-
-        //#button('(click)'='onSubmit()')
-
-
-          //#form(method='POST')
-        //#fodrm('(ng-submit)'="onSubmit()")
+          input#message.form-control(
+            type='text'
+            name='message'
+            "[formControl]"="contactForm.controls['message']"
+            required )
+        .form-group
+          button.btn.btn-primary(
+            type='submit') Contact Us

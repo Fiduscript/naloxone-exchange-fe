@@ -4,8 +4,8 @@ import { Observable } from 'rxjs/Rx';
 
 import * as _ from 'lodash';
 
-import { ProductDetail } from './model/product-detail';
-import { ProductDetails } from './model/product-details';
+import { ProductDetail } from './product-detail/model/product-detail';
+import { ProductDetails } from './product-detail/model/product-details';
 import { jsonConvert } from '../util/json-convert-provider';
 
 @Injectable({

@@ -9,9 +9,8 @@ export class ContactService {
 
   public constructor(private http: Http) { }
   public saveContact(contactForm: ContactForm): boolean { // todo change return type?
-    const key = '/api/contact';
-    this.http.post(key, contactForm); // TODO
+    // const key = '/api/contact';
+    // this.http.post(key, contactForm); // TODO
     return true;
   }
-
 }

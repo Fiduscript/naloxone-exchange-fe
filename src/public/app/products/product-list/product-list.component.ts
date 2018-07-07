@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import * as _ from 'lodash';
 
 import { ProductsService } from '../products.service';
-import { ProductDetail } from '../model/product-detail';
+import { ProductDetail } from '../product-detail/model/product-detail';
 
 @Component({
   selector: 'product-list',

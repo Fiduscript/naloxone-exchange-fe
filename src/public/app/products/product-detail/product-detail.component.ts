@@ -4,7 +4,7 @@ import { ActivatedRoute, Params } from '@angular/router'
 import * as _ from 'lodash';
 
 import { ProductsService } from '../products.service';
-import { ProductDetail } from '../model/product-detail';
+import { ProductDetail } from './model/product-detail';
 
 @Component({
   selector: 'app-product-detail',
