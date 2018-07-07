@@ -3,25 +3,25 @@ import { JsonObject, JsonProperty } from 'json2typescript';
 @JsonObject
 export class ProductDetail {
 
-  @JsonProperty("id", String)
+  @JsonProperty('id', String)
   public readonly id: string = undefined;
 
-  @JsonProperty("price", Number)
+  @JsonProperty('price', Number)
   public readonly price: number = 45.00;
 
-  @JsonProperty("title", String)
+  @JsonProperty('title', String)
   public readonly title: string = undefined;
 
-  @JsonProperty("details", String)
+  @JsonProperty('details', String)
   public readonly details: string = undefined;
 
-  @JsonProperty("detailShort", String)
+  @JsonProperty('detailShort', String)
   public readonly detailShort: string = undefined;
 
-  @JsonProperty("imageUri", String)
+  @JsonProperty('imageUri', String)
   public readonly imageUri: string = undefined;
 
-  @JsonProperty("usage", String)
+  @JsonProperty('usage', String)
   public readonly usage: string = undefined;
 
   public constructor() {}

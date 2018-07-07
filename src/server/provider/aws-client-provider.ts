@@ -1,4 +1,4 @@
-import awsConfig = require('aws-config');
+import * as awsConfig from 'aws-config';
 import { DynamoDB } from 'aws-sdk/clients/all';
 import * as _ from 'lodash';
 
@@ -15,7 +15,7 @@ export module AWSClientProvider {
   });
 
   /**
-   * @returns singleton DynamoDB client.
+   * @return singleton DynamoDB client.
    */
   export const getDynmoClient = _.memoize((): DynamoDB => {
      return new DynamoDB(GLOBAL_CONFIG);
