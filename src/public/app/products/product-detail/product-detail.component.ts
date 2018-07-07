@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router'
-
+import { ActivatedRoute, Params } from '@angular/router';
 import * as _ from 'lodash';
 
-import { ProductsService } from '../products.service';
 import { ProductDetail } from '../model/product-detail';
+import { ProductsService } from '../products.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -36,10 +35,10 @@ export class ProductDetailComponent implements OnInit {
   }
 
   private fetch(): void {
-    if (_.isEmpty(this.id)) return;
+    if (_.isEmpty(this.id)) { return; }
     this.service.getProduct(this.id).subscribe((product: ProductDetail): void => {
       this.product = product;
-    })
+    });
   }
 
   private scrollToAnchor(): void {
@@ -50,6 +49,6 @@ export class ProductDetailComponent implements OnInit {
           cmp.scrollIntoView();
         }
       }
-    })
+    });
   }
 }

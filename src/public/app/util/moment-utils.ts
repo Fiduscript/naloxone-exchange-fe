@@ -1,6 +1,6 @@
+import { JsonConverter, JsonCustomConvert } from 'json2typescript';
 import * as moment from 'moment';
-import { JsonCustomConvert, JsonConverter } from 'json2typescript';
-import { Moment, Duration } from 'moment'
+import { Duration, Moment } from 'moment';
 
 @JsonConverter
 class MomentConverter implements JsonCustomConvert<Moment> {
@@ -28,4 +28,4 @@ class DurationConverter implements JsonCustomConvert<Duration> {
 export {
   MomentConverter,
   DurationConverter
-}
+};

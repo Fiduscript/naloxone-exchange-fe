@@ -1,8 +1,8 @@
 import * as express from 'express';
 import { NextFunction, Request, Response, Router } from 'express';
 
-import { SecurityRouter } from './security.router';
 import { ProductRouter } from './product.router';
+import { SecurityRouter } from './security.router';
 import { UpdatesRouter } from './updates.router';
 
 const router: Router = express.Router();
