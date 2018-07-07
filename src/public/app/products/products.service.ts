@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import _ from 'lodash';
 import { of } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { map, tap } from 'rxjs/operators';
+
+import * as _ from 'lodash';
 
 import { jsonConvert } from '../util/json-convert-provider';
 import { ProductDetail } from './product-detail/model/product-detail';

@@ -14,7 +14,7 @@ export class ContactComponent implements OnInit {
       private service: ContactService) {
    this.contactForm = fb.group({
     'name' : [null, Validators.required],
-    'email' : [null, Validators.required, Validators.email],
+    'email' : [null, [Validators.required, Validators.email]],
     'message' : [null, Validators.required],
    });
   }
@@ -22,7 +22,7 @@ export class ContactComponent implements OnInit {
   public ngOnInit() { }
 
   public submitContactUsForm(form: any) {
-    // this.service.saveContact(form)
-    alert(JSON.stringify(form));
+    let xxx = this.service.saveContact(form);
+
   }
 }
