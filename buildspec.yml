@@ -1,0 +1,40 @@
+version: 0.2
+
+#env:
+  #variables:
+     # key: "value"
+     # key: "value"
+  #parameter-store:
+     # key: "value"
+     # key: "value"
+
+phases:
+  install:
+    commands:
+      - npm install -g @angular/cli
+      #- rm -rf node_modules
+      #- ng add ng-cli-pug-loader
+      - npm install
+      - npm run postinstall
+  #pre_build:
+    #commands:
+      # - command
+      # - command
+  build:
+    commands:
+      - npm run build
+      # - command
+  post_build:
+    commands:
+      - aws s3 cp dist s3://naloxoneexchange-frontend-build-artifacts --recursive
+
+artifacts:
+    files:
+        - '**/*'
+    base-directory: 'dist*'
+    discard-paths: yes
+
+#cache:
+  #paths:
+    # - paths
+
