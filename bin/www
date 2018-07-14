@@ -7,7 +7,7 @@ const debug = require("debug")("express:server");
 const http = require("http");
 
 //create http server
-const httpPort = process.env.PORT || 8080;
+const httpPort = process.env.PORT || 8081;
 const appServer = server.Server.bootstrap(httpPort);
 const httpServer = http.createServer(appServer.app);
 

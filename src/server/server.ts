@@ -9,6 +9,9 @@ import * as requestLogger from 'morgan';
 import * as path from 'path';
 
 import { ApiRouter } from './routes/api.router';
+import { Logger } from './util/logger';
+
+const log = Logger.create(module);
 
 /**
  * The server.
