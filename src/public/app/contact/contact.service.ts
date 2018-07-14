@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {ContactForm} from './model/contact-form';
 import {Observable} from '../../../../node_modules/rxjs/Rx';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -9,24 +10,14 @@ import {Observable} from '../../../../node_modules/rxjs/Rx';
 export class ContactService {
 
   public constructor(private http: Http) { }
-  readonly key = '/api/contact/dumb';
+  readonly key = '/api/contact';
 
   /**
-   * Subscribes a user by posting to `/api/updates/subscribe`.
-   * @param email
-   * @param state
+   * Forwards ContactUs message to us
+   * @param contactForm
    */
-  // public saveContact(contactForm: ContactForm): Observable<string> {
-  public saveContact(contactForm: ContactForm): string {
-    // let responsse = this.http.get(this.key, contactForm)
-    let responsse = this.http.get(this.key);
-      // .map((response: Response): string => response.text());
-
-
-    alert(JSON.stringify(responsse));
-    alert("fuck!");
-    return "booty";
-    // Observable.
-    // return resp  onse.map((response: Response): string => response.text())();
+  public contact(contactForm: ContactForm): Observable<string> {
+    return this.http.post(this.key, contactForm).pipe(
+      map((response: Response): string => response.text()));
   }
 }

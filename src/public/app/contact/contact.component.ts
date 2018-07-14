@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ContactService} from './contact.service';
+import {Response} from '@angular/http';
 
 @Component({
   selector: 'app-contact', // is this needed?
@@ -22,7 +23,13 @@ export class ContactComponent implements OnInit {
   public ngOnInit() { }
 
   public submitContactUsForm(form: any) {
-    let xxx = this.service.saveContact(form);
+    this.service.contact(form).subscribe(
+     (msg: string): void => {
+       alert('success!');
+       alert(msg);
+     }, (error: Response): void => {
+       alert(error.json().message);
+     });
 
   }
 }

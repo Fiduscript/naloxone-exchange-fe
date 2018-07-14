@@ -15,6 +15,6 @@ export module ErrorMiddleware {
     const e = errors.mapped();
     const msg = e[Object.keys(e)[0]].msg;
     res.status(400).json({message: msg});
-  }
+  };
 
 }
