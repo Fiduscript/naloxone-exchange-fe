@@ -35,7 +35,7 @@ export class Server {
     return new Server(app).init();
   }
 
-  // tslint:disable member-ordering reason: named construcor should preceed this
+  // tslint:disable member-ordering reason: named constructor should precede this
   public init = _.once((): Server => {
     this.config();
     // add api routes
