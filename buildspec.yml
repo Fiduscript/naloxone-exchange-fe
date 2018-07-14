@@ -24,9 +24,9 @@ phases:
     commands:
       - npm run build
       # - command
-  # post_build:
-    # commands:
-    #   - aws s3 cp ./ s3://naloxoneexchange-frontend-build-artifacts --recursive
+  post_build:
+    commands:
+      - aws s3 cp ./ s3://naloxoneexchange-frontend-build-artifacts --recursive
 
 artifacts:
     files:
