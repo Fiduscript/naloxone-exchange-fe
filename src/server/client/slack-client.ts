@@ -4,7 +4,7 @@ const webhook = new IncomingWebhook(url);
 
 // require('dotenv').config();
 
-export const sendSlackMessage = (msg: string) => {
+export const sendSlackMessage = (msg: string, callback: Function) => {
   // Send simple text to the webhook channel
   webhook.send(msg, function(err, res) {
     if (err) {
@@ -12,5 +12,6 @@ export const sendSlackMessage = (msg: string) => {
     } else {
       console.log('Message sent: ', res);
     }
+    callback(err, res);
   });
 };

@@ -9,10 +9,12 @@ import {Response} from '@angular/http';
 })
 export class ContactComponent implements OnInit {
   public contactForm: FormGroup;
+  public sentMsg: boolean;
 
   public constructor(
       private fb: FormBuilder,
       private service: ContactService) {
+    this.sentMsg = false;
    this.contactForm = fb.group({
     'name' : [null, Validators.required],
     'email' : [null, [Validators.required, Validators.email]],
@@ -25,8 +27,7 @@ export class ContactComponent implements OnInit {
   public submitContactUsForm(form: any) {
     this.service.contact(form).subscribe(
      (msg: string): void => {
-       alert('success!');
-       alert(msg);
+       this.sentMsg = true;
      }, (error: Response): void => {
        alert(error.json().message);
      });

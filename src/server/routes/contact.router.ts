@@ -1,17 +1,14 @@
 import * as express from 'express';
-import { AWSError } from 'aws-sdk/lib/error';
-import { DynamoDB } from 'aws-sdk/clients/all';
-import { NextFunction, Request, Response, Router } from 'express';
+import { Request, Response, Router } from 'express';
 import { ValidationChain } from 'express-validator/check';
 import { check } from 'express-validator/check';
-import { matchedData, sanitize } from 'express-validator/filter';
 
 import { ErrorMiddleware } from '../helper/error-middleware';
-import { AWSClientProvider } from '../provider/aws-client-provider';
 import { sendSlackMessage } from '../client/slack-client';
+import { sendEmail } from '../client/mailer';
 
+const config = require('config');
 const router: Router = express.Router();
-const ddb: DynamoDB = AWSClientProvider.getDynmoClient();
 
 const validateContactForm: ValidationChain[] = [
   check('name')
@@ -31,28 +28,32 @@ const validateContactForm: ValidationChain[] = [
 ];
 
 /**
+ * Handles ContactUs requests. Sends Slack message and Email
  * POST: /api/contact
  * @param email
  */
 router.post('/', validateContactForm, ErrorMiddleware.sendFirst, (req: Request, res: Response) => {
   const body = req.body;
-
-  sendSlackContactUsMessage(body['name'], body['email'], body['message']);
-
-  // ddb.putItem(params, (err: AWSError, data: DynamoDB.PutItemOutput) => {
-  //   if (err != null) {
-  //     console.error(`Failed to subscribe customer \`${params}\`.` , err.message, err);
-  //     res.status(500).send('Unable to subscribe at this time. Please try again later.');
-  //   } else {
-  //     res.status(201).send('Subscribed!');
-  //   }
-  // });
-  res.status(200).send('DONE!!');
+  sendSlackContactUsMessage(body['name'], body['email'], body['message'], function(error, info) {});
+  sendContactUsEmail(body['name'], body['email'], body['message'], function(error, info){
+    if (error) {
+      res.status(500).send('Unable to send ContactUs at this time. Please try again later.');
+    } else {
+      res.status(200).send('ContactUs Sent!');
+    }
+  });
 });
 
-const sendSlackContactUsMessage = (name: String, email: String, msg: String) => {
+const sendSlackContactUsMessage = (name: string, email: string, msg: string, callback: Function) => {
   const message = `New ContactUs message!\nName: ${name}\nEmail: ${email}\nMessage: ${msg}`;
-  sendSlackMessage(message);
+  sendSlackMessage(message, callback);
+};
+
+const sendContactUsEmail = (name: string, email: string, msg: string, callback: Function) => {
+  const contactUsEmailAddr = config.get('contactUs.emailAddr');
+  const contactUsSubject = 'New ContactUs Message Received';
+  const message = `New ContactUs message!\nName: ${name}\nEmail: ${email}\nMessage: ${msg}`;
+  sendEmail(contactUsEmailAddr, email, contactUsSubject, message, callback);
 };
 
 export const ContactRouter: Router = router;
