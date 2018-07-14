@@ -30,14 +30,14 @@ phases:
 
 artifacts:
     files:
-        - dist/*
         - bin/*
+        - dist/**/*
         # it is not recommended to copy the entire contents of node modules over
         # and is instead recommended you copy only the required modules. E.g.
         # -node_modules/lodash/*
         # -node_modules/moment/*
         # -node_modules/PACKAGE_NAME/*
-        - node_modules/*
+        - node_modules/**/*
     discard-paths: no
 
 #cache:
