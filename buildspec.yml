@@ -26,9 +26,10 @@ phases:
       # - command
   post_build:
     commands:
-      - aws s3 cp ./bin s3://naloxoneexchange-frontend-build-artifacts --recursive
-      - aws s3 cp ./dist s3://naloxoneexchange-frontend-build-artifacts --recursive
-      - aws s3 cp ./node_modules s3://naloxoneexchange-frontend-build-artifacts --recursive
+      - aws s3 cp package.json s3://naloxoneexchange-frontend-build-artifacts . --recursive
+      - aws s3 cp ./bin s3://naloxoneexchange-frontend-build-artifacts ./bin --recursive
+      - aws s3 cp ./dist s3://naloxoneexchange-frontend-build-artifacts ./dist --recursive
+      - aws s3 cp ./node_modules s3://naloxoneexchange-frontend-build-artifacts ./node_modules --recursive
 
 artifacts:
     files:
@@ -40,6 +41,7 @@ artifacts:
         # -node_modules/moment/*
         # -node_modules/PACKAGE_NAME/*
         - node_modules/**/*
+        - package.json
     discard-paths: no
 
 #cache:
