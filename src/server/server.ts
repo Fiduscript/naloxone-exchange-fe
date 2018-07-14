@@ -18,7 +18,7 @@ const log = Logger.create(module);
  * @class Server
  */
 export class Server {
-  private static readonly root: string = path.join(__dirname, '../public/naloxone-exchange');
+  private static readonly root: string = path.join(__dirname, '../../public/naloxone-exchange');
 
   public app: Application;
 
@@ -35,6 +35,7 @@ export class Server {
     return new Server(app).init();
   }
 
+  // tslint:disable member-ordering reason: named construcor should preceed this
   public init = _.once((): Server => {
     this.config();
     // add api routes
@@ -44,6 +45,7 @@ export class Server {
     this.app.use('/', this.sendIndex);
     return this;
   });
+// tslint:enable
 
   /**
    * Configure application
