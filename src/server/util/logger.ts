@@ -32,9 +32,9 @@ export namespace Logger {
         winston.format.colorize(),
         winston.format.json(),
         winston.format.printf((info) => {
-          const timestmap: string = moment().utc().format('YYYY-MM-DD HH:mm:ss.SSS');
+          const timestamp: string = moment().utc().format('YYYY-MM-DD HH:mm:ss.SSS');
           const metadata: string = (info.meta != null && !_.isEmpty(info.meta)) ? '\n\t' + JSON.stringify(info.meta) : '';
-          return `${timestmap} [${info.level}] (${label}): ${info.message || ''}${metadata}`;
+          return `${timestamp} [${info.level}] (${label}): ${info.message || ''}${metadata}`;
         }))
       };
 
