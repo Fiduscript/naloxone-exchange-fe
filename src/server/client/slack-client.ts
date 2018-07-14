@@ -1,11 +1,9 @@
-import {IncomingWebhook, WebClient} from '@slack/client';
-const url = 'https://hooks.slack.com/services/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';
+import { IncomingWebhook } from '@slack/client';
+const config = require('config');
+const url = config.get('contactUs.slackWebhookUrl');
 const webhook = new IncomingWebhook(url);
 
-// require('dotenv').config();
-
 export const sendSlackMessage = (msg: string, callback: Function) => {
-  // Send simple text to the webhook channel
   webhook.send(msg, function(err, res) {
     if (err) {
       console.error('Error sending slack message:', err);
