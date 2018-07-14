@@ -24,17 +24,17 @@ phases:
     commands:
       - npm run build
       # - command
-  post_build:
-    commands:
-      - aws s3 cp dist s3://naloxoneexchange-frontend-build-artifacts --recursive
+  # post_build:
+    # commands:
+    #   - aws s3 cp ./ s3://naloxoneexchange-frontend-build-artifacts --recursive
 
 artifacts:
     files:
-        - '**/*'
-    base-directory: 'dist*'
-    discard-paths: yes
+        - dist/**/*
+        - bin/*
+        - node_modules/**/*
+    discard-paths: no
 
 #cache:
   #paths:
     # - paths
-
