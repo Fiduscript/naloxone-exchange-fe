@@ -24,17 +24,22 @@ phases:
     commands:
       - npm run build
       # - command
-  post_build:
-    commands:
-      - aws s3 cp dist s3://naloxoneexchange-frontend-build-artifacts --recursive
+  # post_build:
+    # commands:
+    #   - aws s3 cp ./ s3://naloxoneexchange-frontend-build-artifacts --recursive
 
 artifacts:
     files:
-        - '**/*'
-    base-directory: 'dist*'
-    discard-paths: yes
+        - dist/*
+        - bin/*
+        # it is not recommended to copy the entire contents of node modules over
+        # and is instead recommended you copy only the required modules. E.g.
+        # -node_modules/lodash/*
+        # -node_modules/moment/*
+        # -node_modules/PACKAGE_NAME/*
+        - node_modules/*
+    discard-paths: no
 
 #cache:
   #paths:
     # - paths
-
