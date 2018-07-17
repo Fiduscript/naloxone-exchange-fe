@@ -4,45 +4,45 @@ header.text-center
 section
   .row.mt-2
     .col-lg-12
-      .alert.alert-success(*ngIf="sentMsg") Sent Message!
+      .alert.alert-success(*ngIf="sentMsg") Message Sent!
       form(
         "[formGroup]"="contactForm"
         "(ngSubmit)"="submitContactUsForm(contactForm.value)")
-        .row
-          .col-md-6.col-sm-12
-            .form-group
-              label(for='name') Name:
-              input#name.form-control(
-                type='text'
-                name='name'
-                "[formControl]"="contactForm.controls['name']"
-                required
-                "[readonly]"="sentMsg")
-              span.text-danger(*ngIf="contactForm.controls.name.touched && contactForm.controls.name.invalid") You must add a valid name.
-        .row
-          .col-md-6.col-sm-12
-            .form-group
-              label(for='email') Email:
-              input#email.form-control(
-                type='email'
-                name='email'
-                "[formControl]"="contactForm.controls['email']"
-                required
-                "[readonly]"="sentMsg")
-              span.text-danger(*ngIf="contactForm.controls.email.touched && contactForm.controls.email.invalid") You must add a valid email address.
-        .row
-          .col-md-12
-            .form-group
-              label(for='message') Message:
-              textarea#message.form-control(
-                type='text'
-                name='message'
-                "[formControl]"="contactForm.controls['message']"
-                required
-                "[readonly]"="sentMsg"
-                rows=10)
-              span.text-danger(*ngIf="contactForm.controls.message.touched && contactForm.controls.message.invalid") You must add a valid message.
-            .form-group(*ngIf="!sentMsg")
-              button.btn.btn-primary(
-                "[disabled]"="!contactForm.valid"
-                type='submit') Contact Us
+        .form-row
+          .form-group.col-md-6.col-sm-12
+            label(for='name') Name:
+            input.form-control(
+              "[formControl]"="contactForm.controls['name']"
+              name='name'
+              placeholder='Enter Name'
+              "[readonly]"="sentMsg"
+              required
+              type='text')
+            span.text-danger(*ngIf="contactForm.controls.name.touched && contactForm.controls.name.invalid") You must add a valid name.
+        .form-row
+          .form-group.col-md-6.col-sm-12
+            label(for='email') Email:
+            input.form-control(
+              "[formControl]"="contactForm.controls['email']"
+              name='email'
+              placeholder='Enter Email Address'
+              required
+              "[readonly]"="sentMsg"
+              type='email')
+            span.text-danger(*ngIf="contactForm.controls.email.touched && contactForm.controls.email.invalid") You must add a valid email address.
+        .form-row
+          .form-group.col-md-12
+            label(for='message') Message:
+            textarea.form-control(
+              "[formControl]"="contactForm.controls['message']"
+              name='message'
+              placeholder='Enter Message'
+              "[readonly]"="sentMsg"
+              required
+              rows=10
+              type='text')
+            span.text-danger(*ngIf="contactForm.controls.message.touched && contactForm.controls.message.invalid") You must add a valid message.
+          .form-group(*ngIf="!sentMsg")
+            button.btn.btn-primary(
+              "[disabled]"="!contactForm.valid"
+              type='submit') Contact Us

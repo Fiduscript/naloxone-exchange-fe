@@ -16,9 +16,9 @@ export class ContactComponent implements OnInit {
       private service: ContactService) {
     this.sentMsg = false;
    this.contactForm = fb.group({
-    'name' : [null, Validators.required],
-    'email' : [null, [Validators.required, Validators.email]],
-    'message' : [null, Validators.required],
+    'name' : [null, [Validators.required, Validators.maxLength(200)]],
+    'email' : [null, [Validators.required, Validators.email, Validators.maxLength(200)]],
+    'message' : [null, [Validators.required, Validators.maxLength(4000)]],
    });
   }
 

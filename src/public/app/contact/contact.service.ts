@@ -9,8 +9,8 @@ import { map } from 'rxjs/operators';
 })
 export class ContactService {
 
+  private readonly key = '/api/contact';
   public constructor(private http: Http) { }
-  readonly key = '/api/contact';
 
   /**
    * Forwards ContactUs message to us
