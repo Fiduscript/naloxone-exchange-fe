@@ -4,10 +4,12 @@ import { ValidationChain } from 'express-validator/check';
 import { check } from 'express-validator/check';
 
 import { ErrorMiddleware } from '../helper/error-middleware';
-import { sendSlackMessage } from '../client/slack-client';
-import { sendEmail } from '../client/mailer';
+import { sendEmail } from '../client/email-client';
+import { Logger } from '../util/logger';
+import { SlackProvider } from '../provider/slack-provider';
 
 const config = require('config');
+const log = Logger.create(module);
 const router: Router = express.Router();
 
 const validateContactForm: ValidationChain[] = [
@@ -30,13 +32,13 @@ const validateContactForm: ValidationChain[] = [
 /**
  * Handles ContactUs requests. Sends Slack message and Email
  * POST: /api/contact
- * @param email
  */
 router.post('/', validateContactForm, ErrorMiddleware.sendFirst, (req: Request, res: Response) => {
   const body = req.body;
   sendSlackContactUsMessage(body['name'], body['email'], body['message'], function(error, info) {});
-  sendContactUsEmail(body['name'], body['email'], body['message'], function(error, info){
+  sendContactUsEmail(body['name'], body['email'], body['message'], function(error, info) {
     if (error) {
+      log.error('Failed to send email: ${error}');
       res.status(500).send('Unable to send ContactUs at this time. Please try again later.');
     } else {
       res.status(200).send('ContactUs Sent!');
@@ -46,7 +48,7 @@ router.post('/', validateContactForm, ErrorMiddleware.sendFirst, (req: Request, 
 
 const sendSlackContactUsMessage = (name: string, email: string, msg: string, callback: Function) => {
   const message = `New ContactUs message!\nName: ${name}\nEmail: ${email}\nMessage: ${msg}`;
-  sendSlackMessage(message, callback);
+  SlackProvider.create().sendSlackMessage(message, callback);
 };
 
 const sendContactUsEmail = (name: string, email: string, msg: string, callback: Function) => {
