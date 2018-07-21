@@ -3,6 +3,7 @@ import { Request, Response, Router } from 'express';
 import { ValidationChain } from 'express-validator/check';
 import { check } from 'express-validator/check';
 
+import { ContactForm } from '../../public/app/contact/model/contact-form';
 import { ErrorMiddleware } from '../helper/error-middleware';
 import { sendEmail } from '../client/email-client';
 import { Logger } from '../util/logger';
@@ -34,28 +35,37 @@ const validateContactForm: ValidationChain[] = [
  * POST: /api/contact
  */
 router.post('/', validateContactForm, ErrorMiddleware.sendFirst, (req: Request, res: Response) => {
-  const body = req.body;
-  sendSlackContactUsMessage(body['name'], body['email'], body['message'], function(error, info) {});
-  sendContactUsEmail(body['name'], body['email'], body['message'], function(error, info) {
-    if (error) {
+  const contactForm: ContactForm = {
+    name: req.body['name'],
+    email: req.body['email'],
+    message: req.body['message']
+  };
+
+  SlackProvider.create().sendSlackMessage(constructSlackContactUsMessage(contactForm)).then(() => {
+      return sendEmail(getContactUsEmailAddr(), contactForm.email, getContactUsSubject(), constructEmailMessage(contactForm));
+    }).then(() => {
+      res.status(200).send('ContactUs Sent!');
+    }).catch((error) => {
       log.error('Failed to send email: ${error}');
       res.status(500).send('Unable to send ContactUs at this time. Please try again later.');
-    } else {
-      res.status(200).send('ContactUs Sent!');
-    }
-  });
+    });
 });
 
-const sendSlackContactUsMessage = (name: string, email: string, msg: string, callback: Function) => {
-  const message = `New ContactUs message!\nName: ${name}\nEmail: ${email}\nMessage: ${msg}`;
-  SlackProvider.create().sendSlackMessage(message, callback);
+const constructEmailMessage = (contactForm: ContactForm) => {
+   return `New ContactUs message!\nName: ${contactForm.name}\nEmail: ${contactForm.email}\nMessage: ${contactForm.message}`;
 };
 
-const sendContactUsEmail = (name: string, email: string, msg: string, callback: Function) => {
-  const contactUsEmailAddr = config.get('contactUs.emailAddr');
-  const contactUsSubject = 'New ContactUs Message Received';
-  const message = `New ContactUs message!\nName: ${name}\nEmail: ${email}\nMessage: ${msg}`;
-  sendEmail(contactUsEmailAddr, email, contactUsSubject, message, callback);
+const getContactUsEmailAddr = () => {
+  return config.get('contactUs.emailAddr');
 };
+
+const getContactUsSubject = () => {
+  return 'New ContactUs Message Received';
+};
+
+const constructSlackContactUsMessage = (contactForm: ContactForm) => {
+  return `New ContactUs message!\nName: ${contactForm.name}\nEmail: ${contactForm.email}\nMessage: ${contactForm.message}`;
+};
+
 
 export const ContactRouter: Router = router;

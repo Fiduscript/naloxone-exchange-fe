@@ -12,7 +12,7 @@ const smtpConfig = {
 
 const transporter = nodemailer.createTransport(smtpConfig);
 
-export const sendEmail = (toEmail: string, fromEmail: string, subject: string, text: string, callback: Function) => {
+export const sendEmail = (toEmail: string, fromEmail: string, subject: string, text: string): Promise<any> => {
   const mailOptions = {
     to: toEmail,
     from: fromEmail,
@@ -20,5 +20,13 @@ export const sendEmail = (toEmail: string, fromEmail: string, subject: string, t
     text: text
   }
 
-  transporter.sendMail(mailOptions, callback);
+  return new Promise((resolve, reject) => {
+    transporter.sendMail(mailOptions, function(err, res) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
 };

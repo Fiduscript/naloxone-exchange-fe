@@ -6,14 +6,18 @@ const log = Logger.create(module);
 export class SlackClient {
   constructor(private webhook: IncomingWebhook) {}
 
-  public sendSlackMessage = (msg: string, callback: Function) => {
-    this.webhook.send(msg, function(err, res) {
-      if (err) {
-        log.error('Error sending slack message:', err);
-      } else {
-        log.info('Message sent: ', res);
-      }
-      callback(err, res);
+  public sendSlackMessage = (msg: string): Promise<any> => {
+    return new Promise((resolve, reject) => {
+      this.webhook.send(msg, function (err, res) {
+        if (err) {
+          // return
+          log.error('Error sending slack message:', err);
+          reject(err);
+        } else {
+          log.info('Message sent: ', res);
+          resolve();
+        }
+      });
     });
   }
 }
