@@ -39,7 +39,7 @@ export module Logger {
     awsAccessKeyId: process.env.AWS_ACCESS_KEY_ID,
     awsSecretKey: process.env.AWS_ACCESS_KEY_SECRET,
     awsRegion: 'us-east-2',
-    level: 'audit'
+    level: 'warn'
   };
 
   const basePath: string = process.mainModule.filename.split('/').slice(0, -2).join('/') + '/dist/server/';
