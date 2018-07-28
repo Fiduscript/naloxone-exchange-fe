@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 "use strict";
 
+//configure enviornmental varaibles
+require('dotenv').config();
+
 //module dependencies
 const server = require("../dist/server/server/server");
 const debug = require("debug")("express:server");
