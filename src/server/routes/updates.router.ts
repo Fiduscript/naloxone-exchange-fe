@@ -7,12 +7,12 @@ import { check } from 'express-validator/check';
 
 import { STATE_SET } from '../../common/constant/states';
 import { ErrorMiddleware } from '../helper/error-middleware';
-import { AWSClientProvider } from '../provider/aws-client-provider';
+import { AWSProvider } from '../provider/aws-provider';
 import { Logger } from '../util/logger';
 
 const log = Logger.create(module);
 const router: Router = express.Router();
-const ddb: DynamoDB = AWSClientProvider.getDynmoClient();
+const ddb: DynamoDB = AWSProvider.getDynmoClient();
 
 const validateSubscribe: ValidationChain[] = [
   check('email')
@@ -44,11 +44,10 @@ router.put('/subscribe', validateSubscribe, ErrorMiddleware.sendFirst, (req: Req
   ddb.putItem(params, (err: AWSError, data: DynamoDB.PutItemOutput) => {
     if (err != null) {
       log.error(`Failed to subscribe customer \`${params}\`.` , err.message, err);
-      res.status(500).send('Unable to subscribe at this time. Please try again later.');
+      res.status(500).json({message: 'Unable to subscribe at this time. Please try again later.'});
     } else {
       res.status(201).send('Subscribed!');
     }
-
   });
 });
 
@@ -68,7 +67,7 @@ router.put('/unsubscribe', validateSubscribe, ErrorMiddleware.sendFirst, (req: R
   ddb.deleteItem(params, (err: AWSError, data: DynamoDB.PutItemOutput) => {
     if (err != null) {
       log.error(`Failed to unsubscribe customer \`${params}\`.` , err.message, err);
-      res.status(500).send('Unable to unsubscribe at this time. Please try again later.');
+      res.status(500).json({message: 'Unable to unsubscribe at this time. Please try again later.'});
     } else {
       res.status(201).send('Successfully unsubscribed!');
     }
