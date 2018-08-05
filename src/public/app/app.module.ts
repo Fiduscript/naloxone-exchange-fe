@@ -6,13 +6,13 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import {OverdoseComponent} from './overdose/overdose.component';
 
+import { AboutUsModule } from './about-us/about-us.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
-import { ProductsModule } from './products/products.module';
 import { PharmacyModule } from './pharmacy/pharmacy.module';
-import { AboutUsModule } from './about-us/about-us.module';
+import { ProductsModule } from './products/products.module';
 import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber.component';
 
 @NgModule({
@@ -31,7 +31,6 @@ import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber
   declarations: [
     AppComponent,
     HomeComponent,
-    AboutComponent,
     ContactComponent,
     OverdoseComponent,
     UpdateSubscriberComponent

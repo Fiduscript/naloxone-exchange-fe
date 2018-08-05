@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-pharmacy',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PharmacyComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
 
    ngOnInit() {
 
