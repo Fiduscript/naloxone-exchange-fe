@@ -11,7 +11,7 @@ import { OurTeamComponent } from './our-team/our-team.component';
 @NgModule({
   imports: [
     CommonModule,
-		AboutUsRoutingModule
+    AboutUsRoutingModule
   ],
   declarations: [
     AboutUsComponent,
@@ -19,6 +19,6 @@ import { OurTeamComponent } from './our-team/our-team.component';
     HistoryComponent,
     OurTeamComponent,
     OurSponsorsComponent
-	]
+  ]
 })
 export class AboutUsModule { }
