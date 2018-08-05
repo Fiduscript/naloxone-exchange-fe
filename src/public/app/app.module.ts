@@ -12,6 +12,8 @@ import { AppComponent } from './app.component';
 import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
 import { ProductsModule } from './products/products.module';
+import { PharmacyModule } from './pharmacy/pharmacy.module';
+import { AboutUsModule } from './about-us/about-us.module';
 import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber.component';
 
 @NgModule({
@@ -21,6 +23,8 @@ import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber
     FormsModule,
     NgbModule.forRoot(),
     ProductsModule,
+    PharmacyModule,
+    AboutUsModule,
     ReactiveFormsModule,
     FormsModule,
     AppRoutingModule, // this must be LAST so that other routes take president.
