@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import {OverdoseComponent} from './overdose/overdose.component';
+import { OverdoseComponent } from './overdose/overdose.component';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AboutComponent } from './about/about.component';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ProductsModule } from './products/products.module';
 import { ContactComponent } from './contact/contact.component';
 import { HomeModule } from './home/home.module';
+import { ProductsModule } from './products/products.module';
 import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber.component';
 
 @NgModule({
