@@ -8,11 +8,7 @@ import { OurTeamComponent } from './our-team/our-team.component';
 import { OurSponsorsComponent } from './our-sponsors/our-sponsors.component';
 
 const routes: Routes = [
-  {path: 'about-us', component: AboutUsComponent},
-  {path: 'about-us#mission', component: MissionComponent},
-  {path: 'about-us#history', component: HistoryComponent},
-  {path: 'about-us#our-team', component: OurTeamComponent},
-  {path: 'about-us#our-sponsors', component: OurSponsorsComponent}
+  {path: 'about-us', component: AboutUsComponent}
 ];
 
 @NgModule({

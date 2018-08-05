@@ -6,7 +6,6 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import {OverdoseComponent} from './overdose/overdose.component';
 
-import { AboutComponent } from './about/about.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ContactComponent } from './contact/contact.component';
@@ -30,7 +29,6 @@ import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber
     AppRoutingModule, // this must be LAST so that other routes take president.
   ],
   declarations: [
-    AboutComponent,
     AppComponent,
     HomeComponent,
     AboutComponent,

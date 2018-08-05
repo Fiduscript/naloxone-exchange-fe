@@ -5,8 +5,7 @@ import { PharmacyComponent } from './pharmacy.component';
 import { OurPartnersComponent } from './our-partners/our-partners.component';
 
 const routes: Routes = [
-  {path: 'pharmacy', component: PharmacyComponent},
-  {path: 'pharmacy#our-partners', component: OurPartnersComponent}
+  {path: 'pharmacy', component: PharmacyComponent}
 ];
 
 @NgModule({
