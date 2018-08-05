@@ -3,11 +3,11 @@ import { Request, Response, Router } from 'express';
 import { ValidationChain } from 'express-validator/check';
 import { check } from 'express-validator/check';
 
-import { ContactForm } from '../../public/app/contact/model/contact-form';
-import { ErrorMiddleware } from '../helper/error-middleware';
+import { IContactForm } from '../../public/app/contact/model/contact-form';
 import { sendEmail } from '../client/email-client';
-import { Logger } from '../util/logger';
+import { ErrorMiddleware } from '../helper/error-middleware';
 import { SlackProvider } from '../provider/slack-provider';
+import { Logger } from '../util/logger';
 
 const config = require('config');
 const log = Logger.create(module);
@@ -35,7 +35,7 @@ const validateContactForm: ValidationChain[] = [
  * POST: /api/contact
  */
 router.post('/', validateContactForm, ErrorMiddleware.sendFirst, (req: Request, res: Response) => {
-  const contactForm: ContactForm = {
+  const contactForm: IContactForm = {
     name: req.body['name'],
     email: req.body['email'],
     message: req.body['message']
@@ -51,7 +51,7 @@ router.post('/', validateContactForm, ErrorMiddleware.sendFirst, (req: Request, 
     });
 });
 
-const constructEmailMessage = (contactForm: ContactForm) => {
+const constructEmailMessage = (contactForm: IContactForm) => {
    return `New ContactUs message!\nName: ${contactForm.name}\nEmail: ${contactForm.email}\nMessage: ${contactForm.message}`;
 };
 
@@ -63,7 +63,7 @@ const getContactUsSubject = () => {
   return 'New ContactUs Message Received';
 };
 
-const constructSlackContactUsMessage = (contactForm: ContactForm) => {
+const constructSlackContactUsMessage = (contactForm: IContactForm) => {
   return `New ContactUs message!\nName: ${contactForm.name}\nEmail: ${contactForm.email}\nMessage: ${contactForm.message}`;
 };
 

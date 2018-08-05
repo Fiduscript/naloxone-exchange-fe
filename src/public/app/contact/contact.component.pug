@@ -10,34 +10,31 @@ section
         "(ngSubmit)"="submitContactUsForm(contactForm.value)")
         .form-row
           .form-group.col-md-6.col-sm-12
-            label(for='name') Name:
+            label Name:
             input.form-control(
               "[formControl]"="contactForm.controls['name']"
               name='name'
               placeholder='Enter Name'
-              "[readonly]"="sentMsg"
               required
               type='text')
             span.text-danger(*ngIf="contactForm.controls.name.touched && contactForm.controls.name.invalid") You must add a valid name.
         .form-row
           .form-group.col-md-6.col-sm-12
-            label(for='email') Email:
+            label Email:
             input.form-control(
               "[formControl]"="contactForm.controls['email']"
               name='email'
               placeholder='Enter Email Address'
               required
-              "[readonly]"="sentMsg"
               type='email')
             span.text-danger(*ngIf="contactForm.controls.email.touched && contactForm.controls.email.invalid") You must add a valid email address.
         .form-row
           .form-group.col-md-12
-            label(for='message') Message:
+            label Message:
             textarea.form-control(
               "[formControl]"="contactForm.controls['message']"
               name='message'
               placeholder='Enter Message'
-              "[readonly]"="sentMsg"
               required
               rows=10
               type='text')
