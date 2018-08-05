@@ -6,11 +6,12 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { OverdoseComponent } from './overdose/overdose.component';
 
-import { AboutComponent } from './about/about.component';
+import { AboutUsModule } from './about-us/about-us.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ContactComponent } from './contact/contact.component';
 import { HomeModule } from './home/home.module';
+import { PharmacyModule } from './pharmacy/pharmacy.module';
 import { ProductsModule } from './products/products.module';
 import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber.component';
 
@@ -22,14 +23,14 @@ import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber
     HomeModule,
     NgbModule.forRoot(),
     ProductsModule,
+    PharmacyModule,
+    AboutUsModule,
     ReactiveFormsModule,
     FormsModule,
     AppRoutingModule, // this must be LAST so that other routes take president.
   ],
   declarations: [
-    AboutComponent,
     AppComponent,
-    AboutComponent,
     ContactComponent,
     OverdoseComponent,
     UpdateSubscriberComponent
