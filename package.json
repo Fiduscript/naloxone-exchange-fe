@@ -49,6 +49,8 @@
     "rxjs": "^6.2.0",
     "rxjs-compat": "^6.2.0",
     "winston": "^3.0.0",
+    "winston-cloudwatch": "^2.0.0",
+    "winston-transport": "^4.2.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

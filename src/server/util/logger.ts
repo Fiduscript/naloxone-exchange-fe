@@ -1,16 +1,20 @@
+import * as crypto from 'crypto';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import * as path from 'path';
-import * as winston from 'winston';
+import * as winstonTS from 'winston';
 
-const isDevelopment = process.env.NODE_ENV === 'development';
+// Winston has compatability issues with typescript so the modules must be imported the traditional way.
+const winston = require('winston');
+const WinstonCloudwatch = require('winston-cloudwatch');
+const isProduction = process.env.NODE_ENV === 'production';
 
-export namespace Logger {
+export module Logger {
+
   const levels = {
     levels: {
-      error: 0,
-      warn: 1,
-      audit: 2,
+      audit: 0,
+      error: 1,
+      warn: 2,
       info: 3,
       debug: 4,
     },
@@ -22,12 +26,26 @@ export namespace Logger {
       debug: 'magenta',
     }
   };
+
   winston.addColors(levels.colors);
+
+  const cloudWatchOptions = {
+    logGroupName: isProduction ? 'NaloxoneExchangeFrontEnd-production' : 'NaloxoneExchangeFrontEnd-testing',
+    logStreamName: () => {
+      const date = moment().utc().format('YYYY-MM-DD-HH');
+      const hash = crypto.createHash('md5').update(moment().toISOString()).digest('hex');
+      return `audit-trail-${date}-${hash}`;
+    },
+    awsAccessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    awsSecretKey: process.env.AWS_ACCESS_KEY_SECRET,
+    awsRegion: 'us-east-2',
+    level: 'warn'
+  };
 
   const basePath: string = process.mainModule.filename.split('/').slice(0, -2).join('/') + '/dist/server/';
   export const create = (callingModule: NodeModule): ILogger => {
     const label: string = callingModule.filename.replace(basePath, '').replace(/js$/, 'ts');
-    const config = {
+    const baseConfig = {
       format:  winston.format.combine(
         winston.format.colorize(),
         winston.format.json(),
@@ -39,11 +57,12 @@ export namespace Logger {
       };
 
     const transports = [
-      new (winston.transports.Console)(config)
+      new (winston.transports.Console)(baseConfig),
+      new WinstonCloudwatch(cloudWatchOptions)
     ];
 
     return <ILogger> winston.createLogger({
-      level: isDevelopment ? 'debug' : 'info',
+      level: isProduction ? 'info' : 'debug',
       levels: levels.levels,
       transports: transports
     });
@@ -51,8 +70,8 @@ export namespace Logger {
 }
 
 /**
- * Stupid little interface to show Typescript that our new logger has the property 'audit'.
+ * Stupid little interface to show Typescript that our new logger includes 'audit' logs.
  */
-interface ILogger extends winston.Logger {
-  audit(message: string, callback?: winston.LogCallback): void;
+interface ILogger extends winstonTS.Logger {
+  audit: winstonTS.LeveledLogMethod;
 }
