@@ -9,9 +9,9 @@ import {OverdoseComponent} from './overdose/overdose.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AboutComponent } from './about/about.component';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
 import { ProductsModule } from './products/products.module';
 import { ContactComponent } from './contact/contact.component';
+import { HomeModule } from './home/home.module';
 import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber.component';
 
 @NgModule({
@@ -19,6 +19,7 @@ import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber
     AngularFontAwesomeModule,
     BrowserModule,
     FormsModule,
+    HomeModule,
     NgbModule.forRoot(),
     ProductsModule,
     ReactiveFormsModule,
@@ -28,7 +29,6 @@ import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber
   declarations: [
     AboutComponent,
     AppComponent,
-    HomeComponent,
     AboutComponent,
     ContactComponent,
     OverdoseComponent,
