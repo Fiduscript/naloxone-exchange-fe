@@ -11,7 +11,7 @@ export class PharmacyComponent implements OnInit {
 
   constructor(private route: ActivatedRoute) { }
 
-   ngOnInit() {
+  ngOnInit() {
 
   	// defer this task until the DOM has been rendered so there
     // is something to scroll to
@@ -21,7 +21,7 @@ export class PharmacyComponent implements OnInit {
   private scrollToAnchor(): void {
     this.route.fragment.subscribe((hash: string): void => {
       if (hash) {
-        const cmp = document.getElementById(hash);
+        const cmp = document.getElementsByTagName(hash)[0];
         if (cmp) {
           cmp.scrollIntoView();
         }
