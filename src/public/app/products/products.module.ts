@@ -34,6 +34,8 @@ const markdownConfig = {
     ProductsComponent,
     ProductDetailComponent,
     ProductListComponent,
+  ],
+  exports: [
   ]
 })
 export class ProductsModule { }

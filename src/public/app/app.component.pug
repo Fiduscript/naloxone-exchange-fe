@@ -1,11 +1,8 @@
-header.main-header
-  nav.navbar.brand-bar.container
-    a.navbar-brand
-      img(
-          src="/assets/logo/brand-logo.png"
-          alt="Naloxone Exchange"
-          )
-  nav.navbar.navbar-expand-lg.navbar-light.container
+header
+  nav.navbar.navbar-expand-md.navbar-light.bg-light
+    a.d-md-none.d-lg-block.navbar-brand.pr-4.pl-4
+      img(src="/assets/logo/logo.png" alt="Naloxone Exchange" height="50px")
+
     button.navbar-toggler(
         type="button"
         data-toggle="collapse"
@@ -17,29 +14,49 @@ header.main-header
       span.navbar-toggler-icon
 
     #navbarSupportedContent.collapse.navbar-collapse("[ngbCollapse]"="isCollapsed")
-      ul.navbar-nav.mr-auto
+      ul.navbar-nav.flex
+        li.nav-item.dropdown(ngbDropdown)
+          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/") Home
+          .dropdown-menu.text-center(ngbDropdownMenu)
+            a.dropdown-item.nav-link(routerLink="/" fragment="how-it-works") How it Works
+            a.dropdown-item.nav-link(routerLink="/" fragment="privacy") Privacy
+            a.dropdown-item.nav-link(routerLink="/" fragment="sponsors") Sponsors
+            a.dropdown-item.nav-link(routerLink="/" fragment="our-team") Our Team
         li.nav-item
-          a.nav-link(routerLink="/") Home
-        li.nav-item
-          a.nav-link(routerLink="/products/narcan-1") Get Naloxone (Narcan)
-        li.nav-item
-          a.nav-link(routerLink="/products/narcan-1" fragment="usage") Using Narcan
-        li.nav-item
-          a.nav-link(routerLink="/overdose") Overdose Recognition
-        li.nav-item
-          a.nav-link(routerLink="/about") About Us
-        li.nav-item
-          a.nav-link(routerLink="/contact") Contact Us
+          a.nav-link.text-sm-left.text-md-center(href="#") Buy Naloxone
+        li.nav-item(ngbDropdown)
+          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/training") Training
+          .dropdown-menu.text-center(ngbDropdownMenu)
+            a.dropdown-item.nav-link(routerLink="/training" fragment="how-it-works") How it Works
+            a.dropdown-item.nav-link(routerLink="/training" fragment="overdose-recognition") Overdose Recognition
+            a.dropdown-item.nav-link(routerLink="/training" fragment="administering-naloxone") Administering Naloxone
+            a.dropdown-item.nav-link(routerLink="/training" fragment="aftercare") Aftercare
+        li.nav-item(ngbDropdown)
+          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/faq")  FAQs
+          .dropdown-menu.text-center(ngbDropdownMenu)
+            a.dropdown-item.nav-link(routerLink="/faq" fragment="privacy-hippa") Privacy and HIPPA
+            a.dropdown-item.nav-link(routerLink="/faq" fragment="additional-resources") Additional Resources
+        li.nav-item(ngbDropdown)
+          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/about") About Us
+          .dropdown-menu.text-center(ngbDropdownMenu)
+            a.dropdown-item.nav-link(routerLink="/about" fragment="mission") Mission
+            a.dropdown-item.nav-link(routerLink="/about" fragment="history") History
+            a.dropdown-item.nav-link(routerLink="/about" fragment="our-team") Our Team
+            a.dropdown-item.nav-link(routerLink="/about" fragment="our-sponsors") Our Sponsors
+        li.nav-item(ngbDropdown)
+          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="rx") RX
+          .dropdown-menu.text-center(ngbDropdownMenu)
+            a.dropdown-item.nav-link(routerLink="/rx" fragment="our-partners") Partners
 
 section.container.content-area
+  app-update-subscriber
   //- content area
   router-outlet
 
-footer.footer
-  nav.navbar.brand-bar.navbar-light.bg-light
-    .container
-      div.text-muted.col-sm-3
-       fa.mr-1(name="copyright")
-       | Naloxone Exchange 2018
-      div.text-muted.col-sm-9
-       | 4220 S King Dr. 1S, Chicago IL 60653 US
+footer.footer.bg-light
+  .container.flex
+    span.text-muted
+      fa.mr-1(name="copyright")
+      | Naloxone Exchange 2018
+    span.text-muted
+      | 4220 S King Dr. 1S, Chicago IL 60653 US
