@@ -4,12 +4,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
-import {OverdoseComponent} from './overdose/overdose.component';
-
+import { OverdoseComponent } from './overdose/overdose.component';
 import { AboutComponent } from './about/about.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ContactComponent } from './contact/contact.component';
+import { FaqModule } from './faq/faq.module';
 import { HomeComponent } from './home/home.component';
 import { ProductsModule } from './products/products.module';
 import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber.component';
@@ -22,6 +22,7 @@ import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber
     NgbModule.forRoot(),
     ProductsModule,
     ReactiveFormsModule,
+    FaqModule,
     FormsModule,
     AppRoutingModule, // this must be LAST so that other routes take president.
   ],
