@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import * as _ from 'lodash';
 
-import { ProductDetail } from '../model/product-detail';
 import { ProductsService } from '../products.service';
+import { ProductDetail } from './model/product-detail';
 
 @Component({
   selector: 'app-product-detail',
