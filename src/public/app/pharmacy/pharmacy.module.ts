@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PharmacyComponent } from './pharmacy.component';
 import { OurPartnersComponent } from './our-partners/our-partners.component';
+import { PharmacyRoutingModule } from './pharmacy-routing.module';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    PharmacyRoutingModule
   ],
   declarations: [
   	PharmacyComponent, 
@@ -13,3 +15,4 @@ import { OurPartnersComponent } from './our-partners/our-partners.component';
   ]
 })
 export class PharmacyModule { }
+
