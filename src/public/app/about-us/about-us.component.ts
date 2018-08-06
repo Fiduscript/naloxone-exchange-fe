@@ -21,7 +21,7 @@ export class AboutUsComponent implements OnInit {
   private scrollToAnchor(): void {
     this.route.fragment.subscribe((hash: string): void => {
       if (hash) {
-        const cmp = document.getElementById(hash);
+        const cmp = document.getElementsByTagName(hash)[0];
         if (cmp) {
           cmp.scrollIntoView();
         }
