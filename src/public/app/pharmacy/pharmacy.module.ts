@@ -9,8 +9,7 @@ import { PharmacyRoutingModule } from './pharmacy-routing.module';
     PharmacyRoutingModule
   ],
   declarations: [
-  	PharmacyComponent, 
-  	OurPartnersComponent
+    PharmacyComponent, 
   ]
 })
 export class PharmacyModule { }
