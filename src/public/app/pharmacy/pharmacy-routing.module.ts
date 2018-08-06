@@ -8,6 +8,7 @@ const routes: Routes = [
   {path: 'pharmacy', component: PharmacyComponent}
 ];
 
+
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
