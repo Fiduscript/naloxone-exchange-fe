@@ -32,10 +32,11 @@ header
         li.nav-item(ngbDropdown)
           a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/faq")  FAQs
           .dropdown-menu.text-center(ngbDropdownMenu)
-            a.dropdown-item.nav-link(routerLink="/faq" fragment="privacy-hippa") Privacy and HIPPA
+            a.dropdown-item.nav-link(routerLink="/faq" fragment="general") General
+            a.dropdown-item.nav-link(routerLink="/faq" fragment="privacy-hipaa") Privacy and HIPAA
             a.dropdown-item.nav-link(routerLink="/faq" fragment="additional-resources") Additional Resources
         li.nav-item(ngbDropdown)
-          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/about") About Us
+          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/about-us") About Us
           .dropdown-menu.text-center(ngbDropdownMenu)
             a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-mission") Mission
             a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-history") History

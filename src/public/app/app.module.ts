@@ -8,6 +8,7 @@ import { AboutUsModule } from './about-us/about-us.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ContactComponent } from './contact/contact.component';
+import { FaqModule } from './faq/faq.module';
 import { HomeModule } from './home/home.module';
 import { OverdoseComponent } from './overdose/overdose.component';
 import { PharmacyModule } from './pharmacy/pharmacy.module';
@@ -25,6 +26,7 @@ import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber
     PharmacyModule,
     AboutUsModule,
     ReactiveFormsModule,
+    FaqModule,
     FormsModule,
     AppRoutingModule, // this must be LAST so that other routes take president.
   ],
