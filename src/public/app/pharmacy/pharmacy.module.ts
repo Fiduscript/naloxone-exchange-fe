@@ -1,15 +1,15 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PharmacyComponent } from './pharmacy.component';
+import { NgModule } from '@angular/core';
 import { OurPartnersComponent } from './our-partners/our-partners.component';
+import { PharmacyComponent } from './pharmacy.component';
 
 @NgModule({
   imports: [
     CommonModule
   ],
   declarations: [
-  	PharmacyComponent, 
-  	OurPartnersComponent
+    PharmacyComponent,
+    OurPartnersComponent
   ]
 })
 export class PharmacyModule { }

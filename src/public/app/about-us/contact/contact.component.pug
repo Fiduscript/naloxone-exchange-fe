@@ -5,9 +5,8 @@ section
   .row.mt-2
     .col-lg-12
       .alert.alert-success(*ngIf="sentMsg") Message Sent!
-      form(
-        "[formGroup]"="contactForm"
-        "(ngSubmit)"="submitContactUsForm(contactForm.value)")
+        a.pull-right.alert-link.reset(routerLink="/about-us" fragment="app-contact" "(click)"="reset()") Reset
+      form("[formGroup]"="contactForm" "(ngSubmit)"="submitContactUsForm(contactForm.value)")
         .form-row
           .form-group.col-md-6.col-sm-12
             label Name:

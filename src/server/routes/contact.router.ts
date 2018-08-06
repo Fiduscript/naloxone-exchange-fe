@@ -3,7 +3,7 @@ import { Request, Response, Router } from 'express';
 import { ValidationChain } from 'express-validator/check';
 import { check } from 'express-validator/check';
 
-import { IContactForm } from '../../public/app/contact/model/contact-form';
+import { IContactForm } from '../../public/app/about-us/contact/model/contact-form';
 import { sendEmail } from '../client/email-client';
 import { ErrorMiddleware } from '../helper/error-middleware';
 import { SlackProvider } from '../provider/slack-provider';
