@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FaqModule } from './faq/faq.module';
 import { HomeModule } from './home/home.module';
-import { OverdoseComponent } from './overdose/overdose.component';
+import { TrainingComponent } from './training/training.component';
 import { PharmacyModule } from './pharmacy/pharmacy.module';
 import { ProductsModule } from './products/products.module';
 import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber.component';
@@ -31,7 +31,7 @@ import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber
   ],
   declarations: [
     AppComponent,
-    OverdoseComponent,
+    TrainingComponent,
     UpdateSubscriberComponent
   ],
   providers: [],
