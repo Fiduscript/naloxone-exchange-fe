@@ -18,20 +18,20 @@ header
         li.nav-item
           a.nav-link.text-sm-left.text-md-center(href="#") Buy Naloxone
         li.nav-item(ngbDropdown)
-          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownAnchor) Training
+          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownAnchor routerLink="/training") Training
           .dropdown-menu.text-center(ngbDropdownMenu)
             a.dropdown-item.nav-link(routerLink="/training" fragment="how-it-works") How it Works
             a.dropdown-item.nav-link(routerLink="/training" fragment="overdose-recognition") Overdose Recognition
             a.dropdown-item.nav-link(routerLink="/training" fragment="administering-naloxone") Administering Naloxone
             a.dropdown-item.nav-link(routerLink="/training" fragment="aftercare") Aftercare
         li.nav-item(ngbDropdown)
-          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownAnchor)  FAQs
+          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownAnchor routerLink="/faq")  FAQs
           .dropdown-menu.text-center(ngbDropdownMenu)
             a.dropdown-item.nav-link(routerLink="/faq" fragment="general") General
             a.dropdown-item.nav-link(routerLink="/faq" fragment="privacy-hipaa") Privacy and HIPAA
             a.dropdown-item.nav-link(routerLink="/faq" fragment="additional-resources") Additional Resources
         li.nav-item(ngbDropdown)
-          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownAnchor) About Us
+          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownAnchor routerLink="/about-us") About Us
           .dropdown-menu.text-center(ngbDropdownMenu)
             a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-mission") Mission
             a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-history") History
