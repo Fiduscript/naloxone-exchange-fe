@@ -1,6 +1,6 @@
 header
   nav.navbar.navbar-expand-md.navbar-light.bg-light
-    a.d-md-none.d-lg-block.navbar-brand.pr-4.pl-4
+    a.navbar-brand.pr-4.pl-4(routerLink="/")
       img(src="/assets/logo/logo.png" alt="Naloxone Exchange" height="50px")
 
     button.navbar-toggler(
@@ -15,38 +15,33 @@ header
 
     #navbarSupportedContent.collapse.navbar-collapse("[ngbCollapse]"="isCollapsed")
       ul.navbar-nav.flex
-        li.nav-item.dropdown(ngbDropdown)
-          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/") Home
-          .dropdown-menu.text-center(ngbDropdownMenu)
-            a.dropdown-item.nav-link(routerLink="/" fragment="how-it-works") How it Works
-            a.dropdown-item.nav-link(routerLink="/" fragment="privacy") Privacy
         li.nav-item
           a.nav-link.text-sm-left.text-md-center(href="#") Buy Naloxone
         li.nav-item(ngbDropdown)
-          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/training") Training
+          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownAnchor) Training
           .dropdown-menu.text-center(ngbDropdownMenu)
             a.dropdown-item.nav-link(routerLink="/training" fragment="how-it-works") How it Works
             a.dropdown-item.nav-link(routerLink="/training" fragment="overdose-recognition") Overdose Recognition
             a.dropdown-item.nav-link(routerLink="/training" fragment="administering-naloxone") Administering Naloxone
             a.dropdown-item.nav-link(routerLink="/training" fragment="aftercare") Aftercare
         li.nav-item(ngbDropdown)
-          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/faq")  FAQs
+          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownAnchor)  FAQs
           .dropdown-menu.text-center(ngbDropdownMenu)
             a.dropdown-item.nav-link(routerLink="/faq" fragment="general") General
             a.dropdown-item.nav-link(routerLink="/faq" fragment="privacy-hipaa") Privacy and HIPAA
             a.dropdown-item.nav-link(routerLink="/faq" fragment="additional-resources") Additional Resources
         li.nav-item(ngbDropdown)
-          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/about-us") About Us
+          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownAnchor) About Us
           .dropdown-menu.text-center(ngbDropdownMenu)
             a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-mission") Mission
             a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-history") History
-            a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-our-team") Our Team
             a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-our-sponsors") Our Sponsors
+            a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-our-team") Our Team
             a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-contact") Contact Us
         li.nav-item
           a.nav-link.text-sm-left.text-md-center(routerLink="/pharmacy") RX
 
-section.container.content-area
+section
   app-update-subscriber
   //- content area
   router-outlet
