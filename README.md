@@ -42,6 +42,8 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 __Note:__ SkullJack uses `.pug` and `.styl` files instead of the auto generated `.html` and `.css` files. If you generate a component or module make sure to rename these!
 
+__Note2:__ Don't forget about the --routing flag when generating code when applicable!
+
 ## Build
 
 Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory.
