@@ -14,3 +14,22 @@ html
 
 body
   margin-bottom: 60px
+  font-family: Avenir Next
+
+section.scroll-section
+  padding: 2em
+  min-height: 100vh
+
+section.scroll-section:nth-of-type(1)
+  h1, h2, h3, h4, h5, h6
+    color: rgba(0, 164, 197, 1)
+
+for num in (1..5)
+  section.scroll-section:nth-of-type(5n + {num + 1})
+    weight =  1 - (0.25 * (num - 1))
+    background-color: rgba(0, 164, 197, weight)
+    h1, h2, h3, h4, h5, h6
+      if (weight < 0.25)
+        color: rgba(0, 164, 197, 1)
+      else
+        color: white
