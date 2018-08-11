@@ -14,6 +14,7 @@ html
 
 body
   margin-bottom: 60px
+  font-family: Avenir Next
 
 section.scroll-section
   padding: 2em
@@ -25,9 +26,10 @@ section.scroll-section:nth-of-type(1)
 
 for num in (2..6)
   section.scroll-section:nth-of-type({num}n)
-    background-color: rgba(0, 164, 197, 1 - (.25 * (num - 2)))
+    weight =  1 - (0.25 * (num - 2))
+    background-color: rgba(0, 164, 197, weight)
     h1, h2, h3, h4, h5, h6
-      if (num == 2)
-        color: black
+      if (weight < 0.25)
+        color: rgba(0, 164, 197, 1)
       else
         color: white
