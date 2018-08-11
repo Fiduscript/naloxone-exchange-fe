@@ -7,12 +7,11 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AboutUsModule } from './about-us/about-us.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ContactComponent } from './contact/contact.component';
 import { FaqModule } from './faq/faq.module';
 import { HomeModule } from './home/home.module';
-import { OverdoseComponent } from './overdose/overdose.component';
 import { PharmacyModule } from './pharmacy/pharmacy.module';
 import { ProductsModule } from './products/products.module';
+import { TrainingComponent } from './training/training.component';
 import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber.component';
 
 @NgModule({
@@ -32,8 +31,7 @@ import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber
   ],
   declarations: [
     AppComponent,
-    ContactComponent,
-    OverdoseComponent,
+    TrainingComponent,
     UpdateSubscriberComponent
   ],
   providers: [],

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
-import { Observable } from '../../../../node_modules/rxjs/Rx';
 import { IContactForm } from './model/contact-form';
 
 @Injectable({

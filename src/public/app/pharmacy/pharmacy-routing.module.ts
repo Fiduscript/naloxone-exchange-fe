@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+<<<<<<< HEAD
 import { PharmacyComponent } from './pharmacy.component';
 
 const routes: Routes = [

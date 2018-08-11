@@ -4,7 +4,7 @@ import { Response } from '@angular/http';
 import { ContactService } from './contact.service';
 
 @Component({
-  selector: 'app-contact', // is this needed?
+  selector: 'app-contact',
   templateUrl: './contact.component.pug'
 })
 export class ContactComponent implements OnInit {
@@ -24,6 +24,12 @@ export class ContactComponent implements OnInit {
 
   public ngOnInit() { }
 
+  public reset(): void {
+    this.contactForm.reset();
+    this.contactForm.enable();
+    this.sentMsg = false;
+  }
+
   public submitContactUsForm(form: any) {
     this.contactForm.disable();
     this.service.contact(form).subscribe(
@@ -33,6 +39,6 @@ export class ContactComponent implements OnInit {
         this.contactForm.enable();
        alert(error.json().message);
      });
-
   }
+
 }
