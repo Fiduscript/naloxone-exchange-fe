@@ -1,12 +1,17 @@
 import { inject, TestBed } from '@angular/core/testing';
-
+import { HttpModule } from '@angular/http';
 
 import { UpdateSubscriberService } from './update-subscriber.service';
 
 describe('UpdateSubscriberService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [UpdateSubscriberService]
+      providers: [
+        UpdateSubscriberService
+      ],
+      imports: [
+        HttpModule
+      ]
     });
   });
 
