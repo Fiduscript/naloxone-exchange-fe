@@ -20,24 +20,24 @@ header
         li.nav-item(ngbDropdown)
           a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownAnchor routerLink="/training") Training
           .dropdown-menu.text-center(ngbDropdownMenu)
-            a.dropdown-item.nav-link(routerLink="/training" fragment="how-it-works") How it Works
-            a.dropdown-item.nav-link(routerLink="/training" fragment="overdose-recognition") Overdose Recognition
-            a.dropdown-item.nav-link(routerLink="/training" fragment="administering-naloxone") Administering Naloxone
-            a.dropdown-item.nav-link(routerLink="/training" fragment="aftercare") Aftercare
+            a.dropdown-item.nav-link(routerLink="/training" fragment="how-it-works" "(click)"="toggleMenu()") How it Works
+            a.dropdown-item.nav-link(routerLink="/training" fragment="overdose-recognition" "(click)"="toggleMenu()") Overdose Recognition
+            a.dropdown-item.nav-link(routerLink="/training" fragment="administering-naloxone" "(click)"="toggleMenu()") Administering Naloxone
+            a.dropdown-item.nav-link(routerLink="/training" fragment="aftercare" "(click)"="toggleMenu()") Aftercare
         li.nav-item(ngbDropdown)
           a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownAnchor routerLink="/faq")  FAQs
           .dropdown-menu.text-center(ngbDropdownMenu)
-            a.dropdown-item.nav-link(routerLink="/faq" fragment="general") General
-            a.dropdown-item.nav-link(routerLink="/faq" fragment="privacy-hipaa") Privacy and HIPAA
-            a.dropdown-item.nav-link(routerLink="/faq" fragment="additional-resources") Additional Resources
+            a.dropdown-item.nav-link(routerLink="/faq" fragment="general" "(click)"="toggleMenu()") General
+            a.dropdown-item.nav-link(routerLink="/faq" fragment="privacy-hipaa" "(click)"="toggleMenu()") Privacy and HIPAA
+            a.dropdown-item.nav-link(routerLink="/faq" fragment="additional-resources" "(click)"="toggleMenu()") Additional Resources
         li.nav-item(ngbDropdown)
           a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownAnchor routerLink="/about-us") About Us
           .dropdown-menu.text-center(ngbDropdownMenu)
-            a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-mission") Mission
-            a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-history") History
-            a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-our-sponsors") Our Sponsors
-            a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-our-team") Our Team
-            a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-contact") Contact Us
+            a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-mission" "(click)"="toggleMenu()") Mission
+            a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-history" "(click)"="toggleMenu()") History
+            a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-our-sponsors" "(click)"="toggleMenu()") Our Sponsors
+            a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-our-team" "(click)"="toggleMenu()") Our Team
+            a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-contact" "(click)"="toggleMenu()") Contact Us
         li.nav-item
           a.nav-link.text-sm-left.text-md-center(routerLink="/pharmacy") RX
 
