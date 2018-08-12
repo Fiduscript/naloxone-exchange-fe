@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
+import * as _ from 'lodash';
 import { of } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { map, tap } from 'rxjs/operators';
 
-import * as _ from 'lodash';
-
+import { Pharmacies } from '../../../common/model/pharmacies';
 import { jsonConvert } from '../util/json-convert-provider';
-// import { Pharmacy } from '../../../common/model/pharmacy';
-import { Pharmacies } from '../../../common/model/pharmacies'
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +19,10 @@ export class PharmacyService {
 
   public listPharmacies(pageNumber: number = 1): Observable<Pharmacies> {
     const key: string = '/api/pharmacy/list';
-    if(this.memo[key] != null) {
+    if (this.memo[key] != null) {
       return of(this.memo[key]);
     }
-    
+
     return this.http.get(key).pipe(
       map((response: Response): Pharmacies => {
         return jsonConvert.deserialize(response.json(), Pharmacies);

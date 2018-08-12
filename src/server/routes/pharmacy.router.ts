@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 
 const router: Router = express.Router();
 
+// tslint:disable max-line-length
 const pharmacies = {
   pharmacies: [
     {
@@ -19,10 +20,14 @@ const pharmacies = {
       homepage: 'https://www.thegoodcarepharmacy.com/contact-us'
     }
   ]
-}
+};
+// tslint:enable max-line-length
 
+/**
+ * @api GET /api/pharmacy/list/
+ */
 router.get('/list', (req: Request, res: Response) => {
   res.json(pharmacies);
-})
+});
 
 export const PharmacyRouter: Router = router;

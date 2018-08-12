@@ -2,10 +2,10 @@ import * as express from 'express';
 import { NextFunction, Request, Response, Router } from 'express';
 
 import { ContactRouter } from './contact.router';
+import { PharmacyRouter } from './pharmacy.router';
 import { ProductRouter } from './product.router';
 import { SecurityRouter } from './security.router';
 import { UpdatesRouter } from './updates.router';
-import { PharmacyRouter } from './pharmacy.router';
 
 const router: Router = express.Router();
 

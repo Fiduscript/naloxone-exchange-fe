@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { PharmacyService } from './pharmacy.service';
 import { Pharmacies } from '../../../../src/common/model/pharmacies';
+import { PharmacyService } from './pharmacy.service';
 
 @Component({
   selector: 'app-pharmacy',
@@ -10,7 +10,7 @@ import { Pharmacies } from '../../../../src/common/model/pharmacies';
 })
 export class PharmacyComponent implements OnInit {
 
-  private pharmacies: Pharmacies;
+  public pharmacies: Pharmacies;
 
   constructor(private service: PharmacyService) { }
 
