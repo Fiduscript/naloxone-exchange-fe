@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import * as _ from 'lodash';
+
+import { PharmacyService } from './pharmacy.service';
+import { Pharmacies } from '../../../../src/common/model/pharmacies';
 
 @Component({
   selector: 'app-pharmacy',
@@ -9,24 +10,15 @@ import * as _ from 'lodash';
 })
 export class PharmacyComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) { }
+  private pharmacies: Pharmacies;
 
-  ngOnInit() {
+  constructor(private service: PharmacyService) { }
 
-  	// defer this task until the DOM has been rendered so there
-    // is something to scroll to
-    _.delay(_.bind(this.scrollToAnchor, this), 200);
-  }
-
-  private scrollToAnchor(): void {
-    this.route.fragment.subscribe((hash: string): void => {
-      if (hash) {
-        const cmp = document.getElementsByTagName(hash)[0];
-        if (cmp) {
-          cmp.scrollIntoView();
-        }
-      }
+  public ngOnInit(): void {
+    this.service.listPharmacies().subscribe((pharmacies: Pharmacies) => {
+      this.pharmacies = pharmacies;
     });
+
   }
 
 }
