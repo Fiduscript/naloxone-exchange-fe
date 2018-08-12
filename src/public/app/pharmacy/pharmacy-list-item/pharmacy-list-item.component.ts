@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
-import { Pharmacy } from '../../../../common/model/pharmacy';
+import { Pharmacy } from '../model/pharmacy';
 
 @Component({
   selector: 'app-pharmacy-list-item',

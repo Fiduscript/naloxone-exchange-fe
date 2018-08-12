@@ -5,8 +5,8 @@ import { of } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { map, tap } from 'rxjs/operators';
 
-import { Pharmacies } from '../../../common/model/pharmacies';
 import { jsonConvert } from '../util/json-convert-provider';
+import { Pharmacies } from './model/pharmacies';
 
 @Injectable({
   providedIn: 'root'
