@@ -12,7 +12,6 @@ import { HomeModule } from './home/home.module';
 import { PharmacyModule } from './pharmacy/pharmacy.module';
 import { ProductsModule } from './products/products.module';
 import { TrainingComponent } from './training/training.component';
-import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber.component';
 
 @NgModule({
   imports: [
@@ -32,9 +31,8 @@ import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber
   declarations: [
     AppComponent,
     TrainingComponent,
-    UpdateSubscriberComponent
   ],
   providers: [],
-  bootstrap: [AppComponent, UpdateSubscriberComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

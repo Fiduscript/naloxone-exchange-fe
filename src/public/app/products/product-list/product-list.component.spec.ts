@@ -5,8 +5,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 
-import { ProductListComponent } from './product-list.component';
 import { ProductDetail } from '../product-detail/model/product-detail';
+import { ProductListComponent } from './product-list.component';
 
 describe('ProductListComponent', () => {
 

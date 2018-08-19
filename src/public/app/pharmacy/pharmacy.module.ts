@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
+import { PharmaciesComponent } from './pharmacies.component';
+import { PharmacyListItemComponent } from './pharmacy-list-item/pharmacy-list-item.component';
 import { PharmacyRoutingModule } from './pharmacy-routing.module';
-import { PharmacyComponent } from './pharmacy.component';
 
 @NgModule({
   imports: [
@@ -10,7 +11,8 @@ import { PharmacyComponent } from './pharmacy.component';
     PharmacyRoutingModule
   ],
   declarations: [
-    PharmacyComponent,
+    PharmaciesComponent,
+    PharmacyListItemComponent,
   ]
 })
 export class PharmacyModule { }

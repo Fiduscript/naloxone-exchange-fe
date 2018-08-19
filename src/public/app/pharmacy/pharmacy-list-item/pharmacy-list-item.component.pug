@@ -1,0 +1,12 @@
+.row.mt-2
+  .col-lg-5
+    img.-align-left.img-fluid(src="{{pharmacy.image}}")
+  .col-lg-7
+    h2 {{pharmacy.name}}
+    h4 {{pharmacy.address}}
+    p {{pharmacy.description}}
+    h4 Hours
+    p(*ngFor="let hour of pharmacy.hours") {{hour}}
+    h4 Contact Info
+    p 
+      a(href="{{pharmacy.homepage}}" target="_blank") Contact {{pharmacy.name}}
