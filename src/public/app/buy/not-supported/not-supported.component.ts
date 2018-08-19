@@ -12,18 +12,18 @@ export class NotSupportedComponent implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    //not used yet
+    // not used yet
     _.delay(_.bind(this.scrollToAnchor, this), 200);
   }
 
   private scrollToAnchor(): void {
     this.route.fragment.subscribe(((hash: string): void => {
-      if(hash) {
+      if (hash) {
         const cmp = document.getElementById(hash);
         if (cmp) {
           cmp.scrollIntoView();
         }
       }
-    }))
+    }));
   }
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { IState } from 'src/common/constant/states';
 import { STATE_SET } from 'src/common/constant/states';
 import { StateService } from './state.service';
@@ -16,7 +16,7 @@ export class BuyComponent implements OnInit {
 
   ngOnInit() {
     this.getStates();
-    //not used yet
+    // not used yet
     _.delay(_.bind(this.scrollToAnchor, this), 200);
   }
 
@@ -26,7 +26,7 @@ export class BuyComponent implements OnInit {
 
   private scrollToAnchor(): void {
     this.route.fragment.subscribe(((hash: string): void => {
-      if(hash) {
+      if (hash) {
         const cmp = document.getElementById(hash);
         if (cmp) {
           cmp.scrollIntoView();

@@ -1,12 +1,11 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { BuyRoutingModule } from './buy-routing.module';
 import { BuyComponent } from './buy.component';
+import { BuyRoutingModule } from './buy-routing.module';
 import { IdComponent } from './id/id.component';
+import { NgModule } from '@angular/core';
 import { NotSupportedComponent } from './not-supported/not-supported.component';
+import { ProductComponent } from './product/product.component';
 import { SupportedComponent } from './supported/supported.component';
-import { ProductsComponent } from './products/products.component';
 
 @NgModule({
   imports: [
@@ -18,7 +17,7 @@ import { ProductsComponent } from './products/products.component';
     IdComponent,
     NotSupportedComponent,
     SupportedComponent,
-    ProductsComponent
+    ProductComponent
   ],
   exports: [
     IdComponent
