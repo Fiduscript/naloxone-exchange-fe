@@ -12,3 +12,34 @@
 
 .dropdown:hover .dropdown-menu 
   display: block
+
+.main
+  margin-top: 76px
+  
+nav ul li a,
+nav ul li a:after,
+nav ul li a:before 
+  transition: all .5s
+
+/* stroke */
+nav.stroke ul li a 
+  position: relative;
+
+nav.stroke ul li a:after 
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 0%;
+  content: '.';
+  color: transparent;
+  background: #00a4c4;
+  height: 1px;
+  border-top: .3em solid;
+  border-right: .3em solid transparent;
+  border-bottom: 0;
+  border-left: .3em solid transparent;
+
+nav.stroke ul li a:hover:after 
+  width: 100%;
