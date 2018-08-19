@@ -5,10 +5,10 @@ import { PharmacyService } from './pharmacy.service';
 
 @Component({
   selector: 'app-pharmacy',
-  templateUrl: './pharmacy.component.pug',
-  styleUrls: ['./pharmacy.component.styl']
+  templateUrl: './pharmacies.component.pug',
+  styleUrls: ['./pharmacies.component.styl']
 })
-export class PharmacyComponent implements OnInit {
+export class PharmaciesComponent implements OnInit {
 
   public pharmacies: Pharmacies;
 
