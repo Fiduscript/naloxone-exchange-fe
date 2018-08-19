@@ -1,5 +1,5 @@
+import { HttpClientModule } from '@angular/common/http';
 import { inject, TestBed } from '@angular/core/testing';
-import { HttpModule } from '@angular/http';
 
 import { UpdateSubscriberService } from './update-subscriber.service';
 
@@ -10,7 +10,7 @@ describe('UpdateSubscriberService', () => {
         UpdateSubscriberService
       ],
       imports: [
-        HttpModule
+        HttpClientModule
       ]
     });
   });

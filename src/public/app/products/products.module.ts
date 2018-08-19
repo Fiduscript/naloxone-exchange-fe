@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 
 import { ProductDetailComponent } from './product-detail/product-detail.component';
@@ -26,7 +26,7 @@ const markdownConfig = {
 @NgModule({
   imports: [
     CommonModule,
-    HttpModule,
+    HttpClientModule,
     ProductsRoutingModule,
     MarkdownModule.forRoot(markdownConfig)
   ],

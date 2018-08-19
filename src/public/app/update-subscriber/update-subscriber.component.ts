@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Response } from '@angular/http';
-import { JsonObject, JsonProperty } from 'json2typescript';
 import * as moment from 'moment';
-import { Duration, Moment } from 'moment';
+import { Duration } from 'moment';
 
 import { IState, STATES } from '../../../common/constant/states';
 import { jsonConvert } from '../util/json-convert-provider';
-import { MomentConverter } from '../util/moment-utils';
+import { SubscriptionState } from './model/subscription-state';
 import { UpdateSubscriberService } from './update-subscriber.service';
 
 @Component({
@@ -70,18 +69,5 @@ export class UpdateSubscriberComponent implements OnInit {
     const state: SubscriptionState = new SubscriptionState(subscribed);
     const json: any = jsonConvert.serialize(state);
     window.localStorage.setItem(this.LS_KEY, JSON.stringify(json));
-  }
-}
-
-@JsonObject
-class SubscriptionState {
-  @JsonProperty('dismissed', MomentConverter)
-  public dismissed: Moment = moment();
-
-  @JsonProperty('subscribed', Boolean)
-  public subscribed: boolean = false;
-
-  constructor(subscribed: boolean = false) {
-    this.subscribed = subscribed;
   }
 }
