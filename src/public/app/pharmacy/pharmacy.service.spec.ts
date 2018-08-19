@@ -1,13 +1,13 @@
 import { inject, TestBed } from '@angular/core/testing';
 import { HttpModule } from '@angular/http';
 
-import { ProductsService } from './products.service';
+import { PharmacyService } from './pharmacy.service';
 
-describe('ProductsService', () => {
+describe('PharmacyService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        ProductsService
+        PharmacyService
       ],
       imports: [
         HttpModule
@@ -15,7 +15,7 @@ describe('ProductsService', () => {
     });
   });
 
-  it('should be created', inject([ProductsService], (service: ProductsService) => {
+  it('should be created', inject([PharmacyService], (service: PharmacyService) => {
     expect(service).toBeTruthy();
   }));
 });
