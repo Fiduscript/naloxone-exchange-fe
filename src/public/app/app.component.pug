@@ -21,11 +21,11 @@ header
             a.dropdown-item.nav-link(routerLink="/" fragment="how-it-works") How it Works
             a.dropdown-item.nav-link(routerLink="/" fragment="privacy") Privacy
         li.nav-item
-          a.nav-link.text-sm-left.text-md-center(href="#") Buy Naloxone
+          a.nav-link.text-sm-left.text-md-center(routerLink="/buy") Get Naloxone
         li.nav-item(ngbDropdown)
           a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/training") Training
           .dropdown-menu.text-center(ngbDropdownMenu)
-            a.dropdown-item.nav-link(routerLink="/training" fragment="how-it-works") How it Works
+            a.dropdown-item.nav-link(routerLink="/training" fragment="how-it-works") Training Video
             a.dropdown-item.nav-link(routerLink="/training" fragment="overdose-recognition") Overdose Recognition
             a.dropdown-item.nav-link(routerLink="/training" fragment="administering-naloxone") Administering Naloxone
             a.dropdown-item.nav-link(routerLink="/training" fragment="aftercare") Aftercare
@@ -44,9 +44,9 @@ header
             a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-our-sponsors") Our Sponsors
             a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-contact") Contact Us
         li.nav-item(ngbDropdown)
-          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/pharmacy") RX
+          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/pharmacy") Pharmacy Partners
           .dropdown-menu.text-center(ngbDropdownMenu)
-            a.dropdown-item.nav-link(routerLink="/pharmacy" fragment="our-partners") Partners
+            a.dropdown-item.nav-link(routerLink="/pharmacy" fragment="our-partners") Our Partners
 
 section.container.content-area
   app-update-subscriber
