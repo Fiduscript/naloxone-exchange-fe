@@ -28,10 +28,6 @@ export class PharmacyService {
         return jsonConvert.deserialize(response.json(), Pharmacies);
       }),
       tap(_.bind((pharmacies: Pharmacies) => {
-        pharmacies.pharmacies.forEach((pharmacy) => {
-          const k = `/api/pharmacy/list/${pharmacy.id}`;
-          this.memo[k] = pharmacy;
-        });
         this.memo[key] = pharmacies;
       }, this))
     );
