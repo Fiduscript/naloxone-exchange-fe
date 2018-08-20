@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { AngularSvgIconModule } from 'angular-svg-icon';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 
@@ -11,7 +11,7 @@ import { HomeComponent } from './home.component';
     CommonModule,
     HomeRoutingModule,
     HttpClientModule,
-    AngularSvgIconModule
+    FontAwesomeModule
   ],
   declarations: [
     HomeComponent

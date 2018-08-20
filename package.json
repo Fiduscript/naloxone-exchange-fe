@@ -34,7 +34,6 @@
     "@ngx-share/core": "^6.0.1",
     "@slack/client": "^4.3.1",
     "angular-font-awesome": "^3.1.2",
-    "angular-svg-icon": "^6.0.0",
     "aws-config": "^1.2.0",
     "aws-sdk": "^2.263.1",
     "body-parser": "^1.18.3",
