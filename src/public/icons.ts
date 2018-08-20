@@ -1,13 +1,13 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 import { faFacebookF } from '@fortawesome/free-brands-svg-icons/faFacebookF';
-import { faGooglePlusG } from '@fortawesome/free-brands-svg-icons/faGooglePlusG';
 import { faLinkedinIn } from '@fortawesome/free-brands-svg-icons/faLinkedinIn';
 import { faPinterestP } from '@fortawesome/free-brands-svg-icons/faPinterestP';
+import { faRedditAlien } from '@fortawesome/free-brands-svg-icons/faRedditAlien';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons/faTwitter';
 
 // import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons/faFacebookMessenger';
-// import { faRedditAlien } from '@fortawesome/free-brands-svg-icons/faRedditAlien';
+// import { faGooglePlusG } from '@fortawesome/free-brands-svg-icons/faGooglePlusG';
 // import { faStumbleupon } from '@fortawesome/free-brands-svg-icons/faStumbleupon';
 // import { faTelegramPlane } from '@fortawesome/free-brands-svg-icons/faTelegramPlane';
 // import { faTumblr } from '@fortawesome/free-brands-svg-icons/faTumblr';
@@ -25,7 +25,7 @@ import { faTwitter } from '@fortawesome/free-brands-svg-icons/faTwitter';
 // import { faPrint } from '@fortawesome/free-solid-svg-icons/faPrint';
 
 const icons = [
-  faFacebookF, faTwitter, faLinkedinIn, faGooglePlusG, faPinterestP
+  faFacebookF, faTwitter, faLinkedinIn, faRedditAlien, faPinterestP
 ];
 
 library.add(...icons);
