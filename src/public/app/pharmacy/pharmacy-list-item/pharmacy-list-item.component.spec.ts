@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { Pharmacy } from '../model/pharmacy';
 import { PharmacyListItemComponent } from './pharmacy-list-item.component';
 
 describe('PharmacyListItemComponent', () => {
@@ -8,7 +9,9 @@ describe('PharmacyListItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PharmacyListItemComponent ]
+      declarations: [
+        PharmacyListItemComponent
+      ],
     })
     .compileComponents();
   }));
@@ -16,6 +19,7 @@ describe('PharmacyListItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PharmacyListItemComponent);
     component = fixture.componentInstance;
+    component.pharmacy = new Pharmacy();
     fixture.detectChanges();
   });
 

@@ -11,6 +11,8 @@ version: 0.2
 phases:
   install:
     commands:
+      - sudo apt-get update
+      - sudo apt-get --assume-yes install chromium-browser
       - npm install -g @angular/cli
       #- rm -rf node_modules
       #- ng add ng-cli-pug-loader

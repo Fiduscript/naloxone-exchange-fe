@@ -1,4 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { UpdateSubscriberComponent } from './update-subscriber.component';
 
@@ -8,7 +11,13 @@ describe('UpdateSubscriberComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UpdateSubscriberComponent ]
+      declarations: [ UpdateSubscriberComponent ],
+      imports: [
+        BrowserModule,
+        FormsModule,
+        HttpModule,
+        ReactiveFormsModule,
+      ]
     })
     .compileComponents();
   }));
