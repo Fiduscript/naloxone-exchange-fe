@@ -1,9 +1,9 @@
-import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import * as _ from 'lodash';
 import { IState } from 'src/common/constant/states';
 import { STATE_SET } from 'src/common/constant/states';
 import { StateService } from './state.service';
-import * as _ from 'lodash';
 
 @Component({
   selector: 'app-buy',
