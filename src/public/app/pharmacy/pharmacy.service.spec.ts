@@ -1,11 +1,17 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { inject, TestBed } from '@angular/core/testing';
+import { HttpModule } from '@angular/http';
 
 import { PharmacyService } from './pharmacy.service';
 
 describe('PharmacyService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [PharmacyService]
+      providers: [
+        PharmacyService
+      ],
+      imports: [
+        HttpModule
+      ]
     });
   });
 

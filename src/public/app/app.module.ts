@@ -43,6 +43,6 @@ import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber
     UpdateSubscriberComponent
   ],
   providers: [],
-  bootstrap: [AppComponent, UpdateSubscriberComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
