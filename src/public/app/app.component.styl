@@ -7,13 +7,16 @@
 
 .dropdown-menu
   min-width: 100%
-  display: none
   margin-top: 0px
+  
 
-.dropdown:hover .dropdown-menu 
-  display: block
+@media screen and (hover: hover)
+  .dropdown-menu
+    display: none
+  .dropdown:hover .dropdown-menu 
+    display: block
 
-.main
+section.main
   margin-top: 76px
   
 nav .nav-link,
