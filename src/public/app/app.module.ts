@@ -7,6 +7,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AboutUsModule } from './about-us/about-us.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BuyModule } from './buy/buy.module';
 import { FaqModule } from './faq/faq.module';
 import { HomeModule } from './home/home.module';
 import { PharmacyModule } from './pharmacy/pharmacy.module';
@@ -18,6 +19,7 @@ import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber
   imports: [
     AngularFontAwesomeModule,
     BrowserModule,
+    BuyModule,
     FormsModule,
     HomeModule,
     NgbModule.forRoot(),
