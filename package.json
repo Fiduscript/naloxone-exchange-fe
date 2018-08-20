@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "build": "ng build --prod && ng test --watch=false && npm run grunt",
+    "build": "ng build --prod && npm run grunt",
     "test": "ng test",
+    "build-test": "ng lint && ng test --watch=false ",
     "lint": "ng lint",
     "grunt": "grunt",
     "e2e": "ng e2e",

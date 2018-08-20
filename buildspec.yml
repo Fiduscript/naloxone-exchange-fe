@@ -18,9 +18,9 @@ phases:
       #- ng add ng-cli-pug-loader
       - npm install
       - npm run postinstall
-  #pre_build:
-    #commands:
-      # - command
+  pre_build:
+    commands:
+      - npm run build-test
       # - command
   build:
     commands:

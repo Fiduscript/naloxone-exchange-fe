@@ -1,5 +1,5 @@
+import { HttpClientModule } from '@angular/common/http';
 import { inject, TestBed } from '@angular/core/testing';
-import { HttpModule } from '@angular/http';
 
 import { ProductsService } from './products.service';
 
@@ -10,7 +10,7 @@ describe('ProductsService', () => {
         ProductsService
       ],
       imports: [
-        HttpModule
+        HttpClientModule
       ]
     });
   });
