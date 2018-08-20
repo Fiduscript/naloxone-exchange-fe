@@ -1,12 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
 import { of } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
-import { map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 import * as _ from 'lodash';
 
-import { jsonConvert } from '../util/json-convert-provider';
 import { ProductDetail } from './product-detail/model/product-detail';
 import { ProductDetails } from './product-detail/model/product-details';
 
@@ -17,7 +16,7 @@ export class ProductsService {
 
   private memo: {[s: string]: any} = {};
 
-  public constructor(private http: Http) { }
+  public constructor(private http: HttpClient) { }
 
   /**
    * Fetches products from `/api/product/list`.
@@ -30,10 +29,7 @@ export class ProductsService {
       return of(this.memo[key]);
     }
 
-    return this.http.get('/api/product/list').pipe(
-        map((response: Response): ProductDetails => {
-          return jsonConvert.deserialize(response.json(), ProductDetails);
-        }),
+    return this.http.get<ProductDetails>('/api/product/list').pipe(
         tap(_.bind((details: ProductDetails) => {
           details.items.forEach((item) => {
             const k = `/api/product/list/${item.id}`;
@@ -53,10 +49,7 @@ export class ProductsService {
       return of(this.memo[key]);
     }
 
-    return this.http.get(key).pipe(
-      map((response: Response): ProductDetail => {
-        return jsonConvert.deserialize(response.json(), ProductDetail);
-      }),
+    return this.http.get<ProductDetail>(key).pipe(
       tap(_.bind((product: ProductDetail): void => {
         this.memo[key] = product;
       }, this)));

@@ -1,6 +1,6 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Response } from '@angular/http';
 import * as moment from 'moment';
 import { Duration } from 'moment';
 
@@ -56,8 +56,8 @@ export class UpdateSubscriberComponent implements OnInit {
        (msg: string): void => {
           this.show = false;
           this.saveState(true);
-        }, (error: Response): void => {
-          alert(error.json().message);
+        }, (error: HttpResponse<any>): void => {
+          alert(error.body().message);
         });
   }
 

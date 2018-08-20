@@ -1,6 +1,6 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Response } from '@angular/http';
 import { ContactService } from './contact.service';
 
 @Component({
@@ -35,9 +35,9 @@ export class ContactComponent implements OnInit {
     this.service.contact(form).subscribe(
      (msg: string): void => {
        this.sentMsg = true;
-     }, (error: Response): void => {
+     }, (error: HttpResponse<any>): void => {
         this.contactForm.enable();
-       alert(error.json().message);
+        alert(error.body().message);
      });
   }
 
