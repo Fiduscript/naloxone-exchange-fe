@@ -7,8 +7,40 @@
 
 .dropdown-menu
   min-width: 100%
-  display: none
   margin-top: 0px
+  
 
-.dropdown:hover .dropdown-menu 
-  display: block
+@media screen and (hover: hover)
+  .dropdown-menu
+    display: none
+  .dropdown:hover .dropdown-menu 
+    display: block
+
+section.main
+  margin-top: 76px
+  
+nav .nav-link,
+nav .nav-link:after,
+nav .nav-link:before 
+  transition: all .5s
+
+/* stroke */
+nav.stroke .nav-link 
+  position: relative
+
+nav.stroke .nav-link:after 
+  position: absolute
+  bottom: 0
+  left: 0
+  right: 0
+  margin: auto
+  width: 0%
+  content: '.'
+  color: transparent
+  background: #00a4c4
+  height: 1px
+  border-top: .25em solid
+  border-bottom: 0
+
+nav.stroke .nav-link:hover:after 
+  width: 100%
