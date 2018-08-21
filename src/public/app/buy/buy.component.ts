@@ -42,6 +42,7 @@ export class BuyComponent {
   }
 
   public navigate(): void {
+    if (this.form.invalid) { return; }
     this.router.navigate(['buy', this.form.get('state').value]);
   }
 

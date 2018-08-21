@@ -10,7 +10,6 @@ import { BuyRoutingModule } from './buy-routing.module';
 import { BuyComponent } from './buy.component';
 import { BuyService } from './buy.service';
 
-
 @NgModule({
   imports: [
     AngularFontAwesomeModule,
