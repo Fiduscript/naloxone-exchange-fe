@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { Duration } from 'moment';
@@ -19,6 +19,7 @@ export class UpdateSubscriberComponent implements OnInit {
 
   private readonly LS_KEY: string = 'updateSubscriber';
 
+  @Input() public showClose: boolean = true;
   public subscribeForm: FormGroup;
   public show: boolean = false;
 

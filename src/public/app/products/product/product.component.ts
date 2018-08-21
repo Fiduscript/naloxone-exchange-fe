@@ -2,21 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import * as _ from 'lodash';
 
-import { ProductsService } from '../products.service';
-import { ProductDetail } from './model/product-detail';
+import { BuyService } from '../../buy/buy.service';
+import { Product } from '../../buy/model/product';
 
 @Component({
-  selector: 'app-product-detail',
-  templateUrl: './product-detail.component.pug',
+  selector: 'app-product',
+  templateUrl: './product.component.pug',
   styleUrls: ['../products.component.styl']
 })
-export class ProductDetailComponent implements OnInit {
+export class ProductComponent implements OnInit {
 
   private id: string;
-  private product: ProductDetail;
+  private product: Product;
 
   public constructor(
-      private service: ProductsService,
+      private service: BuyService,
       private route: ActivatedRoute) { }
 
   public ngOnInit(): void {
@@ -36,9 +36,9 @@ export class ProductDetailComponent implements OnInit {
 
   private fetch(): void {
     if (_.isEmpty(this.id)) { return; }
-    this.service.getProduct(this.id).subscribe((product: ProductDetail): void => {
-      this.product = product;
-    });
+    // this.service.getProduct(this.id).subscribe((product: Product): void => {
+    //   this.product = product;
+    // });
   }
 
   private scrollToAnchor(): void {

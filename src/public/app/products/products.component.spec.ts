@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 
-import { ProductDetails } from './product-detail/model/product-details';
+import { Products } from '../buy/model/products';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductsComponent } from './products.component';
 
@@ -35,7 +35,7 @@ describe('ProductsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductsComponent);
     component = fixture.componentInstance;
-    component.products = new ProductDetails();
+    component.products = new Products();
     fixture.detectChanges();
   });
 

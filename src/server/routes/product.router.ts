@@ -78,27 +78,23 @@ const products = {
 // tslint:enable max-line-length
 
 /**
- * @api GET /api/product/list/:id
+ * @api GET /api/product/list/featured
  */
-router.get('/list/:id', (req: Request, res: Response) => {
-  /**
-   * Currently hard coded. But this should be in a database somewhere.
-   */
-  const result = _(products.items)
-      .filter((item) => item.id === req.params.id)
-      .first();
-  res.json(result);
+router.get('/list/featured', (req: Request, res: Response) => {
+    /**
+     * Currently hard coded. But this should be in a database somewhere.
+     */
+    res.json(products);
 });
 
 /**
- * @api GET /api/product/list
+ * @api GET /api/product/list/state/:state
  */
-router.get('/list', (req: Request, res: Response) => {
-  /**
-   * Currently hard coded. But this should be in a database somewhere.
-   */
-  res.json(products);
+router.get('/list/state/:id', (req: Request, res: Response) => {
+    /**
+     * Currently hard coded. But this should be in a database somewhere.
+     */
+    res.json({items: []});
 });
-
 
 export const ProductRouter: Router = router;
