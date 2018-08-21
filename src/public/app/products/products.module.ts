@@ -3,8 +3,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 
-import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { ProductComponent } from './product/product.component';
 import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsComponent } from './products.component';
 
@@ -32,7 +32,7 @@ const markdownConfig = {
   ],
   declarations: [
     ProductsComponent,
-    ProductDetailComponent,
+    ProductComponent,
     ProductListComponent,
   ],
   exports: [

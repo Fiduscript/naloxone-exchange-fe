@@ -1,0 +1,14 @@
+.container.pt-5(*ngIf="products != null")
+  section(*ngIf="products.isSupportedState()")
+    .alert.alert-info This section is under construction.
+
+  section(*ngIf="!products.isSupportedState()")
+    h4 Naloxone Exchange Currently is not supported in {{state}}.
+    p
+      | If you would like to know when Naloxone is available in your state please subscribe below!
+    h4.mt-5 Get Involved!
+    p Get involved by contacting your
+      a.ml-1.mr-1(href="https://www.house.gov/representatives/find-your-representative" target="_blank") state representatives
+      | and ask them to support Nalaxone Exchange!
+    hr.mt-5.mb-5
+    app-update-subscriber([showClose]="false")

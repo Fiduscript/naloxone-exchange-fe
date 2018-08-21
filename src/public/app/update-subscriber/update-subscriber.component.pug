@@ -1,4 +1,4 @@
-.container-fluid.mt-3.mb-3(*ngIf="show")
+.mt-3.mb-3(*ngIf="show")
   .row
     .col-sm-12.col-md-5.pr-0
       h5.mb-0 Subscribe to get updates for NaloxoneExchange!
@@ -28,6 +28,7 @@
                 title="subscribe for updates"
                 type="submit") Subscribe
             button.btn.btn-light(
+                *ngIf="showClose"
                 "(click)"="dismiss()"
                 title="dismiss"
                 type="button"

@@ -1,0 +1,37 @@
+import { APP_BASE_HREF } from '@angular/common';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterModule } from '@angular/router';
+
+import { UpdateSubscriberModule } from '../../update-subscriber/update-subscriber.module';
+import { BuyByStateComponent } from './buy-by-state.component';
+
+describe('BuyByStateComponent', () => {
+  let component: BuyByStateComponent;
+  let fixture: ComponentFixture<BuyByStateComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        RouterModule.forRoot([]),
+        UpdateSubscriberModule
+      ],
+      declarations: [
+        BuyByStateComponent
+      ],
+      providers: [
+        {provide: APP_BASE_HREF, useValue: '/buy/Alabama'}
+      ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(BuyByStateComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

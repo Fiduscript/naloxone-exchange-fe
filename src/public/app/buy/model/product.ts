@@ -1,7 +1,7 @@
 import { JsonObject, JsonProperty } from 'json2typescript';
 
 @JsonObject
-export class ProductDetail {
+export class Product {
 
   @JsonProperty('id', String)
   public readonly id: string = '';

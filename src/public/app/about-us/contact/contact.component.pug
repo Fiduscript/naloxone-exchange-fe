@@ -11,33 +11,30 @@ section
           .form-group.col-md-6.col-sm-12
             label Name:
             input.form-control(
-              "[formControl]"="contactForm.controls['name']"
-              name='name'
+              formControlName="name"
               placeholder='Enter Name'
               required
               type='text')
-            span.text-danger(*ngIf="contactForm.controls.name.touched && contactForm.controls.name.invalid") You must add a valid name.
+            small.form-text.text-danger(*ngIf="contactForm.get('name').touched && contactForm.get('name').invalid") You must add a valid name.
         .form-row
           .form-group.col-md-6.col-sm-12
             label Email:
             input.form-control(
-              "[formControl]"="contactForm.controls['email']"
-              name='email'
+              formControlName="email"
               placeholder='Enter Email Address'
               required
               type='email')
-            span.text-danger(*ngIf="contactForm.controls.email.touched && contactForm.controls.email.invalid") You must add a valid email address.
+            small.form-text.text-danger(*ngIf="contactForm.get('email').touched && contactForm.get('email').invalid") You must add a valid email address.
         .form-row
           .form-group.col-md-12
             label Message:
             textarea.form-control(
-              "[formControl]"="contactForm.controls['message']"
-              name='message'
+              formControlName="message"
               placeholder='Enter Message'
               required
               rows=10
               type='text')
-            span.text-danger(*ngIf="contactForm.controls.message.touched && contactForm.controls.message.invalid") You must add a valid message.
+            small.form-text.text-danger(*ngIf="contactForm.get('message').touched && contactForm.get('message').invalid") You must add a valid message.
           .form-group(*ngIf="!sentMsg")
             button.btn.btn-primary(
               "[disabled]"="!contactForm.valid"

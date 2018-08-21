@@ -9,12 +9,12 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AboutUsModule } from './about-us/about-us.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BuyModule } from './buy/buy.module';
 import { FaqModule } from './faq/faq.module';
 import { HomeModule } from './home/home.module';
 import { PharmacyModule } from './pharmacy/pharmacy.module';
-import { ProductsModule } from './products/products.module';
+// import { ProductsModule } from './products/products.module';
 import { TrainingComponent } from './training/training.component';
-import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber.component';
 
 
 @NgModule({
@@ -27,7 +27,8 @@ import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber
     FormsModule,
     HomeModule,
     NgbModule.forRoot(),
-    ProductsModule,
+    // ProductsModule,
+    BuyModule,
     PharmacyModule,
     AboutUsModule,
     ReactiveFormsModule,
@@ -37,8 +38,7 @@ import { UpdateSubscriberComponent } from './update-subscriber/update-subscriber
   ],
   declarations: [
     AppComponent,
-    TrainingComponent,
-    UpdateSubscriberComponent
+    TrainingComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

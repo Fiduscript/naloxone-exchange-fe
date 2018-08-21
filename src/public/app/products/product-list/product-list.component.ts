@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { ProductDetail } from '../product-detail/model/product-detail';
+import { Product } from '../../buy/model/product';
 
 
 
@@ -12,7 +12,7 @@ import { ProductDetail } from '../product-detail/model/product-detail';
 export class ProductListComponent implements OnInit {
 
   @Input()
-  public product: ProductDetail = undefined;
+  public product: Product = undefined;
 
   public constructor() {
   }
