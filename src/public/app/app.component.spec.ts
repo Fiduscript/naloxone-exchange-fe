@@ -3,6 +3,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ShareButtonsModule } from '@ngx-share/buttons';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { AppComponent } from './app.component';
@@ -20,6 +21,7 @@ describe('AppComponent', () => {
         BrowserModule,
         NgbModule.forRoot(),
         RouterModule.forRoot([]),
+        ShareButtonsModule.forRoot(),
       ],
       providers: [
         {provide: APP_BASE_HREF, useValue: ''}
