@@ -47,6 +47,7 @@ section
 
 footer.footer.bg-light
   .container.flex.bg-light
+    app-update-subscriber(*ngIf="!showSubscribe()")
     span.text-muted
       fa.mr-1(name="copyright")
       | Naloxone Exchange 2018
