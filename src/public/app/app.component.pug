@@ -45,16 +45,17 @@ section
   //- content area
   router-outlet
 
+.container.pb-2.subscribe
+  app-update-subscriber(*ngIf="!showSubscribe()")
 footer.footer.bg-light
-  .container.flex.bg-light
-    app-update-subscriber(*ngIf="!showSubscribe()")
-    span.text-muted
+  .container.flex.bg-light.align-items-center
+    small.text-muted
       fa.mr-1(name="copyright")
       | Naloxone Exchange 2018
-    span.text-muted
+    small.text-muted
       | 4220 S King Dr. 1S, Chicago IL 60653 US
     share-buttons(
           "[theme]"="'circles-dark'"
           "[include]"="['facebook','twitter','reddit','pinterest','linkedin']"
-          "[size]"="-5"
+          "[size]"="-7"
           "[autoSetMeta]"="false")
