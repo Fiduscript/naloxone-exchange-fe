@@ -16,21 +16,21 @@ header
     #navbarSupportedContent.collapse.navbar-collapse("[ngbCollapse]"="isCollapsed")
       ul.navbar-nav.flex
         li.nav-item
-          a.nav-link.text-sm-left.text-md-center(routerLink="/buy") Get Naloxone
+          a.nav-link.text-sm-left.text-md-center(routerLink="/buy" "(click)"="toggleMenu()") Get Naloxone
         li.nav-item(ngbDropdown)
-          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownAnchor routerLink="/training") Training
+          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownAnchor routerLink="/training" "(click)"="toggleMenu()") Training
           .dropdown-menu.text-center(ngbDropdownMenu)
             a.dropdown-item.nav-link(routerLink="/training" fragment="training-video" "(click)"="toggleMenu()") Training Video
             a.dropdown-item.nav-link(routerLink="/training" fragment="overdose-recognition" "(click)"="toggleMenu()") Overdose Recognition
             a.dropdown-item.nav-link(routerLink="/training" fragment="administering-naloxone" "(click)"="toggleMenu()") Administering Naloxone
             a.dropdown-item.nav-link(routerLink="/training" fragment="aftercare" "(click)"="toggleMenu()") Aftercare
         li.nav-item(ngbDropdown)
-          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownAnchor routerLink="/faq")  FAQs
+          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownAnchor routerLink="/faq" "(click)"="toggleMenu()")  FAQs
           .dropdown-menu.text-center(ngbDropdownMenu)
             a.dropdown-item.nav-link(routerLink="/faq" fragment="general" "(click)"="toggleMenu()") General
             a.dropdown-item.nav-link(routerLink="/faq" fragment="privacy-hipaa" "(click)"="toggleMenu()") Privacy and HIPAA
         li.nav-item(ngbDropdown)
-          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownAnchor routerLink="/about-us") About Us
+          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownAnchor routerLink="/about-us" "(click)"="toggleMenu()") About Us
           .dropdown-menu.text-center(ngbDropdownMenu)
             a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-mission" "(click)"="toggleMenu()") Mission
             a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-history" "(click)"="toggleMenu()") History
@@ -38,7 +38,7 @@ header
             a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-our-team" "(click)"="toggleMenu()") Our Team
             a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-contact" "(click)"="toggleMenu()") Contact Us
         li.nav-item
-          a.nav-link.text-sm-left.text-md-center(routerLink="/pharmacy") Partner Pharmacies
+          a.nav-link.text-sm-left.text-md-center(routerLink="/pharmacy" "(click)"="toggleMenu()") Partner Pharmacies
 
 section
   //- content area
