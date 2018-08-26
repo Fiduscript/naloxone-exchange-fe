@@ -20,7 +20,7 @@ export class BuyService {
   }
 
   /**
-   * Fetches products from `/api/product/list/:state` that are avaialble in a particular state
+   * Fetches products from `/api/product/list/state/:state` that are avaialble in a particular state
    * @param state the name of the state in question
    * @return observable of Products
    */

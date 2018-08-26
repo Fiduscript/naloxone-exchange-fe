@@ -13,7 +13,6 @@ import { BuyModule } from './buy/buy.module';
 import { FaqModule } from './faq/faq.module';
 import { HomeModule } from './home/home.module';
 import { PharmacyModule } from './pharmacy/pharmacy.module';
-// import { ProductsModule } from './products/products.module';
 import { TrainingComponent } from './training/training.component';
 
 
@@ -27,7 +26,6 @@ import { TrainingComponent } from './training/training.component';
     FormsModule,
     HomeModule,
     NgbModule.forRoot(),
-    // ProductsModule,
     BuyModule,
     PharmacyModule,
     AboutUsModule,
