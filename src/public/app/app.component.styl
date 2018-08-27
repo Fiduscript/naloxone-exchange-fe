@@ -5,11 +5,18 @@
   flex-wrap: wrap
   li.nav-item
     flex: 1
-
+    
+.get-naloxone
+  border-radius: 100px!important
+  padding: 14px 30px!important
+  cursor: pointer!important
+  
 .dropdown-menu
   min-width: 100%
-  display: none
   margin-top: 0px
-
-.dropdown:hover .dropdown-menu
-  display: block
+  
+@media screen and (min-width: 769px)
+ .dropdown-menu
+   display: none
+ .dropdown:hover .dropdown-menu
+   display: block
