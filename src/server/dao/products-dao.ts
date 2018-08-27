@@ -102,7 +102,7 @@ const products: Products = new Products([
   ]);
 // tslint:enable max-line-length
 
-const indexedProducts: {[id: string]: Product} = _.groupBy(products.items, 'id');
+const indexedProducts: {[id: string]: Product} = _.keyBy(products.items, 'id');
 
 export class ProductDao {
   public static TEST_STATE = 'TexasTest';
@@ -118,7 +118,7 @@ export class ProductDao {
 
   public getFeaturedProducts(): Promise<Products> {
     return Promise.resolve(
-        new Products(_.map(featuredProductIds, (id): Product => indexedProducts[id]))
+        new Products(featuredProductIds.map((id): Product => indexedProducts[id]))
     );
   }
 

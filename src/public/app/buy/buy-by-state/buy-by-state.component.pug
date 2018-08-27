@@ -1,9 +1,9 @@
 .container.pt-5(*ngIf="products != null")
-  section(*ngIf="products.isSupportedState()")
-    .alert.alert-info This section is under construction.
+  .alert.alert-info.mb-5 This section is under construction.
+  section.pb-5.pt-4.mb-5(*ngIf="products.isSupportedState()")
     app-products("[state]"="state")
 
-  section(*ngIf="!products.isSupportedState()")
+  section.mb-4(*ngIf="!products.isSupportedState()")
     h4 Naloxone Exchange Currently is not supported in {{state}}.
     p
       | If you would like to know when Naloxone is available in your state please subscribe below!

@@ -16,8 +16,9 @@ export class ProductsComponent implements OnInit {
 
   public products: Products;
 
-  public constructor(
-      private service: BuyService) { }
+  public constructor(private service: BuyService) {
+    this.setProducts = this.setProducts.bind(this);
+  }
 
   public ngOnInit() {
     if (_.isEmpty(this.state)) {
