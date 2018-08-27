@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
+@import 'https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css';
 @import '~@ngx-share/button/styles/share-buttons.css';
 @import '~@ngx-share/button/styles/themes/default/default-theme.css';
 @import '~@ngx-share/button/styles/themes/circles/circles-dark-theme.css';
@@ -20,9 +20,13 @@ body
   font-family: Avenir Next
 
 section.scroll-section
-  min-height: 100vh
+  min-height: 70vh
   padding-top: 2em
   padding-bottom: 2em
+
+@media (max-width: 576px)
+  section.scroll-section
+    min-height: 35vh
 
 section.scroll-section:nth-of-type(1)
   h1, h2, h3, h4, h5, h6
