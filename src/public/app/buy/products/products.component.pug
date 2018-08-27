@@ -1,0 +1,10 @@
+
+section.container
+  .row.items(*ngIf="canRender()")
+    .col-sm-12.col-md-4(*ngFor="let product of products.items;")
+        app-product("[product]"="product" "[thumbnail]"="true")
+  .progress.full-width(*ngIf="!canRender()")
+    .progress-bar.progress-bar-striped.progress-bar-animated(
+      aria-valuemin="0"
+      aria-valuenow="100"
+      aria-valuemax="100")

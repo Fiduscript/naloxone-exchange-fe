@@ -1,0 +1,11 @@
+header
+  h4.text-center {{product.title}}
+
+section
+  img.img-thumbnail(src="{{product.imageUri}}")
+  div
+    em {{product.price | currency}}
+  div
+    a(routerLink="/buy") See if {{product.title}} is available in your state.
+
+markdown(*ngIf="!thumbnail") {{product.detailShort}}
