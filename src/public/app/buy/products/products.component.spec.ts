@@ -1,12 +1,9 @@
-import { APP_BASE_HREF } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 
-import { Products } from '../buy/model/products';
-import { ProductListComponent } from './product-list/product-list.component';
+import { ProductComponent } from '../product/product.component';
 import { ProductsComponent } from './products.component';
 
 describe('ProductsComponent', () => {
@@ -17,16 +14,12 @@ describe('ProductsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         ProductsComponent,
-        ProductListComponent,
+        ProductComponent
       ],
       imports: [
-        BrowserModule,
+        CommonModule,
         HttpClientModule,
-        MarkdownModule,
-        RouterModule.forRoot([])
-      ],
-      providers: [
-        {provide: APP_BASE_HREF, useValue: '/products'}
+        MarkdownModule.forRoot()
       ]
     })
     .compileComponents();
@@ -35,7 +28,6 @@ describe('ProductsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductsComponent);
     component = fixture.componentInstance;
-    component.products = new Products();
     fixture.detectChanges();
   });
 
