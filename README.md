@@ -53,7 +53,7 @@ Run `npm run build` to build the project. The build artifacts will be stored in 
 Front end smoke tests are required. These tests only verify that a component can render without error.
 
 - Run `ng test` to start a continuous test server.
-- Run `npm run dev-test` to run deployment tests. If these fail, so will your deployment. __PLEASE RUN THIS BEFORE POSTING A CODE REVIEW!__
+- Run `npm run build-test` to run deployment tests. If these fail, so will your deployment. __PLEASE RUN THIS BEFORE POSTING A CODE REVIEW!__
 
 ## Running end-to-end tests
 

@@ -1,8 +1,8 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../out-tsc/app",
-    "types": []
+    "outDir": "../../out-tsc/server",
+    "sourceMap": false
   },
   "exclude": [
     "src/public/test.ts",
