@@ -11,8 +11,8 @@ const pharmacies = {
       id: 1,
       image: '/assets/img/GoodcarePharmacy.jpg',
       name: 'Good Care Pharmacy',
-      address: 'Huston, Texas',
-      description: `'Good Care Pharmacy's mission is to provide the best pharmaceutical care and service to all patients. To treat patients with respect, dignity, compassion and empathy regardless of their social background, race, or creed.`,
+      address: 'Houston, Texas',
+      description: `Good Care Pharmacy's mission is to provide the best pharmaceutical care and service to all patients. To treat patients with respect, dignity, compassion and empathy regardless of their social background, race, or creed.`,
       hours: [
         `Monday - Friday: 9:00am - 5:00pm`,
         `Saturday - Sunday: Closed`
