@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "../../dist/server",
     "rootDir": "./",
+    "module": "commonjs",
     "sourceMap": false
   },
   "exclude": [
