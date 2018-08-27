@@ -41,14 +41,14 @@ header
         li.nav-item
           a.nav-link.text-sm-left.text-md-center(routerLink="/pharmacy") RX
 
-section
+section.content-section
   //- content area
   router-outlet
 
-.container
-  app-update-subscriber(*ngIf="!showSubscribe()")
 footer.footer.bg-light
-  .container.flex.bg-light.align-items-center
+  .bg-light.mr-5.ml-4
+    app-update-subscriber(*ngIf="!showSubscribe()" "[showClose]"="false")
+  .mr-4.ml-4.d-flex.justify-content-between.align-items-center.bg-light
     small.text-muted
       fa.mr-1(name="copyright")
       | Naloxone Exchange 2018
