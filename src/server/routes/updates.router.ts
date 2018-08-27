@@ -2,8 +2,7 @@ import { DynamoDB } from 'aws-sdk/clients/all';
 import { AWSError } from 'aws-sdk/lib/error';
 import * as express from 'express';
 import { Request, Response, Router } from 'express';
-import { ValidationChain } from 'express-validator/check';
-import { check } from 'express-validator/check';
+import { body, ValidationChain } from 'express-validator/check';
 
 import { STATE_SET } from '../../common/constant/states';
 import { ErrorMiddleware } from '../helper/error-middleware';
@@ -15,12 +14,12 @@ const router: Router = express.Router();
 const ddb: DynamoDB = AWSProvider.getDynmoClient();
 
 const validateSubscribe: ValidationChain[] = [
-  check('email')
+  body('email')
       .isString()
       .trim()
       .isEmail()
       .withMessage('Must provide a well-formed valid email address.'),
-  check('state')
+  body('state')
       .isString()
       .trim()
       .custom((s: string) => STATE_SET.has(s))
@@ -34,7 +33,10 @@ const TABLE_NAME: string = 'subscribe_for_updates';
  * @param email
  * @param state
  */
-router.put('/subscribe', validateSubscribe, ErrorMiddleware.sendFirst, (req: Request, res: Response) => {
+router.put('/subscribe',
+    validateSubscribe,
+    ErrorMiddleware.sendFirst,
+    (req: Request, res: Response) => {
 
   const params: DynamoDB.PutItemInput = {
     TableName: TABLE_NAME,
