@@ -14,7 +14,7 @@ export class AppComponent {
   }
 
   public showSubscribe(): boolean {
-    return window.location.pathname.includes('/buy/');
+    return window.location.pathname.includes('/buy');
   }
 
   public toggleMenu(): void {
