@@ -8,18 +8,14 @@ module.exports = function(grunt) {
           src: ["src/server/\*\*/\*.ts", "src/common/\*\*/\*.ts", "!src/public/\*\*/\*.ts", "!src/server/.baseDir.ts"],
           dest: "./dist/server"
         }],
-        options: {
-          module: "commonjs",
-          target: "es6",
-          sourceMap: false,
-          rootDir: "src/"
-        }
+        tsconfig: './src/server/tsconfig.server.json',
+        passThrough: true
       }
     },
     watch: {
       ts: {
         files: ["src/server/\*\*/\*.ts", "src/common/\*\*/\*.ts"],
-        tasks: ["ts"]
+        tasks: ["ts"],
       }
     }
   });

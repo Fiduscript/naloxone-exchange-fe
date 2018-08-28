@@ -15,7 +15,6 @@ import { HomeModule } from './home/home.module';
 import { PharmacyModule } from './pharmacy/pharmacy.module';
 import { TrainingComponent } from './training/training.component';
 
-
 @NgModule({
   imports: [
     HttpClientModule,      // (Required) for share counts

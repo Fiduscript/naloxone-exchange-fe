@@ -12,6 +12,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `npm run dev-server` to start back-end and front-end server tasks. Navigate to `http://localhost:8080/`. The app will automatically reload if you change any of the source files.
 
+__WAIT!__ Are you a server-sharing romatic? Trying to save an extra dollar but can't use the same port again and again? Or are you otherwise behind a single public IP and want to run multiple servers under different ports?  In _your seperate user accounts_, try running (from the package root directory) `python bin/multi-dev-server.py` instead of the command above. Now you love birds can flurish! Make sure to record the port the server started on! (It probably won't ever change!).
+
 ## AWS Resources
 
 In order to access AWS resources in development mode you will need to create a `.env` file in the package root directory and fill it with the following:
@@ -53,7 +55,7 @@ Run `npm run build` to build the project. The build artifacts will be stored in 
 Front end smoke tests are required. These tests only verify that a component can render without error.
 
 - Run `ng test` to start a continuous test server.
-- Run `npm run dev-test` to run deployment tests. If these fail, so will your deployment. __PLEASE RUN THIS BEFORE POSTING A CODE REVIEW!__
+- Run `npm run build-test` to run deployment tests. If these fail, so will your deployment. __PLEASE RUN THIS BEFORE POSTING A CODE REVIEW!__
 
 ## Running end-to-end tests
 
