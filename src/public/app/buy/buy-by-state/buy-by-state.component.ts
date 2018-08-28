@@ -34,6 +34,7 @@ export class BuyByStateComponent implements OnInit {
           this.products = products;
         }, (error: any): void => {
           // TODO: handle error
+          console.error(error);
         });
   }
 }
