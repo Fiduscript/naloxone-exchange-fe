@@ -5,18 +5,25 @@
 @import '~@ngx-share/button/styles/themes/circles/circles-dark-theme.css';
 
 .footer
-  position: absolute
+  height: auto
   bottom: 0
-  height: 60px
-  line-height: 60px
+  padding-bottom: 0.5em
+  padding-top: 0.7em
   width: 100%
+
+/* for sticky footer*/
+app-root
+  display: flex
+  min-height: 100vh
+  flex-direction: column
+app-root > .content-section
+  flex: 1
 
 html
   position: relative
   min-height: 100%
 
 body
-  margin-bottom: 60px
   font-family: Avenir Next
 
 section.scroll-section
