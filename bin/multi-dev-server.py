@@ -17,7 +17,7 @@ def port_free(port):
   return True
 
 def hash_port(name, offset):
-  return hash(name) % 2**14 + offset
+  return hash(name) % (2**14) + offset
 
 user = getpass.getuser()
 user_config_path = '{}/{}-fidu-server.conf'.format(tempfile.gettempdir(), user)
