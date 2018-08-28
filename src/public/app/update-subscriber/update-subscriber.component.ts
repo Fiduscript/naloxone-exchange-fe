@@ -30,15 +30,15 @@ export class UpdateSubscriberComponent implements OnInit {
       private fb: FormBuilder,
       private service: UpdateSubscriberService) {
     this.subscribeForm = fb.group({
-      email : [null, Validators.email],
-      state: [null, Validators.required],
+      email : ['', Validators.email],
+      state: ['', Validators.required],
     });
   }
 
   ngOnInit() {
     this.subscribeForm.setValue({
-      email: null,
-      state: this.selectedState
+      email: '',
+      state: this.selectedState || ''
     });
 
     const rawState: string = window.localStorage.getItem(this.LS_KEY);

@@ -47,16 +47,18 @@ section.content-section
   router-outlet
 
 footer.footer.bg-light
-  .bg-light.mr-5.ml-5
-    app-update-subscriber(*ngIf="!showSubscribe()" "[showClose]"="false")
-  .mr-5.ml-5.d-flex.justify-content-around.flex-wrap.align-items-center.bg-light
-    small.text-muted
-      fa.mr-1(name="copyright")
-      | Naloxone Exchange 2018
-    small.text-muted
-      | 4220 S King Dr. 1S, Chicago IL 60653 US
-    share-buttons(
-          "[theme]"="'circles-dark'"
-          "[include]"="['facebook','twitter','reddit','pinterest','linkedin']"
-          "[size]"="-7"
-          "[autoSetMeta]"="false")
+  .container
+    app-update-subscriber(*ngIf="!showSubscribe()")
+  .container
+    .container-fluid
+      .d-flex.justify-content-around.justify-content-md-between.justify-content-lg-between.flex-wrap.align-items-center
+        small.text-muted
+          fa.mr-1(name="copyright")
+          | Naloxone Exchange 2018
+        small.text-muted
+          | 4220 S King Dr. 1S, Chicago IL 60653 US
+        share-buttons(
+              "[theme]"="'circles-dark'"
+              "[include]"="['facebook','twitter','reddit','pinterest','linkedin']"
+              "[size]"="-7"
+              "[autoSetMeta]"="false")
