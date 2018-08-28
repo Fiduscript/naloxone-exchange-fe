@@ -7,14 +7,14 @@
         type="button"
         aria-label="Close") x
   .row.d-flex.justify-content-around
-    .col-sm-12.col-md-5.pr-0
+    .text-center
       h5.mb-0 Subscribe for update! 
       small.form-text We will never share this information with third parties.
-    .col-sm-12.col-md-7.pl-0
+    div
       form.mt-md-1("[formGroup]"="subscribeForm" "(ngSubmit)"="subscribe()")
-        .form-row.d-flex.justify-content-end
-          .form-group.col-sm-12.col-md-6.col-lg-6
-            input.form-control(
+        .form-row.d-flex.justify-content-around
+          .form-group.mr-1
+            input.form-control.email-input(
                 type="email"
                 placeholder="Ex. john.doe@email.com"
                 name="email"
@@ -22,8 +22,8 @@
                 required)
             small.form-text.text-danger(*ngIf="subscribeForm.touched && subscribeForm.get('email').invalid") 
               | A valid email address is required.
-          .form-group.col-sm-12.col-md-3.col-lg-3
-            select.form-control.mr-lg-4(
+          .form-group.mr-1
+            select.form-control.state-input(
                 name="state"
                 "[formControl]"="subscribeForm.controls['state']"
                 required)
