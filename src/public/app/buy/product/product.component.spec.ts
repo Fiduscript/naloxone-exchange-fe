@@ -1,10 +1,8 @@
-import { APP_BASE_HREF } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 
+import { Product } from '../model/product';
 import { ProductComponent } from './product.component';
 
 describe('ProductComponent', () => {
@@ -17,12 +15,8 @@ describe('ProductComponent', () => {
         ProductComponent
       ],
       imports: [
-        BrowserModule,
-        HttpClientModule,
+        CommonModule,
         MarkdownModule.forRoot(),
-        RouterModule.forRoot([])
-      ], providers: [
-        {provide: APP_BASE_HREF, useValue: '/products'}
       ]
     })
     .compileComponents();
@@ -31,6 +25,7 @@ describe('ProductComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductComponent);
     component = fixture.componentInstance;
+    component.product = new Product();
     fixture.detectChanges();
   });
 
