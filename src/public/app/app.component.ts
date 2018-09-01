@@ -9,8 +9,10 @@ export class AppComponent {
 
   isCollapsed: boolean = true;
 
-  public constructor() {
+  public constructor() { }
 
+  public showSubscribe(): boolean {
+    return window.location.pathname.includes('/buy');
   }
 
   public toggleMenu(): void {

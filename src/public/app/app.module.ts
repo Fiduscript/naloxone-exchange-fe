@@ -14,6 +14,7 @@ import { FaqModule } from './faq/faq.module';
 import { HomeModule } from './home/home.module';
 import { PharmacyModule } from './pharmacy/pharmacy.module';
 import { TrainingComponent } from './training/training.component';
+import { UpdateSubscriberModule } from './update-subscriber/update-subscriber.module';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { TrainingComponent } from './training/training.component';
     ReactiveFormsModule,
     FaqModule,
     FormsModule,
+    UpdateSubscriberModule,
     AppRoutingModule, // this must be LAST so that other routes take president.
   ],
   declarations: [

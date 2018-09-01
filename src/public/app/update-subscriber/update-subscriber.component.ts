@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { Duration } from 'moment';
 
+
 import { IState, STATES } from '../../../common/constant/states';
 import { jsonConvert } from '../util/json-convert-provider';
 import { SubscriptionState } from './model/subscription-state';
@@ -19,7 +20,9 @@ export class UpdateSubscriberComponent implements OnInit {
 
   private readonly LS_KEY: string = 'updateSubscriber';
 
+  @Input() public selectedState: string = null;
   @Input() public showClose: boolean = true;
+
   public subscribeForm: FormGroup;
   public show: boolean = false;
 
@@ -27,12 +30,17 @@ export class UpdateSubscriberComponent implements OnInit {
       private fb: FormBuilder,
       private service: UpdateSubscriberService) {
     this.subscribeForm = fb.group({
-      email : [null, Validators.email],
-      state: [null, Validators.required],
+      email : ['', Validators.email],
+      state: ['', Validators.required],
     });
   }
 
   ngOnInit() {
+    this.subscribeForm.setValue({
+      email: '',
+      state: this.selectedState || ''
+    });
+
     const rawState: string = window.localStorage.getItem(this.LS_KEY);
     if (rawState == null) {
       this.show = true;

@@ -1,40 +1,31 @@
-.mt-3.mb-3(*ngIf="show")
-  .row
-    .col-sm-12.col-md-5.pr-0
-      h5.mb-0 Subscribe to get updates for NaloxoneExchange!
-      small Don't worry, we will never share this information with third parties.
-    .col-sm-12.col-md-7.pl-0
-      form.mt-md-1("[formGroup]"="subscribeForm" "(ngSubmit)"="subscribe()")
-        .form-row
-          .form-group.col-sm-12.col-md-6.col-lg-6.mb-md-0
-            input.form-control(
-                type="email"
-                placeholder="email address (john.doe@email.com)"
-                name="email"
-                "[formControl]"="subscribeForm.controls['email']"
-                required)
+.container-fluid.pt-1.pb-1(*ngIf="show")
+  form("[formGroup]"="subscribeForm" "(ngSubmit)"="subscribe()")
+    .form-row
+      .form-group.col-md-12.col-lg-4.text-center.text-lg-left
+        h5 Subscribe for updates!
+        small.form-text We will never share this information with third parties.
 
-          .form-group.col-sm-12.col-md-3.col-lg-3.mb-md-0
-            select.form-control.mr-lg-4(
-                name="state"
-                "[formControl]"="subscribeForm.controls['state']"
-                required)
-                option(value="" selected disabled) State
-                option(*ngFor="let state of getStates()" "[value]"="state.name") {{state.name}}
+      .form-group.col-md.col-lg-4
+        input.form-control.email-input(
+            type="email"
+            placeholder="john.doe@email.com"
+            name="email"
+            "[formControl]"="subscribeForm.controls['email']"
+            required)
+        small.form-text.text-danger(*ngIf="subscribeForm.touched && subscribeForm.get('email').invalid")
+          | A valid email address is required.
 
-          .form-group.btn-group.col-sm-12.col-md-3.col-lg-3.mb-md-0
-            button.btn.btn-primary(
-                "[disabled]"="!subscribeForm.valid"
-                title="subscribe for updates"
-                type="submit") Subscribe
-            button.btn.btn-light(
-                *ngIf="showClose"
-                "(click)"="dismiss()"
-                title="dismiss"
-                type="button"
-                aria-label="Close") Close
-        .form-row
-          .form-group.col-sm-12.col-md-6.col-lg-6.mb-md-0
-            span.text-danger(*ngIf="subscribeForm.controls.email.touched && subscribeForm.controls.email.invalid") You must add a valid email address.
-          .form-group.col-sm-12.col-md-3.col-lg-3.mb-md-0
-            span.text-danger(*ngIf="subscribeForm.controls.state.touched && subscribeForm.controls.state.invalid") State is required.
+      .form-group.col-8.col-sm-8.col-md
+        select.form-control.state-input(
+            name="state"
+            "[formControl]"="subscribeForm.controls['state']"
+            required)
+            option(value="" selected disabled) State
+            option(*ngFor="let state of getStates()" "[value]"="state.name") {{state.name}}
+        small.form-text.text-danger(*ngIf="subscribeForm.touched && subscribeForm.get('state').invalid") State is required.
+
+      .form-group.col-4.col-sm-4.col-md-2
+        button.btn.btn-primary.float-right.float-lg-none(
+            "[disabled]"="!subscribeForm.valid"
+            title="subscribe for updates"
+            type="submit") Subscribe
