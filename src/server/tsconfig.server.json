@@ -4,7 +4,9 @@
     "outDir": "../../dist/server",
     "rootDir": "./",
     "module": "commonjs",
-    "sourceMap": false
+    "sourceMap": false,
+    "types": ["node"],
+    "typeRoots": []
   },
   "exclude": [
     "src/public/test.ts",
