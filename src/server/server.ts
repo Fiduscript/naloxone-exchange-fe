@@ -18,7 +18,7 @@ const log = Logger.create(module);
  * @class Server
  */
 export class Server {
-  private static readonly root: string = path.join(__dirname, '../../public/naloxone-exchange');
+  private static readonly root: string = path.join(__dirname, '../../../public/naloxone-exchange');
 
   public app: Application;
 
