@@ -1,12 +1,16 @@
 figure.figure
   img.product-img.figure-img.img-fluid.rounded(src="{{product.imageUri}}" alt="{{product.title}} image")
   figcaption.figure-caption.text-center
-    h5.text-capitalize {{product.title}}
+    h3.text-capitalize {{product.title}}
       small.text-muted.ml-1 ({{product.administrationMethod}})
-    h5.text-uppercase
-      a(href="{{product.fdaUri}}" target="_blank") FDA Drug Info
-    .mt-1
-      em {{product.price | currency}}
-    .mt-1
+    h6.mt-3 {{product.dosage}}
+    h4.mt-3.text-info
+      strong {{product.price | currency}}
+    h6.mt-3 {{product.notes || '&nbsp;'}}
+    h5.text-uppercase.mt-3
+      | (
+      a.text-danger(href="{{product.fdaUri}}" target="_blank") FDA Drug Info
+      | )
+    .mt-1(*ngIf="thumbnail")
       small
         a(routerLink="/buy") See if {{product.title}} is available in your state.

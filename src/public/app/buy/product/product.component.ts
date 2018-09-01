@@ -10,6 +10,7 @@ import { Product } from '../model/product';
 export class ProductComponent implements OnInit {
 
   @Input() public product: Product;
+  @Input() public thumbnail: boolean;
 
   public constructor() { }
 

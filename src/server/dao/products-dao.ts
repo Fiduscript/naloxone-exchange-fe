@@ -9,31 +9,37 @@ const log = Logger.create(module);
 const naloxoneId: string = 'naloxone-1';
 const narcanId: string = 'narcan-1';
 const evzioId: string = 'evzio-1';
-const featuredProductIds: string[] = [narcanId, evzioId];
+const featuredProductIds: string[] = [narcanId, evzioId, naloxoneId];
 
  // tslint:disable max-line-length
 const products: Products = new Products([
     {
       id: narcanId,
       administrationMethod: 'Nasal Spray',
+      dosage: '2 × 4mg / 0.1 mL',
       fdaUri: 'https://www.fda.gov/Drugs/DrugSafety/ucm472958.htm',
       imageUri: '/assets/img/nasal-spray.png',
+      notes: '',
       price: 150.0,
       title: 'Narcan' ,
     },
     {
       id: naloxoneId,
-      administrationMethod: 'Generic Nasal Spray',
+      administrationMethod: 'Nazal Spray',
+      dosage: '2 × 2 mg / mL',
       fdaUri: 'https://www.fda.gov/Drugs/DrugSafety/ucm472958.htm',
-      imageUri: '/assets/img/nasal-spray.png',
+      imageUri: '/assets/img/Naloxone-HCl.png',
+      notes: '(2) Nasal Atomizers (INCLUDED)',
       price: 100.0,
       title: 'Naloxone HCl' ,
     },
     {
       id: evzioId,
       administrationMethod: 'Auto Injector',
+      dosage: '2 × 0.4mg / 0.4mL',
       fdaUri: 'https://www.fda.gov/Drugs/DrugSafety/PostmarketDrugSafetyInformationforPatientsandProviders/ucm391449.htm',
       imageUri: '/assets/img/evzio.png',
+      notes: '',
       price: 125.0,
       title: 'Evzio'
     }
