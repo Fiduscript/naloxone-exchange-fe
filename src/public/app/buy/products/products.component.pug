@@ -1,7 +1,7 @@
 section
   .row.items(*ngIf="canRender()")
-    .col-sm-12.col-md-4(*ngFor="let product of products.items;")
-        app-product("[product]"="product" "[thumbnail]"="true")
+    .col-sm-12.col-md-4.w-100.text-center(*ngFor="let product of products.items;")
+      app-product("[product]"="product")
   .progress(*ngIf="!canRender()")
     .progress-bar.progress-bar-striped.progress-bar-animated.w-100(
         role="progressbar"

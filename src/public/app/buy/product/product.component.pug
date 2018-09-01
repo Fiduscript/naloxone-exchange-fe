@@ -1,12 +1,12 @@
-header.mb-2
-  h5.text-center {{product.title}}
-
-section.text-center
-  img.img-thumbnail(src="{{product.imageUri}}")
-  .mt-2
-    em {{product.price | currency}}
-  .mt-1
-    small
-      a(routerLink="/buy") See if {{product.title}} is available in your state.
-
-markdown(*ngIf="!thumbnail") {{product.detailShort}}
+figure.figure
+  img.product-img.figure-img.img-fluid.rounded(src="{{product.imageUri}}" alt="{{product.title}} image")
+  figcaption.figure-caption.text-center
+    h5.text-capitalize {{product.title}}
+      small.text-muted.ml-1 ({{product.administrationMethod}})
+    h5.text-uppercase
+      a(href="{{product.fdaUri}}" target="_blank") FDA Drug Info
+    .mt-1
+      em {{product.price | currency}}
+    .mt-1
+      small
+        a(routerLink="/buy") See if {{product.title}} is available in your state.
