@@ -1,7 +1,23 @@
+header.mb-5(*ngIf="!thumbnail")
+  h2.text-capitalize Medication Filled By Fiduscript Pharmacy Partners
+  p.text-muted
+    | List accurate as of 8/12/18.
+    | Prices updated monthly.
+    | Naloxone Exchange by Fiduscript does not handle insurance.
+    | All purchases are cash purchases.
+    | Prices may vary at other pharmacies.
+    | Pricing guidelines listed below.
+
 section
   .row.items(*ngIf="canRender()")
-    .col-sm-12.col-md-4(*ngFor="let product of products.items;")
-        app-product("[product]"="product" "[thumbnail]"="true")
+    .col-sm-12.col-md-6.col-lg-4.w-100.text-center(*ngFor="let product of products.items;")
+      app-product("[product]"="product" "[thumbnail]"="thumbnail")
+  .mt-5.text-center
+    strong
+      | *
+      | Two doses included with each dispensed prescription.
+      | Group or Government purchasing prices may vary.
+      | Shipping charges free.
   .progress(*ngIf="!canRender()")
     .progress-bar.progress-bar-striped.progress-bar-animated.w-100(
         role="progressbar"

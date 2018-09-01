@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MarkdownModule } from 'ngx-markdown';
 
 import { Product } from '../model/product';
 import { ProductComponent } from './product.component';
@@ -16,7 +15,6 @@ describe('ProductComponent', () => {
       ],
       imports: [
         CommonModule,
-        MarkdownModule.forRoot(),
       ]
     })
     .compileComponents();
