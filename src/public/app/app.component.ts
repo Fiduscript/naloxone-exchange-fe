@@ -9,7 +9,13 @@ export class AppComponent {
 
   isCollapsed: boolean = true;
 
+  showCrisis: boolean = true;
+
   public constructor() { }
+
+  public dismissCrisis(): void {
+    this.showCrisis = false;
+  }
 
   public showSubscribe(): boolean {
     return window.location.pathname.includes('/buy');

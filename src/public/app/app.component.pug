@@ -41,6 +41,18 @@ header
             a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-contact" "(click)"="toggleMenu()") Contact Us
         li.nav-item
           a.nav-link.text-sm-left.text-md-center(routerLink="/pharmacy" "(click)"="toggleMenu()") Pharmacies
+  .alert.alert-info(*ngIf="showCrisis" role="alert") 
+    .container
+      span
+        em.mr-1
+          u Are you in crisis?
+        |  Call 
+        strong.mr-1 911
+        | or to a suicide hotline (
+        strong.mr-1 1-800-273-8255
+        | is the national hotline.)
+        button.close(type="button" "(click)"="dismissCrisis()")
+          span(aria-hidden="true") &times;
 
 section.content-section
   //- content area
