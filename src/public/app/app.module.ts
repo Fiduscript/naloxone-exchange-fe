@@ -16,7 +16,6 @@ import { PharmacyModule } from './pharmacy/pharmacy.module';
 import { TrainingComponent } from './training/training.component';
 import { UpdateSubscriberModule } from './update-subscriber/update-subscriber.module';
 
-
 @NgModule({
   imports: [
     HttpClientModule,      // (Required) for share counts

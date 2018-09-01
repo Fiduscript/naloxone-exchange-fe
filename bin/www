@@ -5,7 +5,7 @@
 require('dotenv').config();
 
 //module dependencies
-const server = require("../dist/server/server/server");
+const server = require("../dist/server/src/server/server");
 const debug = require("debug")("express:server");
 const http = require("http");
 
