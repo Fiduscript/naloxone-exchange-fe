@@ -14,7 +14,7 @@ const featuredProductIds: string[] = [naloxoneId, narcanId];
  // tslint:disable max-line-length
 const products: Products = new Products([
     {
-      id: 'narcan-1',
+      id: narcanId,
       title: 'Narcan (Naloxone)' ,
       price: 150.0,
       imageUri: '/assets/img/nasal-spray.png',
