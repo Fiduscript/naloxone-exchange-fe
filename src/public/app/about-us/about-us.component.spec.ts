@@ -11,6 +11,7 @@ import { HistoryComponent } from './history/history.component';
 import { MissionComponent } from './mission/mission.component';
 import { OurSponsorsComponent } from './our-sponsors/our-sponsors.component';
 import { OurTeamComponent } from './our-team/our-team.component';
+import { PortraitComponent } from './our-team/portrait/portrait.component';
 
 describe('AboutUsComponent', () => {
   let component: AboutUsComponent;
@@ -25,6 +26,7 @@ describe('AboutUsComponent', () => {
           MissionComponent,
           OurSponsorsComponent,
           OurTeamComponent,
+          PortraitComponent,
       ],
       imports: [
         BrowserModule,

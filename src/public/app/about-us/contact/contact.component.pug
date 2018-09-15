@@ -1,8 +1,8 @@
-header.text-center
-  h2 Contact Us
+header.mb-5
+  h1.text-center Contact Us
 
 section
-  .row.mt-2
+  .row
     .col-lg-12
       .alert.alert-success(*ngIf="sentMsg") Message Sent!
         a.pull-right.alert-link(routerLink="/about-us" fragment="app-contact" "(click)"="reset()") Reset

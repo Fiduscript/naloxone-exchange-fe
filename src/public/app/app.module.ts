@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ShareButtonsModule } from '@ngx-share/buttons';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { AboutUsModule } from './about-us/about-us.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -21,7 +20,6 @@ import { UpdateSubscriberModule } from './update-subscriber/update-subscriber.mo
     HttpClientModule,      // (Required) for share counts
     // HttpClientJsonpModule, // (Optional) For Tumblr counts
     ShareButtonsModule.forRoot(),
-    AngularFontAwesomeModule,
     BrowserModule,
     FormsModule,
     HomeModule,

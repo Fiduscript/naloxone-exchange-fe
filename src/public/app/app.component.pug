@@ -41,12 +41,12 @@ header
             a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-contact" "(click)"="toggleMenu()") Contact Us
         li.nav-item
           a.nav-link.text-sm-left.text-md-center(routerLink="/pharmacy" "(click)"="toggleMenu()") Pharmacies
-  .alert.alert-info(*ngIf="showCrisis" role="alert") 
+  .alert.alert-info(*ngIf="showCrisis" role="alert")
     .container
       span
         em.mr-1
           u Are you in crisis?
-        |  Call 
+        |  Call
         strong.mr-1 911
         | or to a suicide hotline (
         strong.mr-1 1-800-273-8255
@@ -65,7 +65,7 @@ footer.footer.bg-light
     .container-fluid
       .d-flex.justify-content-around.justify-content-md-between.justify-content-lg-between.flex-wrap.align-items-center
         small.text-muted
-          fa.mr-1(name="copyright")
+          i.far.fa-copyright.mr-1
           | Naloxone Exchange 2018
         small.text-muted
           | 4220 S King Dr. 1S, Chicago IL 60653 US
