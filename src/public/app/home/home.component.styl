@@ -1,3 +1,5 @@
+container-max-width = 800px
+
 img.centered
   margin-left: auto
   margin-right: auto
@@ -5,36 +7,38 @@ img.centered
 
 .steps-container
   margin: auto
-  max-width: 853px
+  max-width: container-max-width
   
 .steps  
   display: flex
   align-items: center  
-  font-size: 16px
-  font-weight: 500
-  color: #6c757d
+  font-weight: 450
 
 .number
   color: rgba(0, 164, 197, 1)
-  font-size: 45px
-  margin-right: 10px
 
 .why-container
-  margin-top: 50px
+  margin: auto
+  max-width: container-max-width
 
 .reasons
   margin-top: 20px
-  color: #525252
 
 .image
   color: white
-  max-height: 100px
-  min-width: 150px
+  min-width: 70px
 
 .title
-  font-size: 20px
-  font-weight: 500
+  font-weight: 450
   color: rgba(255, 255, 255, 1)
 
+.fa-custom
+  font-size: 40px; // min size
+
+  @media screen and (min-width: 375px)
+    font-size: 10vw
+  @media screen and (min-width: 590px)
+    font-size: 60px //max size
+
 .content
-  font-weight: 500
+  font-weight: 450
