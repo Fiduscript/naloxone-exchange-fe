@@ -1,10 +1,12 @@
-import { HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { Duration } from 'moment';
 
 import { IState, STATES } from '../../../common/constant/states';
+import { ErrorMessage } from '../common/error-message';
+import { MessageResponse } from '../common/message-response';
 import { jsonConvert } from '../util/json-convert-provider';
 import { SubscriptionState } from './model/subscription-state';
 import { UpdateSubscriberService } from './update-subscriber.service';
@@ -61,11 +63,12 @@ export class UpdateSubscriberComponent implements OnInit {
 
   public subscribe(): void {
     this.service.subscribe(this.subscribeForm.value).subscribe(
-       (msg: string): void => {
+       (msg: MessageResponse): void => {
           this.show = false;
           this.saveState(true);
-        }, (error: HttpResponse<any>): void => {
-          alert(error.body().message);
+          alert(msg.message);
+        }, (error: HttpErrorResponse): void => {
+          alert(error.error.message);
         });
   }
 
