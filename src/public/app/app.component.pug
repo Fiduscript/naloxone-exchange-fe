@@ -48,12 +48,12 @@ header
           em.mr-2
             u Are you in crisis?
           | Please call
-          strong.ml-1.mr-1 911
+          a.alert-link.ml-1.mr-1(href="tel:911") 911
           | or a suicide hotline (
-          strong.mr-1 1-800-273-8255
+          a.alert-link.mr-1(href="tel:1-800-273-8255") 1-800-273-8255
           | is the national hotline).
 
-        button.close(type="button" "(click)"="dismissCrisis()")
+        button.close.ml-2(type="button" "(click)"="dismissCrisis()")
           span(aria-hidden="true") &times;
 
 section.content-section
