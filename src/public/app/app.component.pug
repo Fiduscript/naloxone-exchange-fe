@@ -17,7 +17,7 @@ header
       ul.navbar-nav.flex
         li.nav-item
           a.nav-link.text-sm-left.text-md-center
-            span.bg-danger.text-white.get-naloxone(routerLink="/buy" "(click)"="toggleMenu()") Get Naloxone
+            span.bg-danger.text-white.get-naloxone.text-nowrap(routerLink="/buy" "(click)"="toggleMenu()") Get Naloxone
         li.nav-item(ngbDropdown)
           a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/training") Training
           .dropdown-menu.text-center(ngbDropdownMenu)
@@ -41,16 +41,18 @@ header
             a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-contact" "(click)"="toggleMenu()") Contact Us
         li.nav-item
           a.nav-link.text-sm-left.text-md-center(routerLink="/pharmacy" "(click)"="toggleMenu()") Pharmacies
-  .alert.alert-info(*ngIf="showCrisis" role="alert") 
+  .alert.alert-info(*ngIf="showCrisis" role="alert")
     .container
-      span
-        em.mr-2
-          u Are you in crisis?
-        | Please call 
-        strong.mr-1 911
-        | or a suicide hotline (
-        strong.mr-1 1-800-273-8255
-        | is the national hotline).
+      .d-flex.justify-content-between.flex-nowrap
+        span
+          em.mr-2
+            u Are you in crisis?
+          | Please call
+          strong.ml-1.mr-1 911
+          | or a suicide hotline (
+          strong.mr-1 1-800-273-8255
+          | is the national hotline).
+
         button.close(type="button" "(click)"="dismissCrisis()")
           span(aria-hidden="true") &times;
 
@@ -65,7 +67,7 @@ footer.footer.bg-light
     .container-fluid
       .d-flex.justify-content-around.justify-content-md-between.justify-content-lg-between.flex-wrap.align-items-center
         small.text-muted
-          fa.mr-1(name="copyright")
+          i.far.fa-copyright.mr-1
           | Naloxone Exchange 2018
         small.text-muted
           | 4220 S King Dr. 1S, Chicago IL 60653 US

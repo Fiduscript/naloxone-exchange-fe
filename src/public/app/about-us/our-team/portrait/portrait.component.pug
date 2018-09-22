@@ -1,0 +1,12 @@
+figure.figure
+  img.figure-img.img-thumbnail.rounded.face(src="{{person.portraitUri}}")
+  figcaption.text-left.figure-caption.p-1
+    .d-flex.justify-content-between
+      h5 {{person.name}}
+      h5
+        a.pull-right(
+            href="{{person.linkedinUrl}}"
+            target="_blank"
+            title="Click to visit {{person.name}}'s LinkedIn profile!")
+          i.fa.fa-linkedin-square
+    h6.text-left {{person.title}}

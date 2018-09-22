@@ -9,6 +9,7 @@ import { HistoryComponent } from './history/history.component';
 import { MissionComponent } from './mission/mission.component';
 import { OurSponsorsComponent } from './our-sponsors/our-sponsors.component';
 import { OurTeamComponent } from './our-team/our-team.component';
+import { PortraitComponent } from './our-team/portrait/portrait.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { OurTeamComponent } from './our-team/our-team.component';
     MissionComponent,
     HistoryComponent,
     OurTeamComponent,
-    OurSponsorsComponent
+    OurSponsorsComponent,
+    PortraitComponent
   ],
   exports: [
     ContactComponent

@@ -1,12 +1,12 @@
 section#general.scroll-section
-  h3.text-center Partner Pharmacies
   .container
-    p. 
-      As mentioned in the FAQ, we partner with different pharmacies across 
-      the US to fulfill the orders you place online. Here you can see the 
-      specific pharmacies that we partner with.
-    br
-
-  .container(*ngIf="pharmacies")
-    app-pharmacy-list-item(*ngFor="let pharmacy of pharmacies.pharmacies" "[pharmacy]"="pharmacy")
-
+    header.mb-4
+      h1.text-center Partner Pharmacies
+    section.mb-4
+      p.
+        As mentioned in the FAQ, we partner with different pharmacies across
+        the US to fulfill the orders you place online. Here you can see the
+        specific pharmacies that we partner with.
+      br
+    section(*ngIf="pharmacies")
+      app-pharmacy-list-item(*ngFor="let pharmacy of pharmacies.pharmacies" "[pharmacy]"="pharmacy")

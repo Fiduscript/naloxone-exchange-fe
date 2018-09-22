@@ -2,7 +2,6 @@ import { APP_BASE_HREF } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { BuyComponent } from './buy.component';
 
@@ -16,7 +15,6 @@ describe('BuyComponent', () => {
         BuyComponent
       ],
       imports: [
-        AngularFontAwesomeModule,
         FormsModule,
         ReactiveFormsModule,
         RouterModule.forRoot([]),
