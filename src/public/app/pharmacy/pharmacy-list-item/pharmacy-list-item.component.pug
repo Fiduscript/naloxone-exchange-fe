@@ -5,12 +5,13 @@
     h2 {{pharmacy.name}}
     h4 {{pharmacy.address}}
     p {{pharmacy.description}}
-    h4 Hours
+    h4(*ngIf="pharmacy.hours.length") Hours
     p(*ngFor="let hour of pharmacy.hours") {{hour}}
     h4 Contact Info
     p(*ngIf="pharmacy.email") Email: 
       a(href="mailto:{{pharmacy.email}}") {{pharmacy.email}}
     p(*ngIf="pharmacy.phone") Phone: 
       a(href="tel:{{pharmacy.phone}}") {{pharmacy.phone}}
-    p 
-      a(href="{{pharmacy.homepage}}" target="_blank") Contact {{pharmacy.name}}
+    p(*ngIf="pharmacy.homepage") Visit 
+      a(href="{{pharmacy.homepage}}" target="_blank") {{pharmacy.name}}
+      span 's website
