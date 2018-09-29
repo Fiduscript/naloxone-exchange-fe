@@ -1,12 +1,25 @@
 .row.mt-2
   .col-lg-5
-    img.-align-left.img-fluid(src="{{pharmacy.image}}")
+    img.-align-left.img-pharmacy.mb-4(src="{{pharmacy.image}}")
   .col-lg-7
-    h2 {{pharmacy.name}}
-    h4 {{pharmacy.address}}
-    p {{pharmacy.description}}
-    h4 Hours
-    p(*ngFor="let hour of pharmacy.hours") {{hour}}
-    h4 Contact Info
-    p 
-      a(href="{{pharmacy.homepage}}" target="_blank") Contact {{pharmacy.name}}
+    section
+      h2 {{pharmacy.name}}
+      h4 {{pharmacy.address}}
+      p {{pharmacy.description}}
+    section(*ngIf="pharmacy.hours")
+      h4 Hours
+      p(*ngFor="let hour of pharmacy.hours") {{hour}}
+    section(*ngIf="pharmacy.hasContactInfo()")
+      h4 Contact Info
+      p(*ngIf="pharmacy.email")
+        i.far.fa-envelope.mr-3 
+        span
+          a(href="mailto:{{pharmacy.email}}") {{pharmacy.email}}
+      p(*ngIf="pharmacy.phone")
+        i.fas.fa-phone.mr-3
+        span
+          a(href="tel:{{pharmacy.phone}}") {{pharmacy.phone}}
+      p(*ngIf="pharmacy.homepage")
+        i.fas.fa-home.mr-3
+        span
+          a(href="{{pharmacy.homepage}}" target="_blank") {{pharmacy.homepage}}

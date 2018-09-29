@@ -9,7 +9,7 @@ const pharmacies = {
   pharmacies: [
     {
       id: 1,
-      image: '/assets/img/GoodcarePharmacy.jpg',
+      image: '/assets/img/GoodcarePharmacy.png',
       name: 'Good Care Pharmacy',
       address: 'Houston, Texas',
       description: `Good Care Pharmacy's mission is to provide the best pharmaceutical care and service to all patients. To treat patients with respect, dignity, compassion and empathy regardless of their social background, race, or creed.`,
@@ -17,7 +17,9 @@ const pharmacies = {
         `Monday - Friday: 9:00am - 5:00pm`,
         `Saturday - Sunday: Closed`
       ],
-      homepage: 'https://www.thegoodcarepharmacy.com/contact-us'
+      email: 'thegoodcarepharmacy@gmail.com',
+      phone: '1-832-530-4767',
+      homepage: 'https://www.thegoodcarepharmacy.com'
     }
   ]
 };
