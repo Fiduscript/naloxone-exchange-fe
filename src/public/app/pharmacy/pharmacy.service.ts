@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import { of } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
+import { jsonConvert } from '../util/json-convert-provider';
 import { Pharmacies } from './model/pharmacies';
 
 @Injectable({
@@ -23,9 +24,14 @@ export class PharmacyService {
     }
 
     return this.http.get<Pharmacies>(key).pipe(
+      map(this.mapPharmacies),
       tap(_.bind((pharmacies: Pharmacies) => {
         this.memo[key] = pharmacies;
       }, this))
     );
+  }
+
+  private mapPharmacies(pharmacies: Pharmacies): Pharmacies {
+    return jsonConvert.deserialize(pharmacies, Pharmacies);
   }
 }
