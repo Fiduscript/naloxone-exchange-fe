@@ -8,5 +8,8 @@
     h4 Hours
     p(*ngFor="let hour of pharmacy.hours") {{hour}}
     h4 Contact Info
+    p(*ngIf="pharmacy.email") email: {{pharmacy.email}}
+    p(*ngIf="pharmacy.phone") phone: {{pharmacy.phone}}
+    p(*ngIf="pharmacy.fax") fax: {{pharmacy.fax}}
     p 
       a(href="{{pharmacy.homepage}}" target="_blank") Contact {{pharmacy.name}}

@@ -17,6 +17,9 @@ const pharmacies = {
         `Monday - Friday: 9:00am - 5:00pm`,
         `Saturday - Sunday: Closed`
       ],
+      email: 'thegoodcarepharmacy@gmail.com',
+      phone: '(832) 530-4767',
+      fax: '(832) 530-4760',
       homepage: 'https://www.thegoodcarepharmacy.com/contact-us'
     }
   ]
