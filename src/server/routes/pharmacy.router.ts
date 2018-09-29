@@ -9,7 +9,7 @@ const pharmacies = {
   pharmacies: [
     {
       id: 1,
-      image: '/assets/img/GoodcarePharmacy.jpg',
+      image: '/assets/img/GoodcarePharmacy.png',
       name: 'Good Care Pharmacy',
       address: 'Houston, Texas',
       description: `Good Care Pharmacy's mission is to provide the best pharmaceutical care and service to all patients. To treat patients with respect, dignity, compassion and empathy regardless of their social background, race, or creed.`,
