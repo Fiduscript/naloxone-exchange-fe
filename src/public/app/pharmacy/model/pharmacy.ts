@@ -8,7 +8,6 @@ export class Pharmacy {
   public readonly hours: string[];
   public readonly email: string;
   public readonly phone: string;
-  public readonly fax: string;
   public readonly homepage: string;
 
   public constructor() {}

@@ -18,8 +18,7 @@ const pharmacies = {
         `Saturday - Sunday: Closed`
       ],
       email: 'thegoodcarepharmacy@gmail.com',
-      phone: '(832) 530-4767',
-      fax: '(832) 530-4760',
+      phone: '1-832-530-4767',
       homepage: 'https://www.thegoodcarepharmacy.com/contact-us'
     }
   ]
