@@ -15,8 +15,8 @@ export module ErrorMiddleware {
       return;
     }
 
-    log.error(`Invalid Request. Route ${req.baseUrl + req.path} has the following errors: ${JSON.stringify(errors)}`);
     const e = errors.mapped();
+    log.error(`Invalid Request. Route ${req.baseUrl + req.path} has the following errors: ${JSON.stringify(e)}`);
     const msg = e[Object.keys(e)[0]].msg;
     res.status(400).json({message: msg});
   };

@@ -4,7 +4,7 @@ import { JsonObject, JsonProperty } from 'json2typescript';
 export class ErrorMessage {
 
   @JsonProperty('message', String)
-  public message: string = undefined;
+  public readonly message: string = '';
 
   public constructor(message: string) {
     this.message = message;
