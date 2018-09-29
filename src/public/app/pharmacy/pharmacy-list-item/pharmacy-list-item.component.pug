@@ -12,6 +12,5 @@
       a(href="mailto:{{pharmacy.email}}") {{pharmacy.email}}
     p(*ngIf="pharmacy.phone") Phone: 
       a(href="tel:{{pharmacy.phone}}") {{pharmacy.phone}}
-    p(*ngIf="pharmacy.homepage") Visit 
-      a(href="{{pharmacy.homepage}}" target="_blank") {{pharmacy.name}}
-      span 's website
+    p(*ngIf="pharmacy.homepage") Website: 
+      a(href="{{pharmacy.homepage}}" target="_blank") {{pharmacy.homepage}}

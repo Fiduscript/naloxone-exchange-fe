@@ -19,7 +19,7 @@ const pharmacies = {
       ],
       email: 'thegoodcarepharmacy@gmail.com',
       phone: '1-832-530-4767',
-      homepage: 'https://www.thegoodcarepharmacy.com/contact-us'
+      homepage: 'https://www.thegoodcarepharmacy.com'
     }
   ]
 };
