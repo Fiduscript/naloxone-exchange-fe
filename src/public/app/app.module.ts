@@ -6,6 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ShareButtonsModule } from '@ngx-share/buttons';
 
 import { AboutUsModule } from './about-us/about-us.module';
+import { AccountModule } from './account/account.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BuyModule } from './buy/buy.module';
@@ -24,6 +25,7 @@ import { UpdateSubscriberModule } from './update-subscriber/update-subscriber.mo
     FormsModule,
     HomeModule,
     NgbModule.forRoot(),
+    AccountModule,
     BuyModule,
     PharmacyModule,
     AboutUsModule,

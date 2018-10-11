@@ -41,6 +41,8 @@ header
             a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-contact" "(click)"="toggleMenu()") Contact Us
         li.nav-item
           a.nav-link.text-sm-left.text-md-center(routerLink="/pharmacy" "(click)"="toggleMenu()") Pharmacies
+        li.nav-item
+          a.nav-link.text-sm-left.text-md-center(routerLink="/account/login" "(click)"="toggleMenu()") Log In
   .alert.alert-info(*ngIf="showCrisis" role="alert")
     .container
       .d-flex.justify-content-between.flex-nowrap

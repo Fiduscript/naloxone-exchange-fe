@@ -1,0 +1,31 @@
+.container.text-center.pt-1.pb-1
+  h3 {{user}} Login
+  form(
+    "[formGroup]"="loginForm" 
+    "(ngSubmit)"="login()"
+    )
+    .form-group
+      input.form-control(
+        type="text" 
+        formControlName="username"
+        placeholder="Username"
+        "[ngClass]"="{ 'is-invalid': submitted && f.username.errors }"
+        )
+      .invalid-feedback(*ngIf="submitted && f.username.errors")
+        .text-left(*ngIf="f.username.errors.required") Username is required
+
+
+    .form-group
+      input.form-control(
+        type="password" 
+        formControlName="password"
+        placeholder="Password"
+        "[ngClass]"="{ 'is-invalid': submitted && f.password.errors }"
+        )
+      .invalid-feedback(*ngIf="submitted && f.password.errors")
+        .text-left(*ngIf="f.password.errors.required") Password is required
+
+
+    .form-group
+      button.btn.btn-primary(
+          type="submit") Login
