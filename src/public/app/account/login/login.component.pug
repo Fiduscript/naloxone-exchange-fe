@@ -14,7 +14,6 @@
       .invalid-feedback(*ngIf="submitted && f.username.errors")
         .text-left(*ngIf="f.username.errors.required") Username is required
 
-
     .form-group
       input.form-control(
         type="password" 
@@ -25,7 +24,13 @@
       .invalid-feedback(*ngIf="submitted && f.password.errors")
         .text-left(*ngIf="f.password.errors.required") Password is required
 
-
     .form-group
       button.btn.btn-primary(
           type="submit") Login
+.container.text-center.pt-1.pb-1
+  //- button.btn.btn-primary("(click)"="socialSignIn('facebook')")
+  //- i.fab.fa-facebook 
+  i.fab.fa-facebook("(click)"="socialSignIn('facebook')")
+  i.fab.fa-google("(click)"="socialSignIn('google')") 
+
+
