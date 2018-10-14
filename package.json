@@ -34,7 +34,6 @@
     "@ngx-share/buttons": "^6.0.1",
     "@ngx-share/core": "^6.0.1",
     "@slack/client": "^4.5.0",
-    "angular-6-social-login": "^1.1.1",
     "aws-config": "^1.2.0",
     "aws-sdk": "^2.302.0",
     "body-parser": "^1.18.3",

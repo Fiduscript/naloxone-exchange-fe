@@ -1,36 +1,39 @@
-.container.text-center.pt-1.pb-1
-  h3 {{user}} Login
-  form(
-    "[formGroup]"="loginForm" 
-    "(ngSubmit)"="login()"
-    )
-    .form-group
-      input.form-control(
-        type="text" 
-        formControlName="username"
-        placeholder="Username"
-        "[ngClass]"="{ 'is-invalid': submitted && f.username.errors }"
-        )
-      .invalid-feedback(*ngIf="submitted && f.username.errors")
-        .text-left(*ngIf="f.username.errors.required") Username is required
+.login-container.text-center.mb-2
+  h3.mb-5.mt-3 {{user}} Login
+  .container.text-center.mb-5
+    .mb-2 Connect with
+    i.fa.fa-facebook-f.circle-icon.mr-4(style="color: white" "(click)"="socialSignIn('facebook')") 
+    i.fab.fa-google.circle-icon(style="color: white" "(click)"="socialSignIn('google')") 
 
-    .form-group
-      input.form-control(
-        type="password" 
-        formControlName="password"
-        placeholder="Password"
-        "[ngClass]"="{ 'is-invalid': submitted && f.password.errors }"
-        )
-      .invalid-feedback(*ngIf="submitted && f.password.errors")
-        .text-left(*ngIf="f.password.errors.required") Password is required
+  .or-seperator.mt-3.mb-3
+    b.or or
 
-    .form-group
-      button.btn.btn-primary(
-          type="submit") Login
-.container.text-center.pt-1.pb-1
-  //- button.btn.btn-primary("(click)"="socialSignIn('facebook')")
-  //- i.fab.fa-facebook 
-  i.fab.fa-facebook("(click)"="socialSignIn('facebook')")
-  i.fab.fa-google("(click)"="socialSignIn('google')") 
+  .container.text-center.pt-1.pb-1
+    form(
+      "[formGroup]"="loginForm" 
+      "(ngSubmit)"="login()"
+      )
+      .form-group
+        input.form-control(
+          type="text" 
+          formControlName="username"
+          placeholder="Username"
+          "[ngClass]"="{ 'is-invalid': loginForm.get('username').touched && loginForm.get('username').invalid }"
+          )
+        .invalid-feedback(*ngIf="loginForm.get('username').touched && loginForm.get('username').invalid")
+          .text-left Username is required
 
+      .form-group
+        input.form-control(
+          type="password" 
+          formControlName="password"
+          placeholder="Password"
+          "[ngClass]"="{ 'is-invalid': loginForm.get('password').touched && loginForm.get('password').invalid }"
+          )
+        .invalid-feedback(*ngIf="loginForm.get('password').touched && loginForm.get('password').invalid")
+          .text-left Password is required
 
+      .form-group
+        button.btn.btn-primary.login-btn(
+            type="submit") Login
+  button.btn.btn-link("(click)"="signup()") Create an Account
