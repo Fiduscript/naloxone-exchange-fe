@@ -1,22 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import { of } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
-import { map, tap } from 'rxjs/operators';
 
-import { jsonConvert } from '../util/json-convert-provider';
+import { FiduServiceBase } from '../common/fidu-service-base';
 import { Products } from './model/products';
 
 @Injectable({
   providedIn: 'root'
 })
-export class BuyService {
-
-  private productsMemo: {[s: string]: Products} = {};
+export class BuyService extends FiduServiceBase {
 
   public constructor(private http: HttpClient) {
-    this.memoizeProducts = this.memoizeProducts.bind(this);
+    super();
   }
 
   /**
@@ -26,12 +22,13 @@ export class BuyService {
    */
   public stateProducts(state: string): Observable<Products> {
     const key: string = `/api/product/list/state/${state}`;
-    if (this.productsMemo[key] != null) {
-      return of(this.productsMemo[key]);
+    if (this.hasMemo(key)) {
+      return this.getMemoized(key);
     }
+
     return this.http.get<Products>(key).pipe(
-      map(this.mapProducts),
-      tap(_.partial(this.memoizeProducts, key))
+      this.deserialize(Products),
+      this.memoizeResult(key)
     );
   }
 
@@ -41,21 +38,14 @@ export class BuyService {
   */
   public featuredProducts(): Observable<Products> {
     const key: string = '/api/product/list/featured';
-    if (this.productsMemo[key] != null) {
-      return of(this.productsMemo[key]);
-     }
+    if (this.hasMemo(key)) {
+      return this.getMemoized(key);
+    }
+
     return this.http.get<Products>(key).pipe(
-        map(this.mapProducts),
-        tap(_.partial(this.memoizeProducts, key))
+        this.deserialize(Products),
+        this.memoizeResult(key)
       );
-  }
-
-  private memoizeProducts(key: string, products: Products): void {
-     this.productsMemo[key] = products;
-  }
-
-  private mapProducts(products: Products): Products {
-    return jsonConvert.deserialize(products, Products);
   }
 
 }
