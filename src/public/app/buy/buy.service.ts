@@ -21,15 +21,16 @@ export class BuyService extends FiduServiceBase {
    * @return observable of Products
    */
   public stateProducts(state: string): Observable<Products> {
-    const key: string = `/api/product/list/state/${state}`;
-    if (this.hasMemo(key)) {
-      return this.getMemoized(key);
+    const path: string = `/api/product/list/state/${state}`;
+    if (this.hasMemo(path)) {
+      return this.getMemoized(path);
     }
 
-    return this.http.get<Products>(key).pipe(
-      this.deserialize(Products),
-      this.memoizeResult(key)
-    );
+    return this.http.get<Products>(path).pipe(
+        this.deserialize(Products),
+        this.memoizeResult(path),
+        this.logErrors()
+      );
   }
 
   /**
@@ -37,14 +38,15 @@ export class BuyService extends FiduServiceBase {
   * @return observable of items
   */
   public featuredProducts(): Observable<Products> {
-    const key: string = '/api/product/list/featured';
-    if (this.hasMemo(key)) {
-      return this.getMemoized(key);
+    const path: string = '/api/product/list/featured';
+    if (this.hasMemo(path)) {
+      return this.getMemoized(path);
     }
 
-    return this.http.get<Products>(key).pipe(
+    return this.http.get<Products>(path).pipe(
         this.deserialize(Products),
-        this.memoizeResult(key)
+        this.memoizeResult(path),
+        this.logErrors()
       );
   }
 

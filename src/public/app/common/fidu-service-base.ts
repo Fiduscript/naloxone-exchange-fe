@@ -2,8 +2,9 @@ import * as _ from 'lodash';
 import { MonoTypeOperatorFunction, OperatorFunction } from 'rxjs';
 import { of } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
-import { map, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
+import { HttpErrorResponse } from '@angular/common/http';
 import { jsonConvert } from '../util/json-convert-provider';
 
 /**
@@ -50,6 +51,21 @@ export class FiduServiceBase {
    */
   protected getMemoized<T>(key: string): Observable<T> {
     return of(this.memo[key]);
+  }
+
+  /**
+   * Utility to add to pipes to ensure we log any error messages.
+   * TODO: turn this on in development environemnts but turn it off for production
+   */
+  protected logErrors<T>(): MonoTypeOperatorFunction<T> {
+    return catchError((error: any, caught: Observable<T>): never => {
+      if (error instanceof HttpErrorResponse) {
+        console.error(`Service returned with ${error.status}, error enclosed:`, error.status, error.error);
+      } else {
+        console.error('Unexpected Error: ', error);
+      }
+      throw error; // propegate
+    });
   }
 
   private memoize<T>(key: string, value: T): void {

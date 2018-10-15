@@ -16,14 +16,15 @@ export class PharmacyService extends FiduServiceBase {
   }
 
   public listPharmacies(pageNumber: number = 1): Observable<Pharmacies> {
-    const key: string = '/api/pharmacy/list';
-    if (this.hasMemo(key)) {
-      return this.getMemoized(key);
+    const path: string = '/api/pharmacy/list';
+    if (this.hasMemo(path)) {
+      return this.getMemoized(path);
     }
 
-    return this.http.get<Pharmacies>(key).pipe(
-      this.deserialize(Pharmacies),
-      this.memoizeResult(key)
-    );
+    return this.http.get<Pharmacies>(path).pipe(
+        this.deserialize(Pharmacies),
+        this.memoizeResult(path),
+        this.logErrors()
+      );
   }
 }
