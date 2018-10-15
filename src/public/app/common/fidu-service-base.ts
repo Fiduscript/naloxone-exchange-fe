@@ -23,8 +23,8 @@ export class FiduServiceBase {
    * Supplies a mapping function which deserializes raw json into a typescript class.
    * Should be called called in a 'pipe' function.
    */
-  protected deserialize<T, R>(classReference: { new (): R; }): OperatorFunction<T, R> {
-    return map((input: T) => jsonConvert.deserialize(input, classReference));
+  protected deserialize<T, R>(clazz: { new (): R; }): OperatorFunction<T, R> {
+    return map((input: T) => jsonConvert.deserialize(input, clazz));
   }
 
   /**
