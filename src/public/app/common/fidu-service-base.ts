@@ -22,7 +22,7 @@ export class FiduServiceBase {
 
   /**
    * Supplies a mapping function which deserializes raw json into a typescript class.
-   * Should be called called in a 'pipe' function.
+   * Should be called in a 'pipe' function.
    */
   protected deserialize<T, R>(clazz: { new (): R; }): OperatorFunction<T, R> {
     return map((input: T) => jsonConvert.deserialize(input, clazz));
@@ -38,7 +38,7 @@ export class FiduServiceBase {
 
   /**
    * Supplies a tap function that memoizes the result of a query.
-   * Should be called called in a 'pipe' function, after any required deserialization.
+   * Should be called in a 'pipe' function, after any required deserialization.
    * @param key
    */
   protected memoizeResult<T>(key: string): MonoTypeOperatorFunction<T> {
@@ -54,7 +54,9 @@ export class FiduServiceBase {
   }
 
   /**
-   * Utility to add to pipes to ensure we log any error messages.
+   * Catches and logs any error messages encountered during the request.
+   * Should be called at the end of every 'pipe' function.
+   *
    * TODO: turn this on in development environemnts but turn it off for production
    */
   protected logErrors<T>(): MonoTypeOperatorFunction<T> {
