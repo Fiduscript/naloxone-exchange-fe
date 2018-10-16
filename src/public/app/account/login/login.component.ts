@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from './login.service';
 
-import { UserInfo } from '../model/userInfo';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -14,18 +14,18 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
 
   constructor(
-    private fb: FormBuilder,
-    private service: LoginService
-  ) {}
+      private fb: FormBuilder,
+      private service: LoginService) {
+        this.loginForm = this.fb.group({
+          username: ['', Validators.required],
+          password: ['', Validators.required]
+        });
+      }
 
   public user: string = 'User';
+  private error: string = null;
 
-  public ngOnInit() {
-    this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
-    });
-  }
+  public ngOnInit() {}
 
   public login(): void {
     if (this.loginForm.invalid) {
@@ -33,17 +33,15 @@ export class LoginComponent implements OnInit {
     }
 
     this.service.login(this.loginForm.value).subscribe(
-      (userInfo: UserInfo): void => {
-        console.log(userInfo, 'user info from login service');
+      (): void => { window.location.replace('/'); },
+      (error: HttpErrorResponse): void => {
+        this.loginForm.get('password').reset();
+        this.error = error.error.message;
       }
     );
   }
 
   public socialSignIn(socialPlatform: string) {
     console.log(`login with ${socialPlatform}`);
-  }
-
-  public signup(): void {
-    console.log(`let's creat an account!!`);
   }
 }
