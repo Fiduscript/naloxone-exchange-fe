@@ -50,7 +50,7 @@ router.put('/subscribe',
       log.error(`Failed to subscribe customer \`${params}\`.` , err.message, err);
       res.status(500).json(new ErrorMessage('Unable to subscribe at this time. Please try again later.'));
     } else {
-      res.status(201).json(new MessageResponse('Successfully unsubscribed!'));
+      res.status(201).json(new MessageResponse('Successfully subscribed!'));
     }
   });
 });

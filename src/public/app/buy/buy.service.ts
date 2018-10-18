@@ -1,22 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import { of } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
-import { map, tap } from 'rxjs/operators';
 
-import { jsonConvert } from '../util/json-convert-provider';
+import { FiduServiceBase } from '../common/fidu-service-base';
 import { Products } from './model/products';
 
 @Injectable({
   providedIn: 'root'
 })
-export class BuyService {
-
-  private productsMemo: {[s: string]: Products} = {};
+export class BuyService extends FiduServiceBase {
 
   public constructor(private http: HttpClient) {
-    this.memoizeProducts = this.memoizeProducts.bind(this);
+    super();
   }
 
   /**
@@ -25,14 +21,16 @@ export class BuyService {
    * @return observable of Products
    */
   public stateProducts(state: string): Observable<Products> {
-    const key: string = `/api/product/list/state/${state}`;
-    if (this.productsMemo[key] != null) {
-      return of(this.productsMemo[key]);
+    const path: string = `/api/product/list/state/${state}`;
+    if (this.hasMemo(path)) {
+      return this.getMemoized(path);
     }
-    return this.http.get<Products>(key).pipe(
-      map(this.mapProducts),
-      tap(_.partial(this.memoizeProducts, key))
-    );
+
+    return this.http.get<Products>(path).pipe(
+        this.deserialize(Products),
+        this.memoizeResult(path),
+        this.logErrors()
+      );
   }
 
   /**
@@ -40,22 +38,16 @@ export class BuyService {
   * @return observable of items
   */
   public featuredProducts(): Observable<Products> {
-    const key: string = '/api/product/list/featured';
-    if (this.productsMemo[key] != null) {
-      return of(this.productsMemo[key]);
-     }
-    return this.http.get<Products>(key).pipe(
-        map(this.mapProducts),
-        tap(_.partial(this.memoizeProducts, key))
+    const path: string = '/api/product/list/featured';
+    if (this.hasMemo(path)) {
+      return this.getMemoized(path);
+    }
+
+    return this.http.get<Products>(path).pipe(
+        this.deserialize(Products),
+        this.memoizeResult(path),
+        this.logErrors()
       );
-  }
-
-  private memoizeProducts(key: string, products: Products): void {
-     this.productsMemo[key] = products;
-  }
-
-  private mapProducts(products: Products): Products {
-    return jsonConvert.deserialize(products, Products);
   }
 
 }

@@ -8,11 +8,4 @@ import { MomentConverter } from '../../util/moment-utils';
 export class SubscriptionState {
   @JsonProperty('dismissed', MomentConverter)
   public dismissed: Moment = moment();
-
-  @JsonProperty('subscribed', Boolean)
-  public subscribed: boolean = false;
-
-  constructor(subscribed: boolean = false) {
-    this.subscribed = subscribed;
-  }
 }

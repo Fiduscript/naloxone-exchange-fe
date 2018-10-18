@@ -5,7 +5,6 @@ import * as moment from 'moment';
 import { Duration } from 'moment';
 
 import { IState, STATES } from '../../../common/constant/states';
-import { ErrorMessage } from '../common/error-message';
 import { MessageResponse } from '../common/message-response';
 import { jsonConvert } from '../util/json-convert-provider';
 import { SubscriptionState } from './model/subscription-state';
@@ -50,22 +49,20 @@ export class UpdateSubscriberComponent implements OnInit {
 
     const state: SubscriptionState = jsonConvert.deserialize(JSON.parse(rawState), SubscriptionState);
 
-    if (moment().isAfter(state.dismissed.clone().add(UpdateSubscriberComponent.DISMISS_LIMIT))
-      && !state.subscribed) {
+    if (moment().isAfter(state.dismissed.clone().add(UpdateSubscriberComponent.DISMISS_LIMIT))) {
       this.show = true;
     }
   }
 
   public dismiss(): void {
     this.show = false;
-    this.saveState();
+    this.saveDismissed();
   }
 
   public subscribe(): void {
     this.service.subscribe(this.subscribeForm.value).subscribe(
-       (msg: MessageResponse): void => {
+        (msg: MessageResponse): void => {
           this.show = false;
-          this.saveState(true);
           alert(msg.message);
         }, (error: HttpErrorResponse): void => {
           alert(error.error.message);
@@ -76,8 +73,8 @@ export class UpdateSubscriberComponent implements OnInit {
     return STATES;
   }
 
-  private saveState(subscribed: boolean = false): void {
-    const state: SubscriptionState = new SubscriptionState(subscribed);
+  private saveDismissed(): void {
+    const state: SubscriptionState = new SubscriptionState();
     const json: any = jsonConvert.serialize(state);
     window.localStorage.setItem(this.LS_KEY, JSON.stringify(json));
   }
