@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
   public user: string = 'User';
-  private error: string = null;
+  public error: string = null;
 
   public constructor(
       private fb: FormBuilder,
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-      }
+  }
 
   public ngOnInit() {}
 
