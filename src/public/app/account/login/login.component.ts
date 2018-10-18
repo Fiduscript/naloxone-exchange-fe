@@ -12,18 +12,17 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
-
-  constructor(
-      private fb: FormBuilder,
-      private service: LoginService) {
-        this.loginForm = this.fb.group({
-          username: ['', Validators.required],
-          password: ['', Validators.required]
-        });
-      }
-
   public user: string = 'User';
   private error: string = null;
+
+  public constructor(
+      private fb: FormBuilder,
+      private service: LoginService) {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+      }
 
   public ngOnInit() {}
 

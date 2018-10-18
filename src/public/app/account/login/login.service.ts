@@ -6,7 +6,7 @@ import { map, tap } from 'rxjs/operators';
 
 import { MessageResponse } from '../../common/message-response';
 import { jsonConvert } from '../../util/json-convert-provider';
-import { LoginForm } from '../model/loginForm';
+import { ILoginForm } from '../model/loginForm';
 import { UserInfo } from '../model/userInfo';
 
 @Injectable({
@@ -22,7 +22,7 @@ export class LoginService {
     this.whoami = this.whoami.bind(this);
    }
 
-  public login(loginForm: LoginForm): Observable<MessageResponse> {
+  public login(loginForm: ILoginForm): Observable<MessageResponse> {
     return this.http.post<MessageResponse>('/api/account/login', loginForm);
   }
 
