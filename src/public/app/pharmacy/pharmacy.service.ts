@@ -27,4 +27,8 @@ export class PharmacyService extends FiduServiceBase {
         this.logErrors()
       );
   }
+
+  private mapPharmacies(pharmacies: Pharmacies): Pharmacies {
+    return jsonConvert.deserialize(pharmacies, Pharmacies);
+  }
 }

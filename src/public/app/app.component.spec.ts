@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ShareButtonsModule } from '@ngx-share/buttons';
 
+import { AccountModule } from './account/account.module';
 import { AppComponent } from './app.component';
 import { MockComponent } from './util/mock-component';
 
@@ -17,6 +18,7 @@ describe('AppComponent', () => {
       ],
       imports: [
         BrowserModule,
+        AccountModule,
         NgbModule.forRoot(),
         RouterModule.forRoot([]),
         ShareButtonsModule.forRoot(),
