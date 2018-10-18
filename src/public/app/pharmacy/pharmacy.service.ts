@@ -15,7 +15,7 @@ export class PharmacyService extends FiduServiceBase {
     super();
   }
 
-  public listPharmacies(pageNumber: number = 1): Observable<Pharmacies> {
+  public listPharmacies(): Observable<Pharmacies> {
     const path: string = '/api/pharmacy/list';
     if (this.hasMemo(path)) {
       return this.getMemoized(path);
@@ -28,7 +28,4 @@ export class PharmacyService extends FiduServiceBase {
       );
   }
 
-  private mapPharmacies(pharmacies: Pharmacies): Pharmacies {
-    return jsonConvert.deserialize(pharmacies, Pharmacies);
-  }
 }
