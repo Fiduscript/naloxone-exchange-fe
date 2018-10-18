@@ -5,7 +5,6 @@ import * as moment from 'moment';
 import { Duration } from 'moment';
 
 import { IState, STATES } from '../../../common/constant/states';
-import { ErrorMessage } from '../common/error-message';
 import { MessageResponse } from '../common/message-response';
 import { jsonConvert } from '../util/json-convert-provider';
 import { SubscriptionState } from './model/subscription-state';
@@ -62,7 +61,7 @@ export class UpdateSubscriberComponent implements OnInit {
 
   public subscribe(): void {
     this.service.subscribe(this.subscribeForm.value).subscribe(
-       (msg: MessageResponse): void => {
+        (msg: MessageResponse): void => {
           this.show = false;
           alert(msg.message);
         }, (error: HttpErrorResponse): void => {
