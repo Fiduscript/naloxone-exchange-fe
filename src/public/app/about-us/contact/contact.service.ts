@@ -1,21 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+
+import { FiduServiceBase } from '../../common/fidu-service-base';
 import { IContactForm } from './model/contact-form';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ContactService {
+export class ContactService extends FiduServiceBase {
 
-  private readonly key = '/api/contact';
-  public constructor(private http: HttpClient) { }
+  public constructor(private http: HttpClient) {
+    super();
+  }
 
   /**
    * Forwards ContactUs message to us
    * @param contactForm
    */
   public contact(contactForm: IContactForm): Observable<string> {
-    return this.http.post<string>(this.key, contactForm);
+    const path: string = '/api/contact';
+    return this.http.post<string>(path, contactForm).pipe(
+        this.logErrors()
+      );
   }
 }

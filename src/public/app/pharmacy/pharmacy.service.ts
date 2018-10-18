@@ -1,34 +1,31 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import { of } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
-import { map, tap } from 'rxjs/operators';
 
-import { jsonConvert } from '../util/json-convert-provider';
+import { FiduServiceBase } from '../common/fidu-service-base';
 import { Pharmacies } from './model/pharmacies';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PharmacyService {
+export class PharmacyService extends FiduServiceBase {
 
-  private memo: {[s: string]: any} = {};
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    super();
+  }
 
   public listPharmacies(pageNumber: number = 1): Observable<Pharmacies> {
-    const key: string = '/api/pharmacy/list';
-    if (this.memo[key] != null) {
-      return of(this.memo[key]);
+    const path: string = '/api/pharmacy/list';
+    if (this.hasMemo(path)) {
+      return this.getMemoized(path);
     }
 
-    return this.http.get<Pharmacies>(key).pipe(
-      map(this.mapPharmacies),
-      tap(_.bind((pharmacies: Pharmacies) => {
-        this.memo[key] = pharmacies;
-      }, this))
-    );
+    return this.http.get<Pharmacies>(path).pipe(
+        this.deserialize(Pharmacies),
+        this.memoizeResult(path),
+        this.logErrors()
+      );
   }
 
   private mapPharmacies(pharmacies: Pharmacies): Pharmacies {

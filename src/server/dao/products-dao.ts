@@ -25,7 +25,7 @@ const products: Products = new Products([
     },
     {
       id: naloxoneId,
-      administrationMethod: 'Nazal Spray',
+      administrationMethod: 'Nasal Spray',
       dosage: '2 × 2 mg / mL',
       fdaUri: 'https://www.fda.gov/Drugs/DrugSafety/ucm472958.htm',
       imageUri: '/assets/img/Naloxone-HCl.png',

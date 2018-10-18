@@ -2,14 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
+import { FiduServiceBase } from '../common/fidu-service-base';
 import { MessageResponse } from '../common/message-response';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UpdateSubscriberService {
+export class UpdateSubscriberService extends FiduServiceBase {
 
-  constructor(private http: HttpClient) { }
+  public constructor(private http: HttpClient) {
+    super();
+   }
 
   /**
    * Subscribes a user by posting to `/api/updates/subscribe`.
@@ -17,7 +20,10 @@ export class UpdateSubscriberService {
    * @param state
    */
   public subscribe(body: {[s: string]: string}): Observable<MessageResponse> {
-    return this.http.put<MessageResponse>('/api/updates/subscribe', body);
+    const path: string = '/api/updates/subscribe';
+    return this.http.put<MessageResponse>(path, body).pipe(
+        this.logErrors()
+      );
   }
 
   /**
@@ -26,6 +32,9 @@ export class UpdateSubscriberService {
    * @param state
    */
   public unsubscribe(body: {[s: string]: string}): Observable<MessageResponse> {
-    return this.http.put<MessageResponse>('/api/updates/unsubscribe', body);
+    const path: string = '/api/updates/unsubscribe';
+    return this.http.put<MessageResponse>(path, body).pipe(
+        this.logErrors()
+      );
   }
 }
