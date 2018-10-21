@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { Request, Response, Router } from 'express';
+import * as _ from 'lodash';
 
 import { UserInfo } from '../../public/app/account/model/userInfo';
 import { ErrorMessage } from '../../public/app/common/error-message';
@@ -7,14 +8,17 @@ import { MessageResponse } from '../../public/app/common/message-response';
 
 const router: Router = express.Router();
 
-const testUser = {
-  name: 'test',
-  password: 'test',
-  address: 'Seattle, WA'
+// map of login (email) to UserInfo.
+const users = {
+  'test@test.com': {
+    name: 'Test User',
+    password: 'test',
+    address: 'Seattle, WA'
+  }
 };
 
-let testLoggedIn: boolean = false;
-let expiredTimer: NodeJS.Timer = null;
+// map of login (email) to user to Timer which expries the login
+const loggedInUsers: {[user: string]: NodeJS.Timer} = { };
 
 /**
  * @api GET /api/account/login
@@ -22,12 +26,15 @@ let expiredTimer: NodeJS.Timer = null;
 router.post('/login', (req: Request, res: Response) => {
   const username = req.body.username;
   const password = req.body.password;
-  if (username === testUser.name && password === testUser.password) {
-    testLoggedIn = true;
-    if (expiredTimer != null) {
-      clearTimeout(expiredTimer);
+  const user = users[username];
+  if (users[username] != null && password === user.password) {
+    if (loggedInUsers[username] != null) {
+      clearTimeout(loggedInUsers[username]);
     }
-    expiredTimer = setTimeout(() => testLoggedIn = false, 10000);
+    loggedInUsers[username] = setTimeout(() => {
+      delete loggedInUsers[username];
+    }, 10000);
+
     res.json(new MessageResponse('Login Succeed'));
   } else {
     res.status(401).json(new ErrorMessage('Login Failed: username or password is incorrect'));
@@ -38,11 +45,12 @@ router.post('/login', (req: Request, res: Response) => {
  * @api GET /api/account/whoami
  */
 router.get('/whoami', (req: Request, res: Response) => {
-  if (testLoggedIn) {
-    res.json(new UserInfo(testUser.name, testUser.address));
-  } else {
+  if (_.isEmpty(loggedInUsers)) {
     res.json(new UserInfo());
+  } else {
+    const user = users[Object.keys(loggedInUsers)[0]];
+    res.json(new UserInfo(user.name, user.address));
   }
 });
 
-export const LoginRouter: Router = router;
+export const AccountRouter: Router = router;
