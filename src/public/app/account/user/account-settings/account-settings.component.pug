@@ -1,4 +1,30 @@
 .card
   h5.card-header Account Settings
-  .card-body
-    .alert.alert-warning TODO
+  ul.list-group.list-group-flush
+    li.list-group-item.d-flex.justify-content-between
+      div
+        h6 Name
+        span {{user.name}}
+      div
+        button.btn.btn-secondary.mt-2 Edit
+
+    li.list-group-item.d-flex.justify-content-between
+      div
+        h6 Email
+        span {{user.email}}
+      div
+        button.btn.btn-secondary.mt-2 Edit
+
+    li.list-group-item.d-flex.justify-content-between
+      div
+        h6 Password
+        strong ••••••••••
+      div
+        button.btn.btn-secondary.mt-2 Edit
+
+    li.list-group-item.d-flex.justify-content-between
+      div
+        h6 Subscription Settings
+        span Subscribed to all notifications
+      div
+        button.btn.btn-secondary.mt-2 Edit
