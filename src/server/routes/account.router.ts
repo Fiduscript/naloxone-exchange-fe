@@ -33,7 +33,7 @@ router.post('/login', (req: Request, res: Response) => {
     }
     loggedInUsers[username] = setTimeout(() => {
       delete loggedInUsers[username];
-    }, 20_0000);
+    }, 20_000);
 
     res.json(new MessageResponse('Login Succeed'));
   } else {
