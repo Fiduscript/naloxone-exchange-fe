@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
-import { LoginService } from '../../login/login.service';
 import { UserInfo } from '../../model/user-info';
 
 @Component({
@@ -10,17 +9,12 @@ import { UserInfo } from '../../model/user-info';
 })
 export class AccountSettingsComponent implements OnInit {
 
-  public user: UserInfo;
+  @Input() public user: UserInfo;
 
-  public constructor(private loginService: LoginService) {
-    this.user = new UserInfo();
+  public constructor() {
   }
 
   public ngOnInit(): void {
-    this.loginService.whoami().subscribe((user: UserInfo) => {
-      // XXX: if user is not logged in should redirect
-      this.user = user;
-    });
   }
 
 }
