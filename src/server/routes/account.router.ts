@@ -2,7 +2,7 @@ import * as express from 'express';
 import { Request, Response, Router } from 'express';
 import * as _ from 'lodash';
 
-import { UserInfo } from '../../public/app/account/model/userInfo';
+import { UserInfo } from '../../public/app/account/model/user-info';
 import { ErrorMessage } from '../../public/app/common/error-message';
 import { MessageResponse } from '../../public/app/common/message-response';
 
@@ -13,7 +13,7 @@ const users = {
   'test@test.com': {
     name: 'Test User',
     password: 'test',
-    address: 'Seattle, WA'
+    email: 'test@test.com'
   }
 };
 
@@ -33,7 +33,7 @@ router.post('/login', (req: Request, res: Response) => {
     }
     loggedInUsers[username] = setTimeout(() => {
       delete loggedInUsers[username];
-    }, 10000);
+    }, 20_0000);
 
     res.json(new MessageResponse('Login Succeed'));
   } else {
@@ -49,7 +49,7 @@ router.get('/whoami', (req: Request, res: Response) => {
     res.json(new UserInfo());
   } else {
     const user = users[Object.keys(loggedInUsers)[0]];
-    res.json(new UserInfo(user.name, user.address));
+    res.json(new UserInfo(user.name, user.email));
   }
 });
 

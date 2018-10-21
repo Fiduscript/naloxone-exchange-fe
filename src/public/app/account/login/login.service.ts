@@ -6,13 +6,12 @@ import { map, tap } from 'rxjs/operators';
 
 import { MessageResponse } from '../../common/message-response';
 import { jsonConvert } from '../../util/json-convert-provider';
-import { ILoginForm } from '../model/loginForm';
-import { UserInfo } from '../model/userInfo';
+import { ILoginForm } from '../model/login-form';
+import { UserInfo } from '../model/user-info';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class LoginService {
 
   private readonly memo: {[s: string]: any} = {};
