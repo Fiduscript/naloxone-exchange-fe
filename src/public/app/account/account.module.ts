@@ -6,6 +6,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AccountRoutingModule } from './account-routing.module';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
+import { AddressesComponent } from './user/addresses/addresses.component';
+import { OrdersComponent } from './user/orders/orders.component';
+import { PersonalInfoComponent } from './user/personal-info/personal-info.component';
+import { ProfileComponent } from './user/profile/profile.component';
+import { RelationsComponent } from './user/relations/relations.component';
 
 @NgModule({
   imports: [
@@ -18,6 +23,13 @@ import { LoginService } from './login/login.service';
   providers: [
     LoginService
   ],
-  declarations: [LoginComponent]
+  declarations: [
+    LoginComponent,
+    ProfileComponent,
+    AddressesComponent,
+    PersonalInfoComponent,
+    RelationsComponent,
+    OrdersComponent
+  ]
 })
 export class AccountModule { }
