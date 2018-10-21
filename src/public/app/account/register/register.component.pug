@@ -1,0 +1,40 @@
+.container.text-center
+  h3.mb-3 User Registration
+  .container.register-container.text-center.mb-3
+    form
+      .form-group.row.text-center
+        label.col-sm-4.col-form-label.text-left First Name 
+        .col-sm-8
+          input.form-control(type="text")
+
+      .form-group.row.text-center
+        label.col-sm-4.col-form-label.text-left Last Name 
+        .col-sm-8
+          input.form-control(type="text")
+
+      .form-group.row.text-center
+        label.col-sm-4.col-form-label.text-left Email 
+        .col-sm-8
+          input.form-control(type="email")
+
+      .form-group.row.text-center
+        label.col-sm-4.col-form-label.text-left Confirm Email 
+        .col-sm-8
+          input.form-control(type="email")
+
+      .form-group.row.text-center
+        label.col-sm-4.col-form-label.text-left Password 
+        .col-sm-8
+          input.form-control(type="password")
+
+      .form-group.row.text-center
+        label.col-sm-4.col-form-label.text-left Confirm Password 
+        .col-sm-8
+          input.form-control(type="password")
+      
+      .form-group
+        button.btn.btn-primary.w-100(type="submit") Sign Up
+    div Already have an account? Sign in 
+      a(href="/account/login") here!
+    div Do you want to be a partner pharmacy? Please 
+      a(href="/about-us#app-contact") contact us!

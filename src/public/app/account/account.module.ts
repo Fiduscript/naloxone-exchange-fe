@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AccountRoutingModule } from './account-routing.module';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
+import { RegisterComponent } from './register/register.component';
 import { AccountSettingsComponent } from './user/account-settings/account-settings.component';
 import { AddressesComponent } from './user/addresses/addresses.component';
 import { OrdersComponent } from './user/orders/orders.component';
@@ -29,7 +30,9 @@ import { RelationsComponent } from './user/relations/relations.component';
     AccountSettingsComponent,
     AddressesComponent,
     RelationsComponent,
+    RegisterComponent,
     OrdersComponent,
+    RegisterComponent,
   ]
 })
 export class AccountModule { }
