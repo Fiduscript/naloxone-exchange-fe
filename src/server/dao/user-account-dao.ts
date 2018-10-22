@@ -33,14 +33,10 @@ export class UserAccountDao {
    * @param login
    */
   public getUser(login: string): Promise<UserInfo> {
-    log.info('here');
     if (USERS[login] != null) {
-      log.info('here2');
       return Promise.resolve(USERS[login]);
     }
-    log.info('here3');
-    const msg: string = `User ${login} already exists!`;
-    log.warn(`Rejecting getUser. ${msg}`);
+    const msg: string = `Rejecting getUser: User \`${login}\` doesn't exist!`;
     return Promise.reject(new ErrorMessage(msg));
   }
 
@@ -54,8 +50,7 @@ export class UserAccountDao {
       USERS[login] = userInfo;
       return Promise.resolve(userInfo);
     }
-    const msg: string = `User ${login} already exists!`;
-    log.warn(`Rejecting createUser. ${msg}`);
+    const msg: string = `Rejecting createUser: User \`${login}\` already exists!`;
     return Promise.reject(new ErrorMessage(msg));
   }
 
@@ -69,8 +64,7 @@ export class UserAccountDao {
       USERS[login] = userInfo;
       return Promise.resolve(userInfo);
     }
-    const msg: string = `No user ${login} to update.`;
-    log.warn(`Rejecting updateUserInfo. ${msg}`, userInfo);
+    const msg: string = `Rejecting updateUserInfo: No user \`${login}\` to update.`;
     return Promise.reject(new ErrorMessage(msg));
   }
 
