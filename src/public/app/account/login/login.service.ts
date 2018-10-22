@@ -2,14 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
 
 import { FiduServiceBase } from '../../common/fidu-service-base';
 import { SuccessMessage } from '../../common/message-response';
-import { jsonConvert } from '../../util/json-convert-provider';
 import { ILoginForm } from '../model/login-form';
 import { UserInfo } from '../model/user-info';
 
+// XXX: consider renaming this service to UserAuthService
 @Injectable({
   providedIn: 'root'
 })
@@ -17,7 +16,7 @@ export class LoginService extends FiduServiceBase {
 
   public constructor(private http: HttpClient) {
     super();
-   }
+  }
 
   public login(loginForm: ILoginForm): Observable<SuccessMessage> {
     return this.http.post<SuccessMessage>('/api/account/login', loginForm);

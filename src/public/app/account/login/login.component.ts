@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from './login.service';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { HttpErrorResponse } from '@angular/common/http';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'app-login',
@@ -15,8 +16,11 @@ export class LoginComponent implements OnInit {
   public user: string = 'User';
   public error: string = null;
 
+  private returnRoute: string;
+
   public constructor(
       private fb: FormBuilder,
+      private route: ActivatedRoute,
       private service: LoginService) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
@@ -24,7 +28,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  public ngOnInit() {}
+  public ngOnInit() {
+    this.route.queryParams.subscribe((params: Params) => {
+      this.returnRoute = params['returnTo'] || '/';
+    });
+  }
 
   public login(): void {
     if (this.loginForm.invalid) {
@@ -32,7 +40,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.service.login(this.loginForm.value).subscribe(
-      (): void => { window.location.replace('/'); },
+      (): void => { window.location.replace(this.returnRoute); },
       (error: HttpErrorResponse): void => {
         this.loginForm.get('password').reset();
         this.error = error.error.message;

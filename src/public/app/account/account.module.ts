@@ -11,6 +11,7 @@ import { AddressesComponent } from './user/addresses/addresses.component';
 import { OrdersComponent } from './user/orders/orders.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { RelationsComponent } from './user/relations/relations.component';
+import { UserAuthGuard } from './user/user-auth.guard';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { RelationsComponent } from './user/relations/relations.component';
     HttpClientModule,
   ],
   providers: [
-    LoginService
+    LoginService,
+    UserAuthGuard
   ],
   declarations: [
     LoginComponent,
