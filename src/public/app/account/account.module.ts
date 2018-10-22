@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AccountRoutingModule } from './account-routing.module';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
+import { LogoutComponent } from './logout/logout.component';
 import { AccountSettingsComponent } from './user/account-settings/account-settings.component';
 import { AddressesComponent } from './user/addresses/addresses.component';
 import { OrdersComponent } from './user/orders/orders.component';
@@ -32,6 +33,7 @@ import { UserAuthGuard } from './user/user-auth.guard';
     AddressesComponent,
     RelationsComponent,
     OrdersComponent,
+    LogoutComponent,
   ]
 })
 export class AccountModule { }

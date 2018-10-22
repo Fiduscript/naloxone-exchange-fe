@@ -11,12 +11,14 @@ export class MessageResponse {
   }
 }
 
+@JsonObject
 export class SuccessMessage extends MessageResponse {
   public constructor(message: string) {
     super(message);
   }
 }
 
+@JsonObject
 export class ErrorMessage extends MessageResponse {
   public constructor(message: string) {
     super(message);

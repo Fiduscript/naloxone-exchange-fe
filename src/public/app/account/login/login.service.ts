@@ -19,7 +19,16 @@ export class LoginService extends FiduServiceBase {
   }
 
   public login(loginForm: ILoginForm): Observable<SuccessMessage> {
-    return this.http.post<SuccessMessage>('/api/account/login', loginForm);
+    return this.http.post<SuccessMessage>('/api/account/login', loginForm).pipe(
+      this.deserialize(SuccessMessage),
+      this.logErrors()
+    );
+  }
+
+  public logout(): Observable<SuccessMessage> {
+    return this.http.delete<SuccessMessage>('/api/account/logout').pipe(
+      this.logErrors()
+    );
   }
 
   public whoami(): Observable<UserInfo> {
@@ -30,7 +39,8 @@ export class LoginService extends FiduServiceBase {
 
     return this.http.get<UserInfo>(key).pipe(
       this.deserialize(UserInfo),
-      this.memoizeResult(key)
+      this.memoizeResult(key),
+      this.logErrors()
     );
   }
 
