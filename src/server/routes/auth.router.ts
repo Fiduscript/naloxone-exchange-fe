@@ -34,13 +34,13 @@ router.post('/login', (req: Request, res: Response): void => {
         req.login(user, (error) => {
           if (error) {
             log.error(`Failed logging in ${username}.`, error);
-            res.send(500).json(new ErrorMessage(`Login Failed`));
+            res.status(500).json(new ErrorMessage(`Login Failed`));
           } else {
             res.send(new SuccessMessage(`User ${username} successfully logged in.`));
           }
         });
       } else {
-        res.send(401).json(new ErrorMessage(`Login Failed: username or password is incorrect`));
+        res.status(401).json(new ErrorMessage(`Login Failed: username or password is incorrect`));
       }
     })
     .catch((error: ErrorMessage): void => {
