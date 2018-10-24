@@ -6,17 +6,10 @@ import { Logger } from '../util/logger';
 
 const log = Logger.create(module);
 
-// map of login (email) to UserInfo.
+// map of login id to UserInfo.
 const USERS = {
-  'test@test.com': {
-    name: 'Test User',
-    password: 'test',
-    email: 'test@test.com'
-  }
+  '0': {id: '0', name: 'Test User', email: 'test@test.com'},
 };
-
-// map of login (email) to user to Timer which expries the login
-const loggedInUsers: {[user: string]: NodeJS.Timer} = { };
 
 export class UserAccountDao {
 
@@ -30,13 +23,14 @@ export class UserAccountDao {
 
   /**
    * Gets user infomration for the login provided.
-   * @param login
+   * @param uuid
    */
-  public getUser(login: string): Promise<UserInfo> {
-    if (USERS[login] != null) {
-      return Promise.resolve(USERS[login]);
+  public getUser(uuid: string): Promise<UserInfo> {
+    if (USERS[uuid] != null) {
+      return Promise.resolve(USERS[uuid]);
     }
-    const msg: string = `Rejecting getUser: User \`${login}\` doesn't exist!`;
+
+    const msg: string = `Rejecting getUser: User \`${uuid}\` doesn't exist!`;
     return Promise.reject(new ErrorMessage(msg));
   }
 
@@ -45,12 +39,12 @@ export class UserAccountDao {
    * @param userInfo
    */
   public createUser(userInfo: UserInfo): Promise<UserInfo> {
-    const login: string = userInfo.email;
-    if (USERS[login] == null) {
-      USERS[login] = userInfo;
+    if (USERS[userInfo.id] == null) {
+      USERS[userInfo.id] = userInfo;
       return Promise.resolve(userInfo);
     }
-    const msg: string = `Rejecting createUser: User \`${login}\` already exists!`;
+
+    const msg: string = `Rejecting createUser: User \`${userInfo.id}\` already exists!`;
     return Promise.reject(new ErrorMessage(msg));
   }
 
@@ -59,12 +53,12 @@ export class UserAccountDao {
    * @param userInfo
    */
   public updateUserInfo(userInfo: UserInfo): Promise<UserInfo> {
-    const login: string = userInfo.email;
-    if (USERS[login] != null) {
-      USERS[login] = userInfo;
+    if (USERS[userInfo.id] != null) {
+      USERS[userInfo.id] = userInfo;
       return Promise.resolve(userInfo);
     }
-    const msg: string = `Rejecting updateUserInfo: No user \`${login}\` to update.`;
+
+    const msg: string = `Rejecting updateUserInfo: No user \`${userInfo.id}\` to update.`;
     return Promise.reject(new ErrorMessage(msg));
   }
 
