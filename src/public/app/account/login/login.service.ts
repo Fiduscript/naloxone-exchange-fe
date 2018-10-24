@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 
 import { FiduServiceBase } from '../../common/fidu-service-base';
-import { SuccessMessage } from '../../common/message-response';
+import { MessageResponse, SuccessMessage } from '../../common/message-response';
 import { ILoginForm } from '../model/login-form';
 import { UserInfo } from '../model/user-info';
 
@@ -27,6 +27,7 @@ export class LoginService extends FiduServiceBase {
 
   public logout(): Observable<SuccessMessage> {
     return this.http.delete<SuccessMessage>('/api/account/logout').pipe(
+      this.deserialize(SuccessMessage),
       this.logErrors()
     );
   }
