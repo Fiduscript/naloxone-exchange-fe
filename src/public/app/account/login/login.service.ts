@@ -4,8 +4,8 @@ import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 
 import { FiduServiceBase } from '../../common/fidu-service-base';
-import { MessageResponse, SuccessMessage } from '../../common/message-response';
-import { ILoginForm } from '../model/login-form';
+import { SuccessMessage } from '../../common/message-response';
+import { IUserCredentials } from '../model/user-credentials';
 import { UserInfo } from '../model/user-info';
 
 // XXX: consider renaming this service to UserAuthService
@@ -18,7 +18,7 @@ export class LoginService extends FiduServiceBase {
     super();
   }
 
-  public login(loginForm: ILoginForm): Observable<SuccessMessage> {
+  public login(loginForm: IUserCredentials): Observable<SuccessMessage> {
     return this.http.post<SuccessMessage>('/api/account/login', loginForm).pipe(
       this.deserialize(SuccessMessage),
       this.logErrors()
