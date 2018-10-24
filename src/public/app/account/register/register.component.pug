@@ -1,36 +1,76 @@
 .container.text-center
   h3.mb-3 User Registration
   .container.register-container.text-center.mb-3
-    form
+    form(
+        "[formGroup]"="registerForm" 
+        "(ngSubmit)"="register()")
       .form-group.row.text-center
         label.col-sm-4.col-form-label.text-left First Name 
         .col-sm-8
-          input.form-control(type="text")
+          input.form-control(
+              type="text"
+              formControlName="firstName"
+              "[ngClass]"="{ 'is-invalid': registerForm.get('firstName').touched && registerForm.get('firstName').invalid }")
+          .invalid-feedback(*ngIf="registerForm.get('firstName').touched && registerForm.get('firstName').invalid")
+            .text-left First name is required
 
       .form-group.row.text-center
         label.col-sm-4.col-form-label.text-left Last Name 
         .col-sm-8
-          input.form-control(type="text")
+          input.form-control(
+              type="text"
+              formControlName="lastName"
+              "[ngClass]"="{ 'is-invalid': registerForm.get('lastName').touched && registerForm.get('lastName').invalid }")
+          .invalid-feedback(*ngIf="registerForm.get('lastName').touched && registerForm.get('lastName').invalid")
+            .text-left Last name is required
 
       .form-group.row.text-center
         label.col-sm-4.col-form-label.text-left Email 
         .col-sm-8
-          input.form-control(type="email")
+          input.form-control(
+              type="email"
+              formControlName="email"
+              "[ngClass]"="{ 'is-invalid': registerForm.get('email').touched && registerForm.get('email').invalid }")
+          .invalid-feedback(*ngIf="registerForm.get('email').touched && registerForm.get('email').invalid")
+            .text-left Enter a valid email address
 
       .form-group.row.text-center
         label.col-sm-4.col-form-label.text-left Confirm Email 
         .col-sm-8
-          input.form-control(type="email")
+          input.form-control(
+              type="email"
+              formControlName="confirmEmail"
+              "[ngClass]"="{ 'is-invalid': registerForm.get('confirmEmail').touched && registerForm.get('confirmEmail').hasError('compare')}")
+          .invalid-feedback(*ngIf="registerForm.get('confirmEmail').touched && registerForm.get('confirmEmail').hasError('compare')")
+            .text-left Email does not match
 
       .form-group.row.text-center
         label.col-sm-4.col-form-label.text-left Password 
         .col-sm-8
-          input.form-control(type="password")
+          input.form-control(
+              type="password"
+              formControlName="password"
+              "[ngClass]"="{ 'is-invalid': registerForm.get('password').touched && registerForm.get('password').invalid }")
+          .invalid-feedback(*ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('length')")
+            .text-left Must contain at least 8 characters
+          .invalid-feedback(*ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('lowerCase')")
+            .text-left Must contain at least one lowercase letter
+          .invalid-feedback(*ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('upperCase')")
+            .text-left Must contain at least one uppercase letter
+          .invalid-feedback(*ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('number')")
+            .text-left Must contain at least one number
+          .invalid-feedback(*ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('character')")
+            .text-left Must contain at least one special character
 
       .form-group.row.text-center
         label.col-sm-4.col-form-label.text-left Confirm Password 
         .col-sm-8
-          input.form-control(type="password")
+          input.form-control(
+              type="password"
+              formControlName="confirmPassword"
+              "[ngClass]"="{ 'is-invalid': registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').hasError('compare')}")
+          .invalid-feedback(*ngIf="registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').hasError('compare')")
+            .text-left Password does not match
       
       .form-group
         button.btn.btn-primary.w-100(type="submit") Sign Up
