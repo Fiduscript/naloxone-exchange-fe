@@ -4,6 +4,9 @@ import * as _ from 'lodash';
 @JsonObject
 export class UserInfo {
 
+  @JsonProperty('id', String, true)
+  public readonly id: string = undefined;
+
   @JsonProperty('name', String)
   public readonly name: string = undefined;
 
