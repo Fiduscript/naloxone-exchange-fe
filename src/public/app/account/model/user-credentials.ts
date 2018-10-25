@@ -1,4 +1,4 @@
-export interface ILoginForm {
+export interface IUserCredentials {
   username: string;
   password: string;
 }

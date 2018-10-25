@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 
 import { STATE_SET } from '../../common/constant/states';
 import { Products } from '../../public/app/buy/model/products';
-import { ErrorMessage } from '../../public/app/common/error-message';
+import { ErrorMessage } from '../../public/app/common/message-response';
 import { ProductDao } from '../dao/products-dao';
 import { ErrorMiddleware } from '../helper/error-middleware';
 import { Logger } from '../util/logger';

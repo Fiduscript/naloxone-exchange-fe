@@ -5,8 +5,7 @@ import { Request, Response, Router } from 'express';
 import { body, ValidationChain } from 'express-validator/check';
 
 import { STATE_SET } from '../../common/constant/states';
-import { ErrorMessage } from '../../public/app/common/error-message';
-import { MessageResponse } from '../../public/app/common/message-response';
+import { ErrorMessage, SuccessMessage } from '../../public/app/common/message-response';
 import { ErrorMiddleware } from '../helper/error-middleware';
 import { AWSProvider } from '../provider/aws-provider';
 import { Logger } from '../util/logger';
@@ -50,7 +49,7 @@ router.put('/subscribe',
       log.error(`Failed to subscribe customer \`${params}\`.` , err.message, err);
       res.status(500).json(new ErrorMessage('Unable to subscribe at this time. Please try again later.'));
     } else {
-      res.status(201).json(new MessageResponse('Successfully subscribed!'));
+      res.status(201).json(new SuccessMessage('Successfully subscribed!'));
     }
   });
 });
@@ -73,7 +72,7 @@ router.put('/unsubscribe', validateSubscribe, ErrorMiddleware.sendFirst, (req: R
       log.error(`Failed to unsubscribe customer \`${params}\`.` , err.message, err);
       res.status(500).json(new ErrorMessage('Unable to unsubscribe at this time. Please try again later.'));
     } else {
-      res.status(201).json(new MessageResponse('Successfully unsubscribed!'));
+      res.status(201).json(new SuccessMessage('Successfully unsubscribed!'));
     }
   });
 });

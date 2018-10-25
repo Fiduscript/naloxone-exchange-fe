@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
+import { UserInfo } from '../../model/user-info';
 
 @Component({
   selector: 'app-user-account-settings',
@@ -7,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountSettingsComponent implements OnInit {
 
-  public constructor() { }
+  @Input() public user: UserInfo;
+
+  public constructor() {
+  }
 
   public ngOnInit(): void {
   }

@@ -3,12 +3,16 @@ import * as cookieParser from 'cookie-parser';
 import * as errorHandler from 'errorhandler';
 import * as express from 'express';
 import { Application, NextFunction, Request, Response } from 'express';
+import * as session from 'express-session';
 import * as _ from 'lodash';
 import * as methodOverride from 'method-override';
+import * as moment from 'moment';
 import * as requestLogger from 'morgan';
+import * as passport from 'passport';
 import * as path from 'path';
 
 import { ApiRouter } from './routes/api.router';
+import { Env } from './util/env';
 import { Logger } from './util/logger';
 
 const log = Logger.create(module);
@@ -52,8 +56,9 @@ export class Server {
    */
   private config(): void {
     // use requestLogger middlware
-    // XXX this should not be used for production.
-    this.app.use(requestLogger('dev'));
+    if (!Env.isProd()) {
+      this.app.use(requestLogger('dev'));
+    }
 
     // use json form parser middlware
     this.app.use(bodyParser.json());
@@ -65,6 +70,23 @@ export class Server {
 
     // use cookie parser middleware
     this.app.use(cookieParser('SECRET_GOES_HERE'));
+
+    // session & Cookie Stuffs
+    // Trust https proxy settings (for secure cookies)
+    if (Env.isProd()) {
+      this.app.set('trust proxy', 1);
+    }
+    this.app.use(session({
+      secret: '93cf678bdc0927fa9425fc4cf273b716',
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        secure: Env.isProd(),
+        maxAge: moment.duration(1, 'day').asMilliseconds()
+      }
+    }));
+    this.app.use(passport.initialize());
+    this.app.use(passport.session());
 
     // use override middlware
     this.app.use(methodOverride());

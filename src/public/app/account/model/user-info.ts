@@ -4,15 +4,18 @@ import * as _ from 'lodash';
 @JsonObject
 export class UserInfo {
 
+  @JsonProperty('id', String, true)
+  public readonly id: string = undefined;
+
   @JsonProperty('name', String)
   public readonly name: string = undefined;
 
-  @JsonProperty('address', String)
-  public readonly address: string = undefined;
+  @JsonProperty('email', String)
+  public readonly email: string = undefined;
 
-  public constructor(name: string = '', address: string = '') {
+  public constructor(name: string = '', email: string = '') {
     this.name = name;
-    this.address = address;
+    this.email = email;
   }
 
   public hasName(): boolean {

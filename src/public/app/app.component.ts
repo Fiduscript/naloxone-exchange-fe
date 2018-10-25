@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { LoginService } from './account/login/login.service';
-import { UserInfo } from './account/model/userInfo';
+import { UserInfo } from './account/model/user-info';
 
 @Component({
   selector: 'app-root',

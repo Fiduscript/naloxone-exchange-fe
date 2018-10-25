@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { FiduServiceBase } from '../common/fidu-service-base';
-import { MessageResponse } from '../common/message-response';
+import { SuccessMessage } from '../common/message-response';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +19,9 @@ export class UpdateSubscriberService extends FiduServiceBase {
    * @param email
    * @param state
    */
-  public subscribe(body: {[s: string]: string}): Observable<MessageResponse> {
+  public subscribe(body: {[s: string]: string}): Observable<SuccessMessage> {
     const path: string = '/api/updates/subscribe';
-    return this.http.put<MessageResponse>(path, body).pipe(
+    return this.http.put<SuccessMessage>(path, body).pipe(
         this.logErrors()
       );
   }
@@ -31,9 +31,9 @@ export class UpdateSubscriberService extends FiduServiceBase {
    * @param email
    * @param state
    */
-  public unsubscribe(body: {[s: string]: string}): Observable<MessageResponse> {
+  public unsubscribe(body: {[s: string]: string}): Observable<SuccessMessage> {
     const path: string = '/api/updates/unsubscribe';
-    return this.http.put<MessageResponse>(path, body).pipe(
+    return this.http.put<SuccessMessage>(path, body).pipe(
         this.logErrors()
       );
   }

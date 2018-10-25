@@ -2,48 +2,47 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
 
-import { MessageResponse } from '../../common/message-response';
-import { jsonConvert } from '../../util/json-convert-provider';
-import { ILoginForm } from '../model/loginForm';
-import { UserInfo } from '../model/userInfo';
+import { FiduServiceBase } from '../../common/fidu-service-base';
+import { SuccessMessage } from '../../common/message-response';
+import { IUserCredentials } from '../model/user-credentials';
+import { UserInfo } from '../model/user-info';
 
+// XXX: consider renaming this service to UserAuthService
 @Injectable({
   providedIn: 'root'
 })
+export class LoginService extends FiduServiceBase {
 
-export class LoginService {
+  public constructor(private http: HttpClient) {
+    super();
+  }
 
-  private readonly memo: {[s: string]: any} = {};
+  public login(loginForm: IUserCredentials): Observable<SuccessMessage> {
+    return this.http.post<SuccessMessage>('/api/account/login', loginForm).pipe(
+      this.deserialize(SuccessMessage),
+      this.logErrors()
+    );
+  }
 
-  constructor(private http: HttpClient) {
-    this.memoize = this.memoize.bind(this);
-    this.whoami = this.whoami.bind(this);
-   }
-
-  public login(loginForm: ILoginForm): Observable<MessageResponse> {
-    return this.http.post<MessageResponse>('/api/account/login', loginForm);
+  public logout(): Observable<SuccessMessage> {
+    return this.http.delete<SuccessMessage>('/api/account/logout').pipe(
+      this.deserialize(SuccessMessage),
+      this.logErrors()
+    );
   }
 
   public whoami(): Observable<UserInfo> {
     const key: string = '/api/account/whoami';
-    if (this.memo[key] != null) {
-      return this.memo[key];
+    if (this.hasMemo(key)) {
+      return this.getMemoized(key);
     }
 
     return this.http.get<UserInfo>(key).pipe(
-      map(this.mapUser),
-      tap(_.partial(this.memoize, key)),
+      this.deserialize(UserInfo),
+      this.memoizeResult(key),
+      this.logErrors()
     );
-  }
-
-  private memoize(key: string, memo: any): void {
-    this.memo[key] = memo;
-  }
-
-  private mapUser(user: UserInfo): UserInfo {
-    return jsonConvert.deserialize(user, UserInfo);
   }
 
 }
