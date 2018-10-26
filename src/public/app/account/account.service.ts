@@ -3,16 +3,16 @@ import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 
-import { FiduServiceBase } from '../../common/fidu-service-base';
-import { SuccessMessage } from '../../common/message-response';
-import { IUserCredentials } from '../model/user-credentials';
-import { UserInfo } from '../model/user-info';
+import { FiduServiceBase } from '../common/fidu-service-base';
+import { SuccessMessage } from '../common/message-response';
+import { IUserCredentials } from './model/user-credentials';
+import { UserInfo } from './model/user-info';
 
 // XXX: consider renaming this service to UserAuthService
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService extends FiduServiceBase {
+export class AccountService extends FiduServiceBase {
 
   public constructor(private http: HttpClient) {
     super();

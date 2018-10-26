@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { LoginService } from '../../login/login.service';
+import { AccountService } from '../../account.service';
 import { UserInfo } from '../../model/user-info';
 import { UserService } from '../user.service';
 
@@ -14,7 +14,7 @@ export class ProfileComponent implements OnInit {
   public user: UserInfo;
 
   public constructor(
-      private loginService: LoginService,
+      private loginService: AccountService,
       private userService: UserService) {
     this.user = new UserInfo();
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { SuccessMessage } from '../../common/message-response';
-import { LoginService } from '../login/login.service';
+import { AccountService } from '../account.service';
 
 @Component({
   selector: 'app-logout',
@@ -10,7 +10,7 @@ import { LoginService } from '../login/login.service';
 export class LogoutComponent implements OnInit {
 
   public constructor(
-    private service: LoginService) { }
+    private service: AccountService) { }
 
   public ngOnInit(): void {
     this.service.logout()

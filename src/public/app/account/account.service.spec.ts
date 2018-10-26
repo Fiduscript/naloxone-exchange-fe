@@ -1,19 +1,19 @@
 import { HttpClientModule } from '@angular/common/http';
 import { inject, TestBed } from '@angular/core/testing';
 
-import { LoginService } from './login.service';
+import { AccountService } from './account.service';
 
-describe('LoginService', () => {
+describe('AccountService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ LoginService ],
+      providers: [ AccountService ],
       imports: [
         HttpClientModule
       ]
     });
   });
 
-  it('should be created', inject([LoginService], (service: LoginService) => {
+  it('should be created', inject([AccountService], (service: AccountService) => {
     expect(service).toBeTruthy();
   }));
 });

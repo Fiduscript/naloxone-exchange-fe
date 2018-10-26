@@ -4,8 +4,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AccountRoutingModule } from './account-routing.module';
+import { AccountService } from './account.service';
 import { LoginComponent } from './login/login.component';
-import { LoginService } from './login/login.service';
 import { LogoutComponent } from './logout/logout.component';
 import { RegisterComponent } from './register/register.component';
 import { AccountSettingsComponent } from './user/account-settings/account-settings.component';
@@ -24,7 +24,7 @@ import { UserAuthGuard } from './user/user-auth.guard';
     HttpClientModule,
   ],
   providers: [
-    LoginService,
+    AccountService,
     UserAuthGuard
   ],
   declarations: [

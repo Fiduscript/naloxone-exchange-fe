@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from '../login/login.service';
+import { AccountService } from '../account.service';
 
 import { compareValidator, strongPassword } from '../../../../common/validator/validator';
 
@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
       private fb: FormBuilder,
-      private service: LoginService) {
+      private service: AccountService) {
     this.registerForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],

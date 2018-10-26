@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { HttpErrorResponse } from '@angular/common/http';
-import { LoginService } from './login.service';
+import { AccountService } from '../account.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   public constructor(
       private fb: FormBuilder,
       private route: ActivatedRoute,
-      private service: LoginService) {
+      private service: AccountService) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
