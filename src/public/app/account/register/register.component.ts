@@ -24,18 +24,19 @@ export class RegisterComponent implements OnInit {
       password: ['', [
         Validators.required,
         strongPassword()
-        // Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')
         ]
       ],
       confirmPassword: ['', [Validators.required, compareValidator('password')]]
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   public register(): void {
-    console.log(this.registerForm.get('confirmEmail').hasError('compare'));
+    // TODO: register the user and login
+    if (this.registerForm.invalid) {
+      return;
+    }
   }
 
 }
