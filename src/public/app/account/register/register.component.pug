@@ -51,16 +51,8 @@
               type="password"
               formControlName="password"
               "[ngClass]"="{ 'is-invalid': registerForm.get('password').touched && registerForm.get('password').invalid }")
-          .invalid-feedback(*ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('length')")
-            .text-left Must contain at least 8 characters
-          .invalid-feedback(*ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('lowerCase')")
-            .text-left Must contain at least one lowercase letter
-          .invalid-feedback(*ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('upperCase')")
-            .text-left Must contain at least one uppercase letter
-          .invalid-feedback(*ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('number')")
-            .text-left Must contain at least one number
-          .invalid-feedback(*ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('character')")
-            .text-left Must contain at least one special character
+          .invalid-feedback(*ngIf="registerForm.get('password').touched && registerForm.get('password').invalid")
+            .text-left(*ngFor="let error of registerForm.get('password').errors | keyvalue") {{error.value}}
 
       .form-group.row.text-center
         label.col-sm-4.col-form-label.text-left Confirm Password 

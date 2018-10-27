@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from '../account.service';
 
 import { HttpErrorResponse } from '@angular/common/http';
-import { compareValidator, strongPassword } from '../../../../common/validator/validator';
+import { MatchValidator } from 'src/common/validator/match-validator';
+import { StrongPasswordValidator } from 'src/common/validator/strong-password-validator';
 import { IUserCredentials } from '../model/user-credentials';
 import { UserInfo } from '../model/user-info';
 
@@ -24,28 +25,23 @@ export class RegisterComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      confirmEmail: ['', [Validators.required, compareValidator('email')]],
-      password: ['', [
-        Validators.required,
-        strongPassword()
-        ]
-      ],
-      confirmPassword: ['', [Validators.required, compareValidator('password')]]
+      confirmEmail: ['', [Validators.required, new MatchValidator('email')]],
+      password: ['', [new StrongPasswordValidator()]],
+      confirmPassword: ['', [Validators.required, new MatchValidator('password')]]
     });
   }
 
   ngOnInit() { }
 
   public register(): void {
+
     // TODO: register the user and login
     if (this.registerForm.invalid) {
-      console.log('invalid form for registration');
       return;
     }
 
     const userCreds: IUserCredentials = {
       username: this.registerForm.get('email').value,
-      confirmUsername: this.registerForm.get('confirmEmail').value,
       password: this.registerForm.get('password').value,
       confirmPassword: this.registerForm.get('confirmPassword').value,
     };
