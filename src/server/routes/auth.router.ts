@@ -51,6 +51,35 @@ router.post('/login', (req: Request, res: Response): void => {
 });
 
 /**
+ * @api GET /api/account/register
+ * TODO: add express validation once user model have been fixed!
+ */
+router.post('/register', (req: Request, res: Response): void => {
+  const userCreds: IUserCredentials = req.body.userCredentials;
+  const userInfo: UserInfo = req.body.userInfo;
+
+  authDao.registerUser(userCreds)
+    .then((userSession: IUserSession) => {
+      userInfo.id = userSession.userId;
+      userDao.createUser(userInfo)
+        .then(() => {
+          res.status(201).json(new SuccessMessage(`User ${userInfo.email} successfully registered and logged in.`));
+        })
+        .catch((err) => {
+
+          // XXX: if userDao.creatUser fails roll back authDao.registerUser.
+          //      this probly won't be needed with cognito
+
+          log.error(`Failed to create user \`${userInfo.id}\` after registration`, err);
+          res.status(500).json(new ErrorMessage(`Create new user failed`));
+        });
+    }).catch((err) => {
+      log.error(`Failed to register user`, err);
+      res.status(500).json(new ErrorMessage(`The email address is already in use`));
+    });
+});
+
+/**
  * @api DELETE /api/account/logout
  */
 router.delete('/logout', (req: Request, res: Response): void => {

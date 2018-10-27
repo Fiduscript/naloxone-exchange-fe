@@ -5,20 +5,24 @@ import * as _ from 'lodash';
 export class UserInfo {
 
   @JsonProperty('id', String, true)
-  public readonly id: string = undefined;
+  public id: string = undefined;
 
-  @JsonProperty('name', String)
-  public readonly name: string = undefined;
+  @JsonProperty('firstName', String)
+  public readonly firstName: string = undefined;
+
+  @JsonProperty('lastName', String)
+  public readonly lastName: string = undefined;
 
   @JsonProperty('email', String)
   public readonly email: string = undefined;
 
-  public constructor(name: string = '', email: string = '') {
-    this.name = name;
+  public constructor(firstName: string = '', lastName: string = '', email: string = '') {
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.email = email;
   }
 
   public hasName(): boolean {
-    return !_.isEmpty(this.name);
+    return !_.isEmpty(this.firstName);
   }
 }

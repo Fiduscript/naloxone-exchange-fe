@@ -32,6 +32,13 @@ export class AccountService extends FiduServiceBase {
     );
   }
 
+  public register(
+      userCredentials: IUserCredentials,
+      userInfo: UserInfo): Observable<SuccessMessage> {
+    const body = { userCredentials, userInfo };
+    return this.http.post<SuccessMessage>('/api/account/register', body);
+  }
+
   public whoami(): Observable<UserInfo> {
     const key: string = '/api/account/whoami';
     if (this.hasMemo(key)) {

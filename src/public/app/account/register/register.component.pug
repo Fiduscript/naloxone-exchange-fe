@@ -74,6 +74,9 @@
       
       .form-group
         button.btn.btn-primary.w-100(type="submit") Sign Up
+        
+      .alert.alert-danger.text-left(*ngIf="error") {{error}}
+
     div Already have an account? Sign in 
       a(href="/account/login") here!
     div Do you want to be a partner pharmacy? Please 
