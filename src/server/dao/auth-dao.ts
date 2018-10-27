@@ -1,19 +1,13 @@
 import * as _ from 'lodash';
 
+import { AuthenticationDetails, CognitoUserPool, CognitoUser } from 'amazon-cognito-identity-js';
+
 import { IUserCredentials } from '../../public/app/account/model/user-credentials';
 import { ErrorMessage } from '../../public/app/common/message-response';
 import { IUserSession } from '../model/user-session';
 import { Logger } from '../util/logger';
 
 const log = Logger.create(module);
-
-// XXX: This is only for testing at this time. Remove when cognito is integrated
-const USERS_PASSWORD = {
-  'test@test.com': {
-    id: '0',
-    pw: 'test'
-  }
-};
 
 export class AuthDao {
 
@@ -32,14 +26,42 @@ export class AuthDao {
    * @returns promise with user session information. At this time user UUID is sufficent.
    */
   public login(user: IUserCredentials): Promise<IUserSession> {
-    const creds = USERS_PASSWORD[user.username];
-    if (creds != null && creds.pw === user.password) {
-      const result: IUserSession = { userId: creds.id };
-      return Promise.resolve(result);
-    }
+    const authenticationDetails = new AuthenticationDetails({
+        Username : user.username,
+        Password : user.password
+    });
 
-    const msg: string = `Rejecting login: Username or password is incorrect!`;
-    return Promise.reject(new ErrorMessage(msg));
+    // TODO: this needs to come from configuration
+    const userPool = new CognitoUserPool({
+        UserPoolId : 'us-east-2_ej6SB5BPr', // This is the "customer-user-pool-test" user pool
+        ClientId : '7dum3ivsqng75jdve4sc39tve4'
+    });
+
+    const cognitoUser = new CognitoUser({
+        Username : user.username,
+        Pool : userPool
+    });
+
+    return new Promise((resolve, reject) => {
+      cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: function(result) {
+          log.info("onSuccess called");
+          // TODO: figure out what session information we should be storing
+          const session: IUserSession = { userId: '0' };
+          resolve(session);
+        },
+
+        onFailure: function(err) {
+          log.info("onFailure called");
+          reject(new ErrorMessage("Failure: " + err.message));
+        },
+
+        newPasswordRequired: function(userAttributes, requiredAttributes) {
+          log.info("newPasswordRequired called")
+          reject(new ErrorMessage("Password reset required but not yet implemented"))
+        }
+      });
+    });
   }
 
   /**

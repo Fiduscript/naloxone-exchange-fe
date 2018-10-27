@@ -15,6 +15,8 @@ import { ApiRouter } from './routes/api.router';
 import { Env } from './util/env';
 import { Logger } from './util/logger';
 
+require('isomorphic-fetch');
+
 const log = Logger.create(module);
 
 /**
