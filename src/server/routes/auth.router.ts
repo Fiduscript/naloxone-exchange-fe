@@ -1,13 +1,18 @@
 import * as express from 'express';
 import { Request, Response, Router } from 'express';
+import { check } from 'express-validator/check';
+import { ValidationChain } from 'express-validator/check';
 import * as _ from 'lodash';
 import * as passport from 'passport';
 
+import { jsonConvert } from '../../common/json-convert-provider';
+import { StrongPasswordValidator } from '../../common/validator/strong-password-validator';
 import { IUserCredentials } from '../../public/app/account/model/user-credentials';
 import { UserInfo } from '../../public/app/account/model/user-info';
 import { ErrorMessage, SuccessMessage } from '../../public/app/common/message-response';
 import { AuthDao } from '../dao/auth-dao';
 import { UserAccountDao } from '../dao/user-account-dao';
+import { ErrorMiddleware } from '../helper/error-middleware';
 import { IUserSession } from '../model/user-session';
 import { Logger } from '../util/logger';
 
@@ -28,21 +33,49 @@ passport.deserializeUser((id: string, done: (err?: any, user?: UserInfo) => void
       .catch((error: ErrorMessage): void => { done(error, null); });
 });
 
+const validateUserCredentials: ValidationChain[] = [
+  check('email')
+    .isString()
+    .trim()
+    .isEmail()
+    .customSanitizer((v: string): string => v.toLowerCase())
+    .withMessage('Must provide a well-formed email address.'),
+  check('password')
+    .isString()
+    .trim()
+    .withMessage('Password is required.')
+];
+
+const validateRegisterUserInfo: ValidationChain[] = [
+  validateUserCredentials[0],
+  check('password')
+    .isString()
+    .trim()
+    .matches(StrongPasswordValidator.UPPERCASE)
+    .matches(StrongPasswordValidator.LOWERCASE)
+    .matches(StrongPasswordValidator.NUMBER)
+    .matches(StrongPasswordValidator.SPECIAL_CHARACTER)
+    .matches(StrongPasswordValidator.LENGTH)
+    .withMessage('A secure password is required'),
+  check('firstName').isString().trim().exists(),
+  check('lastName').isString().trim().exists()
+];
+
 /**
  * @api GET /api/account/login
  * FIXME: this login route needs a validator!
  */
-router.post('/login', (req: Request, res: Response): void => {
+router.post('/login', validateUserCredentials, ErrorMiddleware.sendFirst, (req: Request, res: Response): void => {
   const user: IUserCredentials = req.body;
 
   authDao.login(user)
     .then((userSession: IUserSession): void => {
       req.login(userSession, (error) => {
         if (error) {
-          log.error(`Failed logging in ${user.username}.`, error);
+          log.error(`Failed logging in ${user.email}.`, error);
           res.status(500).json(new ErrorMessage(`Login Failed`));
         } else {
-          res.json(new SuccessMessage(`User ${user.username} successfully logged in.`));
+          res.json(new SuccessMessage(`User ${user.email} successfully logged in.`));
         }
       });
     }).catch((error: ErrorMessage): void => {
@@ -54,13 +87,12 @@ router.post('/login', (req: Request, res: Response): void => {
  * @api GET /api/account/register
  * TODO: add express validation once user model have been fixed!
  */
-router.post('/register', (req: Request, res: Response): void => {
-  const userCreds: IUserCredentials = req.body.userCredentials;
-  const userInfo: UserInfo = req.body.userInfo;
+router.post('/register', validateRegisterUserInfo, ErrorMiddleware.sendFirst, (req: Request, res: Response): void => {
+  let userInfo: UserInfo = jsonConvert.deserialize(req.body, UserInfo);
 
-  authDao.registerUser(userCreds)
+  authDao.registerUser(userInfo)
     .then((userSession: IUserSession) => {
-      userInfo.id = userSession.userId;
+      userInfo = userInfo.withId(userSession.userId);
       userDao.createUser(userInfo)
         .then(() => {
           res.status(201).json(new SuccessMessage(`User ${userInfo.email} successfully registered and logged in.`));

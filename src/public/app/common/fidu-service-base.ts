@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { HttpErrorResponse } from '@angular/common/http';
-import { jsonConvert } from '../util/json-convert-provider';
+import { jsonConvert } from '../../../common/json-convert-provider';
 
 /**
  * Base containing shared patterns and methods of our services.

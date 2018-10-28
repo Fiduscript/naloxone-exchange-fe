@@ -38,18 +38,14 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    const userCreds: IUserCredentials = {
-      username: this.registerForm.get('email').value,
-      password: this.registerForm.get('password').value,
-      confirmPassword: this.registerForm.get('confirmPassword').value,
-    };
+    const userInfo: UserInfo = new UserInfo(<UserInfo> {
+      firstName: this.registerForm.get('firstName').value,
+      lastName: this.registerForm.get('lastName').value,
+      email: this.registerForm.get('email').value,
+      password: this.registerForm.get('password').value
+    });
 
-    const userInfo: UserInfo = new UserInfo(
-        this.registerForm.get('firstName').value,
-        this.registerForm.get('lastName').value,
-        this.registerForm.get('email').value);
-
-    this.service.register(userCreds, userInfo).subscribe(
+    this.service.register(userInfo).subscribe(
       (): void => { window.location.replace('/account/login'); },
       (error: HttpErrorResponse): void => {
         this.error = error.error.message;

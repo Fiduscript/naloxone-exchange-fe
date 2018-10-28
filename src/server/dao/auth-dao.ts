@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 
 import { IUserCredentials } from '../../public/app/account/model/user-credentials';
+import { UserInfo } from '../../public/app/account/model/user-info';
 import { ErrorMessage } from '../../public/app/common/message-response';
 import { IUserSession } from '../model/user-session';
 import { Logger } from '../util/logger';
@@ -32,7 +33,7 @@ export class AuthDao {
    * @returns promise with user session information. At this time user UUID is sufficent.
    */
   public login(user: IUserCredentials): Promise<IUserSession> {
-    const creds = USERS_PASSWORD[user.username];
+    const creds = USERS_PASSWORD[user.email];
     if (creds != null && creds.pw === user.password) {
       const result: IUserSession = { userId: creds.id };
       return Promise.resolve(result);
@@ -48,10 +49,10 @@ export class AuthDao {
    * @param user
    * @return promise with user session information. At this time user UUID is sufficient.
    */
-  public registerUser(user: IUserCredentials): Promise<IUserSession> {
-    const userUUID = Math.floor(Math.random() * 1000).toString(25); // for testing purpose only
-    if (!USERS_PASSWORD[user.username]) {
-      USERS_PASSWORD[user.username] = {id: userUUID, pw: user.password};
+  public registerUser(user: UserInfo): Promise<IUserSession> {
+    const userUUID = Math.floor(Math.random() * 10000000).toString(25); // for testing purpose only
+    if (!USERS_PASSWORD[user.email]) {
+      USERS_PASSWORD[user.email] = {id: userUUID, pw: user.password};
       const result: IUserSession = { userId: userUUID };
       return Promise.resolve(result);
     }

@@ -5,8 +5,8 @@ import * as moment from 'moment';
 import { Duration } from 'moment';
 
 import { IState, STATES } from '../../../common/constant/states';
+import { jsonConvert } from '../../../common/json-convert-provider';
 import { MessageResponse } from '../common/message-response';
-import { jsonConvert } from '../util/json-convert-provider';
 import { SubscriptionState } from './model/subscription-state';
 import { UpdateSubscriberService } from './update-subscriber.service';
 

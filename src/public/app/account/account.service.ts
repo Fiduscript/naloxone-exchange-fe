@@ -18,8 +18,8 @@ export class AccountService extends FiduServiceBase {
     super();
   }
 
-  public login(loginForm: IUserCredentials): Observable<SuccessMessage> {
-    return this.http.post<SuccessMessage>('/api/account/login', loginForm).pipe(
+  public login(credentials: IUserCredentials): Observable<SuccessMessage> {
+    return this.http.post<SuccessMessage>('/api/account/login', credentials).pipe(
       this.deserialize(SuccessMessage),
       this.logErrors()
     );
@@ -32,11 +32,11 @@ export class AccountService extends FiduServiceBase {
     );
   }
 
-  public register(
-      userCredentials: IUserCredentials,
-      userInfo: UserInfo): Observable<SuccessMessage> {
-    const body = { userCredentials, userInfo };
-    return this.http.post<SuccessMessage>('/api/account/register', body);
+  public register(userInfo: UserInfo): Observable<SuccessMessage> {
+    return this.http.post<SuccessMessage>('/api/account/register', userInfo).pipe(
+      this.deserialize(SuccessMessage),
+      this.logErrors()
+    );
   }
 
   public whoami(): Observable<UserInfo> {

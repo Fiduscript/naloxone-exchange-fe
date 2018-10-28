@@ -40,7 +40,9 @@ export class UserAccountDao {
    */
   public createUser(userInfo: UserInfo): Promise<UserInfo> {
     if (USERS[userInfo.id] == null) {
-      USERS[userInfo.id] = userInfo;
+      const clone = _.cloneDeep(userInfo);
+      delete clone.password;
+      USERS[userInfo.id] = clone;
       return Promise.resolve(userInfo);
     }
 

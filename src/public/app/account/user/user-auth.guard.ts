@@ -24,7 +24,7 @@ export class UserAuthGuard implements CanActivate {
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.service.whoami().pipe(
       map((user: UserInfo): boolean => {
-        const loggedIn = user.hasName();
+        const loggedIn = user.isValidUser();
         if (!loggedIn) {
           this.router.navigate(['/account/login'],  { queryParams: { returnTo: state.url } });
         }
