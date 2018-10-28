@@ -1,7 +1,6 @@
 import { AbstractControl, ValidationErrors, Validator } from '@angular/forms';
 import * as _ from 'lodash';
 
-
 export class StrongPasswordValidator implements Validator {
   private static readonly LOWERCASE = new RegExp('^(?=.*[a-z])');
   private static readonly UPPERCASE = new RegExp('^(?=.*[A-Z])');

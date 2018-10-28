@@ -33,18 +33,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() { }
 
-  // public ngOnInit(): void {
-  //   this.registerForm.get('email').valueChanges.subscribe((): void => {
-  //     this.registerForm.get('confirmEmail').updateValueAndValidity();
-  //   });
-  //   // this.registerForm.get('passwrod').valueChanges.subscribe((): void => {
-  //   //   this.registerForm.get('confirmPassword').updateValueAndValidity();
-  //   // });
-  // }
-
   public register(): void {
-
-    // TODO: register the user and login
     if (this.registerForm.invalid) {
       return;
     }

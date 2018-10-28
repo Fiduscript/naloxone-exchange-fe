@@ -63,13 +63,14 @@
               "[ngClass]"="{ 'is-invalid': registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').hasError('compare')}")
           .invalid-feedback(*ngIf="registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').hasError('compare')")
             .text-left Password does not match
-      
-      .form-group
-        button.btn.btn-primary.w-100(type="submit") Sign Up
-        
-      .alert.alert-danger.text-left(*ngIf="error") {{error}}
 
-    div Already have an account? Sign in 
+      .form-group
+        .alert.alert-danger.text-left(*ngIf="error") {{error}}
+
+      .form-group.mt-4
+        button.btn.btn-primary.w-100(type="submit" "[disabled]"="registerForm.invalid") Sign Up
+
+    p Already have an account? Sign in 
       a(href="/account/login") here!
-    div Do you want to be a partner pharmacy? Please 
+    p Do you want to be a partner pharmacy? Please 
       a(href="/about-us#app-contact") contact us!
