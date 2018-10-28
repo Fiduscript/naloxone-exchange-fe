@@ -8,7 +8,7 @@ const log = Logger.create(module);
 
 // map of login id to UserInfo.
 const USERS = {
-  '0': {id: '0', name: 'Test User', email: 'test@test.com'},
+  '0': {id: '0', firstName: 'Test', lastName: 'User', email: 'test@test.com'},
 };
 
 export class UserAccountDao {
