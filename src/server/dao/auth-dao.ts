@@ -49,7 +49,16 @@ export class AuthDao {
    * @return promise with user session information. At this time user UUID is sufficient.
    */
   public registerUser(user: IUserCredentials): Promise<IUserSession> {
-    return Promise.reject(new ErrorMessage('Not Implemented.'));
+    const userUUID = Math.floor(Math.random() * 1000).toString(25); // for testing purpose only
+    if (!USERS_PASSWORD[user.username]) {
+      USERS_PASSWORD[user.username] = {id: userUUID, pw: user.password};
+      const result: IUserSession = { userId: userUUID };
+      return Promise.resolve(result);
+    }
+
+    const msg: string = 'Rejecting register user: This email address is already in use.';
+    return Promise.reject(new ErrorMessage(msg));
+
   }
 
   /**

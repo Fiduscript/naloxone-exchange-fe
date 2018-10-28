@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { LoginService } from './account/login/login.service';
+import { AccountService } from './account/account.service';
 import { UserInfo } from './account/model/user-info';
 
 @Component({
@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
 
   user: UserInfo;
 
-  public constructor(private loginService: LoginService) {
+  public constructor(private loginService: AccountService) {
     this.user = new UserInfo();
   }
 

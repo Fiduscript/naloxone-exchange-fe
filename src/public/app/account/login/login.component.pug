@@ -16,7 +16,7 @@
         input.form-control(
             type="text" 
             formControlName="username"
-            placeholder="Username"
+            placeholder="username@email.com"
             "[ngClass]"="{ 'is-invalid': loginForm.get('username').touched && loginForm.get('username').invalid }")
         .invalid-feedback(*ngIf="loginForm.get('username').touched && loginForm.get('username').invalid")
           .text-left Username is required
