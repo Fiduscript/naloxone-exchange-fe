@@ -1,3 +1,5 @@
+import { CognitoUserSession } from 'amazon-cognito-identity-js';
+
 export interface IUserSession {
-  userId: string;
+  cognitoSession: CognitoUserSession;
 }

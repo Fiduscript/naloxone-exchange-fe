@@ -1,3 +1,4 @@
+import { CognitoAccessToken, CognitoIdToken, CognitoRefreshToken, CognitoUserSession } from 'amazon-cognito-identity-js';
 import * as express from 'express';
 import { Request, Response, Router } from 'express';
 import * as _ from 'lodash';
@@ -19,11 +20,17 @@ const userDao: UserAccountDao = UserAccountDao.create();
 
 // Set up passport. Not sure where this belongs long term. Perhaps Auth Dao?
 passport.serializeUser((user: IUserSession, done: (err: any, id: string) => void) => {
-  done(null, user.userId);
+  done(null, JSON.stringify(user.cognitoSession));
 });
 
-passport.deserializeUser((id: string, done: (err?: any, user?: UserInfo) => void) => {
-  userDao.getUser(id)
+passport.deserializeUser((sessionJson: string, done: (err?: any, user?: UserInfo) => void) => {
+  const sessionObject = JSON.parse(sessionJson);
+  const cognitoSession = new CognitoUserSession({
+    IdToken: new CognitoIdToken({ IdToken: sessionObject.idToken.jwtToken }),
+    AccessToken: new CognitoAccessToken({ AccessToken: sessionObject.accessToken.jwtToken }),
+    RefreshToken: new CognitoRefreshToken({ RefreshToken: sessionObject.refreshToken.token })
+  });
+  userDao.getUser(cognitoSession)
       .then((user: UserInfo): void => { done(null, user); })
       .catch((error: ErrorMessage): void => { done(error, null); });
 });

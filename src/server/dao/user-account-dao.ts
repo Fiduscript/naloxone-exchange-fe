@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import { CognitoUserSession } from 'amazon-cognito-identity-js';
 
 import { UserInfo } from '../../public/app/account/model/user-info';
 import { ErrorMessage } from '../../public/app/common/message-response';
@@ -8,7 +9,6 @@ const log = Logger.create(module);
 
 // map of login id to UserInfo.
 const USERS = {
-  '0': {id: '0', name: 'Test User', email: 'test@test.com'},
 };
 
 export class UserAccountDao {
@@ -25,13 +25,11 @@ export class UserAccountDao {
    * Gets user infomration for the login provided.
    * @param uuid
    */
-  public getUser(uuid: string): Promise<UserInfo> {
-    if (USERS[uuid] != null) {
-      return Promise.resolve(USERS[uuid]);
-    }
+  public getUser(session: CognitoUserSession): Promise<UserInfo> {
+    const idTokenPayload = session.getIdToken().decodePayload();
+    const userInfo = new UserInfo(idTokenPayload['name'], idTokenPayload['email']);
 
-    const msg: string = `Rejecting getUser: User \`${uuid}\` doesn't exist!`;
-    return Promise.reject(new ErrorMessage(msg));
+    return Promise.resolve(userInfo);
   }
 
   /**

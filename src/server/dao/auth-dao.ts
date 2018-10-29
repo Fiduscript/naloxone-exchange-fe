@@ -45,19 +45,15 @@ export class AuthDao {
     return new Promise((resolve, reject) => {
       cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: function(result) {
-          log.info("onSuccess called");
-          // TODO: figure out what session information we should be storing
-          const session: IUserSession = { userId: '0' };
+          const session: IUserSession = { cognitoSession: result };
           resolve(session);
         },
 
         onFailure: function(err) {
-          log.info("onFailure called");
           reject(new ErrorMessage("Failure: " + err.message));
         },
 
         newPasswordRequired: function(userAttributes, requiredAttributes) {
-          log.info("newPasswordRequired called")
           reject(new ErrorMessage("Password reset required but not yet implemented"))
         }
       });
