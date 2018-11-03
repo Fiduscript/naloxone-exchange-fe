@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthenticationDetails, CognitoUser, CognitoUserPool, CookieStorage } from 'amazon-cognito-identity-js';
+import { AuthenticationDetails, CognitoUser, CognitoUserPool, CognitoUserSession, CookieStorage } from 'amazon-cognito-identity-js';
 import * as _ from 'lodash';
 import { bindNodeCallback, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -97,6 +97,24 @@ export class AccountService extends FiduServiceBase {
       userInfo: UserInfo): Observable<SuccessMessage> {
     const body = { userCredentials, userInfo };
     return this.http.post<SuccessMessage>('/api/account/register', body);
+  }
+
+  public currentSession(): Observable<CognitoUserSession> {
+    const user = AccountService.userPool.getCurrentUser();
+
+    return Observable.create((observer) => {
+      if (user == null) {
+        observer.error("There is no logged-in user");
+      } else {
+        user.getSession(function(err, session) {
+          if (session != null) {
+            observer.next(session);
+          } else {
+            observer.error("Couldn't get active session");
+          }
+        });
+      }
+    });
   }
 
   public whoami(): Observable<UserInfo> {
