@@ -8,28 +8,71 @@ import { SuccessMessage } from '../common/message-response';
 import { IUserCredentials } from './model/user-credentials';
 import { UserInfo } from './model/user-info';
 
+import { AuthenticationDetails, CognitoUser, CognitoUserPool, CookieStorage } from 'amazon-cognito-identity-js';
+
 // XXX: consider renaming this service to UserAuthService
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService extends FiduServiceBase {
 
+  cookieStorage = new CookieStorage({
+    domain: window.location.hostname,
+    secure: window.location.protocol === "https:"
+  });
+
+  // This is the "customer-user-pool-test" user pool
+  // TODO: needs to be provided via config
+  userPool = new CognitoUserPool({
+    UserPoolId : 'us-east-2_ej6SB5BPr',
+    ClientId : '7dum3ivsqng75jdve4sc39tve4',
+    Storage: this.cookieStorage
+  });
+
   public constructor(private http: HttpClient) {
     super();
   }
 
   public login(loginForm: IUserCredentials): Observable<SuccessMessage> {
-    return this.http.post<SuccessMessage>('/api/account/login', loginForm).pipe(
-      this.deserialize(SuccessMessage),
-      this.logErrors()
-    );
+    const authenticationDetails = new AuthenticationDetails({
+        Username : loginForm.username,
+        Password : loginForm.password
+    });
+
+    const cognitoUser = new CognitoUser({
+        Username : loginForm.username,
+        Pool : this.userPool,
+        Storage: this.cookieStorage
+    });
+
+    return Observable.create((observer) => {
+      cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: (result) => {
+          observer.next(new SuccessMessage('Successfully logged in'));
+        },
+
+        onFailure: (err) => {
+          observer.error(new Error("Failure: " + err.message));
+        },
+
+        newPasswordRequired: (userAttributes, requiredAttributes) => {
+          observer.error(new Error("Password reset required but not yet implemented"));
+        }
+      });
+    });
   }
 
   public logout(): Observable<SuccessMessage> {
-    return this.http.delete<SuccessMessage>('/api/account/logout').pipe(
-      this.deserialize(SuccessMessage),
-      this.logErrors()
-    );
+    const user = this.userPool.getCurrentUser();
+
+    return Observable.create((observer) => {
+      if (user != null) {
+        user.signOut();
+        observer.next(new SuccessMessage('Sucessfully logged out.'));
+      } else {
+        observer.next(new SuccessMessage('Already logged out.'));
+      }
+    });
   }
 
   public register(
@@ -40,16 +83,23 @@ export class AccountService extends FiduServiceBase {
   }
 
   public whoami(): Observable<UserInfo> {
-    const key: string = '/api/account/whoami';
-    if (this.hasMemo(key)) {
-      return this.getMemoized(key);
-    }
+    const user = this.userPool.getCurrentUser();
 
-    return this.http.get<UserInfo>(key).pipe(
-      this.deserialize(UserInfo),
-      this.memoizeResult(key),
-      this.logErrors()
-    );
+    return Observable.create((observer) => {
+      if (user == null) {
+        observer.next(new UserInfo());
+      } else {
+        user.getSession(function(err, session) {
+          if (session != null) {
+            const userIdPayload = session.getIdToken().decodePayload();
+            observer.next(new UserInfo(userIdPayload['name'], "", userIdPayload['email']));
+          } else {
+            console.log("Couldn't get current session: " + err);
+            observer.next(new UserInfo());
+          }
+        });
+      }
+    });
   }
 
 }

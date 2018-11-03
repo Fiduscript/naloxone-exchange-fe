@@ -41,9 +41,9 @@ export class LoginComponent implements OnInit {
 
     this.service.login(this.loginForm.value).subscribe(
       (): void => { window.location.replace(this.returnRoute); },
-      (error: HttpErrorResponse): void => {
+      (error: Error): void => {
         this.loginForm.get('password').reset();
-        this.error = error.error.message;
+        this.error = error.message;
       }
     );
   }
