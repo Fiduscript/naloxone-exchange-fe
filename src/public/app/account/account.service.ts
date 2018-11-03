@@ -8,7 +8,7 @@ import { SuccessMessage } from '../common/message-response';
 import { IUserCredentials } from './model/user-credentials';
 import { UserInfo } from './model/user-info';
 
-import { AuthenticationDetails, CognitoUser, CognitoUserPool, CookieStorage } from 'amazon-cognito-identity-js';
+import { AuthenticationDetails, CognitoUser, CognitoUserSession, CognitoUserPool, CookieStorage } from 'amazon-cognito-identity-js';
 
 // XXX: consider renaming this service to UserAuthService
 @Injectable({
@@ -82,6 +82,24 @@ export class AccountService extends FiduServiceBase {
     return this.http.post<SuccessMessage>('/api/account/register', body);
   }
 
+  public currentSession(): Observable<CognitoUserSession> {
+    const user = this.userPool.getCurrentUser();
+
+    return Observable.create((observer) => {
+      if (user == null) {
+        observer.error("There is no logged-in user");
+      } else {
+        user.getSession(function(err, session) {
+          if (session != null) {
+            observer.next(session);
+          } else {
+            observer.error("Couldn't get active session");
+          }
+        });
+      }
+    });
+  }
+
   public whoami(): Observable<UserInfo> {
     const user = this.userPool.getCurrentUser();
 
@@ -92,7 +110,7 @@ export class AccountService extends FiduServiceBase {
         user.getSession(function(err, session) {
           if (session != null) {
             const userIdPayload = session.getIdToken().decodePayload();
-            observer.next(new UserInfo(userIdPayload['name'], "", userIdPayload['email']));
+            observer.next(UserInfo.fromIDToken(userIdPayload));
           } else {
             console.log("Couldn't get current session: " + err);
             observer.next(new UserInfo());

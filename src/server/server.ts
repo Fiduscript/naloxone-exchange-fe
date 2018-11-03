@@ -3,17 +3,16 @@ import * as cookieParser from 'cookie-parser';
 import * as errorHandler from 'errorhandler';
 import * as express from 'express';
 import { Application, NextFunction, Request, Response } from 'express';
-import * as session from 'express-session';
 import * as _ from 'lodash';
 import * as methodOverride from 'method-override';
-import * as moment from 'moment';
 import * as requestLogger from 'morgan';
-import * as passport from 'passport';
 import * as path from 'path';
+import * as CognitoExpress from 'cognito-express';
 
 import { ApiRouter } from './routes/api.router';
 import { Env } from './util/env';
 import { Logger } from './util/logger';
+import { UserInfo } from '../public/app/account/model/user-info';
 
 const log = Logger.create(module);
 
@@ -23,6 +22,13 @@ const log = Logger.create(module);
  */
 export class Server {
   private static readonly root: string = path.join(__dirname, '../../../public/naloxone-exchange');
+
+  private static readonly cognitoExpress = new CognitoExpress({
+    // TODO: get these from configuration
+    region: "us-east-2",
+    cognitoUserPoolId: "us-east-2_ej6SB5BPr",
+    tokenUse: "id"
+  });
 
   public app: Application;
 
@@ -76,17 +82,26 @@ export class Server {
     if (Env.isProd()) {
       this.app.set('trust proxy', 1);
     }
-    this.app.use(session({
-      secret: '93cf678bdc0927fa9425fc4cf273b716',
-      resave: false,
-      saveUninitialized: false,
-      cookie: {
-        secure: Env.isProd(),
-        maxAge: moment.duration(1, 'day').asMilliseconds()
+
+    // Validate Cognito session token if provided in the request
+    this.app.use((req, res, next) => {
+      const authToken = req.headers.authorization;
+
+      if (authToken) {
+        Server.cognitoExpress.validate(authToken, (err, response) => {
+          if (response != null) {
+            res.locals.user = UserInfo.fromIDToken(response);
+            console.log("Authenticated request from user " + response['cognito:username']);
+          } else {
+            console.log("Couldn't validate auth token: " + err);
+          }
+        });
+      } else {
+        console.log("No auth token provided in request");
       }
-    }));
-    this.app.use(passport.initialize());
-    this.app.use(passport.session());
+
+      next();
+    });
 
     // use override middlware
     this.app.use(methodOverride());

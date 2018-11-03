@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,6 +15,7 @@ import { HomeModule } from './home/home.module';
 import { PharmacyModule } from './pharmacy/pharmacy.module';
 import { TrainingComponent } from './training/training.component';
 import { UpdateSubscriberModule } from './update-subscriber/update-subscriber.module';
+import { AuthorizationInterceptor } from './util/authorization-interceptor';
 
 @NgModule({
   imports: [
@@ -39,7 +40,11 @@ import { UpdateSubscriberModule } from './update-subscriber/update-subscriber.mo
     AppComponent,
     TrainingComponent
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthorizationInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
