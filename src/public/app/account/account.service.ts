@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators';
 import { FiduServiceBase } from '../common/fidu-service-base';
 import { SuccessMessage } from '../common/message-response';
 import { IUserCredentials } from './model/user-credentials';
+import { IUserConfirmation } from './model/user-confirmation';
 import { UserInfo } from './model/user-info';
 
 // XXX: consider renaming this service to UserAuthService
@@ -40,11 +41,7 @@ export class AccountService extends FiduServiceBase {
         Password : loginForm.password
     });
 
-    const cognitoUser = new CognitoUser({
-        Username : loginForm.username,
-        Pool : AccountService.userPool,
-        Storage: AccountService.cookieStorage
-    });
+    const cognitoUser = this.createCognitoUser(loginForm.username);
 
     return Observable.create((observer) => {
       cognitoUser.authenticateUser(authenticationDetails, {
@@ -119,6 +116,20 @@ export class AccountService extends FiduServiceBase {
     });
   }
 
+  public confirm(confirmForm: IUserConfirmation): Observable<SuccessMessage> {
+    const cognitoUser = this.createCognitoUser(confirmForm.username);
+
+    return Observable.create((observer) => {
+      cognitoUser.confirmRegistration(confirmForm.code, true, (err, result) => {
+        if (err) {
+          observer.error(err);
+        }
+
+        observer.next(new SuccessMessage("Successfully confirmed user!"));
+      });
+    });
+  }
+
   public currentSession(): Observable<CognitoUserSession> {
     const user = AccountService.userPool.getCurrentUser();
 
@@ -152,6 +163,14 @@ export class AccountService extends FiduServiceBase {
       }),
       this.logErrors()
     );
+  }
+
+  private createCognitoUser(username: string): CognitoUser {
+    return new CognitoUser({
+      Username : username,
+      Pool : AccountService.userPool,
+      Storage: AccountService.cookieStorage
+    });
   }
 
 }
