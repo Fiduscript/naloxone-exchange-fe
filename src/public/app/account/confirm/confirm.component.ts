@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { AccountService } from '../account.service';
 
@@ -16,7 +16,7 @@ export class ConfirmComponent implements OnInit {
 
   public constructor(
       private fb: FormBuilder,
-      private route: ActivatedRoute,
+      private router: Router,
       private service: AccountService) {
     this.confirmForm = this.fb.group({
       username: ['', Validators.required],
@@ -32,7 +32,7 @@ export class ConfirmComponent implements OnInit {
     }
 
     this.service.confirm(this.confirmForm.value).subscribe(
-      (): void => { window.location.replace('/account/login'); },
+      (): void => { this.router.navigate(['/account/login']); },
       (error: Error): void => {
         this.error = error.message;
       }
