@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthenticationDetails, CognitoUser, CognitoUserPool, CognitoUserSession, CookieStorage } from 'amazon-cognito-identity-js';
+import { AuthenticationDetails, CognitoUser, CognitoUserAttribute, 
+  CognitoUserPool, CognitoUserSession, CookieStorage } from 'amazon-cognito-identity-js';
 import * as _ from 'lodash';
 import { bindNodeCallback, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -95,8 +96,27 @@ export class AccountService extends FiduServiceBase {
   public register(
       userCredentials: IUserCredentials,
       userInfo: UserInfo): Observable<SuccessMessage> {
-    const body = { userCredentials, userInfo };
-    return this.http.post<SuccessMessage>('/api/account/register', body);
+
+    const attributes = [
+      new CognitoUserAttribute({
+        Name: 'name',
+        Value: userInfo.firstName
+      }),
+      new CognitoUserAttribute({
+        Name: 'email',
+        Value: userInfo.email
+      })
+    ];
+
+    return Observable.create((observer) => {
+      AccountService.userPool.signUp(userCredentials.username, userCredentials.password, attributes, null, (err, result) => {
+        if (err) {
+          observer.error(err);
+        }
+
+        observer.next(new SuccessMessage("Successfully registered user!"));
+      });
+    });
   }
 
   public currentSession(): Observable<CognitoUserSession> {
