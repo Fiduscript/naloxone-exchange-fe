@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AuthenticationDetails, CognitoUser, CognitoUserPool, CookieStorage } from 'amazon-cognito-identity-js';
 import * as _ from 'lodash';
-import { Observable } from 'rxjs';
+import { bindNodeCallback, Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { FiduServiceBase } from '../common/fidu-service-base';
 import { SuccessMessage } from '../common/message-response';
 import { IUserCredentials } from './model/user-credentials';
 import { UserInfo } from './model/user-info';
-
-import { AuthenticationDetails, CognitoUser, CognitoUserPool, CookieStorage } from 'amazon-cognito-identity-js';
 
 // XXX: consider renaming this service to UserAuthService
 @Injectable({
@@ -16,17 +16,17 @@ import { AuthenticationDetails, CognitoUser, CognitoUserPool, CookieStorage } fr
 })
 export class AccountService extends FiduServiceBase {
 
-  cookieStorage = new CookieStorage({
+  private static readonly cookieStorage = new CookieStorage({
     domain: window.location.hostname,
-    secure: window.location.protocol === "https:"
+    secure: window.location.protocol === 'https:'
   });
 
   // This is the "customer-user-pool-test" user pool
   // TODO: needs to be provided via config
-  userPool = new CognitoUserPool({
+  private static readonly userPool = new CognitoUserPool({
     UserPoolId : 'us-east-2_ej6SB5BPr',
     ClientId : '7dum3ivsqng75jdve4sc39tve4',
-    Storage: this.cookieStorage
+    Storage: AccountService.cookieStorage
   });
 
   public constructor(private http: HttpClient) {
@@ -41,8 +41,8 @@ export class AccountService extends FiduServiceBase {
 
     const cognitoUser = new CognitoUser({
         Username : loginForm.username,
-        Pool : this.userPool,
-        Storage: this.cookieStorage
+        Pool : AccountService.userPool,
+        Storage: AccountService.cookieStorage
     });
 
     return Observable.create((observer) => {
@@ -52,27 +52,44 @@ export class AccountService extends FiduServiceBase {
         },
 
         onFailure: (err) => {
-          observer.error(new Error("Failure: " + err.message));
+          observer.error(err);
         },
 
         newPasswordRequired: (userAttributes, requiredAttributes) => {
-          observer.error(new Error("Password reset required but not yet implemented"));
+          observer.error(new Error('Password reset required but not yet implemented'));
+        },
+
+        mfaRequired: (challengeName, challengeParameters) => {
+          observer.error(new Error('MFA required but not yet implemented'));
+        },
+
+        totpRequired: (challengeName, challengeParameters) => {
+          observer.error(new Error('TOTP required but not yet implemented'));
+        },
+
+        mfaSetup: (challengeName, challengeParameters) => {
+          observer.error(new Error('MFA setup required but not yet implemented'));
+        },
+
+        selectMFAType: (challengeName, challengeParameters) => {
+          observer.error(new Error('Select MFA type required but not yet implemented'));
         }
       });
-    });
+    }).pipe(this.logErrors());
   }
 
   public logout(): Observable<SuccessMessage> {
-    const user = this.userPool.getCurrentUser();
+    const user = AccountService.userPool.getCurrentUser();
+    let message: string;
 
-    return Observable.create((observer) => {
-      if (user != null) {
-        user.signOut();
-        observer.next(new SuccessMessage('Sucessfully logged out.'));
-      } else {
-        observer.next(new SuccessMessage('Already logged out.'));
-      }
-    });
+    if (user == null) {
+      message = 'Already logged out.';
+    } else {
+      user.signOut();
+      message = 'Sucessfully logged out.';
+    }
+
+    return of(new SuccessMessage(message));
   }
 
   public register(
@@ -83,23 +100,20 @@ export class AccountService extends FiduServiceBase {
   }
 
   public whoami(): Observable<UserInfo> {
-    const user = this.userPool.getCurrentUser();
+    const user = AccountService.userPool.getCurrentUser();
 
-    return Observable.create((observer) => {
-      if (user == null) {
-        observer.next(new UserInfo());
-      } else {
-        user.getSession(function(err, session) {
-          if (session != null) {
-            const userIdPayload = session.getIdToken().decodePayload();
-            observer.next(new UserInfo(userIdPayload['name'], "", userIdPayload['email']));
-          } else {
-            console.log("Couldn't get current session: " + err);
-            observer.next(new UserInfo());
-          }
-        });
-      }
-    });
+    if (user == null) {
+      return of(new UserInfo());
+    }
+
+    return bindNodeCallback(user.getSession.bind(user))().pipe(
+      map((session: any) => {
+        if (session == null) { return new UserInfo(); }
+        const userIdPayload = session.getIdToken().decodePayload();
+        return new UserInfo(userIdPayload['name'], '', userIdPayload['email']);
+      }),
+      this.logErrors()
+    );
   }
 
 }
