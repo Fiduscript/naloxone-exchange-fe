@@ -24,7 +24,7 @@ import { UpdateSubscriberModule } from './update-subscriber/update-subscriber.mo
     BrowserModule,
     FormsModule,
     HomeModule,
-    NgbModule.forRoot(),
+    NgbModule,
     AccountModule,
     BuyModule,
     PharmacyModule,
