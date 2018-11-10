@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AuthenticationDetails, CognitoUser, CognitoUserPool, CookieStorage } from 'amazon-cognito-identity-js';
 import * as _ from 'lodash';
-import { Observable } from 'rxjs';
+import { bindNodeCallback, Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { FiduServiceBase } from '../common/fidu-service-base';
 import { SuccessMessage } from '../common/message-response';
@@ -14,22 +16,80 @@ import { UserInfo } from './model/user-info';
 })
 export class AccountService extends FiduServiceBase {
 
+  private static readonly cookieStorage = new CookieStorage({
+    domain: window.location.hostname,
+    secure: window.location.protocol === 'https:'
+  });
+
+  // This is the "customer-user-pool-test" user pool
+  // TODO: needs to be provided via config
+  private static readonly userPool = new CognitoUserPool({
+    UserPoolId : 'us-east-2_ej6SB5BPr',
+    ClientId : '7dum3ivsqng75jdve4sc39tve4',
+    Storage: AccountService.cookieStorage
+  });
+
   public constructor(private http: HttpClient) {
     super();
   }
 
   public login(loginForm: IUserCredentials): Observable<SuccessMessage> {
-    return this.http.post<SuccessMessage>('/api/account/login', loginForm).pipe(
-      this.deserialize(SuccessMessage),
-      this.logErrors()
-    );
+    const authenticationDetails = new AuthenticationDetails({
+        Username : loginForm.username,
+        Password : loginForm.password
+    });
+
+    const cognitoUser = new CognitoUser({
+        Username : loginForm.username,
+        Pool : AccountService.userPool,
+        Storage: AccountService.cookieStorage
+    });
+
+    return Observable.create((observer) => {
+      cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: (result) => {
+          observer.next(new SuccessMessage('Successfully logged in'));
+        },
+
+        onFailure: (err) => {
+          observer.error(err);
+        },
+
+        newPasswordRequired: (userAttributes, requiredAttributes) => {
+          observer.error(new Error('Password reset required but not yet implemented'));
+        },
+
+        mfaRequired: (challengeName, challengeParameters) => {
+          observer.error(new Error('MFA required but not yet implemented'));
+        },
+
+        totpRequired: (challengeName, challengeParameters) => {
+          observer.error(new Error('TOTP required but not yet implemented'));
+        },
+
+        mfaSetup: (challengeName, challengeParameters) => {
+          observer.error(new Error('MFA setup required but not yet implemented'));
+        },
+
+        selectMFAType: (challengeName, challengeParameters) => {
+          observer.error(new Error('Select MFA type required but not yet implemented'));
+        }
+      });
+    }).pipe(this.logErrors());
   }
 
   public logout(): Observable<SuccessMessage> {
-    return this.http.delete<SuccessMessage>('/api/account/logout').pipe(
-      this.deserialize(SuccessMessage),
-      this.logErrors()
-    );
+    const user = AccountService.userPool.getCurrentUser();
+    let message: string;
+
+    if (user == null) {
+      message = 'Already logged out.';
+    } else {
+      user.signOut();
+      message = 'Sucessfully logged out.';
+    }
+
+    return of(new SuccessMessage(message));
   }
 
   public register(
@@ -40,14 +100,18 @@ export class AccountService extends FiduServiceBase {
   }
 
   public whoami(): Observable<UserInfo> {
-    const key: string = '/api/account/whoami';
-    if (this.hasMemo(key)) {
-      return this.getMemoized(key);
+    const user = AccountService.userPool.getCurrentUser();
+
+    if (user == null) {
+      return of(new UserInfo());
     }
 
-    return this.http.get<UserInfo>(key).pipe(
-      this.deserialize(UserInfo),
-      this.memoizeResult(key),
+    return bindNodeCallback(user.getSession.bind(user))().pipe(
+      map((session: any) => {
+        if (session == null) { return new UserInfo(); }
+        const userIdPayload = session.getIdToken().decodePayload();
+        return new UserInfo(userIdPayload['name'], '', userIdPayload['email']);
+      }),
       this.logErrors()
     );
   }
