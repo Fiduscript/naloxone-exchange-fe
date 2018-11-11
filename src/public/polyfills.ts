@@ -81,4 +81,7 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 import './icons';
 
 // https://github.com/aws-amplify/amplify-js/issues/678
-(window as any).global = window;
+// but do not perform this linking during tests as it breaks them
+if ((window as any).__karma__ == null) {
+  (window as any).global = window;
+}

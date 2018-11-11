@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { LOCATION } from '../util/window-injections';
 import { AccountRoutingModule } from './account-routing.module';
 import { AccountService } from './account.service';
 import { LoginComponent } from './login/login.component';
@@ -25,7 +26,8 @@ import { UserAuthGuard } from './user/user-auth.guard';
   ],
   providers: [
     AccountService,
-    UserAuthGuard
+    UserAuthGuard,
+    {provide: LOCATION, useValue: window.location}
   ],
   declarations: [
     LoginComponent,
