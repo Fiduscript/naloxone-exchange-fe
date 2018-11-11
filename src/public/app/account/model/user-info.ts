@@ -22,6 +22,10 @@ export class UserInfo {
     this.email = email;
   }
 
+  public static fromIDToken(idToken: Object): UserInfo {
+    return new UserInfo(idToken['name'], '', idToken['email']);
+  }
+
   public hasName(): boolean {
     return !_.isEmpty(this.firstName);
   }

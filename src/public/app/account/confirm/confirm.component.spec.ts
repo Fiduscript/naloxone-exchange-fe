@@ -4,18 +4,16 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { Mock } from 'ts-mocks';
 
-import { LOCATION } from '../../util/window-injections';
-import { LoginComponent } from './login.component';
+import { ConfirmComponent } from './confirm.component';
 
-describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
+describe('ConfirmComponent', () => {
+  let component: ConfirmComponent;
+  let fixture: ComponentFixture<ConfirmComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginComponent ],
+      declarations: [ ConfirmComponent ],
       imports: [
         BrowserModule,
         FormsModule,
@@ -24,15 +22,14 @@ describe('LoginComponent', () => {
         RouterModule.forRoot([]),
       ],
       providers: [
-        {provide: APP_BASE_HREF, useValue: '/account/login'},
-        {provide: LOCATION, useValue: new Mock<Location>()}
+        {provide: APP_BASE_HREF, useValue: '/account/confirm'}
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
+    fixture = TestBed.createComponent(ConfirmComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

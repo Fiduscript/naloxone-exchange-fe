@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthenticationDetails, CognitoUser, CognitoUserPool, CookieStorage } from 'amazon-cognito-identity-js';
+import { AuthenticationDetails, CognitoUser, CognitoUserAttribute,
+  CognitoUserPool, CognitoUserSession, CookieStorage } from 'amazon-cognito-identity-js';
 import * as _ from 'lodash';
-import { bindNodeCallback, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { bindNodeCallback, Observable, of, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import { FiduServiceBase } from '../common/fidu-service-base';
 import { SuccessMessage } from '../common/message-response';
+import { IUserConfirmation } from './model/user-confirmation';
 import { IUserCredentials } from './model/user-credentials';
 import { UserInfo } from './model/user-info';
 
@@ -39,11 +41,7 @@ export class AccountService extends FiduServiceBase {
         Password : loginForm.password
     });
 
-    const cognitoUser = new CognitoUser({
-        Username : loginForm.username,
-        Pool : AccountService.userPool,
-        Storage: AccountService.cookieStorage
-    });
+    const cognitoUser = this.createCognitoUser(loginForm.username);
 
     return Observable.create((observer) => {
       cognitoUser.authenticateUser(authenticationDetails, {
@@ -95,25 +93,73 @@ export class AccountService extends FiduServiceBase {
   public register(
       userCredentials: IUserCredentials,
       userInfo: UserInfo): Observable<SuccessMessage> {
-    const body = { userCredentials, userInfo };
-    return this.http.post<SuccessMessage>('/api/account/register', body);
+
+    const attributes = [
+      new CognitoUserAttribute({
+        Name: 'name',
+        Value: userInfo.firstName
+      }),
+      new CognitoUserAttribute({
+        Name: 'email',
+        Value: userInfo.email
+      })
+    ];
+
+    return Observable.create((observer) => {
+      AccountService.userPool.signUp(userCredentials.username, userCredentials.password, attributes, null, (err, result) => {
+        if (err) {
+          observer.error(err);
+        }
+
+        observer.next(new SuccessMessage('Successfully registered user!'));
+      });
+    }).pipe(this.logErrors());
   }
 
-  public whoami(): Observable<UserInfo> {
-    const user = AccountService.userPool.getCurrentUser();
+  public confirm(confirmForm: IUserConfirmation): Observable<SuccessMessage> {
+    const cognitoUser = this.createCognitoUser(confirmForm.username);
+
+    return Observable.create((observer) => {
+      cognitoUser.confirmRegistration(confirmForm.code, true, (err, result) => {
+        if (err) {
+          observer.error(err);
+        }
+
+        observer.next(new SuccessMessage('Successfully confirmed user!'));
+      });
+    }).pipe(this.logErrors());
+  }
+
+  public currentSession(): Observable<CognitoUserSession> {
+    const user: CognitoUser = AccountService.userPool.getCurrentUser();
 
     if (user == null) {
-      return of(new UserInfo());
+      return throwError('There is no logged-in user');
     }
 
     return bindNodeCallback(user.getSession.bind(user))().pipe(
-      map((session: any) => {
+      map((session: any) => session),
+      this.logErrors()
+    );
+  }
+
+  public whoami(): Observable<UserInfo> {
+    return this.currentSession().pipe(
+      map((session) => {
         if (session == null) { return new UserInfo(); }
         const userIdPayload = session.getIdToken().decodePayload();
         return new UserInfo(userIdPayload['name'], '', userIdPayload['email']);
       }),
-      this.logErrors()
+      catchError((error) => of(new UserInfo()))
     );
+  }
+
+  private createCognitoUser(username: string): CognitoUser {
+    return new CognitoUser({
+      Username : username,
+      Pool : AccountService.userPool,
+      Storage: AccountService.cookieStorage
+    });
   }
 
 }
