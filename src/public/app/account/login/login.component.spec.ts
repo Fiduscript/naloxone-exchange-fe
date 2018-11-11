@@ -4,7 +4,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { Mock } from 'ts-mocks';
 
+import { LOCATION } from '../../util/window-injections';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
@@ -22,7 +24,8 @@ describe('LoginComponent', () => {
         RouterModule.forRoot([]),
       ],
       providers: [
-        {provide: APP_BASE_HREF, useValue: '/account/login'}
+        {provide: APP_BASE_HREF, useValue: '/account/login'},
+        {provide: LOCATION, useValue: new Mock<Location>()}
       ]
     })
     .compileComponents();

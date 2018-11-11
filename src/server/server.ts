@@ -1,4 +1,5 @@
 import * as bodyParser from 'body-parser';
+import * as CognitoExpress from 'cognito-express';
 import * as cookieParser from 'cookie-parser';
 import * as errorHandler from 'errorhandler';
 import * as express from 'express';
@@ -7,12 +8,11 @@ import * as _ from 'lodash';
 import * as methodOverride from 'method-override';
 import * as requestLogger from 'morgan';
 import * as path from 'path';
-import * as CognitoExpress from 'cognito-express';
 
+import { UserInfo } from '../public/app/account/model/user-info';
 import { ApiRouter } from './routes/api.router';
 import { Env } from './util/env';
 import { Logger } from './util/logger';
-import { UserInfo } from '../public/app/account/model/user-info';
 
 const log = Logger.create(module);
 
@@ -25,9 +25,9 @@ export class Server {
 
   private static readonly cognitoExpress = new CognitoExpress({
     // TODO: get these from configuration
-    region: "us-east-2",
-    cognitoUserPoolId: "us-east-2_ej6SB5BPr",
-    tokenUse: "id"
+    region: 'us-east-2',
+    cognitoUserPoolId: 'us-east-2_ej6SB5BPr',
+    tokenUse: 'id'
   });
 
   public app: Application;

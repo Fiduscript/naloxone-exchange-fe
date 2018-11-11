@@ -113,7 +113,7 @@ export class AccountService extends FiduServiceBase {
 
         observer.next(new SuccessMessage('Successfully registered user!'));
       });
-    });
+    }).pipe(this.logErrors());
   }
 
   public confirm(confirmForm: IUserConfirmation): Observable<SuccessMessage> {
@@ -127,7 +127,7 @@ export class AccountService extends FiduServiceBase {
 
         observer.next(new SuccessMessage('Successfully confirmed user!'));
       });
-    });
+    }).pipe(this.logErrors());
   }
 
   public currentSession(): Observable<CognitoUserSession> {
