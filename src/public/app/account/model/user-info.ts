@@ -22,11 +22,11 @@ export class UserInfo {
     this.email = email;
   }
 
-  public hasName(): boolean {
-    return !_.isEmpty(this.firstName);
+  public static fromIDToken(idToken: Object): UserInfo {
+    return new UserInfo(idToken['name'], '', idToken['email']);
   }
 
-  public static fromIDToken(idToken: string): UserInfo {
-    return new UserInfo(idToken['name'], "", idToken['email']);
+  public hasName(): boolean {
+    return !_.isEmpty(this.firstName);
   }
 }

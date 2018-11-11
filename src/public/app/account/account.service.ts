@@ -1,15 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthenticationDetails, CognitoUser, CognitoUserAttribute, 
+import { AuthenticationDetails, CognitoUser, CognitoUserAttribute,
   CognitoUserPool, CognitoUserSession, CookieStorage } from 'amazon-cognito-identity-js';
 import * as _ from 'lodash';
-import { bindNodeCallback, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { bindNodeCallback, Observable, of, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import { FiduServiceBase } from '../common/fidu-service-base';
 import { SuccessMessage } from '../common/message-response';
-import { IUserCredentials } from './model/user-credentials';
 import { IUserConfirmation } from './model/user-confirmation';
+import { IUserCredentials } from './model/user-credentials';
 import { UserInfo } from './model/user-info';
 
 // XXX: consider renaming this service to UserAuthService
@@ -111,7 +111,7 @@ export class AccountService extends FiduServiceBase {
           observer.error(err);
         }
 
-        observer.next(new SuccessMessage("Successfully registered user!"));
+        observer.next(new SuccessMessage('Successfully registered user!'));
       });
     });
   }
@@ -125,43 +125,32 @@ export class AccountService extends FiduServiceBase {
           observer.error(err);
         }
 
-        observer.next(new SuccessMessage("Successfully confirmed user!"));
+        observer.next(new SuccessMessage('Successfully confirmed user!'));
       });
     });
   }
 
   public currentSession(): Observable<CognitoUserSession> {
-    const user = AccountService.userPool.getCurrentUser();
-
-    return Observable.create((observer) => {
-      if (user == null) {
-        observer.error("There is no logged-in user");
-      } else {
-        user.getSession(function(err, session) {
-          if (session != null) {
-            observer.next(session);
-          } else {
-            observer.error("Couldn't get active session");
-          }
-        });
-      }
-    });
-  }
-
-  public whoami(): Observable<UserInfo> {
-    const user = AccountService.userPool.getCurrentUser();
+    const user: CognitoUser = AccountService.userPool.getCurrentUser();
 
     if (user == null) {
-      return of(new UserInfo());
+      return throwError('There is no logged-in user');
     }
 
     return bindNodeCallback(user.getSession.bind(user))().pipe(
-      map((session: any) => {
+      map((session: any) => session),
+      this.logErrors()
+    );
+  }
+
+  public whoami(): Observable<UserInfo> {
+    return this.currentSession().pipe(
+      map((session) => {
         if (session == null) { return new UserInfo(); }
         const userIdPayload = session.getIdToken().decodePayload();
         return new UserInfo(userIdPayload['name'], '', userIdPayload['email']);
       }),
-      this.logErrors()
+      catchError((error) => of(new UserInfo()))
     );
   }
 

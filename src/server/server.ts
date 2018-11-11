@@ -91,13 +91,13 @@ export class Server {
         Server.cognitoExpress.validate(authToken, (err, response) => {
           if (response != null) {
             res.locals.user = UserInfo.fromIDToken(response);
-            console.log("Authenticated request from user " + response['cognito:username']);
+            log.audit(`Authenticated request to ${req.originalUrl} from user ${response['cognito:username']}`);
           } else {
-            console.log("Couldn't validate auth token: " + err);
+            log.audit(`Couldn't validate auth token in request to ${req.originalUrl}: ${err.message}`);
           }
         });
       } else {
-        console.log("No auth token provided in request");
+        log.audit(`No auth token provided in request to ${req.originalUrl}`);
       }
 
       next();

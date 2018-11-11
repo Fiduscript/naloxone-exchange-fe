@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { ConfirmComponent } from './confirm/confirm.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { RegisterComponent } from './register/register.component';
-import { ConfirmComponent } from './confirm/confirm.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { UserAuthGuard } from './user/user-auth.guard';
 
