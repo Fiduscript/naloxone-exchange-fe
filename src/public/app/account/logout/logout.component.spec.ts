@@ -1,6 +1,8 @@
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Mock } from 'ts-mocks';
 
+import { LOCATION } from '../../util/window-injections';
 import { LogoutComponent } from './logout.component';
 
 describe('LogoutComponent', () => {
@@ -12,6 +14,9 @@ describe('LogoutComponent', () => {
       declarations: [ LogoutComponent ],
       imports: [
         HttpClientModule
+      ],
+      providers: [
+        {provide: LOCATION, useValue: new Mock<Location>()}
       ]
     })
     .compileComponents();
