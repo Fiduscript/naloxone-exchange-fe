@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from '../account.service';
 
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatchValidator } from 'src/common/validator/match-validator';
 import { StrongPasswordValidator } from 'src/common/validator/strong-password-validator';
+import { LOCATION } from '../../util/window-injections';
 import { IUserCredentials } from '../model/user-credentials';
 import { UserInfo } from '../model/user-info';
 
@@ -19,6 +20,7 @@ export class RegisterComponent implements OnInit {
   public error: string = null;
 
   constructor(
+      @Inject(LOCATION) private location: Location,
       private fb: FormBuilder,
       private service: AccountService) {
     this.registerForm = this.fb.group({
@@ -50,7 +52,7 @@ export class RegisterComponent implements OnInit {
         this.registerForm.get('email').value);
 
     this.service.register(userCreds, userInfo).subscribe(
-      (): void => { window.location.replace('/account/login'); },
+      (): void => { this.location.replace('/account/login'); },
       (error: HttpErrorResponse): void => {
         this.error = error.error.message;
       }
