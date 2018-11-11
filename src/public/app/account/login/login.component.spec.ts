@@ -24,7 +24,7 @@ describe('LoginComponent', () => {
       ],
       providers: [
         {provide: APP_BASE_HREF, useValue: '/account/login'},
-        {provide: LOCATION, useValue: {replace: () => {}}}
+        {provide: LOCATION, useValue: {replace: (location: string) => {}}}
       ]
     })
     .compileComponents();
