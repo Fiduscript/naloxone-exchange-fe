@@ -31,7 +31,7 @@ export class ConfirmComponent implements OnInit {
       return;
     }
 
-    this.service.confirm(this.confirmForm.value).subscribe(
+    this.service.confirmRegistration(this.confirmForm.value).subscribe(
       (): void => { this.router.navigate(['/account/login']); },
       (error: Error): void => {
         this.error = error.message;

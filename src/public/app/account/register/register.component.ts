@@ -42,13 +42,13 @@ export class RegisterComponent implements OnInit {
     const userCreds: IUserCredentials = {
       username: this.registerForm.get('email').value,
       password: this.registerForm.get('password').value,
-      confirmPassword: this.registerForm.get('confirmPassword').value,
     };
 
-    const userInfo: UserInfo = new UserInfo(
-        this.registerForm.get('firstName').value,
-        this.registerForm.get('lastName').value,
-        this.registerForm.get('email').value);
+    const userInfo: UserInfo = new UserInfo({
+        name: `${this.registerForm.get('firstName').value} ${this.registerForm.get('lastName').value}`  ,
+        email: this.registerForm.get('email').value,
+        privacyAgreement: 'v(-1)' // TODO: implement
+    });
 
     this.service.register(userCreds, userInfo).subscribe(
       (): void => { this.router.navigate(['/account/confirm']); },

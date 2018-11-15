@@ -1,9 +1,8 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CognitoUserSession } from 'amazon-cognito-identity-js';
-import { of } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
-import { catchError, map, mergeAll } from 'rxjs/operators';
+import { map, mergeAll } from 'rxjs/operators';
 
 import { AccountService } from '../account/account.service';
 
@@ -14,13 +13,16 @@ export class AuthorizationInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return this.accountService.currentSession().pipe(
-      map((session: CognitoUserSession) => {
+      map((session?: CognitoUserSession) => {
+        if (session == null) {
+          return next.handle(req);
+        }
+
         const authToken = session.getIdToken().getJwtToken();
         const clonedRequest = req.clone({ setHeaders: { Authorization: authToken } });
 
         return next.handle(clonedRequest);
       }),
-      catchError(err => of(next.handle(req))),
       mergeAll()
     );
   }

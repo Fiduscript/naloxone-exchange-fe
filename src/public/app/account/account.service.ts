@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthenticationDetails, CognitoUser, CognitoUserAttribute,
-  CognitoUserPool, CognitoUserSession, CookieStorage } from 'amazon-cognito-identity-js';
+import { AuthenticationDetails, CognitoUser, CognitoUserPool,
+    CognitoUserSession, CookieStorage, ISignUpResult } from 'amazon-cognito-identity-js';
 import * as _ from 'lodash';
-import { bindNodeCallback, Observable, of, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { bindNodeCallback, Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { FiduServiceBase } from '../common/fidu-service-base';
 import { SuccessMessage } from '../common/message-response';
@@ -12,7 +12,6 @@ import { IUserConfirmation } from './model/user-confirmation';
 import { IUserCredentials } from './model/user-credentials';
 import { UserInfo } from './model/user-info';
 
-// XXX: consider renaming this service to UserAuthService
 @Injectable({
   providedIn: 'root'
 })
@@ -33,6 +32,27 @@ export class AccountService extends FiduServiceBase {
 
   public constructor(private http: HttpClient) {
     super();
+  }
+
+  public confirmRegistration(confirmForm: IUserConfirmation): Observable<SuccessMessage> {
+    const cognitoUser = this.createCognitoUser(confirmForm.username);
+
+    return Observable.create((observer) => {
+      cognitoUser.confirmRegistration(confirmForm.code, true, (err, result) => {
+        if (err) {
+          observer.error(err);
+        }
+        observer.next(new SuccessMessage('Successfully confirmed user!'));
+      });
+    }).pipe(this.logErrors());
+  }
+
+  public currentSession(): Observable<CognitoUserSession | null> {
+    const user: CognitoUser = AccountService.userPool.getCurrentUser();
+    if (user == null) { return of(null); }
+    return bindNodeCallback<CognitoUserSession>(user.getSession.bind(user))().pipe(
+      this.logErrors()
+    );
   }
 
   public login(loginForm: IUserCredentials): Observable<SuccessMessage> {
@@ -90,67 +110,29 @@ export class AccountService extends FiduServiceBase {
     return of(new SuccessMessage(message));
   }
 
-  public register(
-      userCredentials: IUserCredentials,
-      userInfo: UserInfo): Observable<SuccessMessage> {
-
-    const attributes = [
-      new CognitoUserAttribute({
-        Name: 'name',
-        Value: userInfo.firstName
-      }),
-      new CognitoUserAttribute({
-        Name: 'email',
-        Value: userInfo.email
-      })
-    ];
-
+  public register(credentials: IUserCredentials, userInfo: UserInfo): Observable<SuccessMessage> {
     return Observable.create((observer) => {
-      AccountService.userPool.signUp(userCredentials.username, userCredentials.password, attributes, null, (err, result) => {
+      AccountService.userPool.signUp(
+          credentials.username,
+          credentials.password,
+          userInfo.cognitoAttributes(),
+          null,
+          (err: Error, result: ISignUpResult) => {
         if (err) {
           observer.error(err);
         }
 
         observer.next(new SuccessMessage('Successfully registered user!'));
       });
-    }).pipe(this.logErrors());
+    }).pipe( this.logErrors() );
   }
 
-  public confirm(confirmForm: IUserConfirmation): Observable<SuccessMessage> {
-    const cognitoUser = this.createCognitoUser(confirmForm.username);
-
-    return Observable.create((observer) => {
-      cognitoUser.confirmRegistration(confirmForm.code, true, (err, result) => {
-        if (err) {
-          observer.error(err);
-        }
-
-        observer.next(new SuccessMessage('Successfully confirmed user!'));
-      });
-    }).pipe(this.logErrors());
-  }
-
-  public currentSession(): Observable<CognitoUserSession> {
-    const user: CognitoUser = AccountService.userPool.getCurrentUser();
-
-    if (user == null) {
-      return throwError('There is no logged-in user');
-    }
-
-    return bindNodeCallback(user.getSession.bind(user))().pipe(
-      map((session: any) => session),
-      this.logErrors()
-    );
-  }
-
+  /**
+   * Shortcut to get user information from session data.
+   */
   public whoami(): Observable<UserInfo> {
     return this.currentSession().pipe(
-      map((session) => {
-        if (session == null) { return new UserInfo(); }
-        const userIdPayload = session.getIdToken().decodePayload();
-        return new UserInfo(userIdPayload['name'], '', userIdPayload['email']);
-      }),
-      catchError((error) => of(new UserInfo()))
+      map((session?: CognitoUserSession) => UserInfo.fromSession(session))
     );
   }
 
@@ -161,5 +143,4 @@ export class AccountService extends FiduServiceBase {
       Storage: AccountService.cookieStorage
     });
   }
-
 }

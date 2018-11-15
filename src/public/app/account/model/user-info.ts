@@ -1,32 +1,44 @@
-import { JsonObject, JsonProperty } from 'json2typescript';
+import { CognitoUserAttribute, CognitoUserSession } from 'amazon-cognito-identity-js';
 import * as _ from 'lodash';
 
-@JsonObject
-export class UserInfo {
+export interface IUserInfo {
+  name: string;
+  email: string;
+  privacyAgreement: string;
+}
+export class UserInfo implements IUserInfo {
+  private static CUSTOM_PROPS: Set<string> = new Set(['privacyAgreement']);
 
-  @JsonProperty('id', String, true)
-  public id: string = undefined;
+  public readonly name: string = '';
+  public readonly email: string = '';
+  public readonly privacyAgreement: string = 'v(-1)';
 
-  @JsonProperty('firstName', String)
-  public readonly firstName: string = undefined;
-
-  @JsonProperty('lastName', String)
-  public readonly lastName: string = undefined;
-
-  @JsonProperty('email', String)
-  public readonly email: string = undefined;
-
-  public constructor(firstName: string = '', lastName: string = '', email: string = '') {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
+  public constructor(userInfo: IUserInfo = {} as IUserInfo) {
+    _.merge(this, userInfo);
   }
 
-  public static fromIDToken(idToken: Object): UserInfo {
-    return new UserInfo(idToken['name'], '', idToken['email']);
+  public static fromSession(session?: CognitoUserSession): UserInfo {
+    if (session == null || !session.isValid()) {
+      return new UserInfo();
+    }
+    return new UserInfo(session.getIdToken().decodePayload() as IUserInfo);
   }
 
-  public hasName(): boolean {
-    return !_.isEmpty(this.firstName);
+  /**
+   * Builds cognito attributes from this UserInfo object.
+   */
+  public cognitoAttributes(): CognitoUserAttribute[] {
+    return _.map(this, (value: any, prop: string) => {
+        const name = UserInfo.CUSTOM_PROPS.has(prop) ? `custom:${prop}` : prop;
+        return new CognitoUserAttribute({Name: name, Value: value});
+    });
   }
+
+  /**
+   * If an object has a name and an email address we consider someone authenticated.
+   */
+  public isAuthenticated(): boolean {
+    return !(_.isEmpty(this.name) || _.isEmpty(this.email));
+  }
+
 }

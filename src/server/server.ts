@@ -9,7 +9,7 @@ import * as methodOverride from 'method-override';
 import * as requestLogger from 'morgan';
 import * as path from 'path';
 
-import { UserInfo } from '../public/app/account/model/user-info';
+import { IUserInfo, UserInfo } from '../public/app/account/model/user-info';
 import { ApiRouter } from './routes/api.router';
 import { Env } from './util/env';
 import { Logger } from './util/logger';
@@ -88,9 +88,9 @@ export class Server {
       const authToken = req.headers.authorization;
 
       if (authToken) {
-        Server.cognitoExpress.validate(authToken, (err, response) => {
+        Server.cognitoExpress.validate(authToken, <T extends IUserInfo>(err, response: T) => {
           if (response != null) {
-            res.locals.user = UserInfo.fromIDToken(response);
+            res.locals.user = new UserInfo(response);
             log.audit(`Authenticated request to ${req.originalUrl} from user ${response['cognito:username']}`);
           } else {
             log.audit(`Couldn't validate auth token in request to ${req.originalUrl}: ${err.message}`);
