@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
+import { LOCATION } from '../../util/window-injections';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
@@ -22,7 +23,8 @@ describe('LoginComponent', () => {
         RouterModule.forRoot([]),
       ],
       providers: [
-        {provide: APP_BASE_HREF, useValue: '/account/login'}
+        {provide: APP_BASE_HREF, useValue: '/account/login'},
+        {provide: LOCATION, useValue: {replace: (location: string) => {}}}
       ]
     })
     .compileComponents();

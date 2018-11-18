@@ -5,15 +5,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
-import { RegisterComponent } from './register.component';
+import { ConfirmComponent } from './confirm.component';
 
-describe('RegisterComponent', () => {
-  let component: RegisterComponent;
-  let fixture: ComponentFixture<RegisterComponent>;
+describe('ConfirmComponent', () => {
+  let component: ConfirmComponent;
+  let fixture: ComponentFixture<ConfirmComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RegisterComponent ],
+      declarations: [ ConfirmComponent ],
       imports: [
         BrowserModule,
         FormsModule,
@@ -22,14 +22,14 @@ describe('RegisterComponent', () => {
         RouterModule.forRoot([]),
       ],
       providers: [
-        {provide: APP_BASE_HREF, useValue: '/account/register'},
+        {provide: APP_BASE_HREF, useValue: '/account/confirm'}
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RegisterComponent);
+    fixture = TestBed.createComponent(ConfirmComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

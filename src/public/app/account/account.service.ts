@@ -1,16 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthenticationDetails, CognitoUser, CognitoUserPool, CookieStorage } from 'amazon-cognito-identity-js';
+import { AuthenticationDetails, CognitoUser, CognitoUserPool,
+    CognitoUserSession, CookieStorage, ISignUpResult } from 'amazon-cognito-identity-js';
 import * as _ from 'lodash';
 import { bindNodeCallback, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { FiduServiceBase } from '../common/fidu-service-base';
 import { SuccessMessage } from '../common/message-response';
+import { IUserConfirmation } from './model/user-confirmation';
 import { IUserCredentials } from './model/user-credentials';
 import { UserInfo } from './model/user-info';
 
-// XXX: consider renaming this service to UserAuthService
 @Injectable({
   providedIn: 'root'
 })
@@ -33,17 +34,34 @@ export class AccountService extends FiduServiceBase {
     super();
   }
 
+  public confirmRegistration(confirmForm: IUserConfirmation): Observable<SuccessMessage> {
+    const cognitoUser = this.createCognitoUser(confirmForm.username);
+
+    return Observable.create((observer) => {
+      cognitoUser.confirmRegistration(confirmForm.code, true, (err, result) => {
+        if (err) {
+          observer.error(err);
+        }
+        observer.next(new SuccessMessage('Successfully confirmed user!'));
+      });
+    }).pipe(this.logErrors());
+  }
+
+  public currentSession(): Observable<CognitoUserSession | null> {
+    const user: CognitoUser = AccountService.userPool.getCurrentUser();
+    if (user == null) { return of(null); }
+    return bindNodeCallback<CognitoUserSession>(user.getSession.bind(user))().pipe(
+      this.logErrors()
+    );
+  }
+
   public login(loginForm: IUserCredentials): Observable<SuccessMessage> {
     const authenticationDetails = new AuthenticationDetails({
         Username : loginForm.username,
         Password : loginForm.password
     });
 
-    const cognitoUser = new CognitoUser({
-        Username : loginForm.username,
-        Pool : AccountService.userPool,
-        Storage: AccountService.cookieStorage
-    });
+    const cognitoUser = this.createCognitoUser(loginForm.username);
 
     return Observable.create((observer) => {
       cognitoUser.authenticateUser(authenticationDetails, {
@@ -92,28 +110,37 @@ export class AccountService extends FiduServiceBase {
     return of(new SuccessMessage(message));
   }
 
-  public register(
-      userCredentials: IUserCredentials,
-      userInfo: UserInfo): Observable<SuccessMessage> {
-    const body = { userCredentials, userInfo };
-    return this.http.post<SuccessMessage>('/api/account/register', body);
+  public register(credentials: IUserCredentials, userInfo: UserInfo): Observable<SuccessMessage> {
+    return Observable.create((observer) => {
+      AccountService.userPool.signUp(
+          credentials.username,
+          credentials.password,
+          userInfo.cognitoAttributes(),
+          null,
+          (err: Error, result: ISignUpResult) => {
+        if (err) {
+          observer.error(err);
+        }
+
+        observer.next(new SuccessMessage('Successfully registered user!'));
+      });
+    }).pipe( this.logErrors() );
   }
 
+  /**
+   * Shortcut to get user information from session data.
+   */
   public whoami(): Observable<UserInfo> {
-    const user = AccountService.userPool.getCurrentUser();
-
-    if (user == null) {
-      return of(new UserInfo());
-    }
-
-    return bindNodeCallback(user.getSession.bind(user))().pipe(
-      map((session: any) => {
-        if (session == null) { return new UserInfo(); }
-        const userIdPayload = session.getIdToken().decodePayload();
-        return new UserInfo(userIdPayload['name'], '', userIdPayload['email']);
-      }),
-      this.logErrors()
+    return this.currentSession().pipe(
+      map((session?: CognitoUserSession) => UserInfo.fromSession(session))
     );
   }
 
+  private createCognitoUser(username: string): CognitoUser {
+    return new CognitoUser({
+      Username : username,
+      Pool : AccountService.userPool,
+      Storage: AccountService.cookieStorage
+    });
+  }
 }

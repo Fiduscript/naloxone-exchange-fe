@@ -2,10 +2,12 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ModalModule } from '@independer/ng-modal';
+// import { ModalModule } from '@independer/ng-modal';
 
+import { LOCATION } from '../util/window-injections';
 import { AccountRoutingModule } from './account-routing.module';
 import { AccountService } from './account.service';
+import { ConfirmComponent } from './confirm/confirm.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { RegisterComponent } from './register/register.component';
@@ -23,11 +25,12 @@ import { UserAuthGuard } from './user/user-auth.guard';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ModalModule,
+    // ModalModule,
   ],
   providers: [
     AccountService,
-    UserAuthGuard
+    UserAuthGuard,
+    {provide: LOCATION, useValue: window.location}
   ],
   declarations: [
     LoginComponent,
@@ -39,6 +42,7 @@ import { UserAuthGuard } from './user/user-auth.guard';
     OrdersComponent,
     RegisterComponent,
     LogoutComponent,
+    ConfirmComponent,
   ]
 })
 export class AccountModule { }

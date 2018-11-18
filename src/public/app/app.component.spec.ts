@@ -19,7 +19,7 @@ describe('AppComponent', () => {
       imports: [
         BrowserModule,
         AccountModule,
-        NgbModule.forRoot(),
+        NgbModule,
         RouterModule.forRoot([]),
         ShareButtonsModule.forRoot(),
       ],

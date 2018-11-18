@@ -1,0 +1,28 @@
+.confirm-container.text-center.mb-2
+  h3.mb-5.mt-3 Confirm Account Registration
+  .container.text-center.pt-1.pb-1
+    form(
+        "[formGroup]"="confirmForm" 
+        "(ngSubmit)"="confirm()")
+      .form-group
+        input.form-control(
+            type="text" 
+            formControlName="username"
+            placeholder="username@email.com"
+            "[ngClass]"="{ 'is-invalid': confirmForm.get('username').touched && confirmForm.get('username').invalid }")
+        .invalid-feedback(*ngIf="confirmForm.get('username').touched && confirmForm.get('username').invalid")
+          .text-left Username is required
+
+      .form-group
+        input.form-control(
+            type="text" 
+            formControlName="code"
+            placeholder="confirmation code"
+            "[ngClass]"="{ 'is-invalid': confirmForm.get('code').touched && confirmForm.get('code').invalid }")
+        .invalid-feedback(*ngIf="confirmForm.get('code').touched && confirmForm.get('code').invalid")
+          .text-left Confirmation code is required
+
+      .alert.alert-danger.text-left(*ngIf="error") {{error}}
+      
+      .form-group
+        button.btn.btn-primary.login-btn.w-100(type="submit") Confirm

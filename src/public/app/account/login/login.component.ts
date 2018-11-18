@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { HttpErrorResponse } from '@angular/common/http';
+import { LOCATION } from '../../util/window-injections';
 import { AccountService } from '../account.service';
 
 @Component({
@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   private returnRoute: string;
 
   public constructor(
+      @Inject(LOCATION) private location: Location,
       private fb: FormBuilder,
       private route: ActivatedRoute,
       private service: AccountService) {
@@ -40,7 +41,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.service.login(this.loginForm.value).subscribe(
-      (): void => { window.location.replace(this.returnRoute); },
+      (): void => { this.location.replace(this.returnRoute); },
       (error: Error): void => {
         this.loginForm.get('password').reset();
         this.error = error.message;

@@ -1,14 +1,14 @@
 .container
   header.mb-5
-    h1.text-center Hello {{user.firstName}}
+    h1.text-center Hello {{user.name}}
   section
     .form-row
-      .col-6
+      .col-12.col-lg-6
         app-user-account-settings([user]="user")
-      .col-6
-        app-addresses
-    .form-row.mt-2
-      .col-6
+      .col-12.col-lg-6.mt-2.mt-lg-0
         app-orders
-      .col-6
+    .form-row.mt-2
+      .col-12.col-lg-6
+        app-addresses
+      .col-12.col-lg-6.mt-2.mt-lg-0
         app-relations

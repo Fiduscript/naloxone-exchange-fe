@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AccountService } from '../account.service';
 
-import { HttpErrorResponse } from '@angular/common/http';
 import { MatchValidator } from 'src/common/validator/match-validator';
 import { StrongPasswordValidator } from 'src/common/validator/strong-password-validator';
 import { IUserCredentials } from '../model/user-credentials';
@@ -20,6 +20,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
       private fb: FormBuilder,
+      private router: Router,
       private service: AccountService) {
     this.registerForm = this.fb.group({
       firstName: ['', Validators.required],
@@ -43,18 +44,18 @@ export class RegisterComponent implements OnInit {
     const userCreds: IUserCredentials = {
       username: this.registerForm.get('email').value,
       password: this.registerForm.get('password').value,
-      confirmPassword: this.registerForm.get('confirmPassword').value,
     };
 
-    const userInfo: UserInfo = new UserInfo(
-        this.registerForm.get('firstName').value,
-        this.registerForm.get('lastName').value,
-        this.registerForm.get('email').value);
+    const userInfo: UserInfo = new UserInfo({
+        name: `${this.registerForm.get('firstName').value} ${this.registerForm.get('lastName').value}`  ,
+        email: this.registerForm.get('email').value,
+        privacyAgreement: 'v(-1)' // TODO: implement
+    });
 
     this.service.register(userCreds, userInfo).subscribe(
-      (): void => { window.location.replace('/account/login'); },
-      (error: HttpErrorResponse): void => {
-        this.error = error.error.message;
+      (): void => { this.router.navigate(['/account/confirm']); },
+      (error: Error): void => {
+        this.error = error.message;
       }
     );
   }

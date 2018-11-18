@@ -5,6 +5,7 @@ process.env.CHROME_BIN = puppeteer.executablePath();
 
 module.exports = function (config) {
   config.set({
+    browserDisconnectTolerance: 3,
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
@@ -15,7 +16,7 @@ module.exports = function (config) {
       require('@angular-devkit/build-angular/plugins/karma')
     ],
     client: {
-      clearContext: false // leave Jasmine Spec Runner output visible in browser
+      clearContext: true
     },
     coverageIstanbulReporter: {
       dir: require('path').join(__dirname, '../../coverage'),

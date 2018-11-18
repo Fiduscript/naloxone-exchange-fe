@@ -43,10 +43,10 @@ header
             a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-contact" "(click)"="toggleMenu()") Contact Us
         li.nav-item
           a.nav-link.text-sm-left.text-md-center(routerLink="/pharmacy" "(click)"="toggleMenu()") Pharmacies
-        li.nav-item(*ngIf="!user.hasName()")
+        li.nav-item(*ngIf="!user.isAuthenticated()")
           a.nav-link.text-sm-left.text-md-center(routerLink="/account/login" "(click)"="toggleMenu()") Login
-        li.nav-item(ngbDropdown *ngIf="user.hasName()")
-          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle) {{user.firstName}}
+        li.nav-item(ngbDropdown *ngIf="user.isAuthenticated()")
+          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle) {{user.name}}
           .dropdown-menu.text-center(ngbDropdownMenu)
             a.dropdown-item.nav-link(routerLink="/account/user/profile") My Account
             a.dropdown-item.nav-link(routerLink="/account/logout") Logout
