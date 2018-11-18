@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthenticationDetails, CognitoUser, CognitoUserPool,
-    CognitoUserSession, CookieStorage, ISignUpResult } from 'amazon-cognito-identity-js';
+    CognitoUserSession, CookieStorage, ICognitoUserAttributeData, ISignUpResult } from 'amazon-cognito-identity-js';
 import * as _ from 'lodash';
-import { bindNodeCallback, Observable, of } from 'rxjs';
+import { bindNodeCallback, Observable, Observer, of, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { FiduServiceBase } from '../common/fidu-service-base';
-import { SuccessMessage } from '../common/message-response';
+import { ErrorMessage, SuccessMessage } from '../common/message-response';
 import { IUserConfirmation } from './model/user-confirmation';
 import { IUserCredentials } from './model/user-credentials';
 import { UserInfo } from './model/user-info';
@@ -37,7 +37,7 @@ export class AccountService extends FiduServiceBase {
   public confirmRegistration(confirmForm: IUserConfirmation): Observable<SuccessMessage> {
     const cognitoUser = this.createCognitoUser(confirmForm.username);
 
-    return Observable.create((observer) => {
+    return Observable.create((observer: Observer<SuccessMessage>) => {
       cognitoUser.confirmRegistration(confirmForm.code, true, (err, result) => {
         if (err) {
           observer.error(err);
@@ -111,11 +111,11 @@ export class AccountService extends FiduServiceBase {
   }
 
   public register(credentials: IUserCredentials, userInfo: UserInfo): Observable<SuccessMessage> {
-    return Observable.create((observer) => {
+    return Observable.create((observer: Observer<SuccessMessage>) => {
       AccountService.userPool.signUp(
           credentials.username,
           credentials.password,
-          userInfo.cognitoAttributes(),
+          userInfo.cognitoUserAttributes(),
           null,
           (err: Error, result: ISignUpResult) => {
         if (err) {
@@ -125,6 +125,36 @@ export class AccountService extends FiduServiceBase {
         observer.next(new SuccessMessage('Successfully registered user!'));
       });
     }).pipe( this.logErrors() );
+  }
+
+  /**
+   * Sets user's info to the supplied userInfo object.
+   * @param userInfo
+   */
+  public updateUserInfo(userInfo: UserInfo): Observable<SuccessMessage> {
+    const user: CognitoUser = AccountService.userPool.getCurrentUser();
+    if (user == null) {
+      return throwError(new ErrorMessage('No valid user logged in. Cannot change attributes.'));
+    }
+
+    return bindNodeCallback(user.updateAttributes.bind(user))(userInfo.cognitoUserAttributeData()).pipe(
+      map((result: any) => new SuccessMessage(result as string))
+    );
+  }
+
+  /**
+   * Updates a user password
+   * @param oldCredentials
+   * @param newCredentials
+   */
+  public updatePassword(oldCredentials: IUserCredentials, newCredentials: IUserCredentials): Observable<SuccessMessage> {
+    const user: CognitoUser = AccountService.userPool.getCurrentUser();
+    if (user == null) {
+      return throwError(new ErrorMessage('No valid user logged in. Cannot update password.'));
+    }
+    return bindNodeCallback(user.changePassword.bind(user))(oldCredentials.password, newCredentials.password).pipe(
+      map((result: any) => new SuccessMessage(result as string))
+    );
   }
 
   /**

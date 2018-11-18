@@ -1,4 +1,4 @@
-import { CognitoUserAttribute, CognitoUserSession } from 'amazon-cognito-identity-js';
+import { CognitoUserAttribute, CognitoUserSession, ICognitoUserAttributeData } from 'amazon-cognito-identity-js';
 import * as _ from 'lodash';
 
 export interface IUserInfo {
@@ -27,11 +27,15 @@ export class UserInfo implements IUserInfo {
   /**
    * Builds cognito attributes from this UserInfo object.
    */
-  public cognitoAttributes(): CognitoUserAttribute[] {
+  public cognitoUserAttributeData(): ICognitoUserAttributeData[] {
     return _.map(this, (value: any, prop: string) => {
         const name = UserInfo.CUSTOM_PROPS.has(prop) ? `custom:${prop}` : prop;
-        return new CognitoUserAttribute({Name: name, Value: value});
+        return {Name: name, Value: value};
     });
+  }
+
+  public cognitoUserAttributes(): CognitoUserAttribute[] {
+    return _.map(this.cognitoUserAttributeData, (d) => new CognitoUserAttribute(d));
   }
 
   /**
