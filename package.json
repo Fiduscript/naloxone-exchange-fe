@@ -29,6 +29,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.4",
     "@fortawesome/free-brands-svg-icons": "^5.3.1",
     "@fortawesome/free-solid-svg-icons": "^5.3.1",
+    "@independer/ng-modal": "^2.0.0",
     "@ng-bootstrap/ng-bootstrap": "^2.2.2",
     "@ngx-share/button": "^6.0.1",
     "@ngx-share/buttons": "^6.0.1",

@@ -27,7 +27,9 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       confirmEmail: ['', [Validators.required, new MatchValidator('email')]],
       password: ['', [new StrongPasswordValidator()]],
-      confirmPassword: ['', [Validators.required, new MatchValidator('password')]]
+      confirmPassword: ['', [Validators.required, new MatchValidator('password')]],
+      privacyAgree: [true, Validators.requiredTrue],
+      subscribeAgree: [true]
     });
   }
 
