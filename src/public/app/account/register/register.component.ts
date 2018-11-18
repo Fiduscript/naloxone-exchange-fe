@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AccountService } from '../account.service';
 
 import { MatchValidator } from 'src/common/validator/match-validator';
@@ -21,7 +22,8 @@ export class RegisterComponent implements OnInit {
   constructor(
       private fb: FormBuilder,
       private router: Router,
-      private service: AccountService) {
+      private service: AccountService,
+      private modalService: NgbModal) {
     this.registerForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -52,11 +54,19 @@ export class RegisterComponent implements OnInit {
         privacyAgreement: 'v(-1)' // TODO: implement
     });
 
+    if (this.registerForm.get('subscribeAgree').value) {
+      // TODO: implement subscribe
+    }
+
     this.service.register(userCreds, userInfo).subscribe(
       (): void => { this.router.navigate(['/account/confirm']); },
       (error: Error): void => {
         this.error = error.message;
       }
     );
+  }
+
+  public open(content: any) {
+    this.modalService.open(content);
   }
 }
