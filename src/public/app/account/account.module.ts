@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-// import { ModalModule } from '@independer/ng-modal';
 
 import { LOCATION } from '../util/window-injections';
 import { AccountRoutingModule } from './account-routing.module';
@@ -25,7 +24,6 @@ import { UserAuthGuard } from './user/user-auth.guard';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    // ModalModule,
   ],
   providers: [
     AccountService,
