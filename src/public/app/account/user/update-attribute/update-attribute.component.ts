@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { IAuthenticationDetailsData, ICognitoUserAttributeData } from 'amazon-cognito-identity-js';
 import * as _ from 'lodash';
 
-import { IAuthenticationDetailsData, ICognitoUserAttributeData } from 'amazon-cognito-identity-js';
 import { MatchValidator } from '../../../../../common/validator/match-validator';
 import { SuccessMessage } from '../../../common/message-response';
+import { LOCATION } from '../../../util/window-injections';
 import { AccountService } from '../../account.service';
 import { UserInfo } from '../../model/user-info';
 
@@ -39,6 +40,7 @@ export class UpdateAttributeComponent implements OnInit {
   public success?: SuccessMessage = null;
 
   public constructor(
+    @Inject(LOCATION) private location: Location,
     private fb: FormBuilder,
     private service: AccountService) { }
 
@@ -89,7 +91,7 @@ export class UpdateAttributeComponent implements OnInit {
       this.service.updateUserInfo([newAttr], credentials).subscribe(
         (success: SuccessMessage) => {
           this.success = success;
-          window.location.reload();
+          this.location.reload();
         },
         (error) => {
           this.error = error.message;
