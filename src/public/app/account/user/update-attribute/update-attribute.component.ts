@@ -30,12 +30,13 @@ export class UpdateAttributeComponent implements OnInit {
 
   @Input() public attributeName: string;
 
-  public successMessage?: string = null;
-  public error?: string = null;
 
   public displaySettings: IDisplaySettings = UpdateAttributeComponent.DISPLAY_SETTINGS.default;
   public form: FormGroup;
   public user: UserInfo = new UserInfo();
+
+  public error?: string = null;
+  public success?: SuccessMessage = null;
 
   public constructor(
     private fb: FormBuilder,
@@ -87,7 +88,7 @@ export class UpdateAttributeComponent implements OnInit {
 
       this.service.updateUserInfo([newAttr], credentials).subscribe(
         (success: SuccessMessage) => {
-          this.successMessage = success.message;
+          this.success = success;
           window.location.reload();
         },
         (error) => {

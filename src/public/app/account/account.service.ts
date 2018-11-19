@@ -8,7 +8,7 @@ import { bindNodeCallback, MonoTypeOperatorFunction, Observable, ObservableInput
 import { catchError, flatMap, map } from 'rxjs/operators';
 
 import { FiduServiceBase } from '../common/fidu-service-base';
-import { ErrorMessage, SuccessMessage } from '../common/message-response';
+import { SuccessMessage } from '../common/message-response';
 import { IUserConfirmation } from './model/user-confirmation';
 import { IUserCredentials } from './model/user-credentials';
 import { UserInfo } from './model/user-info';
@@ -127,15 +127,10 @@ export class AccountService extends FiduServiceBase {
 
   /**
    * Updates a user password
-   * @param oldCredentials
-   * @param newCredentials
    */
-  public updatePassword(
-      oldCredentials: IAuthenticationDetailsData,
-      newCredentials: IAuthenticationDetailsData): Observable<SuccessMessage> {
-
+  public updatePassword(oldPassword: string, newPassword: string): Observable<SuccessMessage> {
     return this.operateOnUser((user: CognitoUser) => {
-      return bindNodeCallback(user.changePassword)(oldCredentials.Password, newCredentials.Password).pipe(
+      return bindNodeCallback(user.changePassword)(oldPassword, newPassword).pipe(
         map((result: any) => new SuccessMessage(result as string))
       );
     }).pipe( this.logErrors() );

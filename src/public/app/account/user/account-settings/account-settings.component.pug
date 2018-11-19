@@ -34,4 +34,4 @@ ng-template(#editModal let-modal)
     h4.modal-title Edit {{ editingAttribute | titlecase}}
   .modal-body
     app-user-update-attribute("[attributeName]"="editingAttribute" "*ngIf"="!isPassword()")
-    app-user-update-password(*ngIf="isPassword()")
+    app-user-update-password("[sucessCallback]"="closeModal" "*ngIf"="isPassword()")

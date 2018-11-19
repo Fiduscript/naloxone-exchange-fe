@@ -37,10 +37,12 @@
           placeholder="Password"
           formControlName="password"
           "[ngClass]"="{ 'is-invalid': form.get('password').touched && form.get('password').invalid }")
+      .invalid-feedback(*ngIf="form.get('password').touched && form.get('password').invalid")
+        .text-left Password is required.
 
     .form-group
       .alert.alert-danger.text-left(*ngIf="error") {{error}}
-      .alert.alert-success(*ngIf="successMessage != null") {{successMessage}}
+      .alert.alert-success(*ngIf="success != null") {{success.message}}
 
     .form-group
       .btn-group.pull-right
