@@ -1,0 +1,47 @@
+.container-fluid
+  form(
+      "[formGroup]"="form"
+      "(ngSubmit)"="update()")
+
+    .form-group.row-text-center
+      label Old {{attributeName | titlecase}}:
+      input.form-control(
+        type="text"
+        value="{{user[attributeName]}}"
+        disabled)
+
+    .form-group
+      label New {{attributeName | titlecase}}
+      input.form-control(
+          type="text"
+          placeholder="{{displaySettings.placeholder}}"
+          formControlName="{{attributeName}}"
+          "[ngClass]"="{ 'is-invalid': form.get(attributeName).touched && form.get(attributeName).invalid }")
+      .invalid-feedback(*ngIf="form.get(attributeName).touched && form.get(attributeName).invalid")
+        .text-left A valid {{attributeName | titlecase}} is required.
+
+    .form-group(*ngIf="displaySettings.requireVerify")
+      label Confirm New {{attributeName | titlecase}}
+      input.form-control(
+          type="text"
+          placeholder="{{displaySettings.placeholder}}"
+          formControlName="confirm{{attributeName}}"
+          "[ngClass]"="{ 'is-invalid': form.get('confirm' + attributeName).touched && form.get('confirm' + attributeName).invalid }")
+      .invalid-feedback(*ngIf="form.get('confirm' + attributeName).touched && form.get('confirm' + attributeName).invalid")
+        .text-left {{attributeName | titlecase}} does not match
+
+    .form-group(*ngIf="displaySettings.requirePassord")
+      label Password
+      input.form-control(
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+          "[ngClass]"="{ 'is-invalid': form.get('password').touched && form.get('password').invalid }")
+
+    .form-group
+      .alert.alert-danger.text-left(*ngIf="error") {{error}}
+      .alert.alert-success(*ngIf="successMessage != null") {{successMessage}}
+
+    .form-group
+      .btn-group.pull-right
+        button.btn.btn-primary(type="submit", "[disabled]"="form.invalid") Update

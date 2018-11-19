@@ -16,6 +16,8 @@ import { OrdersComponent } from './user/orders/orders.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { RelationsComponent } from './user/relations/relations.component';
 import { UserAuthGuard } from './user/user-auth.guard';
+import { UpdateAttributeComponent } from './user/update-attribute/update-attribute.component';
+import { UpdatePasswordComponent } from './user/update-password/update-password.component';
 
 @NgModule({
   imports: [
@@ -41,6 +43,8 @@ import { UserAuthGuard } from './user/user-auth.guard';
     RegisterComponent,
     LogoutComponent,
     ConfirmComponent,
+    UpdateAttributeComponent,
+    UpdatePasswordComponent,
   ]
 })
 export class AccountModule { }

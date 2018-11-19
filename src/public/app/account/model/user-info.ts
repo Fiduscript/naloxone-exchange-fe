@@ -17,11 +17,13 @@ export class UserInfo implements IUserInfo {
     _.merge(this, userInfo);
   }
 
-  public static fromSession(session?: CognitoUserSession): UserInfo {
-    if (session == null || !session.isValid()) {
-      return new UserInfo();
-    }
-    return new UserInfo(session.getIdToken().decodePayload() as IUserInfo);
+  public static fromUserAttributes(attributes: CognitoUserAttribute[]): UserInfo {
+    const attrs: IUserInfo = _(attributes)
+        .mapKeys((v) => _.trimStart(v.getName(), 'custom:'))
+        .mapValues((v) => v.getValue())
+        .value();
+
+    return new UserInfo(attrs);
   }
 
   /**

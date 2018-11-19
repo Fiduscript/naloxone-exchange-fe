@@ -70,7 +70,12 @@ export class FiduServiceBase {
     });
   }
 
-  private memoize<T>(key: string, value: T): void {
+  /**
+   * Memoizes raw object under the provided key.
+   * @param key
+   * @param value
+   */
+  protected memoize<T>(key: string, value: T): void {
     this.memo[key] = value;
   }
 }
