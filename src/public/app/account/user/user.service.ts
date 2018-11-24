@@ -11,7 +11,7 @@ export class UserService {
     // TODO: implement
   }
 
-  public getAddressses() {
+  public getAddresses() {
     // TODO: implement
   }
 
