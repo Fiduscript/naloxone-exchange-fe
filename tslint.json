@@ -38,9 +38,17 @@
         "order": [
           "static-field",
           "instance-field",
-          "static-method",
-          "instance-method"
-        ]
+          "public-constructor",
+          "protected-constructor",
+          "private-constructor",
+          "public-instance-method",
+          "protected-instance-method",
+          "private-instance-method",
+          "public-static-method",
+          "protected-static-method",
+          "private-static-method"
+        ],
+        "alphabetize": true
       }
     ],
     "no-arg": true,
