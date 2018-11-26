@@ -21,32 +21,24 @@ const log = Logger.create(module);
  * @class Server
  */
 export class Server {
-  private static readonly root: string = path.join(__dirname, '../../../public/naloxone-exchange');
 
+  // TODO: get these from configuration
   private static readonly cognitoExpress = new CognitoExpress({
-    // TODO: get these from configuration
     region: 'us-east-2',
     cognitoUserPoolId: 'us-east-2_ej6SB5BPr',
     tokenUse: 'id'
   });
+  private static readonly root: string = path.join(__dirname, '../../../public/naloxone-exchange');
 
   public app: Application;
 
   constructor(app: Application) {
     this.app = app;
+
+    this.init = _.once(this.init.bind(this));
   }
 
-  /**
-   * Bootstrap the application.
-   */
-  public static bootstrap(port: number | string): Server {
-    const app: Application = express();
-    app.set('port', port);
-    return new Server(app).init();
-  }
-
-  // tslint:disable member-ordering reason: named constructor should precede this
-  public init = _.once((): Server => {
+  public init(): Server {
     this.config();
     // add api routes
     this.app.use('/api', ApiRouter);
@@ -54,8 +46,7 @@ export class Server {
     this.app.use(express.static(Server.root));
     this.app.use('/', this.sendIndex);
     return this;
-  });
-// tslint:enable
+  }
 
   /**
    * Configure application
@@ -122,6 +113,15 @@ export class Server {
 
   private sendIndex(req: Request, res: Response): void {
       res.sendFile('index.html', {root: Server.root});
+  }
+
+  /**
+   * Bootstrap the application.
+   */
+  public static bootstrap(port: number | string): Server {
+    const app: Application = express();
+    app.set('port', port);
+    return new Server(app).init();
   }
 
 }

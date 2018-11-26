@@ -12,8 +12,8 @@ import { Products } from '../model/products';
 })
 export class BuyByStateComponent implements OnInit {
 
-  public state: string;
   public products: Products;
+  public state: string;
 
   public constructor(
       private route: ActivatedRoute,

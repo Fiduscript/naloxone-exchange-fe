@@ -29,28 +29,19 @@ export class FiduServiceBase {
   }
 
   /**
-   * Checks if there is a memoized result under the supplied key.
-   * @param key
-   */
-  protected hasMemo(key: string): boolean {
-    return this.memo[key] != null;
-  }
-
-  /**
-   * Supplies a tap function that memoizes the result of a query.
-   * Should be called in a 'pipe' function, after any required deserialization.
-   * @param key
-   */
-  protected memoizeResult<T>(key: string): MonoTypeOperatorFunction<T> {
-    return tap(_.partial(this.memoize, key));
-  }
-
-  /**
    * Returns an observable of a memoized object.
    * @param key
    */
   protected getMemoized<T>(key: string): Observable<T> {
     return of(this.memo[key]);
+  }
+
+  /**
+   * Checks if there is a memoized result under the supplied key.
+   * @param key
+   */
+  protected hasMemo(key: string): boolean {
+    return this.memo[key] != null;
   }
 
   /**
@@ -68,6 +59,15 @@ export class FiduServiceBase {
       }
       throw error; // propegate
     });
+  }
+
+  /**
+   * Supplies a tap function that memoizes the result of a query.
+   * Should be called in a 'pipe' function, after any required deserialization.
+   * @param key
+   */
+  protected memoizeResult<T>(key: string): MonoTypeOperatorFunction<T> {
+    return tap(_.partial(this.memoize, key));
   }
 
   private memoize<T>(key: string, value: T): void {

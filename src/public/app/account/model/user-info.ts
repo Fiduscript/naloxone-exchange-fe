@@ -2,26 +2,19 @@ import { CognitoUserAttribute, CognitoUserSession } from 'amazon-cognito-identit
 import * as _ from 'lodash';
 
 export interface IUserInfo {
-  name: string;
   email: string;
+  name: string;
   privacyAgreement: string;
 }
 export class UserInfo implements IUserInfo {
   private static CUSTOM_PROPS: Set<string> = new Set(['privacyAgreement']);
 
-  public readonly name: string = '';
   public readonly email: string = '';
+  public readonly name: string = '';
   public readonly privacyAgreement: string = 'v(-1)';
 
   public constructor(userInfo: IUserInfo = {} as IUserInfo) {
     _.merge(this, userInfo);
-  }
-
-  public static fromSession(session?: CognitoUserSession): UserInfo {
-    if (session == null || !session.isValid()) {
-      return new UserInfo();
-    }
-    return new UserInfo(session.getIdToken().decodePayload() as IUserInfo);
   }
 
   /**
@@ -39,6 +32,13 @@ export class UserInfo implements IUserInfo {
    */
   public isAuthenticated(): boolean {
     return !(_.isEmpty(this.name) || _.isEmpty(this.email));
+  }
+
+  public static fromSession(session?: CognitoUserSession): UserInfo {
+    if (session == null || !session.isValid()) {
+      return new UserInfo();
+    }
+    return new UserInfo(session.getIdToken().decodePayload() as IUserInfo);
   }
 
 }
