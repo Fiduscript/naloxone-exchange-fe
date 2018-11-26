@@ -22,8 +22,8 @@ const log = Logger.create(module);
  */
 export class Server {
 
+  // TODO: get these from configuration
   private static readonly cognitoExpress = new CognitoExpress({
-    // TODO: get these from configuration
     region: 'us-east-2',
     cognitoUserPoolId: 'us-east-2_ej6SB5BPr',
     tokenUse: 'id'
@@ -32,8 +32,13 @@ export class Server {
 
   public app: Application;
 
-  // tslint:disable member-ordering reason: named constructor should precede this
-  public init = _.once((): Server => {
+  constructor(app: Application) {
+    this.app = app;
+
+    this.init = _.once(this.init.bind(this));
+  }
+
+  public init(): Server {
     this.config();
     // add api routes
     this.app.use('/api', ApiRouter);
@@ -41,12 +46,7 @@ export class Server {
     this.app.use(express.static(Server.root));
     this.app.use('/', this.sendIndex);
     return this;
-  });
-
-  constructor(app: Application) {
-    this.app = app;
   }
-  // tslint:enable
 
   /**
    * Configure application
