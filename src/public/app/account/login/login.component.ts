@@ -50,6 +50,13 @@ export class LoginComponent implements OnInit {
   }
 
   public socialSignIn(socialPlatform: string) {
-    console.log(`login with ${socialPlatform}`);
+    this.service.authorizeSocial(socialPlatform).subscribe(
+      (): void => {
+        // do nothing
+      },
+      (error: Error): void => {
+        this.error = error.message;
+      }
+    );
   }
 }

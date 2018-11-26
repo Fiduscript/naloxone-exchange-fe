@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import { CognitoAuth, CognitoAuthOptions } from 'amazon-cognito-auth-js';
 import { AuthenticationDetails, CognitoUser, CognitoUserAttribute,
-    CognitoUserPool, CognitoUserSession, CookieStorage, IAuthenticationDetailsData,
-    ICognitoUserAttributeData, ISignUpResult } from 'amazon-cognito-identity-js';
+  CognitoUserPool, CognitoUserSession, CookieStorage, IAuthenticationDetailsData,
+  ICognitoUserAttributeData, ISignUpResult } from 'amazon-cognito-identity-js';
 import * as _ from 'lodash';
 import { Moment } from 'moment';
 import * as moment from 'moment';
@@ -19,23 +20,75 @@ import { UserInfo } from './model/user-info';
 })
 export class AccountService extends FiduServiceBase {
 
+  private static readonly _clientId = '7dum3ivsqng75jdve4sc39tve4';
+  private static readonly _poolId = 'us-east-2_ej6SB5BPr';
+
   private static readonly cookieStorage: CookieStorage = new CookieStorage({
     domain: window.location.hostname,
     secure: window.location.protocol === 'https:'
   });
 
+  private static readonly domain = `${window.location.hostname}:${window.location.port}`;
   private static readonly NOT_LOGGED_IN: string = 'No valid user logged in.';
+
+  private static oAuthOptions = {
+    ClientId : AccountService._clientId,
+    AppWebDomain : 'naloxone-exchange-customer-user-pool-test.auth.us-east-2.amazoncognito.com',
+    TokenScopesArray : [],
+    RedirectUriSignIn : `https://${AccountService.domain}/oauth/signin`,
+    RedirectUriSignOut : `https://${AccountService.domain}/account/signout`,
+    IdentityProvider : '',
+    UserPoolId : AccountService._poolId,
+    AdvancedSecurityDataCollectionFlag : true,
+    Storage: AccountService.cookieStorage
+  };
 
   // This is the "customer-user-pool-test" user pool
   // TODO: needs to be provided via config
-  private static readonly userPool: CognitoUserPool = new CognitoUserPool({
-    UserPoolId : 'us-east-2_ej6SB5BPr',
-    ClientId : '7dum3ivsqng75jdve4sc39tve4',
+  private static readonly  userPool: CognitoUserPool = new CognitoUserPool({
+    UserPoolId : AccountService._poolId,
+    ClientId : AccountService._clientId,
     Storage: AccountService.cookieStorage
   });
 
   public constructor(private http: HttpClient) {
     super();
+  }
+
+  public authorizeOauth(location: string): Observable<SuccessMessage> {
+    return Observable.create((observer) => {
+      const auth = new CognitoAuth(AccountService.oAuthOptions);
+
+      auth.userhandler = {
+        onSuccess: () => {
+          observer.next(new SuccessMessage('Successfully logged in'));
+        },
+        onFailure: (err) => observer.error(err),
+      };
+
+      auth.parseCognitoWebResponse(location);
+    });
+  }
+
+  public authorizeSocial(provider: string): Observable<SuccessMessage> {
+    return Observable.create((observer) => {
+      if (provider === 'Facebook') {
+        AccountService.oAuthOptions.IdentityProvider = provider;
+      } else if (provider === 'Google') {
+        AccountService.oAuthOptions.IdentityProvider = provider;
+      } else {
+        observer.error(new SuccessMessage('Unable to authenticate with provider'));
+      }
+
+      const auth = new CognitoAuth(AccountService.oAuthOptions);
+
+      auth.userhandler = {
+        onSuccess: () => observer.next(new SuccessMessage('Authenticating')),
+        onFailure: (err) => observer.error(err),
+      };
+
+      auth.getSession();
+    });
   }
 
   public confirmRegistration(confirmForm: IUserConfirmation): Observable<SuccessMessage> {
@@ -261,5 +314,4 @@ export class AccountService extends FiduServiceBase {
     const expires = session.getAccessToken().getExpiration();
     return expires == null ? null : moment.unix(expires);
   }
-
 }

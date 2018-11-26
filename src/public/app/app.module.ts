@@ -47,4 +47,5 @@ import { AuthorizationInterceptor } from './util/authorization-interceptor';
   }],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
