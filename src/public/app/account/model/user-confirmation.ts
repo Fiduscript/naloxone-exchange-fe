@@ -1,4 +1,4 @@
 export interface IUserConfirmation {
-    username: string;
     code: string;
+    username: string;
 }

@@ -20,14 +20,14 @@ export class AppComponent implements OnInit {
     this.user = new UserInfo();
   }
 
+  public dismissCrisis(): void {
+    this.showCrisis = false;
+  }
+
   public ngOnInit(): void {
     this.loginService.whoami().subscribe((user: UserInfo) => {
       this.user = user;
     });
-  }
-
-  public dismissCrisis(): void {
-    this.showCrisis = false;
   }
 
   public showSubscribe(): boolean {

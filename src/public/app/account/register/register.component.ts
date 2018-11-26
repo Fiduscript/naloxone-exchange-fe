@@ -15,8 +15,8 @@ import { UserInfo } from '../model/user-info';
 })
 export class RegisterComponent implements OnInit {
 
-  public registerForm: FormGroup;
   public error: string = null;
+  public registerForm: FormGroup;
 
   constructor(
       private fb: FormBuilder,
@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  public ngOnInit(): void { }
 
   public register(): void {
     if (this.registerForm.invalid) {

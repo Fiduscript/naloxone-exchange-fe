@@ -12,9 +12,9 @@ import { AccountService } from '../account.service';
 })
 export class LoginComponent implements OnInit {
 
+  public error: string = null;
   public loginForm: FormGroup;
   public user: string = 'User';
-  public error: string = null;
 
   private returnRoute: string;
 
@@ -26,12 +26,6 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
-    });
-  }
-
-  public ngOnInit() {
-    this.route.queryParams.subscribe((params: Params) => {
-      this.returnRoute = params['returnTo'] || '/';
     });
   }
 
@@ -47,6 +41,12 @@ export class LoginComponent implements OnInit {
         this.error = error.message;
       }
     );
+  }
+
+  public ngOnInit() {
+    this.route.queryParams.subscribe((params: Params) => {
+      this.returnRoute = params['returnTo'] || '/';
+    });
   }
 
   public socialSignIn(socialPlatform: string) {
