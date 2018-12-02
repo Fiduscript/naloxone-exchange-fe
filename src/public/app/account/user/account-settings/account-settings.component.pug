@@ -6,21 +6,21 @@
         h6 Name
         span {{user.name}}
       div
-        button.btn.btn-secondary.mt-2 Edit
+        button.btn.btn-secondary.mt-2((click)="editAttribute('name', editModal)") Edit
 
     li.list-group-item.d-flex.justify-content-between
       div
         h6 Email
         span {{user.email}}
       div
-        button.btn.btn-secondary.mt-2 Edit
+        button.btn.btn-secondary.mt-2((click)="editAttribute('email', editModal)") Edit
 
     li.list-group-item.d-flex.justify-content-between
       div
         h6 Password
         strong ••••••••••
       div
-        button.btn.btn-secondary.mt-2 Edit
+        button.btn.btn-secondary.mt-2((click)="editAttribute('password', editModal)") Edit
 
     li.list-group-item.d-flex.justify-content-between
       div
@@ -28,3 +28,10 @@
         span Subscribed to all notifications
       div
         button.btn.btn-secondary.mt-2 Edit
+
+ng-template(#editModal let-modal)
+  .modal-header
+    h4.modal-title Edit {{ editingAttribute | titlecase}}
+  .modal-body
+    app-user-update-attribute("[attributeName]"="editingAttribute" "*ngIf"="!isPassword()")
+    app-user-update-password("[sucessCallback]"="closeModal" "*ngIf"="isPassword()")

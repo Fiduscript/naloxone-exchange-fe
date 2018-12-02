@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 import { UserInfo } from '../../model/user-info';
 
@@ -11,10 +12,37 @@ export class AccountSettingsComponent implements OnInit {
 
   @Input() public user: UserInfo;
 
-  public constructor() {
+  private editingAttribute?: string = null;
+  private modal?: NgbModalRef = null;
+
+  public constructor(
+      private modalService: NgbModal) {
+
+    this.clearAttrs = this.clearAttrs.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+  public closeModal(): void {
+    if (this.modal != null) {
+      this.modal.close();
+    }
+  }
+
+  public editAttribute(attribute: string, content: any) {
+    this.editingAttribute = attribute;
+    this.modal = this.modalService.open(content);
+    this.modal.result.then(this.clearAttrs, this.clearAttrs);
+  }
+
+  public isPassword(): boolean {
+    return this.editingAttribute != null && this.editingAttribute === 'password';
   }
 
   public ngOnInit(): void {
   }
 
+  private clearAttrs(): void {
+    this.editAttribute = null;
+    this.modal = null;
+  }
 }

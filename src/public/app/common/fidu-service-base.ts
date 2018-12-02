@@ -62,15 +62,20 @@ export class FiduServiceBase {
   }
 
   /**
+  * Memoizes raw object under the provided key.
+  * @param key
+  * @param value
+  */
+ protected memoize<T>(key: string, value: T): void {
+    this.memo[key] = value;
+  }
+
+  /**
    * Supplies a tap function that memoizes the result of a query.
    * Should be called in a 'pipe' function, after any required deserialization.
    * @param key
    */
   protected memoizeResult<T>(key: string): MonoTypeOperatorFunction<T> {
     return tap(_.partial(this.memoize, key));
-  }
-
-  private memoize<T>(key: string, value: T): void {
-    this.memo[key] = value;
   }
 }
