@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AccountService } from '../account.service';
+import { IAuthenticationDetailsData } from 'amazon-cognito-identity-js';
 
 import { MatchValidator } from 'src/common/validator/match-validator';
 import { StrongPasswordValidator } from 'src/common/validator/strong-password-validator';
-import { IUserCredentials } from '../model/user-credentials';
+import { AccountService } from '../account.service';
 import { UserInfo } from '../model/user-info';
 
 @Component({
@@ -15,8 +15,8 @@ import { UserInfo } from '../model/user-info';
 })
 export class RegisterComponent implements OnInit {
 
-  public registerForm: FormGroup;
   public error: string = null;
+  public registerForm: FormGroup;
 
   constructor(
       private fb: FormBuilder,
@@ -32,16 +32,16 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  public ngOnInit(): void { }
 
   public register(): void {
     if (this.registerForm.invalid) {
       return;
     }
 
-    const userCreds: IUserCredentials = {
-      username: this.registerForm.get('email').value,
-      password: this.registerForm.get('password').value,
+    const credentials: IAuthenticationDetailsData = {
+      Username: this.registerForm.get('email').value,
+      Password: this.registerForm.get('password').value,
     };
 
     const userInfo: UserInfo = new UserInfo({
@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
         privacyAgreement: 'v(-1)' // TODO: implement
     });
 
-    this.service.register(userCreds, userInfo).subscribe(
+    this.service.register(credentials, userInfo).subscribe(
       (): void => { this.router.navigate(['/account/confirm']); },
       (error: Error): void => {
         this.error = error.message;

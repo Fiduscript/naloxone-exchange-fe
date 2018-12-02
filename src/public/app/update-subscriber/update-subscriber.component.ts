@@ -17,14 +17,12 @@ import { UpdateSubscriberService } from './update-subscriber.service';
 })
 export class UpdateSubscriberComponent implements OnInit {
   private static readonly DISMISS_LIMIT: Duration = moment.duration(1, 'week');
-
-  private readonly LS_KEY: string = 'updateSubscriber';
+  private static readonly LS_KEY: string = 'updateSubscriber';
 
   @Input() public selectedState: string = null;
-  @Input() public showClose: boolean = true;
-
-  public subscribeForm: FormGroup;
   public show: boolean = false;
+  @Input() public showClose: boolean = true;
+  public subscribeForm: FormGroup;
 
   public constructor(
       private fb: FormBuilder,
@@ -35,13 +33,22 @@ export class UpdateSubscriberComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  public dismiss(): void {
+    this.show = false;
+    this.saveDismissed();
+  }
+
+  public getStates(): IState[] {
+    return STATES;
+  }
+
+  public ngOnInit(): void {
     this.subscribeForm.setValue({
       email: '',
       state: this.selectedState || ''
     });
 
-    const rawState: string = window.localStorage.getItem(this.LS_KEY);
+    const rawState: string = window.localStorage.getItem(UpdateSubscriberComponent.LS_KEY);
     if (rawState == null) {
       this.show = true;
       return;
@@ -54,11 +61,6 @@ export class UpdateSubscriberComponent implements OnInit {
     }
   }
 
-  public dismiss(): void {
-    this.show = false;
-    this.saveDismissed();
-  }
-
   public subscribe(): void {
     this.service.subscribe(this.subscribeForm.value).subscribe(
         (msg: MessageResponse): void => {
@@ -69,13 +71,9 @@ export class UpdateSubscriberComponent implements OnInit {
         });
   }
 
-  public getStates(): IState[] {
-    return STATES;
-  }
-
   private saveDismissed(): void {
     const state: SubscriptionState = new SubscriptionState();
     const json: any = jsonConvert.serialize(state);
-    window.localStorage.setItem(this.LS_KEY, JSON.stringify(json));
+    window.localStorage.setItem(UpdateSubscriberComponent.LS_KEY, JSON.stringify(json));
   }
 }

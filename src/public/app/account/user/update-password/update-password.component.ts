@@ -14,12 +14,11 @@ import { AccountService } from '../../account.service';
 })
 export class UpdatePasswordComponent implements OnInit {
 
-  @Input() public sucessCallback?: () => void = _.identity;
-
-  public form: FormGroup;
-
   public error?: string = null;
+  public form: FormGroup;
   public success?: SuccessMessage = null;
+
+  @Input() public sucessCallback?: () => void = _.identity;
 
   public constructor(
       private fb: FormBuilder,

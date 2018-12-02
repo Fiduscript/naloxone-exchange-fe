@@ -9,10 +9,9 @@ import * as moment from 'moment';
 import { bindNodeCallback, MonoTypeOperatorFunction, Observable, ObservableInput, Observer, of, throwError } from 'rxjs';
 import { catchError, flatMap, map } from 'rxjs/operators';
 
-import { ExpireTimeMapper, FiduServiceBase } from '../common/fidu-service-base';
+import { FiduServiceBase } from '../common/fidu-service-base';
 import { SuccessMessage } from '../common/message-response';
 import { IUserConfirmation } from './model/user-confirmation';
-import { IUserCredentials } from './model/user-credentials';
 import { UserInfo } from './model/user-info';
 
 @Injectable({
@@ -58,47 +57,12 @@ export class AccountService extends FiduServiceBase {
         this.defaultIfNotLoggedIn(),
         this.logErrors()
       );
+
   }
 
-  public login(loginForm: IUserCredentials): Observable<SuccessMessage> {
-    const authenticationDetails = new AuthenticationDetails({
-        Username : loginForm.username,
-        Password : loginForm.password
-    });
-
-    const cognitoUser = this.createCognitoUser(loginForm.username);
-
-    return Observable.create((observer) => {
-      cognitoUser.authenticateUser(authenticationDetails, {
-        onSuccess: (result) => {
-          observer.next(new SuccessMessage('Successfully logged in'));
-        },
-
-        onFailure: (err) => {
-          observer.error(err);
-        },
-
-        newPasswordRequired: (userAttributes, requiredAttributes) => {
-          observer.error(new Error('Password reset required but not yet implemented'));
-        },
-
-        mfaRequired: (challengeName, challengeParameters) => {
-          observer.error(new Error('MFA required but not yet implemented'));
-        },
-
-        totpRequired: (challengeName, challengeParameters) => {
-          observer.error(new Error('TOTP required but not yet implemented'));
-        },
-
-        mfaSetup: (challengeName, challengeParameters) => {
-          observer.error(new Error('MFA setup required but not yet implemented'));
-        },
-
-        selectMFAType: (challengeName, challengeParameters) => {
-          observer.error(new Error('Select MFA type required but not yet implemented'));
-        }
-      });
-    }).pipe(this.logErrors());
+  public login(credentials: IAuthenticationDetailsData): Observable<CognitoUserSession> {
+    return this.createAuthenticateUserObservable(credentials)
+        .pipe(this.logErrors());
   }
 
   public logout(): Observable<SuccessMessage> {
@@ -111,11 +75,11 @@ export class AccountService extends FiduServiceBase {
     );
   }
 
-  public register(credentials: IUserCredentials, userInfo: UserInfo): Observable<SuccessMessage> {
+  public register(credentials: IAuthenticationDetailsData, userInfo: UserInfo): Observable<SuccessMessage> {
     return Observable.create((observer: Observer<SuccessMessage>) => {
       AccountService.userPool.signUp(
-          credentials.username,
-          credentials.password,
+          credentials.Username,
+          credentials.Password,
           userInfo.cognitoUserAttributes(),
           null,
           (err: Error, result: ISignUpResult) => {
@@ -156,12 +120,10 @@ export class AccountService extends FiduServiceBase {
         return updateTask;
       }
 
-      return Observable.create((observable: Observer<CognitoUserSession>) => {
-          user.authenticateUser(new AuthenticationDetails(credentials), {
-            onSuccess: (session: CognitoUserSession) => observable.next(session),
-            onFailure: (err) => observable.error(err)
-          });
-        }).pipe(flatMap((session: CognitoUserSession) => updateTask));
+      // XXX: Validate a user's password before allowing them to change this attribute.
+      //      Is this the correct way to do this?
+      return this.createAuthenticateUserObservable(credentials, user)
+          .pipe(flatMap((session: CognitoUserSession) => updateTask));
     });
   }
 
@@ -183,6 +145,47 @@ export class AccountService extends FiduServiceBase {
         this.defaultIfNotLoggedIn(new UserInfo()),
         this.logErrors()
     );
+  }
+
+  private createAuthenticateUserObservable(
+      credentials: IAuthenticationDetailsData,
+      cognitoUser?: CognitoUser): Observable<CognitoUserSession> {
+
+    const user: CognitoUser = cognitoUser == null ?
+        this.createCognitoUser(credentials.Username) :
+        cognitoUser;
+
+    return Observable.create((observer) => {
+      user.authenticateUser(new AuthenticationDetails(credentials), {
+        onSuccess: (result: CognitoUserSession) => {
+          observer.next(result);
+        },
+
+        onFailure: (err) => {
+          observer.error(err);
+        },
+
+        newPasswordRequired: (userAttributes, requiredAttributes) => {
+          observer.error(new Error('Password reset required but not yet implemented'));
+        },
+
+        mfaRequired: (challengeName, challengeParameters) => {
+          observer.error(new Error('MFA required but not yet implemented'));
+        },
+
+        totpRequired: (challengeName, challengeParameters) => {
+          observer.error(new Error('TOTP required but not yet implemented'));
+        },
+
+        mfaSetup: (challengeName, challengeParameters) => {
+          observer.error(new Error('MFA setup required but not yet implemented'));
+        },
+
+        selectMFAType: (challengeName, challengeParameters) => {
+          observer.error(new Error('Select MFA type required but not yet implemented'));
+        }
+      });
+    });
   }
 
   private createCognitoUser(username: string): CognitoUser {

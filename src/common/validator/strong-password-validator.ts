@@ -2,11 +2,11 @@ import { AbstractControl, ValidationErrors, Validator } from '@angular/forms';
 import * as _ from 'lodash';
 
 export class StrongPasswordValidator implements Validator {
+  private static readonly LENGTH = new RegExp('^(?=.{8,})');
   private static readonly LOWERCASE = new RegExp('^(?=.*[a-z])');
-  private static readonly UPPERCASE = new RegExp('^(?=.*[A-Z])');
   private static readonly NUMBER = new RegExp('^(?=.*[0-9])');
   private static readonly SPECIAL_CHARACTER = new RegExp('^(?=.*[!@#\$%\^&\*])');
-  private static readonly LENGTH = new RegExp('^(?=.{8,})');
+  private static readonly UPPERCASE = new RegExp('^(?=.*[A-Z])');
 
   public constuctor() {}
 

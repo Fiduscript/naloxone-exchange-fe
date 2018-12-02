@@ -16,12 +16,11 @@ export class BuyService extends FiduServiceBase {
   }
 
   /**
-   * Fetches products from `/api/product/list/state/:state` that are avaialble in a particular state
-   * @param state the name of the state in question
-   * @return observable of Products
-   */
-  public stateProducts(state: string): Observable<Products> {
-    const path: string = `/api/product/list/state/${state}`;
+  * Fetches products from `/api/product/list/featured`.
+  * @return observable of items
+  */
+  public featuredProducts(): Observable<Products> {
+    const path: string = '/api/product/list/featured';
     if (this.hasMemo(path)) {
       return this.getMemoized(path);
     }
@@ -34,11 +33,12 @@ export class BuyService extends FiduServiceBase {
   }
 
   /**
-  * Fetches products from `/api/product/list/featured`.
-  * @return observable of items
-  */
-  public featuredProducts(): Observable<Products> {
-    const path: string = '/api/product/list/featured';
+   * Fetches products from `/api/product/list/state/:state` that are avaialble in a particular state
+   * @param state the name of the state in question
+   * @return observable of Products
+   */
+  public stateProducts(state: string): Observable<Products> {
+    const path: string = `/api/product/list/state/${state}`;
     if (this.hasMemo(path)) {
       return this.getMemoized(path);
     }

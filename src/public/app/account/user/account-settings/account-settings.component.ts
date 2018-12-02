@@ -10,10 +10,10 @@ import { UserInfo } from '../../model/user-info';
 })
 export class AccountSettingsComponent implements OnInit {
 
+  @Input() public user: UserInfo;
+
   private editingAttribute?: string = null;
   private modal?: NgbModalRef = null;
-
-  @Input() public user: UserInfo;
 
   public constructor(
       private modalService: NgbModal) {
@@ -22,7 +22,10 @@ export class AccountSettingsComponent implements OnInit {
     this.closeModal = this.closeModal.bind(this);
   }
 
-  public ngOnInit(): void {
+  public closeModal(): void {
+    if (this.modal != null) {
+      this.modal.close();
+    }
   }
 
   public editAttribute(attribute: string, content: any) {
@@ -35,10 +38,7 @@ export class AccountSettingsComponent implements OnInit {
     return this.editingAttribute != null && this.editingAttribute === 'password';
   }
 
-  public closeModal(): void {
-    if (this.modal != null) {
-      this.modal.close();
-    }
+  public ngOnInit(): void {
   }
 
   private clearAttrs(): void {
