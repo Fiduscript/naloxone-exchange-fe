@@ -8,6 +8,7 @@ import { MatchValidator } from 'src/common/validator/match-validator';
 import { StrongPasswordValidator } from 'src/common/validator/strong-password-validator';
 import { IUserCredentials } from '../model/user-credentials';
 import { UserInfo } from '../model/user-info';
+import { PrivacyComponent } from '../privacy/privacy.component';
 
 @Component({
   selector: 'app-register',
@@ -18,6 +19,7 @@ export class RegisterComponent implements OnInit {
 
   public registerForm: FormGroup;
   public error: string = null;
+  public privacyVersion: string;
 
   constructor(
       private fb: FormBuilder,
@@ -51,7 +53,8 @@ export class RegisterComponent implements OnInit {
     const userInfo: UserInfo = new UserInfo({
         name: `${this.registerForm.get('firstName').value} ${this.registerForm.get('lastName').value}`  ,
         email: this.registerForm.get('email').value,
-        privacyAgreement: 'v(-1)' // TODO: implement
+        privacyAgreement: this.privacyVersion
+        // privacyAgreement: 'v(-1)' // TODO: implement
     });
 
     if (this.registerForm.get('subscribeAgree').value) {
@@ -66,7 +69,7 @@ export class RegisterComponent implements OnInit {
     );
   }
 
-  public open(content: any) {
-    this.modalService.open(content);
+  public openPrivacyModal() {
+    this.modalService.open(PrivacyComponent);
   }
 }

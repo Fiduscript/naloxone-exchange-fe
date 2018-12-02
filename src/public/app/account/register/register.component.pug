@@ -72,16 +72,8 @@
           input.mr-2(type="checkbox" formControlName="privacyAgree" checked)
           span.small
             | I have read and agree to the 
-            strong((click)="open(privacy)") Privacy Policy
+            strong((click)="openPrivacyModal()") Privacy Policy
             | .
-        ng-template(#privacy let-modal)
-          .modal-header
-            h4.modal-title#modal-basic-title Privacy Policy
-            button.close((click)="modal.dismiss()")
-              span(aria-hidden="true") &times;
-          .modal-body Privacy contents
-          .modal-footer
-            button.btn.btn-light((click)="modal.close()") Close
         div
           input.mr-2(type="checkbox" formControlName="subscribeAgree" checked)
           span.small Stay informed about naloxone products and services. (Optional)

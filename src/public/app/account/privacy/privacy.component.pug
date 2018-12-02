@@ -1,0 +1,8 @@
+.modal-header
+  h4.modal-title#modal-basic-title Privacy Policy
+  button.close((click)="activeModal.dismiss()")
+    span(aria-hidden="true") &times;
+.modal-body Privacy contents
+  .small.text-center last updated: {{version}}
+.modal-footer
+  button.btn.btn-light((click)="activeModal.close()") Close

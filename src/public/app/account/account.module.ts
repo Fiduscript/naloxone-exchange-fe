@@ -9,6 +9,7 @@ import { AccountService } from './account.service';
 import { ConfirmComponent } from './confirm/confirm.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
+import { PrivacyComponent } from './privacy/privacy.component';
 import { RegisterComponent } from './register/register.component';
 import { AccountSettingsComponent } from './user/account-settings/account-settings.component';
 import { AddressesComponent } from './user/addresses/addresses.component';
@@ -30,6 +31,9 @@ import { UserAuthGuard } from './user/user-auth.guard';
     UserAuthGuard,
     {provide: LOCATION, useValue: window.location}
   ],
+  entryComponents: [
+    PrivacyComponent,
+  ],
   declarations: [
     LoginComponent,
     ProfileComponent,
@@ -41,6 +45,7 @@ import { UserAuthGuard } from './user/user-auth.guard';
     RegisterComponent,
     LogoutComponent,
     ConfirmComponent,
+    PrivacyComponent,
   ]
 })
 export class AccountModule { }
