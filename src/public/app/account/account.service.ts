@@ -223,7 +223,9 @@ export class AccountService extends FiduServiceBase {
       user.getSession = user.getSession.bind(user);
     }
 
-    // ensure we have been logged into session but return user.
+    // We already have a 'user' but that doesn't mean that the user has a validated session,
+    // so we will get a valid session and then return the user. This will set the session
+    // attribute on the User object behind the scenes.
     return bindNodeCallback<CognitoUserSession>(user.getSession)().pipe(
       map((session: CognitoUserSession) => user),
       this.memoizeResult(key, AccountService.expireTimeMapper)
