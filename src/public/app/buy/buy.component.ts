@@ -33,12 +33,12 @@ export class BuyComponent {
     });
   }
 
-  public getStates(): IState[] {
-    return STATES;
-  }
-
   public getReasons(): string[] {
     return BuyComponent.REASONS;
+  }
+
+  public getStates(): IState[] {
+    return STATES;
   }
 
   public navigate(): void {

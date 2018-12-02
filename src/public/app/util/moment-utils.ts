@@ -3,29 +3,25 @@ import * as moment from 'moment';
 import { Duration, Moment } from 'moment';
 
 @JsonConverter
-class MomentConverter implements JsonCustomConvert<Moment> {
-  public serialize(value: Moment): string {
-    return value.toISOString();
-  }
+export class MomentConverter implements JsonCustomConvert<Moment> {
 
   public deserialize(value: string | number): Moment {
     return moment(value);
   }
+
+  public serialize(value: Moment): string {
+    return value.toISOString();
+  }
 }
 
 @JsonConverter
-class DurationConverter implements JsonCustomConvert<Duration> {
-
-  public serialize(value: Duration): string {
-    return value.toISOString();
-  }
+export class DurationConverter implements JsonCustomConvert<Duration> {
 
   public deserialize(value: string | number): Duration {
     return moment.duration(value);
   }
-}
 
-export {
-  MomentConverter,
-  DurationConverter
-};
+  public serialize(value: Duration): string {
+    return value.toISOString();
+  }
+}

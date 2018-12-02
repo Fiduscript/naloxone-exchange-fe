@@ -7,11 +7,11 @@ export class UserService {
 
   public constructor() { }
 
-  public getOrders() {
+  public getAddressses() {
     // TODO: implement
   }
 
-  public getAddresses() {
+  public getOrders() {
     // TODO: implement
   }
 
