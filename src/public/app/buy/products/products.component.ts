@@ -11,13 +11,16 @@ import { Products } from '../model/products';
 })
 export class ProductsComponent implements OnInit {
 
+  public products: Products;
   @Input() public state: string = null;
   @Input() public thumbnail: boolean = false;
 
-  public products: Products;
-
   public constructor(private service: BuyService) {
     this.setProducts = this.setProducts.bind(this);
+  }
+
+  public canRender(): boolean {
+    return this.products != null;
   }
 
   public ngOnInit() {
@@ -26,10 +29,6 @@ export class ProductsComponent implements OnInit {
     } else {
       this.service.stateProducts(this.state).subscribe(this.setProducts);
     }
-  }
-
-  public canRender(): boolean {
-    return this.products != null;
   }
 
   private setProducts(products: Products): void {

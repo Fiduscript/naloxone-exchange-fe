@@ -17,12 +17,13 @@ import { UserInfo } from './model/user-info';
   providedIn: 'root'
 })
 export class AccountService extends FiduServiceBase {
-  private static readonly NOT_LOGGED_IN: string = 'No valid user logged in.';
 
   private static readonly cookieStorage = new CookieStorage({
     domain: window.location.hostname,
     secure: window.location.protocol === 'https:'
   });
+
+  private static readonly NOT_LOGGED_IN: string = 'No valid user logged in.';
 
   // This is the "customer-user-pool-test" user pool
   // TODO: needs to be provided via config
@@ -191,6 +192,19 @@ export class AccountService extends FiduServiceBase {
   }
 
   /**
+   * Helper to be used with operateOnUser. If there is no valid user session this utility can provide a default value instead.
+   * @param defaultValue
+   */
+  private defaultIfNotLoggedIn<T>(defaultValue: T = null): MonoTypeOperatorFunction < T > {
+    return catchError( (error: any, caught: Observable<T>): ObservableInput<T> => {
+      if (error === AccountService.NOT_LOGGED_IN) {
+        return of(defaultValue);
+      }
+      throw error; // else propegate
+    });
+  }
+
+  /**
    * Use this method to get a cognito user so that we reuse the same copy of it so that
    * session validation remains throughout the session.
    * NOTE: Generally if you are trying to operate on a User you should use the {@code operateOnUser} method.
@@ -232,19 +246,6 @@ export class AccountService extends FiduServiceBase {
         return operation(user);
       })
     );
-  }
-
-  /**
-   * Helper to be used with operateOnUser. If there is no valid user session this utility can provide a default value instead.
-   * @param defaultValue
-   */
-  private defaultIfNotLoggedIn<T>(defaultValue: T = null): MonoTypeOperatorFunction < T > {
-    return catchError( (error: any, caught: Observable<T>): ObservableInput<T> => {
-      if (error === AccountService.NOT_LOGGED_IN) {
-        return of(defaultValue);
-      }
-      throw error; // else propegate
-    });
   }
 
 }

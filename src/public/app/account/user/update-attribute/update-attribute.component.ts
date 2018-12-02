@@ -33,11 +33,10 @@ export class UpdateAttributeComponent implements OnInit {
 
 
   public displaySettings: IDisplaySettings = UpdateAttributeComponent.DISPLAY_SETTINGS.default;
-  public form: FormGroup;
-  public user: UserInfo = new UserInfo();
-
   public error?: string = null;
+  public form: FormGroup;
   public success?: SuccessMessage = null;
+  public user: UserInfo = new UserInfo();
 
   public constructor(
     @Inject(LOCATION) private location: Location,
@@ -103,7 +102,7 @@ export class UpdateAttributeComponent implements OnInit {
 
 interface IDisplaySettings {
   placeholder?: string;
-  requireVerify?: boolean;
   requirePassord?: boolean;
+  requireVerify?: boolean;
   validators?: ValidatorFn[];
 }

@@ -24,8 +24,6 @@ export class ConfirmComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
-
   public confirm(): void {
     if (this.confirmForm.invalid) {
       return;
@@ -38,5 +36,7 @@ export class ConfirmComponent implements OnInit {
       }
     );
   }
+
+  public ngOnInit() { }
 
 }

@@ -1,6 +1,6 @@
 export interface IState {
-  name: string;
   abbreviation: string;
+  name: string;
 }
 
 export const STATES: IState[] = [

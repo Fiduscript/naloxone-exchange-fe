@@ -2,28 +2,20 @@ import { CognitoUserAttribute, CognitoUserSession, ICognitoUserAttributeData } f
 import * as _ from 'lodash';
 
 export interface IUserInfo {
-  name: string;
   email: string;
+  name: string;
   privacyAgreement: string;
 }
 export class UserInfo implements IUserInfo {
+  private static CUSTOM_PREFIX: String = 'custom:';
   private static CUSTOM_PROPS: Set<string> = new Set(['privacyAgreement']);
 
-  public readonly name: string = '';
   public readonly email: string = '';
+  public readonly name: string = '';
   public readonly privacyAgreement: string = 'v(-1)';
 
   public constructor(userInfo: IUserInfo = {} as IUserInfo) {
     _.merge(this, userInfo);
-  }
-
-  public static fromUserAttributes(attributes: CognitoUserAttribute[]): UserInfo {
-    const attrs: IUserInfo = _(attributes)
-        .mapKeys((v) => _.trimStart(v.getName(), 'custom:'))
-        .mapValues((v) => v.getValue())
-        .value();
-
-    return new UserInfo(attrs);
   }
 
   /**
@@ -31,7 +23,7 @@ export class UserInfo implements IUserInfo {
    */
   public cognitoUserAttributeData(): ICognitoUserAttributeData[] {
     return _.map(this, (value: any, prop: string) => {
-        const name = UserInfo.CUSTOM_PROPS.has(prop) ? `custom:${prop}` : prop;
+        const name = UserInfo.CUSTOM_PROPS.has(prop) ? `${UserInfo.CUSTOM_PREFIX}${prop}` : prop;
         return {Name: name, Value: value};
     });
   }
@@ -45,6 +37,22 @@ export class UserInfo implements IUserInfo {
    */
   public isAuthenticated(): boolean {
     return !(_.isEmpty(this.name) || _.isEmpty(this.email));
+  }
+
+  public static fromSession(session?: CognitoUserSession): UserInfo {
+    if (session == null || !session.isValid()) {
+      return new UserInfo();
+    }
+    return new UserInfo(session.getIdToken().decodePayload() as IUserInfo);
+  }
+
+  public static fromUserAttributes(attributes: CognitoUserAttribute[]): UserInfo {
+    const attrs: IUserInfo = _(attributes)
+        .mapKeys((v) => _.trimStart(v.getName(), UserInfo.CUSTOM_PREFIX))
+        .mapValues((v) => v.getValue())
+        .value();
+
+    return new UserInfo(attrs);
   }
 
 }
