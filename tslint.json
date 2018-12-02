@@ -36,7 +36,6 @@
       true,
       {
         "order": [
-
           "public-static-field",
           "protected-static-field",
           "private-static-field",
