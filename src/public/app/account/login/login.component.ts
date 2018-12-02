@@ -24,8 +24,8 @@ export class LoginComponent implements OnInit {
       private route: ActivatedRoute,
       private service: AccountService) {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      Username: ['', Validators.required],
+      Password: ['', Validators.required]
     });
   }
 
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
     this.service.login(this.loginForm.value).subscribe(
       (): void => { this.location.replace(this.returnRoute); },
       (error: Error): void => {
-        this.loginForm.get('password').reset();
+        this.loginForm.get('Password').reset();
         this.error = error.message;
       }
     );

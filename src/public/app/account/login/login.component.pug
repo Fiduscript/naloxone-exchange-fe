@@ -2,36 +2,36 @@
   h3.mb-5.mt-3 {{user}} Login
   .container.text-center.mb-5
     .mb-2 Login with
-    i.fa.fa-facebook-f.circle-icon.mr-4(style="color: white" "(click)"="socialSignIn('facebook')") 
-    i.fab.fa-google.circle-icon(style="color: white" "(click)"="socialSignIn('google')") 
+    i.fa.fa-facebook-f.circle-icon.mr-4(style="color: white" "(click)"="socialSignIn('facebook')")
+    i.fab.fa-google.circle-icon(style="color: white" "(click)"="socialSignIn('google')")
 
   .or-seperator.mt-3.mb-3
     b.or or
 
   .container.text-center.pt-1.pb-1
     form(
-        "[formGroup]"="loginForm" 
+        "[formGroup]"="loginForm"
         "(ngSubmit)"="login()")
       .form-group
         input.form-control(
-            type="text" 
-            formControlName="username"
+            type="text"
+            formControlName="Username"
             placeholder="username@email.com"
-            "[ngClass]"="{ 'is-invalid': loginForm.get('username').touched && loginForm.get('username').invalid }")
-        .invalid-feedback(*ngIf="loginForm.get('username').touched && loginForm.get('username').invalid")
+            "[ngClass]"="{ 'is-invalid': loginForm.get('Username').touched && loginForm.get('Username').invalid }")
+        .invalid-feedback(*ngIf="loginForm.get('Username').touched && loginForm.get('Username').invalid")
           .text-left Username is required
 
       .form-group
         input.form-control(
-            type="password" 
-            formControlName="password"
+            type="password"
+            formControlName="Password"
             placeholder="Password"
-            "[ngClass]"="{ 'is-invalid': loginForm.get('password').touched && loginForm.get('password').invalid }")
-        .invalid-feedback(*ngIf="loginForm.get('password').touched && loginForm.get('password').invalid")
+            "[ngClass]"="{ 'is-invalid': loginForm.get('Password').touched && loginForm.get('Password').invalid }")
+        .invalid-feedback(*ngIf="loginForm.get('Password').touched && loginForm.get('Password').invalid")
           .text-left Password is required
 
       .alert.alert-danger.text-left(*ngIf="error") {{error}}
-      
+
       .form-group
         button.btn.btn-primary.login-btn.w-100(type="submit") Login
   a(routerLink="/account/register") Create an Account

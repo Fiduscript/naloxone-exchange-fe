@@ -4,6 +4,8 @@ import { AuthenticationDetails, CognitoUser, CognitoUserAttribute,
     CognitoUserPool, CognitoUserSession, CookieStorage, IAuthenticationDetailsData,
     ICognitoUserAttributeData, ISignUpResult } from 'amazon-cognito-identity-js';
 import * as _ from 'lodash';
+import { Moment } from 'moment';
+import * as moment from 'moment';
 import { bindNodeCallback, MonoTypeOperatorFunction, Observable, ObservableInput, Observer, of, throwError } from 'rxjs';
 import { catchError, flatMap, map } from 'rxjs/operators';
 
@@ -17,7 +19,7 @@ import { UserInfo } from './model/user-info';
 })
 export class AccountService extends FiduServiceBase {
 
-  private static readonly cookieStorage = new CookieStorage({
+  private static readonly cookieStorage: CookieStorage = new CookieStorage({
     domain: window.location.hostname,
     secure: window.location.protocol === 'https:'
   });
@@ -26,7 +28,7 @@ export class AccountService extends FiduServiceBase {
 
   // This is the "customer-user-pool-test" user pool
   // TODO: needs to be provided via config
-  private static readonly userPool = new CognitoUserPool({
+  private static readonly userPool: CognitoUserPool = new CognitoUserPool({
     UserPoolId : 'us-east-2_ej6SB5BPr',
     ClientId : '7dum3ivsqng75jdve4sc39tve4',
     Storage: AccountService.cookieStorage
@@ -37,7 +39,7 @@ export class AccountService extends FiduServiceBase {
   }
 
   public confirmRegistration(confirmForm: IUserConfirmation): Observable<SuccessMessage> {
-    const cognitoUser = this.createCognitoUser(confirmForm.username);
+    const cognitoUser = AccountService.createCognitoUser(confirmForm.username);
 
     return Observable.create((observer: Observer<SuccessMessage>) => {
       cognitoUser.confirmRegistration(confirmForm.code, true, (err, result) => {
@@ -55,9 +57,10 @@ export class AccountService extends FiduServiceBase {
         this.defaultIfNotLoggedIn(),
         this.logErrors()
       );
+
   }
 
-  public login(credentials: IAuthenticationDetailsData): Observable<SuccessMessage> {
+  public login(credentials: IAuthenticationDetailsData): Observable<CognitoUserSession> {
     return this.createAuthenticateUserObservable(credentials)
         .pipe(this.logErrors());
   }
@@ -135,26 +138,27 @@ export class AccountService extends FiduServiceBase {
 
     return this.operateOnUser((user: CognitoUser) => {
       return bindNodeCallback<CognitoUserAttribute[]>(user.getUserAttributes)().pipe(
-          map((attrs: CognitoUserAttribute[]) => UserInfo.fromUserAttributes(attrs))
+          map((attrs: CognitoUserAttribute[]) => UserInfo.fromUserAttributes(attrs)),
+          this.memoizeResult(key, _.partial(AccountService.expireTimeMapper, user))
         );
       }).pipe(
-        this.memoizeResult(key),
         this.defaultIfNotLoggedIn(new UserInfo()),
         this.logErrors()
     );
   }
 
   private createAuthenticateUserObservable(
-    credentials: IAuthenticationDetailsData,
-    cognitoUser?: CognitoUser) {
-    if (cognitoUser == null) {
-      cognitoUser = this.createCognitoUser(credentials.Username);
-    }
+      credentials: IAuthenticationDetailsData,
+      cognitoUser?: CognitoUser): Observable<CognitoUserSession> {
+
+    const user: CognitoUser = cognitoUser == null ?
+        AccountService.createCognitoUser(credentials.Username) :
+        cognitoUser;
 
     return Observable.create((observer) => {
-      cognitoUser.authenticateUser(new AuthenticationDetails(credentials), {
-        onSuccess: (result) => {
-          observer.next(new SuccessMessage('Successfully logged in'));
+      user.authenticateUser(new AuthenticationDetails(credentials), {
+        onSuccess: (result: CognitoUserSession) => {
+          observer.next(result);
         },
 
         onFailure: (err) => {
@@ -184,19 +188,11 @@ export class AccountService extends FiduServiceBase {
     });
   }
 
-  private createCognitoUser(username: string): CognitoUser {
-    return new CognitoUser({
-      Username : username,
-      Pool : AccountService.userPool,
-      Storage: AccountService.cookieStorage
-    });
-  }
-
   /**
    * Helper to be used with operateOnUser. If there is no valid user session this utility can provide a default value instead.
    * @param defaultValue
    */
-  private defaultIfNotLoggedIn<T>(defaultValue: T = null): MonoTypeOperatorFunction < T > {
+  private defaultIfNotLoggedIn<T>(defaultValue: T = null): MonoTypeOperatorFunction<T> {
     return catchError( (error: any, caught: Observable<T>): ObservableInput<T> => {
       if (error === AccountService.NOT_LOGGED_IN) {
         return of(defaultValue);
@@ -220,7 +216,6 @@ export class AccountService extends FiduServiceBase {
     if (user == null) {
       return of(null);
     } else {
-      this.memoize(key, user);
       // to be more efficent make sure we only bind once.
       user.changePassword = user.changePassword.bind(user);
       user.getUserAttributes = user.getUserAttributes.bind(user);
@@ -232,7 +227,8 @@ export class AccountService extends FiduServiceBase {
     // so we will get a valid session and then return the user. This will set the session
     // attribute on the User object behind the scenes.
     return bindNodeCallback<CognitoUserSession>(user.getSession)().pipe(
-      map((session: CognitoUserSession) => user)
+      map((session: CognitoUserSession) => user),
+      this.memoizeResult(key, AccountService.expireTimeMapper)
     );
   }
 
@@ -240,7 +236,7 @@ export class AccountService extends FiduServiceBase {
    * Helper method that handles operating on a user with a valid session.
    * @param operation operation to do with user object
    */
-  private operateOnUser<T>(operation: (user: CognitoUser) => ObservableInput<T>): Observable < T > {
+  private operateOnUser<T>(operation: (user: CognitoUser) => ObservableInput<T>): Observable<T> {
     return this.getCognitoUser().pipe(
       flatMap((user: CognitoUser): ObservableInput<T> => {
         if (user == null) {
@@ -249,6 +245,21 @@ export class AccountService extends FiduServiceBase {
         return operation(user);
       })
     );
+  }
+
+  private static createCognitoUser(username: string): CognitoUser {
+    return new CognitoUser({
+      Username : username,
+      Pool : AccountService.userPool,
+      Storage: AccountService.cookieStorage
+    });
+  }
+
+  private static expireTimeMapper(user: CognitoUser): Moment {
+    const session: CognitoUserSession = user.getSignInUserSession();
+    if (session == null) { return null; }
+    const expires = session.getAccessToken().getExpiration();
+    return expires == null ? null : moment.unix(expires);
   }
 
 }

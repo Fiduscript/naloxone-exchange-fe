@@ -31,7 +31,6 @@ export class UpdateAttributeComponent implements OnInit {
 
   @Input() public attributeName: string;
 
-
   public displaySettings: IDisplaySettings = UpdateAttributeComponent.DISPLAY_SETTINGS.default;
   public error?: string = null;
   public form: FormGroup;
