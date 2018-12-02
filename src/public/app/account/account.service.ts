@@ -39,7 +39,7 @@ export class AccountService extends FiduServiceBase {
   }
 
   public confirmRegistration(confirmForm: IUserConfirmation): Observable<SuccessMessage> {
-    const cognitoUser = this.createCognitoUser(confirmForm.username);
+    const cognitoUser = AccountService.createCognitoUser(confirmForm.username);
 
     return Observable.create((observer: Observer<SuccessMessage>) => {
       cognitoUser.confirmRegistration(confirmForm.code, true, (err, result) => {
@@ -152,7 +152,7 @@ export class AccountService extends FiduServiceBase {
       cognitoUser?: CognitoUser): Observable<CognitoUserSession> {
 
     const user: CognitoUser = cognitoUser == null ?
-        this.createCognitoUser(credentials.Username) :
+        AccountService.createCognitoUser(credentials.Username) :
         cognitoUser;
 
     return Observable.create((observer) => {
@@ -185,14 +185,6 @@ export class AccountService extends FiduServiceBase {
           observer.error(new Error('Select MFA type required but not yet implemented'));
         }
       });
-    });
-  }
-
-  private createCognitoUser(username: string): CognitoUser {
-    return new CognitoUser({
-      Username : username,
-      Pool : AccountService.userPool,
-      Storage: AccountService.cookieStorage
     });
   }
 
@@ -251,6 +243,14 @@ export class AccountService extends FiduServiceBase {
         return operation(user);
       })
     );
+  }
+
+  private static createCognitoUser(username: string): CognitoUser {
+    return new CognitoUser({
+      Username : username,
+      Pool : AccountService.userPool,
+      Storage: AccountService.cookieStorage
+    });
   }
 
   private static expireTimeMapper(user: CognitoUser): Moment {
