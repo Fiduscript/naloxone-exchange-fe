@@ -104,7 +104,7 @@ export class FiduServiceBase {
     if (expireTime == null) { return; }
 
     let timeoutMillis: number;
-    if (moment.isDuration(moment())) {
+    if (moment.isDuration(expireTime)) {
       timeoutMillis = (expireTime as Duration).asMilliseconds();
     } else if (moment.isMoment(expireTime)) {
       timeoutMillis = Math.max( (expireTime as Moment).valueOf() - moment().valueOf(), 0);
