@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -16,10 +16,11 @@ import { PrivacyComponent } from '../privacy/privacy.component';
   styleUrls: ['./register.component.styl']
 })
 export class RegisterComponent implements OnInit {
+  @ViewChild(PrivacyComponent) privacy: PrivacyComponent;
 
   public registerForm: FormGroup;
   public error: string = null;
-  public privacyVersion: string;
+  public privacyVersion: string = 'test';
 
   constructor(
       private fb: FormBuilder,
@@ -38,7 +39,9 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log(this.privacy);
+  }
 
   public register(): void {
     if (this.registerForm.invalid) {

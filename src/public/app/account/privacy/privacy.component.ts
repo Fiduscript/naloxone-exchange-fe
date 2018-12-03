@@ -1,6 +1,5 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { version } from 'winston';
 
 @Component({
   selector: 'app-privacy',
