@@ -18,7 +18,6 @@ import { PrivacyComponent } from '../privacy/privacy.component';
 export class RegisterComponent implements OnInit {
 
   public error: string = null;
-  @ViewChild(PrivacyComponent) privacy: PrivacyComponent;
   public privacyVersion: string = 'test';
   public registerForm: FormGroup;
 
@@ -39,7 +38,20 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  public ngOnInit(): void { }
+  public getPrivacyPolicy() {
+    this.service.getPrivacyPolicy().subscribe(
+      (policy) => {
+      this.privacyVersion = policy.date;
+      },
+      (error: Error): void => {
+        this.error = error.message;
+      }
+    );
+  }
+
+  public ngOnInit(): void {
+    this.getPrivacyPolicy();
+  }
 
   public openPrivacyModal() {
     this.modalService.open(PrivacyComponent);
@@ -59,7 +71,6 @@ export class RegisterComponent implements OnInit {
         name: `${this.registerForm.get('firstName').value} ${this.registerForm.get('lastName').value}`  ,
         email: this.registerForm.get('email').value,
         privacyAgreement: this.privacyVersion
-        // privacyAgreement: 'v(-1)' // TODO: implement
     });
 
     if (this.registerForm.get('subscribeAgree').value) {

@@ -11,6 +11,7 @@ import { catchError, flatMap, map } from 'rxjs/operators';
 
 import { FiduServiceBase } from '../common/fidu-service-base';
 import { SuccessMessage } from '../common/message-response';
+import { PrivacyPolicy } from './model/privacy-policy';
 import { IUserConfirmation } from './model/user-confirmation';
 import { UserInfo } from './model/user-info';
 
@@ -57,6 +58,35 @@ export class AccountService extends FiduServiceBase {
         this.defaultIfNotLoggedIn(),
         this.logErrors()
       );
+
+  }
+
+  public getPrivacyPolicy(): Observable<PrivacyPolicy> {
+    const path: string = '/api/account/privacyPolicy';
+    if (this.hasMemo(path)) {
+      return this.getMemoized(path);
+    }
+
+    return this.http.get<PrivacyPolicy>(path);
+    // TODO: momoize result!
+
+
+    // constructor(private http: HttpClient) {
+    //   super();
+    // }
+
+    // public listPharmacies(): Observable<Pharmacies> {
+    //   const path: string = '/api/pharmacy/list';
+    //   if (this.hasMemo(path)) {
+    //     return this.getMemoized(path);
+    //   }
+
+    //   return this.http.get<Pharmacies>(path).pipe(
+    //       this.deserialize(Pharmacies),
+    //       this.memoizeResult(path),
+    //       this.logErrors()
+    //     );
+    // }
 
   }
 
