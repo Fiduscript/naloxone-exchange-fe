@@ -18,7 +18,7 @@ export const sendEmail = (toEmail: string, fromEmail: string, subject: string, t
     from: fromEmail,
     subject: subject,
     text: text
-  }
+  };
 
   return new Promise((resolve, reject) => {
     transporter.sendMail(mailOptions, function(err, res) {

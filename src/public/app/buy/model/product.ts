@@ -3,9 +3,6 @@ import { JsonObject, JsonProperty } from 'json2typescript';
 @JsonObject
 export class Product {
 
-  @JsonProperty('id', String)
-  public readonly id: string = '';
-
   @JsonProperty('administrationMethod', String)
   public readonly administrationMethod: string = '';
 
@@ -14,6 +11,9 @@ export class Product {
 
   @JsonProperty('fdaUri', String)
   public readonly fdaUri: string = '';
+
+  @JsonProperty('id', String)
+  public readonly id: string = '';
 
   @JsonProperty('imageUri', String)
   public readonly imageUri: string = '';
