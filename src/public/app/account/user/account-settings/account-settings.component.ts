@@ -41,7 +41,6 @@ export class AccountSettingsComponent implements OnInit {
   }
 
   private clearAttrs(): void {
-    console.log('clear attrs called', this);
     this.editAttribute = null;
     this.modal = null;
   }
