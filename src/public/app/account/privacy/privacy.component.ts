@@ -9,30 +9,14 @@ import { AccountService } from '../account.service';
 })
 export class PrivacyComponent implements OnInit {
 
-  public error: string = null;
-
   @Input() privacyContent: String;
   @Input() privacyVersion: String;
 
   constructor(
-    public activeModal: NgbActiveModal,
-    private service: AccountService) {
+    public activeModal: NgbActiveModal) {
     }
 
-  public getPrivacyPolicy() {
-    this.service.getPrivacyPolicy().subscribe(
-      (policy) => {
-      this.privacyVersion = policy.date;
-      this.privacyContent = policy.policy;
-      },
-      (error: Error): void => {
-        this.error = error.message;
-      }
-    );
-  }
-
   ngOnInit() {
-    this.getPrivacyPolicy();
   }
 
 }
