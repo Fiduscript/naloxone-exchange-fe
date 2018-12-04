@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AccountService } from '../account.service';
 
@@ -10,8 +10,9 @@ import { AccountService } from '../account.service';
 export class PrivacyComponent implements OnInit {
 
   public error: string = null;
-  public privacyContent: String;
-  public privacyVersion: String;
+
+  @Input() privacyContent: String;
+  @Input() privacyVersion: String;
 
   constructor(
     public activeModal: NgbActiveModal,

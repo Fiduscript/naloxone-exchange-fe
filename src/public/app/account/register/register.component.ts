@@ -18,7 +18,8 @@ import { PrivacyComponent } from '../privacy/privacy.component';
 export class RegisterComponent implements OnInit {
 
   public error: string = null;
-  public privacyVersion: string = 'test';
+  public privacyContent: string;
+  public privacyVersion: string;
   public registerForm: FormGroup;
 
   constructor(
@@ -42,6 +43,7 @@ export class RegisterComponent implements OnInit {
     this.service.getPrivacyPolicy().subscribe(
       (policy) => {
       this.privacyVersion = policy.date;
+      this.privacyContent = policy.policy;
       },
       (error: Error): void => {
         this.error = error.message;
@@ -54,7 +56,9 @@ export class RegisterComponent implements OnInit {
   }
 
   public openPrivacyModal() {
-    this.modalService.open(PrivacyComponent);
+    const modalRef = this.modalService.open(PrivacyComponent);
+    modalRef.componentInstance.privacyVersion = this.privacyVersion;
+    modalRef.componentInstance.privacyContent = this.privacyContent;
   }
 
   public register(): void {
