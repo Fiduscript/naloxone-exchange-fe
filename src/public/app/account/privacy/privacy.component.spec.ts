@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { PrivacyComponent } from './privacy.component';
 
@@ -8,7 +9,8 @@ describe('PrivacyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PrivacyComponent ]
+      declarations: [ PrivacyComponent ],
+      providers: [ NgbActiveModal ]
     })
     .compileComponents();
   }));
