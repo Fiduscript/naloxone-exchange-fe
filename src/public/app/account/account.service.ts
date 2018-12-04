@@ -67,26 +67,10 @@ export class AccountService extends FiduServiceBase {
       return this.getMemoized(path);
     }
 
-    return this.http.get<PrivacyPolicy>(path);
-    // TODO: momoize result!
-
-
-    // constructor(private http: HttpClient) {
-    //   super();
-    // }
-
-    // public listPharmacies(): Observable<Pharmacies> {
-    //   const path: string = '/api/pharmacy/list';
-    //   if (this.hasMemo(path)) {
-    //     return this.getMemoized(path);
-    //   }
-
-    //   return this.http.get<Pharmacies>(path).pipe(
-    //       this.deserialize(Pharmacies),
-    //       this.memoizeResult(path),
-    //       this.logErrors()
-    //     );
-    // }
+    return this.http.get<PrivacyPolicy>(path).pipe(
+      this.memoizeResult(path),
+      this.logErrors()
+    );
 
   }
 

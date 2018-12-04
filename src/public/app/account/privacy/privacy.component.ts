@@ -34,5 +34,4 @@ export class PrivacyComponent implements OnInit {
     this.getPrivacyPolicy();
   }
 
-
 }
