@@ -35,7 +35,7 @@ export module AWSProvider {
   /**
    * @return singleton DynamoDB client.
    */
-  export const getDynmoClient = _.memoize((): DynamoDB => {
+  export const getDynamoClient = _.memoize((): DynamoDB => {
     return new DynamoDB(GLOBAL_CONFIG);
   });
 
