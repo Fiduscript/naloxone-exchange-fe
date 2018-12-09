@@ -1,4 +1,4 @@
-import { CognitoUserAttribute, CognitoUserSession } from 'amazon-cognito-identity-js';
+import { CognitoUserAttribute, CognitoUserSession, ICognitoUserAttributeData } from 'amazon-cognito-identity-js';
 import * as _ from 'lodash';
 
 export interface IUserInfo {
@@ -7,6 +7,7 @@ export interface IUserInfo {
   privacyAgreement: string;
 }
 export class UserInfo implements IUserInfo {
+  private static CUSTOM_PREFIX: String = 'custom:';
   private static CUSTOM_PROPS: Set<string> = new Set(['privacyAgreement']);
 
   public readonly email: string = '';
@@ -20,11 +21,15 @@ export class UserInfo implements IUserInfo {
   /**
    * Builds cognito attributes from this UserInfo object.
    */
-  public cognitoAttributes(): CognitoUserAttribute[] {
+  public cognitoUserAttributeData(): ICognitoUserAttributeData[] {
     return _.map(this, (value: any, prop: string) => {
-        const name = UserInfo.CUSTOM_PROPS.has(prop) ? `custom:${prop}` : prop;
-        return new CognitoUserAttribute({Name: name, Value: value});
+        const name = UserInfo.CUSTOM_PROPS.has(prop) ? `${UserInfo.CUSTOM_PREFIX}${prop}` : prop;
+        return {Name: name, Value: value};
     });
+  }
+
+  public cognitoUserAttributes(): CognitoUserAttribute[] {
+    return _.map(this.cognitoUserAttributeData, (d) => new CognitoUserAttribute(d));
   }
 
   /**
@@ -39,6 +44,15 @@ export class UserInfo implements IUserInfo {
       return new UserInfo();
     }
     return new UserInfo(session.getIdToken().decodePayload() as IUserInfo);
+  }
+
+  public static fromUserAttributes(attributes: CognitoUserAttribute[]): UserInfo {
+    const attrs: IUserInfo = _(attributes)
+        .mapKeys((v) => _.trimStart(v.getName(), UserInfo.CUSTOM_PREFIX))
+        .mapValues((v) => v.getValue())
+        .value();
+
+    return new UserInfo(attrs);
   }
 
 }
