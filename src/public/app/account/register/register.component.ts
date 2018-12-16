@@ -72,12 +72,9 @@ export class RegisterComponent implements OnInit {
     const userInfo: UserInfo = new UserInfo({
         name: `${this.registerForm.get('firstName').value} ${this.registerForm.get('lastName').value}`  ,
         email: this.registerForm.get('email').value,
-        privacyAgreement: this.privacyPolicy.getVersionString()
+        privacyAgreement: this.privacyPolicy.getVersionString(),
+        subscriptionSetting: this.registerForm.get('subscribeAgree').value ? 'all' : 'none'
     });
-
-    if (this.registerForm.get('subscribeAgree').value) {
-      // TODO: implement subscribe
-    }
 
     this.service.register(credentials, userInfo).subscribe(
       (): void => { this.router.navigate(['/account/confirm']); },
