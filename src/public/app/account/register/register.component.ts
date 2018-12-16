@@ -42,8 +42,8 @@ export class RegisterComponent implements OnInit {
   public getPrivacyPolicy() {
     this.service.getPrivacyPolicy().subscribe(
       (policy) => {
-      this.privacyVersion = policy.date;
-      this.privacyContent = policy.policy;
+      this.privacyVersion = policy.privacyVersion;
+      this.privacyContent = policy.privacyContent;
       },
       (error: Error): void => {
         this.error = error.message;

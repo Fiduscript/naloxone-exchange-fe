@@ -1,4 +1,4 @@
 export interface PrivacyPolicy {
-  date: string;
-  policy: string;
+  privacyContent: string;
+  privacyVersion: string;
 }

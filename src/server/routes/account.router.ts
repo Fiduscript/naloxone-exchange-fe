@@ -5,8 +5,8 @@ import * as _ from 'lodash';
 const router: Router = express.Router();
 
 const privacyPolicy = {
-  date: 'TBD',
-  policy: 'Privacy Policy : TBD'
+  privacyVersion: 'TBD',
+  privacyContent: 'Privacy Policy : TBD'
 };
 
 /**
