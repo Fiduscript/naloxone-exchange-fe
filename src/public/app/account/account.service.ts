@@ -68,6 +68,7 @@ export class AccountService extends FiduServiceBase {
     }
 
     return this.http.get<PrivacyPolicy>(path).pipe(
+      this.deserialize(PrivacyPolicy),
       this.memoizeResult(path),
       this.logErrors()
     );

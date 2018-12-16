@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { PrivacyPolicy } from '../model/privacy-policy';
 
 @Component({
   selector: 'app-privacy',
@@ -8,8 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class PrivacyComponent implements OnInit {
 
-  @Input() privacyContent: String;
-  @Input() privacyVersion: String;
+  @Input() privacyPolicy: PrivacyPolicy;
 
   constructor(
     public activeModal: NgbActiveModal) {

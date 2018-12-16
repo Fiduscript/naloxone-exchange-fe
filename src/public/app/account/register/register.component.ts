@@ -7,6 +7,7 @@ import { IAuthenticationDetailsData } from 'amazon-cognito-identity-js';
 import { MatchValidator } from 'src/common/validator/match-validator';
 import { StrongPasswordValidator } from 'src/common/validator/strong-password-validator';
 import { AccountService } from '../account.service';
+import { PrivacyPolicy } from '../model/privacy-policy';
 import { UserInfo } from '../model/user-info';
 import { PrivacyComponent } from '../privacy/privacy.component';
 
@@ -18,8 +19,7 @@ import { PrivacyComponent } from '../privacy/privacy.component';
 export class RegisterComponent implements OnInit {
 
   public error: string = null;
-  public privacyContent: string;
-  public privacyVersion: string;
+  public privacyPolicy: PrivacyPolicy;
   public registerForm: FormGroup;
 
   constructor(
@@ -41,9 +41,9 @@ export class RegisterComponent implements OnInit {
 
   public getPrivacyPolicy() {
     this.service.getPrivacyPolicy().subscribe(
-      (policy) => {
-      this.privacyVersion = policy.privacyVersion;
-      this.privacyContent = policy.privacyContent;
+      (policy: PrivacyPolicy) => {
+        this.privacyPolicy = policy;
+        console.log(policy);
       },
       (error: Error): void => {
         this.error = error.message;
@@ -57,8 +57,7 @@ export class RegisterComponent implements OnInit {
 
   public openPrivacyModal() {
     const modalRef = this.modalService.open(PrivacyComponent);
-    modalRef.componentInstance.privacyVersion = this.privacyVersion;
-    modalRef.componentInstance.privacyContent = this.privacyContent;
+    modalRef.componentInstance.privacyPolicy = this.privacyPolicy;
   }
 
   public register(): void {
@@ -74,7 +73,7 @@ export class RegisterComponent implements OnInit {
     const userInfo: UserInfo = new UserInfo({
         name: `${this.registerForm.get('firstName').value} ${this.registerForm.get('lastName').value}`  ,
         email: this.registerForm.get('email').value,
-        privacyAgreement: this.privacyVersion
+        privacyAgreement: this.privacyPolicy.getVersionString()
     });
 
     if (this.registerForm.get('subscribeAgree').value) {
