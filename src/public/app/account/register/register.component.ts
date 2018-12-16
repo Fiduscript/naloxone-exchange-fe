@@ -39,11 +39,10 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  public getPrivacyPolicy() {
+  public getPrivacyPolicy(): void {
     this.service.getPrivacyPolicy().subscribe(
       (policy: PrivacyPolicy) => {
         this.privacyPolicy = policy;
-        console.log(policy);
       },
       (error: Error): void => {
         this.error = error.message;
@@ -55,7 +54,7 @@ export class RegisterComponent implements OnInit {
     this.getPrivacyPolicy();
   }
 
-  public openPrivacyModal() {
+  public openPrivacyModal(): void {
     const modalRef = this.modalService.open(PrivacyComponent);
     modalRef.componentInstance.privacyPolicy = this.privacyPolicy;
   }

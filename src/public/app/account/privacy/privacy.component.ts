@@ -9,13 +9,10 @@ import { PrivacyPolicy } from '../model/privacy-policy';
 })
 export class PrivacyComponent implements OnInit {
 
-  @Input() privacyPolicy: PrivacyPolicy;
+  @Input() public privacyPolicy: PrivacyPolicy;
 
-  constructor(
-    public activeModal: NgbActiveModal) {
-    }
+  public constructor(public activeModal: NgbActiveModal) {}
 
-  ngOnInit() {
-  }
+  public ngOnInit(): void {}
 
 }
