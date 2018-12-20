@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {FiduServiceBase} from '../../common/fidu-service-base';
-import {Pharmacies} from '../../pharmacy/model/pharmacies';
-import {UserPoolAddOnsType} from 'aws-sdk/clients/cognitoidentityserviceprovider';
 import {UserAddress} from '../model/user-address';
 
 @Injectable({

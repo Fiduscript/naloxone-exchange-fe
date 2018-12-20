@@ -7,7 +7,7 @@ export interface IUserInfo {
   privacyAgreement: string;
 }
 export class UserInfo implements IUserInfo {
-  private static CUSTOM_PREFIX: String = 'custom:';
+  private static CUSTOM_PREFIX: string = 'custom:';
   private static CUSTOM_PROPS: Set<string> = new Set(['privacyAgreement']);
 
   public readonly email: string = '';
@@ -15,7 +15,7 @@ export class UserInfo implements IUserInfo {
   public readonly privacyAgreement: string = 'v(-1)';
 
   public constructor(userInfo: IUserInfo = {} as IUserInfo) {
-    _.merge(this, userInfo);
+    _.merge(_(this), userInfo);
   }
 
   /**
@@ -51,6 +51,7 @@ export class UserInfo implements IUserInfo {
         .mapKeys((v) => _.trimStart(v.getName(), UserInfo.CUSTOM_PREFIX))
         .mapValues((v) => v.getValue())
         .value();
+
 
     return new UserInfo(attrs);
   }

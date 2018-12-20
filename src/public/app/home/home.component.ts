@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
                      private testService: UserService) { }
 
   public ngOnInit(): void {
+    alert("bam");
     const addresses = this.testService.getAddressses();
     alert(addresses);
     // defer this task until the DOM has been rendered so there

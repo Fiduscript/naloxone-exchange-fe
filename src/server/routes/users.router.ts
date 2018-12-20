@@ -6,6 +6,8 @@ import { STATE_SET } from '../../common/constant/states';
 import { ErrorMessage, SuccessMessage } from '../../public/app/common/message-response';
 import { ErrorMiddleware } from '../helper/error-middleware';
 import { Logger } from '../util/logger';
+import {UsersDao} from '../dao/users-dao';
+import {IUserAddress} from '../../public/app/account/model/user-address';
 
 const log = Logger.create(module);
 const router: Router = express.Router();
@@ -37,9 +39,34 @@ router.get('/getAddresses',
     // ErrorMiddleware.sendFirst,
     (req: Request, res: Response) => {
 
-  // log.info(req);
-    res.status(201).json(new SuccessMessage('TEST'));
+  const users_dao = UsersDao.create();
+  users_dao.getAddressesForUser('newTestUser').then((addresses: IUserAddress[]) => {
+    res.status(200).json(addresses);
+  }).catch((err) => {
+    res.status(500).json(err);
+  });
 });
+router.get('/createAddress', // TODO change to put
+  // validateSubscribe,
+  // ErrorMiddleware.sendFirst,
+  (req: Request, res: Response) => {
+
+    const users_dao = UsersDao.create();
+    const testAddress: IUserAddress = {
+      userId: 'newTestUser',
+      name: 'Ryan',
+      street: 'street',
+      city: 'city',
+      state: 'st',
+      zip: 'zip'
+    };
+    users_dao.createAddress(testAddress).then((address: IUserAddress) => {
+      res.status(201).json(address);
+    }).catch((err) => {
+      res.status(500).json(err);
+    });
+  });
+
 
 /**
  * PUT: /api/updates/unsubscribe
