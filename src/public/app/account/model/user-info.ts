@@ -31,7 +31,7 @@ export class UserInfo implements IUserInfo {
   }
 
   public cognitoUserAttributes(): CognitoUserAttribute[] {
-    return _.map(this.cognitoUserAttributeData, (d) => new CognitoUserAttribute(d));
+    return _.map(this.cognitoUserAttributeData(), (d) => new CognitoUserAttribute(d));
   }
 
   /**
