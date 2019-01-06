@@ -36,6 +36,9 @@ const log = Logger.create(module);
 @table(TABLE_NAME)
 class AddressDdbEntity implements IUserAddress {
 
+  @hashKey()
+  userId: string;
+
   @attribute()
   city: string;
 
@@ -53,8 +56,6 @@ class AddressDdbEntity implements IUserAddress {
 
   @attribute()
   street2: string;
-  @hashKey()
-  userId: string;
 
   @attribute()
   zip: string;
@@ -94,22 +95,26 @@ export class UsersDao {
     // };
 
 
-    const paginator = new QueryPaginator(ddb, AddressDdbEntity, {user_id: userId});
+    // const paginator = new QueryPaginator(ddb, AddressDdbEntity, {user_id: userId});
 
     //
-    paginator.next().then((addresses: IteratorResult<Array<AddressDdbEntity>>) => {
-      return;
-    });
-    // for await (const address: AddressDdbEntity of paginator) {
-    //
-    //   log.info('asdf');
-    //   log.info(JSON.stringify(address));
-    //   // total.push(address);
-    //   // individual items with a hash key of "foo" will be yielded as the query is performed
-    // }
+    // paginator.next().then((addresses: IteratorResult<Array<AddressDdbEntity>>) => {
+    //   return;
+    // });
+    const mapper = new DataMapper({'client': ddb});
+
+    const total = [];
+    const iterator = mapper.query(AddressDdbEntity, {'userId': userId});
+    for await (const address of iterator ) {
+      log.info('asdf');
+      log.info(JSON.stringify(address));
+      total.push(address);
+      // individual items with a hash key of "foo" will be yielded as the query is performed
+    }
+    log.info("returning null...");
     //
     // return null;
-    return null;
+    return total;
   }
 
 
