@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { LOCATION } from '../../../util/window-injections';
 import { AccountSettingsComponent } from '../account-settings/account-settings.component';
+import { AddressFormComponent } from '../address-form/address-form.component';
+import { AddressComponent } from '../address/address.component';
 import { AddressesComponent } from '../addresses/addresses.component';
 import { OrdersComponent } from '../orders/orders.component';
 import { RelationsComponent } from '../relations/relations.component';
@@ -22,6 +24,8 @@ describe('ProfileComponent', () => {
         ProfileComponent,
         AccountSettingsComponent,
         AddressesComponent,
+        AddressComponent,
+        AddressFormComponent,
         OrdersComponent,
         RelationsComponent,
         UpdateAttributeComponent,
