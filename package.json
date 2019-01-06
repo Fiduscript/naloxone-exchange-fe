@@ -54,6 +54,7 @@
     "method-override": "^2.3.10",
     "moment": "^2.22.2",
     "morgan": "^1.9.1",
+    "ngx-cookie-service": "^2.1.0",
     "ng-cli-pug-loader": "^0.1.7",
     "nodemailer": "^4.7.0",
     "rxjs": "^6.3.3",

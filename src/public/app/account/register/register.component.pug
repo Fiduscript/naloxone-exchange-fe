@@ -67,6 +67,16 @@
       .form-group
         .alert.alert-danger.text-left(*ngIf="error") {{error}}
 
+      .form-group.text-left
+        div
+          input.mr-2(type="checkbox" formControlName="privacyAgree" checked)
+          span.small
+            | I have read and agree to the 
+            strong((click)="openPrivacyModal()") Privacy Policy
+            | .
+        div
+          input.mr-2(type="checkbox" formControlName="subscribeAgree" checked)
+          span.small Stay informed about naloxone products and services. (Optional)
       .form-group.mt-4
         button.btn.btn-primary.w-100(type="submit" "[disabled]"="registerForm.invalid") Sign Up
 

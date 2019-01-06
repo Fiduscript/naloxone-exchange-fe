@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ShareButtonsModule } from '@ngx-share/buttons';
+import { CookieService } from 'ngx-cookie-service';
 
 import { AboutUsModule } from './about-us/about-us.module';
 import { AccountModule } from './account/account.module';
@@ -40,11 +41,14 @@ import { AuthorizationInterceptor } from './util/authorization-interceptor';
     AppComponent,
     TrainingComponent
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthorizationInterceptor,
-    multi: true
-  }],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizationInterceptor,
+      multi: true
+    },
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 
 import { UserInfo } from '../../model/user-info';
 import { UpdateAttributeComponent } from '../update-attribute/update-attribute.component';
@@ -21,7 +20,6 @@ describe('AccountSettingsComponent', () => {
         UpdatePasswordComponent
       ],
       imports: [
-        BrowserModule,
         FormsModule,
         ReactiveFormsModule
       ]

@@ -1,8 +1,9 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 
+import { CookieService } from 'ngx-cookie-service';
+import { LOCATION } from '../../../util/window-injections';
 import { AccountSettingsComponent } from '../account-settings/account-settings.component';
 import { AddressesComponent } from '../addresses/addresses.component';
 import { OrdersComponent } from '../orders/orders.component';
@@ -27,10 +28,13 @@ describe('ProfileComponent', () => {
         UpdatePasswordComponent
       ],
       imports: [
-        BrowserModule,
         FormsModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         ReactiveFormsModule,
+      ],
+      providers: [
+        {provide: LOCATION, useValue: {replace: (location: string) => {}}},
+        CookieService
       ]
     })
     .compileComponents();

@@ -1,10 +1,11 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
+import { CookieService } from 'ngx-cookie-service';
 import { LOCATION } from '../../util/window-injections';
 import { LoginComponent } from './login.component';
 
@@ -16,15 +17,15 @@ describe('LoginComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
       imports: [
-        BrowserModule,
         FormsModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         ReactiveFormsModule,
         RouterModule.forRoot([]),
       ],
       providers: [
         {provide: APP_BASE_HREF, useValue: '/account/login'},
-        {provide: LOCATION, useValue: {replace: (location: string) => {}}}
+        {provide: LOCATION, useValue: {replace: (location: string) => {}}},
+        CookieService
       ]
     })
     .compileComponents();

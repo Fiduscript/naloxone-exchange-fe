@@ -1,3 +1,4 @@
+import { CookieService } from 'ngx-cookie-service';
 import { AccountModule } from './account.module';
 
 describe('AccountModule', () => {

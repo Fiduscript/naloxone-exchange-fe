@@ -7,11 +7,14 @@ import { AuthenticationDetails, CognitoUser, CognitoUserAttribute,
 import * as _ from 'lodash';
 import { Moment } from 'moment';
 import * as moment from 'moment';
+import { CookieService } from 'ngx-cookie-service';
 import { bindNodeCallback, MonoTypeOperatorFunction, Observable, ObservableInput, Observer, of, throwError } from 'rxjs';
 import { catchError, flatMap, map } from 'rxjs/operators';
 
 import { FiduServiceBase } from '../common/fidu-service-base';
 import { SuccessMessage } from '../common/message-response';
+import { LOCATION } from '../util/window-injections';
+import { PrivacyPolicy } from './model/privacy-policy';
 import { IUserConfirmation } from './model/user-confirmation';
 import { UserInfo } from './model/user-info';
 
@@ -20,38 +23,41 @@ import { UserInfo } from './model/user-info';
 })
 export class AccountService extends FiduServiceBase {
 
-  private static readonly _clientId = '7dum3ivsqng75jdve4sc39tve4';
-  private static readonly _poolId = 'us-east-2_ej6SB5BPr';
+  private static readonly COGNITO_CLIENT_ID = '7dum3ivsqng75jdve4sc39tve4';
+  private static readonly COGNITO_POOL_ID = 'us-east-2_ej6SB5BPr';
 
-  private static readonly cookieStorage: CookieStorage = new CookieStorage({
+  private static readonly COOKIE_STORAGE: CookieStorage = new CookieStorage({
     domain: window.location.hostname,
     secure: window.location.protocol === 'https:'
   });
 
-  private static readonly domain = `${window.location.hostname}:${window.location.port}`;
+  private static readonly DOMAIN = `${window.location.hostname}:${window.location.port}`;
   private static readonly NOT_LOGGED_IN: string = 'No valid user logged in.';
 
   private static oAuthOptions = {
-    ClientId : AccountService._clientId,
+    ClientId : AccountService.COGNITO_CLIENT_ID,
     AppWebDomain : 'naloxone-exchange-customer-user-pool-test.auth.us-east-2.amazoncognito.com',
     TokenScopesArray : [],
-    RedirectUriSignIn : `https://${AccountService.domain}/oauth/signin`,
-    RedirectUriSignOut : `https://${AccountService.domain}/account/signout`,
+    RedirectUriSignIn : `https://${AccountService.DOMAIN}/oauth/signin`,
+    RedirectUriSignOut : `https://${AccountService.DOMAIN}/account/signout`,
     IdentityProvider : '',
-    UserPoolId : AccountService._poolId,
+    UserPoolId : AccountService.COGNITO_POOL_ID,
     AdvancedSecurityDataCollectionFlag : true,
-    Storage: AccountService.cookieStorage
+    Storage: AccountService.COOKIE_STORAGE
   };
 
   // This is the "customer-user-pool-test" user pool
   // TODO: needs to be provided via config
-  private static readonly  userPool: CognitoUserPool = new CognitoUserPool({
-    UserPoolId : AccountService._poolId,
-    ClientId : AccountService._clientId,
-    Storage: AccountService.cookieStorage
+  private static readonly  USER_POOL: CognitoUserPool = new CognitoUserPool({
+    UserPoolId : AccountService.COGNITO_POOL_ID,
+    ClientId : AccountService.COGNITO_CLIENT_ID,
+    Storage: AccountService.COOKIE_STORAGE
   });
 
-  public constructor(private http: HttpClient) {
+  public constructor(
+    private cookieService: CookieService,
+    private http: HttpClient,
+    @Inject(LOCATION) private location: Location) {
     super();
   }
 
@@ -113,6 +119,20 @@ export class AccountService extends FiduServiceBase {
 
   }
 
+  public getPrivacyPolicy(): Observable<PrivacyPolicy> {
+    const path: string = '/api/account/privacyPolicy';
+    if (this.hasMemo(path)) {
+      return this.getMemoized(path);
+    }
+
+    return this.http.get<PrivacyPolicy>(path).pipe(
+      this.deserialize(PrivacyPolicy),
+      this.memoizeResult(path),
+      this.logErrors()
+    );
+
+  }
+
   public login(credentials: IAuthenticationDetailsData): Observable<CognitoUserSession> {
     return this.createAuthenticateUserObservable(credentials)
         .pipe(this.logErrors());
@@ -128,9 +148,15 @@ export class AccountService extends FiduServiceBase {
     );
   }
 
+  public redirectUserOnLogin() {
+    const returnRoute = this.cookieService.get('LoginRedirectLocation') || '/';
+    this.cookieService.delete('LoginRedirectLocation', '/');
+    this.location.replace(returnRoute);
+  }
+
   public register(credentials: IAuthenticationDetailsData, userInfo: UserInfo): Observable<SuccessMessage> {
     return Observable.create((observer: Observer<SuccessMessage>) => {
-      AccountService.userPool.signUp(
+      AccountService.USER_POOL.signUp(
           credentials.Username,
           credentials.Password,
           userInfo.cognitoUserAttributes(),
@@ -265,7 +291,7 @@ export class AccountService extends FiduServiceBase {
       return this.getMemoized(key);
     }
 
-    const user: CognitoUser = AccountService.userPool.getCurrentUser();
+    const user: CognitoUser = AccountService.USER_POOL.getCurrentUser();
     if (user == null) {
       return of(null);
     } else {
@@ -303,8 +329,8 @@ export class AccountService extends FiduServiceBase {
   private static createCognitoUser(username: string): CognitoUser {
     return new CognitoUser({
       Username : username,
-      Pool : AccountService.userPool,
-      Storage: AccountService.cookieStorage
+      Pool : AccountService.USER_POOL,
+      Storage: AccountService.COOKIE_STORAGE
     });
   }
 
