@@ -1,6 +1,7 @@
 import * as express from 'express';
 import { NextFunction, Request, Response, Router } from 'express';
 
+import { AccountRouter } from './account.router';
 import { ContactRouter } from './contact.router';
 import { PharmacyRouter } from './pharmacy.router';
 import { ProductRouter } from './product.router';
@@ -12,5 +13,6 @@ router.use('/product', ProductRouter);
 router.use('/updates', UpdatesRouter);
 router.use('/contact', ContactRouter);
 router.use('/pharmacy', PharmacyRouter);
+router.use('/account', AccountRouter);
 
 export const ApiRouter: Router = router;
