@@ -20,6 +20,7 @@ import { UpdateAttributeComponent } from './user/update-attribute/update-attribu
 import { UpdatePasswordComponent } from './user/update-password/update-password.component';
 import { UserAuthGuard } from './user/user-auth.guard';
 import { AddressComponent } from './user/address/address.component';
+import { AddressFormComponent } from './user/address-form/address-form.component';
 
 @NgModule({
   imports: [
@@ -52,6 +53,7 @@ import { AddressComponent } from './user/address/address.component';
     UpdateAttributeComponent,
     UpdatePasswordComponent,
     AddressComponent,
+    AddressFormComponent,
   ]
 })
 export class AccountModule { }

@@ -15,8 +15,8 @@ export class AccountSettingsComponent implements OnInit {
   private editingAttribute?: string = null;
   private modal?: NgbModalRef = null;
 
-  public constructor(
-      private modalService: NgbModal) {
+  public constructor(private modalService: NgbModal) {
+    this.clearAttrs = this.clearAttrs.bind(this);
   }
 
   public closeModal(): void {
@@ -28,9 +28,7 @@ export class AccountSettingsComponent implements OnInit {
   public editAttribute(attribute: string, content: any) {
     this.editingAttribute = attribute;
     this.modal = this.modalService.open(content);
-    this.modal.result.then(
-      () => this.clearAttrs,
-      () => this.clearAttrs);
+    this.modal.result.then(this.clearAttrs, this.clearAttrs);
   }
 
   public isPassword(): boolean {

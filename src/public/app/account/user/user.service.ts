@@ -10,7 +10,7 @@ const ADDRESSSES: {[key: string]: IAddress} = _.keyBy([
     addressId: 'ADDY-123',
     userId: 'USER-123',
     name: 'Lewis Black',
-    state: 'WA',
+    state: 'Washington',
     street1: '123 abc st',
     street2: '',
     city: 'Seattle',
@@ -22,7 +22,7 @@ const ADDRESSSES: {[key: string]: IAddress} = _.keyBy([
     addressId: 'ADDY-456',
     userId: 'USER-123',
     name: 'Lewis Black c/o Amazon.com',
-    state: 'WA',
+    state: 'Colorado',
     street1: '551 boren ave N',
     street2: '',
     city: 'Seattle',
@@ -41,8 +41,7 @@ export class UserService {
   public constructor() { }
 
   public deleteAddress(addressId: string): Observable<SuccessMessage> {
-    const success: boolean = ADDRESSSES[addressId] != null;
-    delete ADDRESSSES[addressId];
+    const success: boolean = delete ADDRESSSES[addressId];
     if (success) {
       return of(new SuccessMessage(`Successfully deleted address ${addressId}`));
     }
