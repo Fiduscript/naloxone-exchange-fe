@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 
-import { ErrorMessage, SuccessMessage } from '../../../common/message-response';
+import { ErrorMessage } from '../../../common/message-response';
 import { IAddress } from '../../model/address';
 import { UserService } from '../user.service';
 
@@ -23,7 +23,7 @@ export class AddressComponent implements OnInit {
 
   public deleteAddress(): void {
     this.service.deleteAddress(this.address.addressId).subscribe(
-      (message: SuccessMessage) => this.changedCallback(),
+      this.changedCallback,
       this.flashError
     );
   }
