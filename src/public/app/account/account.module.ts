@@ -12,6 +12,8 @@ import { LogoutComponent } from './logout/logout.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { RegisterComponent } from './register/register.component';
 import { AccountSettingsComponent } from './user/account-settings/account-settings.component';
+import { AddressFormComponent } from './user/address-form/address-form.component';
+import { AddressComponent } from './user/address/address.component';
 import { AddressesComponent } from './user/addresses/addresses.component';
 import { OrdersComponent } from './user/orders/orders.component';
 import { ProfileComponent } from './user/profile/profile.component';
@@ -19,8 +21,6 @@ import { RelationsComponent } from './user/relations/relations.component';
 import { UpdateAttributeComponent } from './user/update-attribute/update-attribute.component';
 import { UpdatePasswordComponent } from './user/update-password/update-password.component';
 import { UserAuthGuard } from './user/user-auth.guard';
-import { AddressComponent } from './user/address/address.component';
-import { AddressFormComponent } from './user/address-form/address-form.component';
 
 @NgModule({
   imports: [

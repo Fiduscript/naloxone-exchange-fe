@@ -16,8 +16,8 @@ export class AddressComponent implements OnInit {
   @Input() public address: IAddress;
   @Input() public changedCallback: () => void = _.identity();
   @Input() public editable: boolean = false;
-  public error?: ErrorMessage = null;
 
+  public error?: ErrorMessage = null;
   private modal?: NgbModalRef = null;
 
   public constructor(

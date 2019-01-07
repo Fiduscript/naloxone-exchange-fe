@@ -1,5 +1,10 @@
+import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 
+import { AddressFormComponent } from '../address-form/address-form.component';
+import { AddressComponent } from '../address/address.component';
 import { AddressesComponent } from './addresses.component';
 
 describe('AddressesComponent', () => {
@@ -8,7 +13,17 @@ describe('AddressesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddressesComponent ]
+      declarations: [
+        AddressComponent,
+        AddressesComponent,
+        AddressFormComponent,
+      ],
+      imports: [
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+      ]
     })
     .compileComponents();
   }));
