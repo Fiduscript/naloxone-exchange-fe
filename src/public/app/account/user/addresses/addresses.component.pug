@@ -1,4 +1,5 @@
 .card
   h5.card-header Addresses
   .card-body
-    .alert.alert-warning TODO
+    .mt-1(*ngFor="let address of addresses")
+      app-address("[editable]"="false" "[address]"="address")

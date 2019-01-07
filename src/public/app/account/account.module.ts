@@ -19,6 +19,7 @@ import { RelationsComponent } from './user/relations/relations.component';
 import { UpdateAttributeComponent } from './user/update-attribute/update-attribute.component';
 import { UpdatePasswordComponent } from './user/update-password/update-password.component';
 import { UserAuthGuard } from './user/user-auth.guard';
+import { AddressComponent } from './user/address/address.component';
 
 @NgModule({
   imports: [
@@ -50,6 +51,7 @@ import { UserAuthGuard } from './user/user-auth.guard';
     PrivacyComponent,
     UpdateAttributeComponent,
     UpdatePasswordComponent,
+    AddressComponent,
   ]
 })
 export class AccountModule { }
