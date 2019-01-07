@@ -1,25 +1,21 @@
 ul.list-unstyled
   li
     strong {{address.name}}
-  li(*ngIf="address.street1 != null")
+  li(*ngIf="address.street1 != ''")
     span {{address.street1}}
-  li(*ngIf="address.street2 != null")
-    span {{address.street1}}
+  li(*ngIf="address.street2 != ''")
+    span {{address.street2}}
   li
     span {{address.city}}, {{address.state}} {{address.zip}}
   li(*ngIf="address.phoneNumber != null")
     span Phone number: {{address.phoneNumber}}
   li(*ngIf="address.specialInstructions != null")
-    span Special Instructions
-    p {{address.specialInstructions}}
+    span Special Instructions:
+    .pl-4 {{address.specialInstructions}}
   li
-    small
-      strong(*ngIf="address.weekendOkay") It is OKAY to deliver on weekends.
-      strong(*ngIf="!address.weekendOkay") Only deliver on week days (Monday through Friday).
+    small(*ngIf="address.weekendOkay") It is OKAY to deliver on weekends.
+    small(*ngIf="!address.weekendOkay") Only deliver on week days (Monday through Friday).
 
-.row.mt-2(*ngIf="editable")
-  .col
-    a(href="#") Edit
-  .col |
-  .col
-    a(href="#") Delete
+.mt-1(*ngIf="editable")
+  button.btn.btn-sm.btn-secondary.mr-2 Edit
+  button.btn.btn-sm.btn-secondary Delete

@@ -42,6 +42,7 @@ export class UserService {
 
 
   public getAddressses(): Observable<IAddress[]> {
+    console.log(of(_.values(ADDRESSSES)));
     return of(_.values(ADDRESSSES));
   }
 

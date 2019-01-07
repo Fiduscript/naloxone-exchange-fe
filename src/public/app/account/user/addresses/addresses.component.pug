@@ -1,5 +1,5 @@
 .card
   h5.card-header Addresses
-  .card-body
-    .mt-1(*ngFor="let address of addresses")
-      app-address("[editable]"="false" "[address]"="address")
+  ul.list-group.list-group-flush
+    li.list-group-item(*ngFor="let address of addresses")
+      app-address("[editable]"="true" "[address]"="address")
