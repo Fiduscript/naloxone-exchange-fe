@@ -59,6 +59,7 @@
     "nodemailer": "^4.7.0",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
+    "uuid": "^3.3.2",
     "winston": "^3.1.0",
     "winston-cloudwatch": "^2.0.3",
     "winston-transport": "^4.2.0",

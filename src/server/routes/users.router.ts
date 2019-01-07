@@ -41,11 +41,14 @@ router.get('/getAddresses',
 
   const users_dao = UsersDao.create();
   users_dao.getAddressesForUser('newTestUser').then((addresses: IUserAddress[]) => {
+    log.info('fulfilled');
     res.status(200).json(addresses);
   }).catch((err) => {
     res.status(500).json(err);
   });
+      log.info('done');
 });
+
 router.get('/createAddress', // TODO change to put
   // validateSubscribe,
   // ErrorMiddleware.sendFirst,

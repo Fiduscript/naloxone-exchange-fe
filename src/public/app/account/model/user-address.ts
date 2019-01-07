@@ -1,20 +1,27 @@
-import {IState} from '../../../../common/constant/states';
 import {JsonObject, JsonProperty} from 'json2typescript';
-import {AttributeMap} from 'aws-sdk/clients/dynamodb';
 
 export interface IUserAddress {
+  addressId?: string;
   userId: string;
   name: string;
   street: string;
+  street2?: string;
   city: string;
   state: string;
   zip: string;
+  phoneNumber?: string;
+  specialInstructions?: string;
+  weekendOkay?: boolean;
 }
 
 @JsonObject()
 export class UserAddress implements IUserAddress {
 
-  public constructor() {}
+  public constructor() {
+  }
+
+  @JsonProperty('addressId', String)
+  public readonly addressId: string = undefined;
 
   @JsonProperty('userId', String)
   public readonly userId: string = undefined;
@@ -36,5 +43,14 @@ export class UserAddress implements IUserAddress {
 
   @JsonProperty('zip', String)
   public readonly zip: string = undefined;
+
+  @JsonProperty('phoneNumber', String)
+  public readonly phoneNumber: string = undefined;
+
+  @JsonProperty('specialInstructions', String)
+  public readonly specialInstructions: string = undefined;
+
+  @JsonProperty('weekendOkay', String)
+  public readonly weekendOkay: boolean = true;
 }
 
