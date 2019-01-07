@@ -1,21 +1,28 @@
-ul.list-unstyled
-  li
-    strong {{address.name}}
-  li(*ngIf="address.street1 != ''")
-    span {{address.street1}}
-  li(*ngIf="address.street2 != ''")
-    span {{address.street2}}
-  li
-    span {{address.city}}, {{address.state}} {{address.zip}}
-  li(*ngIf="address.phoneNumber != null")
-    span Phone number: {{address.phoneNumber}}
-  li(*ngIf="address.specialInstructions != null")
-    span Special Instructions:
-    .pl-4 {{address.specialInstructions}}
-  li
-    small(*ngIf="address.weekendOkay") It is OKAY to deliver on weekends.
-    small(*ngIf="!address.weekendOkay") Only deliver on week days (Monday through Friday).
+.d-flex.justify-content-between
+  ul.list-unstyled
+    li
+      strong.less-strong {{address.name}}
+    li(*ngIf="address.street1 != ''")
+      span {{address.street1}}
+    li(*ngIf="address.street2 != ''")
+      span {{address.street2}}
+    li
+      span {{address.city}}, {{address.state}} {{address.zip}}
+    li(*ngIf="address.phoneNumber != null")
+      span Phone number: {{address.phoneNumber}}
+    li(*ngIf="address.specialInstructions != null")
+      span Special Instructions:
+      .pl-4.pr-4
+        em {{address.specialInstructions}}
+    li
+      small(*ngIf="address.weekendOkay") It is OKAY to deliver on weekends.
+      small(*ngIf="!address.weekendOkay") Only deliver on week days (Monday through Friday).
 
-.mt-1(*ngIf="editable")
-  button.btn.btn-sm.btn-secondary.mr-2 Edit
-  button.btn.btn-sm.btn-secondary Delete
+  .align-self-center(*ngIf="editable")
+    .d-flex.align-self-end.flex-column
+      button.btn.btn-sm.btn-secondary(
+          "(click)"="editAddress()"
+          title="Edit this address.") Edit
+      button.btn.btn-sm.btn-secondary.mt-2(
+          "(click)"="deleteAddress()"
+          title="Delete this address.") Delete

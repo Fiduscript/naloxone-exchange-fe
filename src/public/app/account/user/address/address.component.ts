@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+
 import { IAddress } from '../../model/address';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-address',
@@ -12,9 +14,16 @@ export class AddressComponent implements OnInit {
   @Input() public editable: boolean = false;
   // @Input() public selectable: boolean = false;
 
-  public constructor() { }
+  public constructor(private service: UserService) { }
+
+  public deleteAddress(): void {
+    console.log('delete address');
+  }
+
+  public editAddress(): void {
+    console.log('open edit dialog');
+  }
 
   public ngOnInit(): void {
   }
-
 }
