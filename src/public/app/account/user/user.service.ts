@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 
-import { SuccessMessage } from '../../common/message-response';
+import { ErrorMessage, SuccessMessage } from '../../common/message-response';
 import { IAddress } from '../model/address';
 
 const ADDRESSSES: {[key: string]: IAddress} = _.keyBy([
@@ -40,9 +40,16 @@ export class UserService {
 
   public constructor() { }
 
+  public deleteAddress(addressId: string): Observable<SuccessMessage> {
+    const success: boolean = ADDRESSSES[addressId] != null;
+    delete ADDRESSSES[addressId];
+    if (success) {
+      return of(new SuccessMessage(`Successfully deleted address ${addressId}`));
+    }
+    return throwError(new ErrorMessage(`Failed to deleted address ${addressId}`));
+  }
 
   public getAddressses(): Observable<IAddress[]> {
-    console.log(of(_.values(ADDRESSSES)));
     return of(_.values(ADDRESSSES));
   }
 

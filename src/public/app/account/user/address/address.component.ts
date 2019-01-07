@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import * as _ from 'lodash';
 
+import { ErrorMessage, SuccessMessage } from '../../../common/message-response';
 import { IAddress } from '../../model/address';
 import { UserService } from '../user.service';
 
@@ -11,13 +13,19 @@ import { UserService } from '../user.service';
 export class AddressComponent implements OnInit {
 
   @Input() public address: IAddress;
+  @Input() public changedCallback: () => void = _.identity();
   @Input() public editable: boolean = false;
-  // @Input() public selectable: boolean = false;
+  public error?: ErrorMessage = null;
 
-  public constructor(private service: UserService) { }
+  public constructor(private service: UserService) {
+    this.flashError = this.flashError.bind(this);
+  }
 
   public deleteAddress(): void {
-    console.log('delete address');
+    this.service.deleteAddress(this.address.addressId).subscribe(
+      (message: SuccessMessage) => this.changedCallback(),
+      this.flashError
+    );
   }
 
   public editAddress(): void {
@@ -25,5 +33,11 @@ export class AddressComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+
+  }
+
+  private flashError(error: ErrorMessage): void {
+    this.error = error;
+    setTimeout(() => { this.error = null; }, 4000);
   }
 }

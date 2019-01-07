@@ -12,12 +12,21 @@ export class AddressesComponent implements OnInit {
 
   public addresses: IAddress[] = [];
 
-  public constructor(private service: UserService) { }
+  public constructor(private service: UserService) {
+    this.fetchAddresses = this.fetchAddresses.bind(this);
+  }
 
-  public ngOnInit(): void {
+  public addAddress(): void {
+    console.log('open add address dialog');
+  }
+
+  public fetchAddresses(): void {
     this.service.getAddressses().subscribe((addresses: IAddress[]) => {
       this.addresses = addresses;
     });
   }
 
+  public ngOnInit(): void {
+    this.fetchAddresses();
+  }
 }
