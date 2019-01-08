@@ -1,6 +1,5 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { async, TestBed } from '@angular/core/testing';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ShareButtonsModule } from '@ngx-share/buttons';
@@ -17,7 +16,6 @@ describe('AppComponent', () => {
         MockComponent.mock({selector: 'app-update-subscriber'}),
       ],
       imports: [
-        BrowserModule,
         AccountModule,
         NgbModule,
         RouterModule.forRoot([]),

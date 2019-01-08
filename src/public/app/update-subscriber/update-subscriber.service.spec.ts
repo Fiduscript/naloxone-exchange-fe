@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
 
 import { UpdateSubscriberService } from './update-subscriber.service';
@@ -10,7 +10,7 @@ describe('UpdateSubscriberService', () => {
         UpdateSubscriberService
       ],
       imports: [
-        HttpClientModule
+        HttpClientTestingModule
       ]
     });
   });

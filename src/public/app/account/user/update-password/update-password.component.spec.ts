@@ -1,7 +1,6 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 
 import { UpdatePasswordComponent } from './update-password.component';
 
@@ -15,9 +14,8 @@ describe('UpdatePasswordComponent', () => {
         UpdatePasswordComponent
       ],
       imports: [
-        BrowserModule,
         FormsModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         ReactiveFormsModule,
       ]
     })

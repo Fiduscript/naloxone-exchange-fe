@@ -1,7 +1,6 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 
 import { LOCATION } from '../../../util/window-injections';
 import { UpdateAttributeComponent } from './update-attribute.component';
@@ -14,9 +13,8 @@ describe('UpdateAttributeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UpdateAttributeComponent ],
       imports: [
-        BrowserModule,
         FormsModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         ReactiveFormsModule,
       ],
       providers: [
