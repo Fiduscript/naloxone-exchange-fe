@@ -1,8 +1,7 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
 import { AboutUsComponent } from './about-us.component';
@@ -29,9 +28,8 @@ describe('AboutUsComponent', () => {
           PortraitComponent,
       ],
       imports: [
-        BrowserModule,
         FormsModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         ReactiveFormsModule,
         RouterModule.forRoot([]),
       ],

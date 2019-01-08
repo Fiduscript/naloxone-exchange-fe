@@ -1,7 +1,6 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 
 import { AddressFormComponent } from '../address-form/address-form.component';
 import { AddressComponent } from './address.component';
@@ -17,9 +16,8 @@ describe('AddressComponent', () => {
         AddressFormComponent
       ],
       imports: [
-        BrowserModule,
         FormsModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         ReactiveFormsModule
       ]
     })
