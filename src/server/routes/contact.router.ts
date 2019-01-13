@@ -4,6 +4,7 @@ import { ValidationChain } from 'express-validator/check';
 import { check } from 'express-validator/check';
 
 import { IContactForm } from '../../public/app/about-us/contact/model/contact-form';
+import { ErrorMessage, SuccessMessage } from '../../public/app/common/message-response';
 import { sendEmail } from '../client/email-client';
 import { ErrorMiddleware } from '../helper/error-middleware';
 import { SlackProvider } from '../provider/slack-provider';
@@ -35,19 +36,15 @@ const validateContactForm: ValidationChain[] = [
  * POST: /api/contact
  */
 router.post('/', validateContactForm, ErrorMiddleware.sendFirst, (req: Request, res: Response) => {
-  const contactForm: IContactForm = {
-    name: req.body['name'],
-    email: req.body['email'],
-    message: req.body['message']
-  };
+  const contactForm: IContactForm = req.body as IContactForm;
 
   SlackProvider.create().sendSlackMessage(constructSlackContactUsMessage(contactForm)).then(() => {
       return sendEmail(getContactUsEmailAddr(), contactForm.email, getContactUsSubject(), constructEmailMessage(contactForm));
     }).then(() => {
-      res.status(200).send('ContactUs Sent!');
+      res.status(200).json(new SuccessMessage('ContactUs Sent!'));
     }).catch((error) => {
       log.error('Failed to send email: ${error}');
-      res.status(500).send('Unable to send ContactUs at this time. Please try again later.');
+      res.status(500).json(new ErrorMessage('Unable to send ContactUs at this time. Please try again later.'));
     });
 });
 
