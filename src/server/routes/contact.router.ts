@@ -40,8 +40,8 @@ router.post('/', validateContactForm, ErrorMiddleware.sendFirst, (req: Request, 
 
   SlackProvider.create().sendSlackMessage(constructSlackContactUsMessage(contactForm))
     .then(() => {
-      return sendEmail(getContactUsEmailAddr(), contactForm.email, getContactUsSubject(), constructEmailMessage(contactForm));
-    }).then(() => {
+    //   return sendEmail(getContactUsEmailAddr(), contactForm.email, getContactUsSubject(), constructEmailMessage(contactForm));
+    // }).then(() => {
       res.status(200).json(new SuccessMessage('ContactUs Sent!'));
     }).catch((error) => {
       log.error(`Failed to send email: ${error.message}`, error);
