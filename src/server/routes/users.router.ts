@@ -1,97 +1,123 @@
 import * as express from 'express';
-import { Request, Response, Router } from 'express';
-import { body, ValidationChain } from 'express-validator/check';
+import {Request, Response, Router} from 'express';
+import {body, ValidationChain} from 'express-validator/check';
 
-import { STATE_SET } from '../../common/constant/states';
-import { ErrorMessage, SuccessMessage } from '../../public/app/common/message-response';
-import { ErrorMiddleware } from '../helper/error-middleware';
-import { Logger } from '../util/logger';
+import {STATE_SET} from '../../common/constant/states';
+import {Logger} from '../util/logger';
 import {UsersDao} from '../dao/users-dao';
 import {IUserAddress} from '../../public/app/account/model/user-address';
+import {ErrorMiddleware} from '../helper/error-middleware';
 
 const log = Logger.create(module);
 const router: Router = express.Router();
 
-const validateSubscribe: ValidationChain[] = [
-  body('email')
-      .isString()
-      .trim()
-      .isEmail()
-      .withMessage('Must provide a well-formed valid email address.'),
+const validateUserAddress: ValidationChain[] = [
+  body('userId')
+    .isString()
+    .isLength({min: 1})
+    .withMessage('Must provide userId'),
+  body('name')
+    .isString()
+    .isLength({min: 1})
+    .withMessage('Must provide name'),
+  body('street')
+    .isString()
+    .isLength({min: 1})
+    .withMessage('Must provide street'),
+  body('city')
+    .isString()
+    .isLength({min: 1})
+    .withMessage('Must provide city'),
+  body('zip')
+    .isString()
+    .isLength({min: 3, max: 15})
+    .withMessage('Must provide valid ZIP'),
   body('state')
-      .isString()
-      .trim()
-      .custom((s: string) => STATE_SET.has(s))
-      .withMessage('Must provide a valid US state.')
+    .isString()
+    .trim()
+    .custom((s: string) => STATE_SET.has(s))
+    .withMessage('Must provide a valid US state.'),
 ];
 
-const TABLE_NAME: string = 'subscribe_for_updates';
-
-// todo add validation
+const validateUserIdAddressId: ValidationChain[] = [
+  body('userId')
+    .isString()
+    .isLength({min: 1})
+    .withMessage('Must provide userId'),
+  body('addressId')
+    .isString()
+    .isLength({min: 1})
+    .withMessage('Must provide addressId')
+];
 
 /**
  * PUT: /api/updates/subscribe
  * @param email
  * @param state
  */
-router.get('/getAddresses',
-    // validateSubscribe,
-    // ErrorMiddleware.sendFirst,
-    (req: Request, res: Response) => {
-
-  const users_dao = UsersDao.create();
-  users_dao.getAddressesForUser('newTestUser').then((addresses: IUserAddress[]) => {
-    log.info('fulfilled');
-    res.status(200).json(addresses);
-  }).catch((err) => {
-    res.status(500).json(err);
-  });
-      log.info('done');
-});
-
-router.get('/createAddress', // TODO change to put
-  // validateSubscribe,
-  // ErrorMiddleware.sendFirst,
+router.get('/getAddresses/:userId',
   (req: Request, res: Response) => {
-
+    if (!req.params.userId) {
+      res.status(400).json('Must provide userId');
+      return;
+    }
     const users_dao = UsersDao.create();
-    const testAddress: IUserAddress = {
-      userId: 'newTestUser',
-      name: 'Ryan',
-      street: 'street',
-      city: 'city',
-      state: 'st',
-      zip: 'zip'
-    };
-    users_dao.createAddress(testAddress).then((address: IUserAddress) => {
-      res.status(201).json(address);
+    users_dao.getAddressesForUser(req.params.userId).then((addresses: IUserAddress[]) => {
+      res.status(200).json(addresses);
     }).catch((err) => {
       res.status(500).json(err);
     });
   });
 
+router.put('/createAddress',
+  validateUserAddress,
+  ErrorMiddleware.sendFirst,
+  (req: Request, res: Response) => {
+
+    const users_dao: UsersDao = UsersDao.create();
+    users_dao.createAddress(req.body).then((address: IUserAddress) => {
+      res.status(201).json(address);
+    }).catch((err) => {
+      log.error(`Failed to create address \`${req.body}\`.`, err.message, err);
+      res.status(500).json(err);
+    });
+  });
 
 /**
- * PUT: /api/updates/unsubscribe
- * We are not using a delete method for ease of API.
- * @param email
- * @param state
+ * PUT: /api/users/updateAddress
+ * @param address
  */
-// router.put('/unsubscribe', validateSubscribe, ErrorMiddleware.sendFirst, (req: Request, res: Response) => {
-//
-//   const params: DynamoDB.DeleteItemInput = {
-//     TableName: TABLE_NAME,
-//     Key: DynamoDB.Converter.marshall(req.body)
-//   };
-//
-//   ddb.deleteItem(params, (err: AWSError, data: DynamoDB.PutItemOutput) => {
-//     if (err != null) {
-//       log.error(`Failed to unsubscribe customer \`${params}\`.` , err.message, err);
-//       res.status(500).json(new ErrorMessage('Unable to unsubscribe at this time. Please try again later.'));
-//     } else {
-//       res.status(201).json(new SuccessMessage('Successfully unsubscribed!'));
-//     }
-//   });
-// });
+router.put('/updateAddress',
+  validateUserAddress,
+  ErrorMiddleware.sendFirst,
+  (req: Request, res: Response) => {
+
+    const users_dao: UsersDao = UsersDao.create();
+    users_dao.updateAddress(req.body).then((address: IUserAddress) => {
+      res.status(201).json(address);
+    }).catch((err) => {
+      log.error(`Failed to update address \`${req.body}\`.`, err.message, err);
+      res.status(500).json(err);
+    });
+  });
+
+/**
+ * PUT: /api/users/deleteAddress
+ * @param userId
+ * @param addressId
+ */
+router.put('/deleteAddress',
+  validateUserIdAddressId,
+  ErrorMiddleware.sendFirst,
+  (req: Request, res: Response) => {
+
+    const users_dao: UsersDao = UsersDao.create();
+    users_dao.deleteAddress(req.body.userId, req.body.addressId).then((address: IUserAddress) => {
+      res.status(201).json(address);
+    }).catch((err) => {
+      log.error(`Failed to delete address \`${req.body}\`.`, err.message, err);
+      res.status(500).json(err);
+    });
+  });
 
 export const UsersRouter: Router = router;
