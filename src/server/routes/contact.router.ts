@@ -38,12 +38,13 @@ const validateContactForm: ValidationChain[] = [
 router.post('/', validateContactForm, ErrorMiddleware.sendFirst, (req: Request, res: Response) => {
   const contactForm: IContactForm = req.body as IContactForm;
 
-  SlackProvider.create().sendSlackMessage(constructSlackContactUsMessage(contactForm)).then(() => {
+  SlackProvider.create().sendSlackMessage(constructSlackContactUsMessage(contactForm))
+    .then(() => {
       return sendEmail(getContactUsEmailAddr(), contactForm.email, getContactUsSubject(), constructEmailMessage(contactForm));
     }).then(() => {
       res.status(200).json(new SuccessMessage('ContactUs Sent!'));
     }).catch((error) => {
-      log.error('Failed to send email: ${error}');
+      log.error(`Failed to send email: ${error.message}`, error);
       res.status(500).json(new ErrorMessage('Unable to send ContactUs at this time. Please try again later.'));
     });
 });
