@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { faHandHoldingUsd, faPrescriptionBottleAlt, faUserShield, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {faHandHoldingUsd, faPrescriptionBottleAlt, faUserShield, IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import * as _ from 'lodash';
-import {UserService} from '../account/user/user.service';
 
 @Component({
   selector: 'app-home',
@@ -15,13 +14,10 @@ export class HomeComponent implements OnInit {
   public faUsd: IconDefinition = faHandHoldingUsd;
   public faUser: IconDefinition = faUserShield;
 
-  public constructor(private route: ActivatedRoute,
-                     private testService: UserService) { }
+  public constructor(private route: ActivatedRoute) {
+  }
 
   public ngOnInit(): void {
-    alert("bam");
-    const addresses = this.testService.getAddressses();
-    alert(addresses);
     // defer this task until the DOM has been rendered so there
     // is something to scroll to
     _.delay(_.bind(this.scrollToAnchor, this), 200);

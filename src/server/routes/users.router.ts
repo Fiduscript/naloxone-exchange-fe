@@ -51,9 +51,8 @@ const validateUserIdAddressId: ValidationChain[] = [
 ];
 
 /**
- * PUT: /api/updates/subscribe
- * @param email
- * @param state
+ * GET: /api/users/getAddresses/:userId
+ * @param userId
  */
 router.get('/getAddresses/:userId',
   (req: Request, res: Response) => {
@@ -69,6 +68,10 @@ router.get('/getAddresses/:userId',
     });
   });
 
+/**
+ * PUT: /api/users/createAddress
+ * @param address
+ */
 router.put('/createAddress',
   validateUserAddress,
   ErrorMiddleware.sendFirst,
@@ -103,8 +106,7 @@ router.put('/updateAddress',
 
 /**
  * PUT: /api/users/deleteAddress
- * @param userId
- * @param addressId
+ * @param address
  */
 router.put('/deleteAddress',
   validateUserIdAddressId,
