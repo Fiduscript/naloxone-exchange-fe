@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { HttpErrorResponse } from '@angular/common/http';
 import { jsonConvert } from '../util/json-convert-provider';
+import { ErrorMessage } from './message-response';
 
 /**
  * Base containing shared patterns and methods of our services.
@@ -55,18 +56,27 @@ export class FiduServiceBase {
 
   /**
    * Catches and logs any error messages encountered during the request.
+   * Translates varieties of error messages into an ErrorMessage object.
    * Should be called at the end of every 'pipe' function.
    *
    * TODO: turn this on in development environemnts but turn it off for production
    */
   protected logErrors<T>(): MonoTypeOperatorFunction<T> {
     return catchError((error: any, caught: Observable<T>): never => {
+      let e: ErrorMessage;
       if (error instanceof HttpErrorResponse) {
-        console.error(`Service returned with ${error.status}, error enclosed:`, error.status, error.error);
+        console.error(`Service returned with ${error.status}, error enclosed:`, error.error);
+        try {
+          e = jsonConvert.deserialize(error.error, ErrorMessage);
+        } catch (err) {
+          // use defualt message
+          e = new ErrorMessage(error.message);
+        }
       } else {
         console.error('Unexpected Error: ', error);
+        e = new ErrorMessage('Unexpected Error.');
       }
-      throw error; // propegate
+      throw e; // propegate translated error message
     });
   }
 
