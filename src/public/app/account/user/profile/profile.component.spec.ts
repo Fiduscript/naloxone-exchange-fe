@@ -1,9 +1,10 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 
 import { AccountSettingsComponent } from '../account-settings/account-settings.component';
+import { AddressFormComponent } from '../address-form/address-form.component';
+import { AddressComponent } from '../address/address.component';
 import { AddressesComponent } from '../addresses/addresses.component';
 import { OrdersComponent } from '../orders/orders.component';
 import { RelationsComponent } from '../relations/relations.component';
@@ -21,15 +22,16 @@ describe('ProfileComponent', () => {
         ProfileComponent,
         AccountSettingsComponent,
         AddressesComponent,
+        AddressComponent,
+        AddressFormComponent,
         OrdersComponent,
         RelationsComponent,
         UpdateAttributeComponent,
         UpdatePasswordComponent
       ],
       imports: [
-        BrowserModule,
         FormsModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         ReactiveFormsModule,
       ]
     })
