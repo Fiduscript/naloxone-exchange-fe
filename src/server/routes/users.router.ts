@@ -54,8 +54,7 @@ const validateUserIdAddressId: ValidationChain[] = [
  * GET: /api/users/getAddresses/:userId
  * @param userId
  */
-router.get('/getAddresses/:userId',
-  (req: Request, res: Response) => {
+router.get('/getAddresses/:userId', (req: Request, res: Response) => {
     if (!req.params.userId) {
       res.status(400).json('Must provide userId');
       return;
@@ -77,6 +76,10 @@ router.put('/createAddress',
   ErrorMiddleware.sendFirst,
   (req: Request, res: Response) => {
 
+    if (req.body.addressId) {
+      res.status(400).json('Cannot create address with addressId');
+      return;
+    }
     const users_dao: UsersDao = UsersDao.create();
     users_dao.createAddress(req.body).then((address: IUserAddress) => {
       res.status(201).json(address);
@@ -95,6 +98,10 @@ router.put('/updateAddress',
   ErrorMiddleware.sendFirst,
   (req: Request, res: Response) => {
 
+    if (!req.body.addressId) {
+      res.status(400).json('Cannot update address without addressId');
+      return;
+    }
     const users_dao: UsersDao = UsersDao.create();
     users_dao.updateAddress(req.body).then((address: IUserAddress) => {
       res.status(201).json(address);
@@ -113,9 +120,14 @@ router.put('/deleteAddress',
   ErrorMiddleware.sendFirst,
   (req: Request, res: Response) => {
 
+    if (!req.body.addressId || !req.body.userId) {
+      res.status(400).json('Cannot delete address without addressId and userId');
+      return;
+    }
+
     const users_dao: UsersDao = UsersDao.create();
     users_dao.deleteAddress(req.body.userId, req.body.addressId).then((address: IUserAddress) => {
-      res.status(201).json(address);
+      res.status(200).json(address);
     }).catch((err) => {
       log.error(`Failed to delete address \`${req.body}\`.`, err.message, err);
       res.status(500).json(err);

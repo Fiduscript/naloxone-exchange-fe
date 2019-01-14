@@ -1,7 +1,7 @@
-import {IUserAddress} from '../../public/app/account/model/user-address';
 import {DataMapper} from '@aws/dynamodb-data-mapper';
 import {DynamoDB} from 'aws-sdk/clients/all';
 import * as _ from 'lodash';
+import {IUserAddress} from '../../public/app/account/model/user-address';
 import {AWSProvider} from '../provider/aws-provider';
 
 import {attribute, hashKey, rangeKey, table,} from '@aws/dynamodb-data-mapper-annotations';
@@ -16,9 +16,6 @@ const mapper = new DataMapper({
 @table(TABLE_NAME)
 class AddressDdbEntity implements IUserAddress {
 
-  @hashKey()
-  userId: string;
-
   @rangeKey({defaultProvider: () => uuidV4()})
   addressId: string;
 
@@ -32,6 +29,12 @@ class AddressDdbEntity implements IUserAddress {
   name: string;
 
   @attribute()
+  phoneNumber: string;
+
+  @attribute()
+  specialInstructions: string;
+
+  @attribute()
   state: string;
 
   @attribute()
@@ -40,17 +43,14 @@ class AddressDdbEntity implements IUserAddress {
   @attribute()
   street2: string;
 
-  @attribute()
-  zip: string;
-
-  @attribute()
-  phoneNumber: string;
-
-  @attribute()
-  specialInstructions: string;
+  @hashKey()
+  userId: string;
 
   @attribute()
   weekendOkay: boolean;
+
+  @attribute()
+  zip: string;
 }
 
 export class UsersDao {
@@ -68,16 +68,6 @@ export class UsersDao {
   }
 
 
-  async getAddressesForUser(userId: string): Promise<IUserAddress[]> {
-    const total = [];
-    const iterator = mapper.query(AddressDdbEntity, {'userId': userId});
-    for await (const address of iterator) {
-      total.push(address);
-    }
-    return total;
-  }
-
-
   async deleteAddress(userId: string, addressId: string): Promise<IUserAddress> {
     if (!userId) {
       return Promise.reject('Must provide userId');
@@ -91,6 +81,16 @@ export class UsersDao {
     ));
   }
 
+
+  async getAddressesForUser(userId: string): Promise<IUserAddress[]> {
+    const total = [];
+    const iterator = mapper.query(AddressDdbEntity, {'userId': userId});
+    for await (const address of iterator) {
+      total.push(address);
+    }
+    return total;
+  }
+
   async updateAddress(address: IUserAddress): Promise<IUserAddress> {
     if (!address.addressId) {
       return Promise.reject('Address must contain addressId for update');
@@ -98,4 +98,3 @@ export class UsersDao {
     return mapper.put(Object.assign(new AddressDdbEntity, address));
   }
 }
-

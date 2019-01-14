@@ -15,7 +15,7 @@ export class UserInfo implements IUserInfo {
   public readonly privacyAgreement: string = 'v(-1)';
 
   public constructor(userInfo: IUserInfo = {} as IUserInfo) {
-    _.merge(_(this), userInfo);
+    _.merge(this, userInfo);
   }
 
   /**
@@ -51,7 +51,6 @@ export class UserInfo implements IUserInfo {
         .mapKeys((v) => _.trimStart(v.getName(), UserInfo.CUSTOM_PREFIX))
         .mapValues((v) => v.getValue())
         .value();
-
 
     return new UserInfo(attrs);
   }
