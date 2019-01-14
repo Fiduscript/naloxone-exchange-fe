@@ -15,6 +15,8 @@ import { AccountSettingsComponent } from './user/account-settings/account-settin
 import { AddressesComponent } from './user/addresses/addresses.component';
 import { OrdersComponent } from './user/orders/orders.component';
 import { ProfileComponent } from './user/profile/profile.component';
+import { RelationFormComponent } from './user/relation-form/relation-form.component';
+import { RelationComponent } from './user/relation/relation.component';
 import { RelationsComponent } from './user/relations/relations.component';
 import { UpdateAttributeComponent } from './user/update-attribute/update-attribute.component';
 import { UpdatePasswordComponent } from './user/update-password/update-password.component';
@@ -50,6 +52,8 @@ import { UserAuthGuard } from './user/user-auth.guard';
     PrivacyComponent,
     UpdateAttributeComponent,
     UpdatePasswordComponent,
+    RelationFormComponent,
+    RelationComponent,
   ]
 })
 export class AccountModule { }

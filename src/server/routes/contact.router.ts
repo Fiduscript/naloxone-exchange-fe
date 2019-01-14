@@ -65,5 +65,4 @@ const constructSlackContactUsMessage = (contactForm: IContactForm) => {
   return `New ContactUs message!\nName: ${contactForm.name}\nEmail: ${contactForm.email}\nMessage: ${contactForm.message}`;
 };
 
-
 export const ContactRouter: Router = router;
