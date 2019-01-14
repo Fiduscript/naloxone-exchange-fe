@@ -50,20 +50,19 @@ export class UserRelation implements IUserRelation {
 }
 
 @JsonObject
-export class UserRelations implements JsonInitialize<UserRelations> {
+export class UserRelations implements JsonInitialize {
   @JsonProperty('relations', [UserRelation])
   public readonly relations: UserRelation[] = [];
 
   public constructor(relations: UserRelation[] = []) {
     this.relations = _.sortBy(relations, 'name');
-    this.initialize = _.once(this.initialize);
+    this.jsonInitialize = _.once(this.jsonInitialize);
   }
 
-  public initialize(): UserRelations {
+  public jsonInitialize(): void {
     // `(this as any)` is a hack to keep readonly properties but allow
     // them to be modified without the Typescript compiler complaining.
     (this as any).relations = _.sortBy(this.relations, 'name');
-    return this;
   }
 
 }

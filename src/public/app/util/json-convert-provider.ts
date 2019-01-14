@@ -4,9 +4,12 @@ import * as _ from 'lodash';
 /**
  * Implement this interface run a custom initilization task after parsing a json object.
  * For example sorting items in an array.
+ * It is recommended that any implementing class add to its constructor:
+ * `this.jsonInitialize = _.once(this.jsonInitialize);`
+ * to prevent the initialization method from being called more than once.
  */
-export interface JsonInitialize<T> {
-  initialize(): T;
+export interface JsonInitialize {
+  jsonInitialize(): void;
 }
 
 /**
@@ -32,8 +35,8 @@ class JsonConvertCustom extends JsonConvert {
   private callInitialize(instance?: any): any {
     // sadly, since typescript compiles in to javscript there is
     // no way actual way to check if an interface is implemented
-    if (instance != null && _.isFunction(instance.initialize)) {
-      return instance.initialize.call(instance);
+    if (instance != null && _.isFunction(instance.jsonInitialize)) {
+      instance.jsonInitialize.call(instance);
     }
     return instance;
   }
