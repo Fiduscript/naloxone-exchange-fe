@@ -10,20 +10,21 @@ export const RELATIONS: string[] = [
 ];
 
 export interface IUserRelation {
-  alergies: string[];
+  allergies: string[];
   biologicalSex: string;
   id: string;
   insuranceId?: string; // TBD: separate insurance from dependent?
   medicalConditions: string[];
   name: string;
   relation: string;
+  userId?: string;
 }
 
 @JsonObject('UserRelation')
 export class UserRelation implements IUserRelation {
 
-  @JsonProperty('alergies', [String])
-  public readonly alergies: string[] = [];
+  @JsonProperty('allergies', [String])
+  public readonly allergies: string[] = [];
 
   @JsonProperty('biologicalSex', String)
   public readonly biologicalSex: string = undefined;
@@ -42,6 +43,9 @@ export class UserRelation implements IUserRelation {
 
   @JsonProperty('relation', String)
   public readonly relation: string = undefined;
+
+  // no @JsonProperty, don't pass this around.
+  public readonly userId?: string;
 
   public constructor(userRelation: IUserRelation = {} as IUserRelation) {
     _.merge(this, userRelation);
