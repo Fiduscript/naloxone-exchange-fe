@@ -75,23 +75,23 @@ export class Server {
     }
 
     // Validate Cognito session token if provided in the request
-    this.app.use((req, res, next) => {
+    this.app.use((req: Request, res: Response, next: NextFunction) => {
       const authToken = req.headers.authorization;
 
       if (authToken) {
         Server.cognitoExpress.validate(authToken, <T extends IUserInfo>(err, response: T) => {
           if (response != null) {
-            res.locals.user = new UserInfo(response);
-            log.audit(`Authenticated request to ${req.originalUrl} from user ${response['cognito:username']}`);
+            res.locals.user = new UserInfo(response, true);
+            log.audit(`Authenticated request to ${req.originalUrl} from user ${res.locals.user.id}`);
           } else {
             log.audit(`Couldn't validate auth token in request to ${req.originalUrl}: ${err.message}`);
           }
+          next();
         });
       } else {
         log.audit(`No auth token provided in request to ${req.originalUrl}`);
+        next();
       }
-
-      next();
     });
 
     // use override middlware

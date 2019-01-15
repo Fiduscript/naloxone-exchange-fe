@@ -12,12 +12,18 @@ export class UserInfo implements IUserInfo {
   private static CUSTOM_PROPS: Set<string> = new Set(['privacyAgreement', 'subscriptionSetting']);
 
   public readonly email: string = '';
+  public readonly id?: string;
   public readonly name: string = '';
   public readonly privacyAgreement: string = 'v(-1)';
   public readonly subscriptionSetting: string = 'all';
 
-  public constructor(userInfo: IUserInfo = {} as IUserInfo) {
+  public constructor(userInfo: IUserInfo = {} as IUserInfo, isServer: boolean = false) {
     _.merge(this, userInfo);
+
+    // set additional attributes only the server has:
+    if (isServer) {
+      this.id = userInfo['cognito:username'];
+    }
   }
 
   /**
