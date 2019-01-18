@@ -3,10 +3,10 @@ import {Request, Response, Router} from 'express';
 import {body, ValidationChain} from 'express-validator/check';
 
 import {STATE_SET} from '../../common/constant/states';
-import {Logger} from '../util/logger';
-import {UsersDao} from '../dao/users-dao';
 import {IUserAddress} from '../../public/app/account/model/user-address';
+import {UsersDao} from '../dao/users-dao';
 import {ErrorMiddleware} from '../helper/error-middleware';
+import {Logger} from '../util/logger';
 
 const log = Logger.create(module);
 const router: Router = express.Router();
@@ -68,45 +68,18 @@ router.get('/getAddresses/:userId', (req: Request, res: Response) => {
   });
 
 /**
- * PUT: /api/users/createAddress
+ * PUT: /api/users/saveAddress
  * @param address
  */
-router.put('/createAddress',
+router.put('/saveAddress',
   validateUserAddress,
   ErrorMiddleware.sendFirst,
   (req: Request, res: Response) => {
-
-    if (req.body.addressId) {
-      res.status(400).json('Cannot create address with addressId');
-      return;
-    }
     const users_dao: UsersDao = UsersDao.create();
-    users_dao.createAddress(req.body).then((address: IUserAddress) => {
+    users_dao.saveAddress(req.body).then( (address: IUserAddress) => {
       res.status(201).json(address);
     }).catch((err) => {
-      log.error(`Failed to create address \`${req.body}\`.`, err.message, err);
-      res.status(500).json(err);
-    });
-  });
-
-/**
- * PUT: /api/users/updateAddress
- * @param address
- */
-router.put('/updateAddress',
-  validateUserAddress,
-  ErrorMiddleware.sendFirst,
-  (req: Request, res: Response) => {
-
-    if (!req.body.addressId) {
-      res.status(400).json('Cannot update address without addressId');
-      return;
-    }
-    const users_dao: UsersDao = UsersDao.create();
-    users_dao.updateAddress(req.body).then((address: IUserAddress) => {
-      res.status(201).json(address);
-    }).catch((err) => {
-      log.error(`Failed to update address \`${req.body}\`.`, err.message, err);
+      log.error(`Failed to save address \`${req.body}\`.`, err.message, err);
       res.status(500).json(err);
     });
   });

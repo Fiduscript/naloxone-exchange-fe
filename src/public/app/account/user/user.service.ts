@@ -22,17 +22,8 @@ export class UserService extends FiduServiceBase {
     );
   }
 
-  public createAddress(address: IUserAddress): Observable<IUserAddress> {
-    const path: string = '/api/users/createAddress/';
-
-    return this.http.put<UserAddress>(path, address).pipe(
-      this.deserialize(UserAddress),
-      this.logErrors()
-    );
-  }
-
-  public updateAddress(address: IUserAddress): Observable<IUserAddress> {
-    const path: string = '/api/users/updateAddress/';
+  public saveAddress(address: IUserAddress): Observable<IUserAddress> {
+    const path: string = '/api/users/saveAddress/';
 
     return this.http.put<UserAddress>(path, address).pipe(
       this.deserialize(UserAddress),
@@ -41,13 +32,9 @@ export class UserService extends FiduServiceBase {
   }
 
   public deleteAddress(address: IUserAddress): Observable<IUserAddress> {
-    return this.deleteAddressById(address.userId, address.addressId);
-  }
-
-  public deleteAddressById(userId: string, addressId: string): Observable<IUserAddress> {
     const path: string = '/api/users/deleteAddress/';
 
-    return this.http.put<UserAddress>(path, {userId: userId, addressId: addressId}).pipe(
+    return this.http.put<UserAddress>(path, {userId: address.userId, addressId: address.addressId}).pipe(
       this.deserialize(UserAddress),
       this.logErrors()
     );

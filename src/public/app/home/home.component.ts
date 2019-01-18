@@ -1,6 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {faHandHoldingUsd, faPrescriptionBottleAlt, faUserShield, IconDefinition} from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import {
+  faHandHoldingUsd,
+  faPrescriptionBottleAlt,
+  faUserShield,
+  IconDefinition
+} from '@fortawesome/free-solid-svg-icons';
 import * as _ from 'lodash';
 
 @Component({

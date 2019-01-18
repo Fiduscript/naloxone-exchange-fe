@@ -1,17 +1,13 @@
-import {DataMapper} from '@aws/dynamodb-data-mapper';
-import {DynamoDB} from 'aws-sdk/clients/all';
+import { DataMapper } from '@aws/dynamodb-data-mapper';
+import { DynamoDB } from 'aws-sdk/clients/all';
 import * as _ from 'lodash';
-import {IUserAddress} from '../../public/app/account/model/user-address';
-import {AWSProvider} from '../provider/aws-provider';
+import { IUserAddress } from '../../public/app/account/model/user-address';
+import { AWSProvider } from '../provider/aws-provider';
 
-import {attribute, hashKey, rangeKey, table,} from '@aws/dynamodb-data-mapper-annotations';
+import { attribute, hashKey, rangeKey, table } from '@aws/dynamodb-data-mapper-annotations';
 
 const uuidV4 = require('uuid/v4');
-const ddb: DynamoDB = AWSProvider.getDynamoClient();
 const TABLE_NAME = 'user_address_test_two';
-const mapper = new DataMapper({
-  client: ddb,
-});
 
 @table(TABLE_NAME)
 class AddressDdbEntity implements IUserAddress {
@@ -56,15 +52,11 @@ class AddressDdbEntity implements IUserAddress {
 export class UsersDao {
 
   public static create = _.once((): UsersDao => {
-    return new UsersDao();
+    return new UsersDao(new DataMapper({ client: AWSProvider.getDynamoClient() }));
   });
 
-
-  async createAddress(address: IUserAddress): Promise<IUserAddress> {
-    if (address.addressId) {
-      return Promise.reject('Address must not contain addressId for create');
-    }
-    return mapper.put(Object.assign(new AddressDdbEntity, address));
+  private constructor( private mapper: DataMapper ) {
+    // this.mapper = mapper;
   }
 
 
@@ -75,7 +67,7 @@ export class UsersDao {
     if (!addressId) {
       return Promise.reject('Must provide addressId');
     }
-    return mapper.delete(Object.assign(
+    return this.mapper.delete(Object.assign(
       new AddressDdbEntity,
       {userId: userId, addressId: addressId}
     ));
@@ -84,17 +76,15 @@ export class UsersDao {
 
   async getAddressesForUser(userId: string): Promise<IUserAddress[]> {
     const total = [];
-    const iterator = mapper.query(AddressDdbEntity, {'userId': userId});
+    const iterator = this.mapper.query(AddressDdbEntity, {'userId': userId});
     for await (const address of iterator) {
       total.push(address);
     }
     return total;
   }
 
-  async updateAddress(address: IUserAddress): Promise<IUserAddress> {
-    if (!address.addressId) {
-      return Promise.reject('Address must contain addressId for update');
-    }
-    return mapper.put(Object.assign(new AddressDdbEntity, address));
+
+  async saveAddress(address: IUserAddress): Promise<IUserAddress> {
+    return this.mapper.put(Object.assign(new AddressDdbEntity, address));
   }
 }
