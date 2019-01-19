@@ -81,7 +81,7 @@ export class Server {
       if (authToken) {
         Server.cognitoExpress.validate(authToken, <T extends IUserInfo>(err, response: T) => {
           if (response != null) {
-            res.locals.user = new UserInfo(response, true);
+            res.locals.user = new UserInfo(response);
             log.audit(`Authenticated request to ${req.originalUrl} from user ${res.locals.user.id}`);
           } else {
             log.audit(`Couldn't validate auth token in request to ${req.originalUrl}: ${err.message}`);
