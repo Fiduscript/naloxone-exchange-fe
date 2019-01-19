@@ -2,20 +2,16 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { AddressFormComponent } from '../address-form/address-form.component';
-import { AddressComponent } from '../address/address.component';
-import { AddressesComponent } from './addresses.component';
+import { AddressFormComponent } from './address-form.component';
 
-describe('AddressesComponent', () => {
-  let component: AddressesComponent;
-  let fixture: ComponentFixture<AddressesComponent>;
+describe('AddressFormComponent', () => {
+  let component: AddressFormComponent;
+  let fixture: ComponentFixture<AddressFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AddressComponent,
-        AddressesComponent,
-        AddressFormComponent,
+        AddressFormComponent
       ],
       imports: [
         FormsModule,
@@ -27,7 +23,7 @@ describe('AddressesComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddressesComponent);
+    fixture = TestBed.createComponent(AddressFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

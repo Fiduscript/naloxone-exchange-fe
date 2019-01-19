@@ -18,7 +18,7 @@ import { PrivacyComponent } from '../privacy/privacy.component';
 })
 export class RegisterComponent implements OnInit {
 
-  public error: string = null;
+  public error?: string = null;
   public privacyPolicy: PrivacyPolicy;
   public registerForm: FormGroup;
 
