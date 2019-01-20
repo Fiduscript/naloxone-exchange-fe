@@ -2,6 +2,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { CookieService } from 'ngx-cookie-service';
+import { LOCATION } from '../../../util/window-injections';
 import { UpdatePasswordComponent } from './update-password.component';
 
 describe('UpdatePasswordComponent', () => {
@@ -17,6 +19,10 @@ describe('UpdatePasswordComponent', () => {
         FormsModule,
         HttpClientTestingModule,
         ReactiveFormsModule,
+      ],
+      providers: [
+        {provide: LOCATION, useValue: {replace: (location: string) => {}}},
+        CookieService
       ]
     })
     .compileComponents();

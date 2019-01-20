@@ -5,6 +5,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
+import { CookieService } from 'ngx-cookie-service';
 import { LOCATION } from '../../util/window-injections';
 import { LoginComponent } from './login.component';
 
@@ -23,7 +24,8 @@ describe('LoginComponent', () => {
       ],
       providers: [
         {provide: APP_BASE_HREF, useValue: '/account/login'},
-        {provide: LOCATION, useValue: {replace: (location: string) => {}}}
+        {provide: LOCATION, useValue: {replace: (location: string) => {}}},
+        CookieService
       ]
     })
     .compileComponents();

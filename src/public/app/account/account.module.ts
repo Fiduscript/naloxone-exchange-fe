@@ -9,6 +9,7 @@ import { AccountService } from './account.service';
 import { ConfirmComponent } from './confirm/confirm.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
+import { OauthComponent } from './oauth/oauth.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { RegisterComponent } from './register/register.component';
 import { AccountSettingsComponent } from './user/account-settings/account-settings.component';
@@ -44,10 +45,30 @@ import { UserAuthGuard } from './user/user-auth.guard';
     AccountSettingsComponent,
     AddressComponent,
     AddressesComponent,
+    RelationsComponent,
+    RegisterComponent,
+    OauthComponent,
+    OrdersComponent,
+    RegisterComponent,
+    LogoutComponent,
     AddressFormComponent,
     ConfirmComponent,
     LoginComponent,
     LogoutComponent,
+    RelationsComponent,
+    RegisterComponent,
+    OauthComponent,
+    OrdersComponent,
+    PrivacyComponent,
+    ProfileComponent,
+    RegisterComponent,
+    RegisterComponent,
+    RelationComponent,
+    RelationFormComponent,
+    RelationsComponent,
+    LogoutComponent,
+    ConfirmComponent,
+    PrivacyComponent,
     OrdersComponent,
     PrivacyComponent,
     ProfileComponent,
@@ -58,6 +79,9 @@ import { UserAuthGuard } from './user/user-auth.guard';
     RelationsComponent,
     UpdateAttributeComponent,
     UpdatePasswordComponent,
+    RelationFormComponent,
+    RelationComponent,
   ]
 })
-export class AccountModule { }
+export class AccountModule {
+}

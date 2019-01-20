@@ -2,6 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { CookieService } from 'ngx-cookie-service';
 import { LOCATION } from '../../../util/window-injections';
 import { UpdateAttributeComponent } from './update-attribute.component';
 
@@ -18,7 +19,8 @@ describe('UpdateAttributeComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        {provide: LOCATION, useValue: {replace: (location: string) => {}}}
+        {provide: LOCATION, useValue: {replace: (location: string) => {}}},
+        CookieService
       ]
     })
     .compileComponents();
