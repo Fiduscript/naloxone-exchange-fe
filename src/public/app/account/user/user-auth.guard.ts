@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { CognitoUserSession } from 'amazon-cognito-identity-js';
+import * as moment from 'moment';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 
@@ -10,7 +11,7 @@ import { AccountService } from '../account.service';
 @Injectable()
 export class UserAuthGuard implements CanActivate {
 
-  private readonly DEFAULT_EXPIRATION_MILLIS: number = 60 * 1000;
+  private readonly DEFAULT_EXPIRATION_MILLIS: number = moment.duration(1, 'minute').asMilliseconds();
 
   public constructor(
       private cookieService: CookieService,
