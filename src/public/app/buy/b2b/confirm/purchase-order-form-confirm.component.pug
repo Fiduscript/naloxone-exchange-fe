@@ -1,0 +1,5 @@
+section#general.scroll-section
+  .container(*ngIf="orderExists")
+    !=require('./purchase-order-form-confirm-faq.component.pug')
+  .container(*ngIf="!orderExists")
+    !=require('./purchase-order-form-confirm-invalid.component.pug')

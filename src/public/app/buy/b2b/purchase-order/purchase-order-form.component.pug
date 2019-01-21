@@ -1,0 +1,123 @@
+.container.text-center
+  h3.mb-3 Purchase Naloxone for your Organization
+  .conatiner
+    p Please complete the form below. Once submitted, we will reach out to at your preferred form of contact within the next business day to confirm your order.
+  .container.text-center.mb-3
+    form(
+    "[formGroup]"="purchaseOrderForm"
+    "(ngSubmit)"="submit(purchaseOrderForm.value)")
+      .form-group.row.text-center
+        label.col-sm-4.col-form-label.text-left Organization Name
+        .col-sm-6
+          input.form-control(
+          type="text"
+          formControlName="organizationName"
+          placeholder="Name of your organization"
+          "[ngClass]"="{ 'is-invalid': purchaseOrderForm.get('organizationName').touched && purchaseOrderForm.get('organizationName').invalid }")
+          .invalid-feedback(*ngIf="purchaseOrderForm.get('organizationName').touched && purchaseOrderForm.get('organizationName').invalid")
+            .text-left Organization name is required
+
+      .form-group.row.text-center
+        label.col-sm-4.col-form-label.text-left Organization Type
+        .col-sm-6
+          select.form-control(formControlName="organizationType" required)
+            option(value="" selected disabled) Select Organization Type
+            option(*ngFor="let organizationType of getOrganizationTypes();" "[value]"="organizationType") {{organizationType}}
+          small.form-text.text-danger(*ngIf="purchaseOrderForm.get('organizationType').touched && purchaseOrderForm.get('organizationType').invalid") You must select an answer to this question.
+
+      .form-group.row.text-center
+        label.col-sm-4.col-form-label.text-left Contact Name
+        .col-sm-6
+          input.form-control(
+          type="text"
+          formControlName="contactName"
+          placeholder="First and last name"
+          "[ngClass]"="{ 'is-invalid': purchaseOrderForm.get('contactName').touched && purchaseOrderForm.get('contactName').invalid }")
+          .invalid-feedback(*ngIf="purchaseOrderForm.get('contactName').touched && purchaseOrderForm.get('contactName').invalid")
+            .text-left Contact name is required
+
+      .form-group.row.text-center
+        label.col-sm-4.col-form-label.text-left Phone Number
+        .col-sm-6
+          input.form-control(
+          type="text"
+          formControlName="contactPhoneNumber"
+          placeholder="(555) 555-5555"
+          "[ngClass]"="{ 'is-invalid': purchaseOrderForm.get('contactPhoneNumber').touched && purchaseOrderForm.get('contactPhoneNumber').invalid }")
+          .invalid-feedback(*ngIf="purchaseOrderForm.get('contactPhoneNumber').touched && purchaseOrderForm.get('contactPhoneNumber').invalid")
+            .text-left Phone number is required
+
+      .form-group.row.text-center
+        label.col-sm-4.col-form-label.text-left Email Address
+        .col-sm-6
+          input.form-control(
+          type="email"
+          formControlName="contactEmail"
+          placeholder="Contact email address"
+          "[ngClass]"="{ 'is-invalid': purchaseOrderForm.get('contactEmail').touched && purchaseOrderForm.get('contactEmail').invalid }")
+          .invalid-feedback(*ngIf="purchaseOrderForm.get('contactEmail').touched && purchaseOrderForm.get('contactEmail').invalid")
+            .text-left Email address is required
+
+      .form-group.row.text-center
+        label.col-sm-4.col-form-label.text-left Preferred Form of Contact
+        .col-sm-6
+          select.form-control(formControlName="preferredContactType" required)
+            option(value="" selected disabled) Select preferred form of contact
+            option(value="email") Email
+            option(value="phone") Phone
+          small.form-text.text-danger(*ngIf="purchaseOrderForm.get('preferredContactType').touched && purchaseOrderForm.get('preferredContactType').invalid") You must select an answer to this question.
+
+      .form-group.row.text-center
+        label.col-sm-4.col-form-label.text-left Signee Name
+        .col-sm-6
+          input.form-control(
+          type="text"
+          formControlName="signeeName"
+          placeholder="First and last name of signee"
+          "[ngClass]"="{ 'is-invalid': purchaseOrderForm.get('signeeName').touched && purchaseOrderForm.get('signeeName').invalid }")
+          .invalid-feedback(*ngIf="purchaseOrderForm.get('signeeName').touched && purchaseOrderForm.get('signeeName').invalid")
+            .text-left Name of signee is required
+
+      .form-group.row.text-center
+        label.col-sm-4.col-form-label.text-left Product Type
+        .col-sm-6
+          select.form-control(formControlName="requestedProductId" required)
+            option(value="" selected disabled) Select Product
+            option(*ngFor="let product of getProducts().items;" "[value]"="product.id") {{product.title}}
+          small.form-text.text-danger(*ngIf="purchaseOrderForm.get('requestedProductId').touched && purchaseOrderForm.get('requestedProductId').invalid") You must select an answer to this question.
+
+      .form-group.row.text-center
+        label.col-sm-4.col-form-label.text-left Product Quantity
+        .col-sm-6
+          select.form-control(formControlName="quantityRange" required)
+            option(value="" selected disabled) Select Quantity
+            option(*ngFor="let quantity of getQuantities();" "[value]"="quantity") {{quantity}}
+          small.form-text.text-danger(*ngIf="purchaseOrderForm.get('quantityRange').touched && purchaseOrderForm.get('quantityRange').invalid") You must select an answer to this question.
+
+      .form-group.row.text-center
+        label.col-sm-4.col-form-label.text-left How soon do you need your Naloxone order?
+        .col-sm-6
+          select.form-control(formControlName="needByDate" required)
+            option(value="" selected disabled) Select Time Range
+            option(*ngFor="let date of getNeedByDates();" "[value]"="date") {{date}}
+          small.form-text.text-danger(*ngIf="purchaseOrderForm.get('needByDate').touched && purchaseOrderForm.get('needByDate').invalid") You must select an answer to this question.
+
+      .form-group.row.text-center
+        label.col-sm-4.col-form-label.text-left Is this order paid for by a grant?
+        .col-sm-6
+          select.form-control(formControlName="paidByGrant" required)
+            option(value="" selected disabled) Select
+            option(value="true") Yes
+            option(value="false") No
+          small.form-text.text-danger(*ngIf="purchaseOrderForm.get('paidByGrant').touched && purchaseOrderForm.get('paidByGrant').invalid") You must select an answer to this question.
+
+      .form-group.row.text-center
+        label.col-sm-4.col-form-label.text-left How did you hear about us?
+        .col-sm-6
+          select.form-control(formControlName="attributionSource" required)
+            option(value="" selected disabled) Select
+            option(*ngFor="let attributionSource of getAttributionSources();" "[value]"="attributionSource") {{attributionSource}}
+          small.form-text.text-danger(*ngIf="purchaseOrderForm.get('attributionSource').touched && purchaseOrderForm.get('attributionSource').invalid") You must select an answer to this question.
+
+      .form-group.mt-4
+        button.btn.btn-primary(type="submit" "[disabled]"="purchaseOrderForm.invalid") Submit
