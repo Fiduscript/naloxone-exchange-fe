@@ -1,10 +1,14 @@
 import { JsonObject, JsonProperty } from 'json2typescript';
 import * as _ from 'lodash';
-import { JsonInitialize } from 'src/public/app/util/json-convert-provider';
+import { Moment } from 'moment';
+
+import { MomentConverter } from 'src/public/app/util/moment-utils';
+import { safeMerge } from '../../../../../common/safe-merge';
+import { JsonInitialize } from '../../../util/json-convert-provider';
 
 export const RELATIONS: string[] = [
   'Myself',
-  'Family Memeber',
+  'Family Member',
   'Friend',
   'Loved one'
 ];
@@ -12,10 +16,12 @@ export const RELATIONS: string[] = [
 export interface IUserRelation {
   allergies: string[];
   biologicalSex: string;
+  birthDate: Moment;
   id: string;
   insuranceId?: string; // TBD: separate insurance from dependent?
   medicalConditions: string[];
   name: string;
+  narcanAllergy: boolean;
   relation: string;
   userId?: string;
 }
@@ -29,6 +35,9 @@ export class UserRelation implements IUserRelation {
   @JsonProperty('biologicalSex', String)
   public readonly biologicalSex: string = undefined;
 
+  @JsonProperty('birthDate', MomentConverter)
+  public readonly birthDate: Moment = undefined;
+
   @JsonProperty('id', String)
   public readonly id: string = undefined;
 
@@ -41,6 +50,9 @@ export class UserRelation implements IUserRelation {
   @JsonProperty('name', String)
   public readonly name: string = undefined;
 
+  @JsonProperty('narcanAllergy', Boolean)
+  public readonly narcanAllergy: boolean = undefined;
+
   @JsonProperty('relation', String)
   public readonly relation: string = undefined;
 
@@ -48,13 +60,14 @@ export class UserRelation implements IUserRelation {
   public readonly userId?: string;
 
   public constructor(userRelation: IUserRelation = {} as IUserRelation) {
-    _.merge(this, userRelation);
+    safeMerge(this, userRelation);
   }
 
 }
 
-@JsonObject
+@JsonObject('UserRelations')
 export class UserRelations implements JsonInitialize {
+
   @JsonProperty('relations', [UserRelation])
   public readonly relations: UserRelation[] = [];
 

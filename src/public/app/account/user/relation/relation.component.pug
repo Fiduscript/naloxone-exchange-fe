@@ -1,1 +1,24 @@
-p relation works!
+.d-flex.justify-content-between
+  ul.list-unstyled.w-100
+    li
+      strong.less-strong {{relation.name}}
+      span.ml-3.mr-3 •
+      span {{relation.relation}}
+    li {{relation.medicalConditions.length}} known medical conditions
+    li {{relation.allergies.length}} known allergies
+  .align-self-center(*ngIf="editable")
+    .d-flex.align-self-end.flex-column
+      button.btn.btn-sm.btn-secondary(
+          "(click)"="edit(editModal)"
+          title="Edit this relation.") Edit
+      button.btn.btn-sm.btn-secondary.mt-2(
+          "(click)"="delete()"
+          title="Delete this relation.") Delete
+
+.alert.alert-danger.mt-3(*ngIf="error != null") {{error.message}}. Please try again.
+
+ng-template(#editModal let-modal)
+  .modal-header
+    h4.modal-title Edit Address
+  .modal-body
+    app-relation-form("[relation]"="relation" "[sucessCallback]"="editSuccessCallback")

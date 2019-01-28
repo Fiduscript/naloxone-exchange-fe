@@ -1,1 +1,90 @@
-p relation-form works!
+.container-fluid
+  form("[formGroup]"="form" "(ngSubmit)"="submit()")
+
+    //- Relation Info:
+    .form-group.form-row
+      .col-sm-12.col-md-6
+        label Your Relation to Patient
+        select.form-control(
+            "(change)"="relationChanged()"
+            formControlName="relation"
+            "[ngClass]"="{ 'is-invalid': sectionInvalid('relation') }")
+          option(value="" selected disabled) Select one
+          option(*ngFor="let relation of getRelations()" "[value]"="relation") {{relation}}
+          option(value="{{OTHER}}") {{OTHER}}
+        .invalid-feedback Relation is required.
+
+      .col-sm-12.col-md-6(*ngIf="otherSelected")
+        label Please specify
+        input.form-control(
+            formControlName="otherRelation"
+            type="text"
+            "[ngClass]"="{ 'is-invalid': sectionInvalid('otherRelation') }")
+        .invalid-feedback Please specify relation to patient.
+
+    //- Personal Info:
+    .form-group.form-row(*ngIf="editingExisting || form.get('otherRelation').valid")
+      .col-sm-12.col-md-12.col-lg-6
+        label Name
+        input.form-control(
+            formControlName="name"
+            "(change)"="setName()"
+            type="text"
+            placeholder="Patient's Name"
+            "[ngClass]"="{ 'is-invalid': sectionInvalid('name') }")
+        .invalid-feedback Name is required.
+        div.mb-2.d-lg-none
+
+      .col-sm-12.col-md-6.col-lg-3
+        .form-group
+          label Biological Sex
+          select.form-control(
+              formControlName="biologicalSex"
+              "[ngClass]"="{ 'is-invalid': sectionInvalid('biologicalSex') }")
+            option(value="" selected disabled) Select one
+            option(value="female") Female
+            option(value="male") Male
+          .invalid-feedback The patient's biological sex is required.
+          small
+            a Why do we need this?
+        div.mb-2.d-md-none.d-lg-none
+
+      .col-sm-12.col-md-6.col-lg-3
+        .form-group
+          label Date of Birth
+          .input-group
+            input.form-control(
+              placeholder="YYYY-MM-DD"
+              type="text"
+              ngbDatepicker
+              formControlName="birthDate"
+              "[ngClass]"="{ 'is-invalid': sectionInvalid('birthDate') }"
+              #d="ngbDatepicker")
+            .input-group-append
+              button.btn.btn-outline-secondary("(click)"="d.toggle()" type="button")
+                span.fa.fa-calendar-alt
+            .invalid-feedback(*ngFor="let error of form.get('birthDate').errors | keyvalue") {{error.value}}
+          small
+            a Why do we need this?
+
+    //- hide unless name and biological sex are valid
+    .form-group(*ngIf="personalInfoReady()")
+      label Known Alergies
+      //- input.form-check-input(formControlName="narcanAllergy" type="checkbox")
+      label Is {{name}} alergic to Naloxone, Evzio, or Narcan?
+        em.ml-2 *These are all the same active ingredient.
+      select(
+          formControlName="narcanAllergy"
+          "[ngClass]"="{ 'is-invalid': sectionInvalid('narcanAllergy') }")
+        option(value="" selected disabled) Select
+        option("[value]"="true" selected disabled) Yes
+        option("[value]"="false" selected disabled) No
+
+    .form-group
+
+
+    .alert.alert-danger(*ngIf="error != null") {{error.message}}
+
+    .form-group
+      button.btn.btn-primary.pull-right("[disabled]"="form.invalid" type="submit") Submit
+      button.btn.btn-secondary.pull-right.mr-2("(click)"="reset()") reset

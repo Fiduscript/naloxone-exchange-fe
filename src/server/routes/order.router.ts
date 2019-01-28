@@ -7,7 +7,7 @@ const log = Logger.create(module);
 const router: Router = express.Router();
 
 router.get('/list', (req: Request, res: Response) => {
-  res.status(200).json({order: []});
+  res.status(200).json({orders: []});
 });
 
 export const OrderRouter: Router = router;

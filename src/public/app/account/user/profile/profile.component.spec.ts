@@ -7,6 +7,8 @@ import { AddressFormComponent } from '../address-form/address-form.component';
 import { AddressComponent } from '../address/address.component';
 import { AddressesComponent } from '../addresses/addresses.component';
 import { OrdersComponent } from '../orders/orders.component';
+import { RelationFormComponent } from '../relation-form/relation-form.component';
+import { RelationComponent } from '../relation/relation.component';
 import { RelationsComponent } from '../relations/relations.component';
 import { UpdateAttributeComponent } from '../update-attribute/update-attribute.component';
 import { UpdatePasswordComponent } from '../update-password/update-password.component';
@@ -25,6 +27,8 @@ describe('ProfileComponent', () => {
         AddressComponent,
         AddressFormComponent,
         OrdersComponent,
+        RelationComponent,
+        RelationFormComponent,
         RelationsComponent,
         UpdateAttributeComponent,
         UpdatePasswordComponent

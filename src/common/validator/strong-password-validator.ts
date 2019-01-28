@@ -8,7 +8,7 @@ export class StrongPasswordValidator implements Validator {
   private static readonly SPECIAL_CHARACTER = new RegExp('^(?=.*[!@#\$%\^&\*])');
   private static readonly UPPERCASE = new RegExp('^(?=.*[A-Z])');
 
-  public constuctor() {}
+  public constructor() {}
 
   public validate(c: AbstractControl): ValidationErrors | null {
     const errors: ValidationErrors = {};
