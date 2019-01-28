@@ -62,7 +62,7 @@ export class NgbDateMomentAdapter extends NgbDateAdapter<Moment> {
 export const NgbMomentAdapterProvider: Provider = {provide: NgbDateAdapter, useClass: NgbDateMomentAdapter};
 
 /**
- * Angular form validator that ensures a moment is between the sepcified valies.
+ * Angular form validator that ensures a moment is between the sepcified values.
  * Validation errors returned can be displayed directly to client.
  */
 export class MomentRangeValidator implements Validator {
@@ -81,10 +81,12 @@ export class MomentRangeValidator implements Validator {
       return errors;
     }
 
+    // include start
     if (this.start != null && date.isBefore(this.start)) {
       errors.start = `Must be after ${this.start.format(this.format)}.`;
     }
-    if (this.end != null && this.end.isBefore(date)) {
+    // exclude end
+    if (this.end != null && !date.isBefore(this.end)) {
       errors.end = `Must be before ${this.end.format(this.format)}.`;
     }
 
