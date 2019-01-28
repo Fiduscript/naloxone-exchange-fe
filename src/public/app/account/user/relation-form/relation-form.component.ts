@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
 import { MomentRangeValidator } from 'src/public/app/util/moment-utils';
 import { AccountService } from '../../account.service';
 import { UserInfo } from '../../model/user-info';
-import { IUserRelation, RELATIONS } from '../model/user-relation';
+import { IUserRelation, RELATIONS, UserRelation } from '../model/user-relation';
 import { UserService } from '../user.service';
 
 @Component({
@@ -31,16 +31,16 @@ export class RelationFormComponent implements OnInit {
     private service: UserService,
     private accountService: AccountService) { }
 
+  public addFormArrayElement(formControlName: string): void {
+    (this.form.get(formControlName) as FormArray).push(this.fb.control(''));
+  }
+
   public getRelations(): string[] {
     return RELATIONS;
   }
 
-  public getRequiredAllergies(): string[] {
-    return [''];
-  }
-
   public ngOnInit(): void {
-    this.editingExisting = !_.isEmpty(this.relation);
+    this.editingExisting = !_.isEmpty(this.relation.relation);
     this.accountService.whoami().subscribe((user: UserInfo) => {
       this.user = user;
     });
@@ -52,19 +52,24 @@ export class RelationFormComponent implements OnInit {
         moment().subtract(100, 'years').startOf('month'),
         moment().startOf('month'));
 
+    const medicalConditions = (this.relation.medicalConditions || []).map((v) => this.fb.control(v));
+    this.seedEmptyFormArray(medicalConditions);
+
+    const allergies = (this.relation.allergies || []).map((v) => this.fb.control(v));
+    this.seedEmptyFormArray(allergies);
+
     this.form = this.fb.group({
       relation: [this.otherSelected ? this.OTHER : this.relation.relation, Validators.required],
       otherRelation: [this.relation.relation, Validators.required],
       name: [this.relation.name, Validators.required],
       biologicalSex: [this.relation.biologicalSex, Validators.required],
       birthDate: [this.relation.birthDate, [momentValidator]],
+      medicalConditions: this.fb.array(medicalConditions),
       narcanAllergy: [this.relation.narcanAllergy, Validators.required],
-      medicalConditions: [this.relation.medicalConditions],
-      alergies: [this.relation.allergies]
+      allergies: this.fb.array(allergies)
     });
 
     this.setName();
-
   }
 
   public personalInfoReady(): boolean {
@@ -86,6 +91,15 @@ export class RelationFormComponent implements OnInit {
     }
   }
 
+  public removeFormArrayElement(formControlName: string, index: number): void {
+    const allergies: FormArray = this.form.get(formControlName) as FormArray;
+    if (allergies.length === 1) {
+      allergies.setControl(0, this.fb.control(''));
+    } else {
+      allergies.removeAt(index);
+    }
+  }
+
   public reset(): void {
     this.form.reset(this.relation, {emitEvent: false});
     this.relationChanged();
@@ -97,6 +111,12 @@ export class RelationFormComponent implements OnInit {
 
   public setName(): void {
     this.name = this.form.get('name').value;
+  }
+
+  private seedEmptyFormArray(formControls: FormControl[]) {
+    if (_.isEmpty(formControls)) {
+      formControls.push(this.fb.control(''));
+    }
   }
 
 }
