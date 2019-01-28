@@ -34,7 +34,7 @@ export class DurationConverter implements JsonCustomConvert<Duration> {
 }
 
 /**
- * Bootstrap date adapater for moments.
+ * Bootstrap date adapter for moments.
  * This needs to be added to a module's providers to work.
  * A NgbMomentAdapterProvider is supplied below.
  */
@@ -62,7 +62,7 @@ export class NgbDateMomentAdapter extends NgbDateAdapter<Moment> {
 export const NgbMomentAdapterProvider: Provider = {provide: NgbDateAdapter, useClass: NgbDateMomentAdapter};
 
 /**
- * Angular form validator that ensures a moment is between the sepcified values.
+ * Angular form validator that ensures a moment is between the specified values.
  * Validation errors returned can be displayed directly to client.
  */
 export class MomentRangeValidator implements Validator {
