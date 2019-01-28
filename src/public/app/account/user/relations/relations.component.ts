@@ -17,7 +17,7 @@ export class RelationsComponent implements OnInit {
   public constructor(
       private service: UserService,
       private modalService: NgbModal) {
-    this.clearModal = this.closeModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
     this.clearModal = this.clearModal.bind(this);
     this.fetchRelations = this.fetchRelations.bind(this);
   }

@@ -2,7 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { v4 as uuid } from 'uuid';
 
+import { ErrorMessage } from 'src/public/app/common/message-response';
 import { MomentRangeValidator } from 'src/public/app/util/moment-utils';
 import { AccountService } from '../../account.service';
 import { UserInfo } from '../../model/user-info';
@@ -16,7 +18,10 @@ import { UserService } from '../user.service';
 })
 export class RelationFormComponent implements OnInit {
 
+  private static readonly NARCAN_ALLERGY_INDICATOR: string = 'This patient has an allergy to Naloxone, Evzio, or Narcan.';
+
   public editingExisting: boolean = false;
+  public error?: ErrorMessage = null;
   public form: FormGroup;
   public name: string = '';
   public readonly OTHER: string = 'Other';
@@ -52,10 +57,14 @@ export class RelationFormComponent implements OnInit {
         moment().subtract(100, 'years').startOf('month'),
         moment().startOf('month'));
 
-    const medicalConditions = (this.relation.medicalConditions || []).map((v) => this.fb.control(v));
+    const medicalConditions: FormControl[] = (this.relation.medicalConditions || []).map((v) => this.fb.control(v));
     this.seedEmptyFormArray(medicalConditions);
 
-    const allergies = (this.relation.allergies || []).map((v) => this.fb.control(v));
+    const narcanAllergy: string = (this.relation.allergies || []).includes(RelationFormComponent.NARCAN_ALLERGY_INDICATOR) + '';
+    const allergies: FormControl[] = _(this.relation.allergies || [])
+        .reject((v) => v === RelationFormComponent.NARCAN_ALLERGY_INDICATOR)
+        .map((v) => this.fb.control(v))
+        .value();
     this.seedEmptyFormArray(allergies);
 
     this.form = this.fb.group({
@@ -65,7 +74,7 @@ export class RelationFormComponent implements OnInit {
       biologicalSex: [this.relation.biologicalSex, Validators.required],
       birthDate: [this.relation.birthDate, [momentValidator]],
       medicalConditions: this.fb.array(medicalConditions),
-      narcanAllergy: [this.relation.narcanAllergy, Validators.required],
+      narcanAllergy: [narcanAllergy, Validators.required],
       allergies: this.fb.array(allergies)
     });
 
@@ -111,6 +120,45 @@ export class RelationFormComponent implements OnInit {
 
   public setName(): void {
     this.name = this.form.get('name').value;
+  }
+
+  public submit(): void {
+    if (this.form.invalid) {
+      return;
+    }
+
+    this.error = null;
+    this.form.disable();
+
+    const allergies = this.getSanatizedFormArrayValue('allergies');
+    if (this.form.get('narcanAllergy').value === 'true') {
+      allergies.unshift(RelationFormComponent.NARCAN_ALLERGY_INDICATOR);
+    }
+
+    const relation: IUserRelation = {
+      relation: this.form.get('otherRelation').value,
+      name: this.form.get('name').value,
+      biologicalSex: this.form.get('biologicalSex').value,
+      birthDate: this.form.get('birthDate').value,
+      medicalConditions: this.getSanatizedFormArrayValue('medicalConditions'),
+      allergies: allergies,
+      id: this.relation.id || uuid()
+    };
+
+    this.service.updateCreateRelation(new UserRelation(relation)).subscribe(
+      this.sucessCallback,
+      (error: ErrorMessage): void => {
+        this.error = error;
+        this.form.enable();
+      }
+    );
+  }
+
+  private getSanatizedFormArrayValue(formControlName: string): string[] {
+    return _(this.form.get('medicalConditions').value)
+        .map(_.trim)
+        .reject(_.isEmpty)
+        .value();
   }
 
   private seedEmptyFormArray(formControls: FormControl[]) {

@@ -18,10 +18,8 @@ export interface IUserRelation {
   biologicalSex: string;
   birthDate: Moment;
   id: string;
-  insuranceId?: string; // TBD: separate insurance from dependent?
   medicalConditions: string[];
   name: string;
-  narcanAllergy: boolean;
   relation: string;
   userId?: string;
 }
@@ -41,17 +39,11 @@ export class UserRelation implements IUserRelation {
   @JsonProperty('id', String)
   public readonly id: string = undefined;
 
-  @JsonProperty('insuranceId', String, true)
-  public readonly insuranceId?: string = undefined;
-
   @JsonProperty('medicalConditions', [String])
   public readonly medicalConditions: string[] = [];
 
   @JsonProperty('name', String)
   public readonly name: string = undefined;
-
-  @JsonProperty('narcanAllergy', Boolean)
-  public readonly narcanAllergy: boolean = undefined;
 
   @JsonProperty('relation', String)
   public readonly relation: string = undefined;
