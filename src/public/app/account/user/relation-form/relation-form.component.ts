@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
-import { MomentValidator } from 'src/public/app/util/moment-utils';
+import { MomentRangeValidator } from 'src/public/app/util/moment-utils';
 import { AccountService } from '../../account.service';
 import { UserInfo } from '../../model/user-info';
 import { IUserRelation, RELATIONS } from '../model/user-relation';
@@ -48,7 +48,7 @@ export class RelationFormComponent implements OnInit {
     this.otherSelected = !_.isEmpty(this.relation.relation) &&
        !RELATIONS.includes(this.relation.relation);
 
-    const momentValidator = new MomentValidator('MMM YYYY',
+    const momentValidator = new MomentRangeValidator('MMM YYYY',
         moment().subtract(100, 'years').startOf('month'),
         moment().startOf('month'));
 
