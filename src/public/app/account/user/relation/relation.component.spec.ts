@@ -1,5 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbDatepickerModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
 import { RELATIONS, UserRelation } from '../model/user-relation';
@@ -14,10 +16,14 @@ describe('RelationComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         RelationComponent,
-        RelationFormComponent
+        RelationFormComponent,
       ],
       imports: [
-        HttpClientTestingModule
+        FormsModule,
+        HttpClientTestingModule,
+        NgbDatepickerModule,
+        NgbModalModule,
+        ReactiveFormsModule,
       ]
     })
     .compileComponents();
@@ -28,7 +34,6 @@ describe('RelationComponent', () => {
     component = fixture.componentInstance;
     component.relation = new UserRelation({
         id: '2',
-        narcanAllergy: false,
         birthDate: moment(),
         name: 'Andrea',
         biologicalSex: 'female',

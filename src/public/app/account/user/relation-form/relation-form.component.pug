@@ -102,8 +102,8 @@
           formControlName="narcanAllergy"
           "[ngClass]"="{ 'is-invalid': sectionInvalid('narcanAllergy') }")
         option(value="" selected disabled) Select
-        option(value="{{true}}" selected) Yes
-        option(value="{{false}}" selected) No
+        option(value="true" selected) Yes
+        option(value="false" selected) No
 
     .alert.alert-danger(*ngIf="error != null") {{error.message}}
 

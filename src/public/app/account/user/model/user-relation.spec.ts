@@ -4,13 +4,13 @@ import { jsonConvert } from '../../../util/json-convert-provider';
 import { UserRelation, UserRelations } from './user-relation';
 
 const json = {relations: [
-  {id: '1', name: 'B', birthDate: moment(), narcanAllergy: false,
+  {id: '1', name: 'B', birthDate: moment(),
       biologicalSex: 'yes please', medicalConditions: [], allergies: [], relation: 'Loved One'},
-  {id: '2', name: 'A', birthDate: moment(), narcanAllergy: false,
+  {id: '2', name: 'A', birthDate: moment(),
       biologicalSex: 'yes please', medicalConditions: [], allergies: [], relation: 'Loved One'},
-  {id: '3', name: 'D', birthDate: moment(), narcanAllergy: false,
+  {id: '3', name: 'D', birthDate: moment(),
       biologicalSex: 'yes please', medicalConditions: [], allergies: [], relation: 'Loved One'},
-  {id: '4', name: 'C', birthDate: moment(), narcanAllergy: false,
+  {id: '4', name: 'C', birthDate: moment(),
       biologicalSex: 'yes please', medicalConditions: [], allergies: [], relation: 'Loved One'}
 ]};
 

@@ -39,14 +39,14 @@ const ADDRESSSES: {[key: string]: IAddress} = _.keyBy([
 ], 'addressId');
 
 const relations = _.keyBy([
-  {id: '1', birthDate: moment(), narcanAllergy: false,
-      name: 'Jake', biologicalSex: 'male', medicalConditions: [], allergies: [], relation: RELATIONS[0] },
-  {id: '2', birthDate: moment(), narcanAllergy: false,
-      name: 'Andrea', biologicalSex: 'female', medicalConditions: [], allergies: [], relation: RELATIONS[1]},
-  {id: '4', birthDate: moment(), narcanAllergy: false,
-      name: 'Cassy', biologicalSex: 'female', medicalConditions: [], allergies: [], relation: RELATIONS[3]},
-  {id: '3', birthDate: moment(), narcanAllergy: true,
-      name: 'Dave', biologicalSex: 'male', medicalConditions: [], allergies: [], relation: 'RELATIONS[2]'},
+  {id: '1', birthDate: moment(), name: 'Jake', biologicalSex: 'male',
+      medicalConditions: [], allergies: [], relation: RELATIONS[0] },
+  {id: '2', birthDate: moment(), name: 'Andrea', biologicalSex: 'female',
+      medicalConditions: [], allergies: [], relation: RELATIONS[1]},
+  {id: '4', birthDate: moment(), name: 'Cassy', biologicalSex: 'female',
+      medicalConditions: [], allergies: [], relation: RELATIONS[3]},
+  {id: '3', birthDate: moment(), name: 'Dave', biologicalSex: 'male',
+      medicalConditions: [], allergies: [], relation: 'RELATIONS[2]'},
 ], 'id');
 
 @Injectable({

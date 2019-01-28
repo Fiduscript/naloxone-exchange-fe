@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbDatepickerModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CookieService } from 'ngx-cookie-service';
 import { LOCATION } from '../../../util/window-injections';
@@ -23,19 +24,21 @@ describe('ProfileComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        ProfileComponent,
         AccountSettingsComponent,
-        AddressesComponent,
         AddressComponent,
+        AddressesComponent,
         AddressFormComponent,
         OrdersComponent,
+        ProfileComponent,
         RelationComponent,
         RelationFormComponent,
         RelationsComponent,
         UpdateAttributeComponent,
-        UpdatePasswordComponent
+        UpdatePasswordComponent,
       ],
       imports: [
+        NgbDatepickerModule,
+        NgbModalModule,
         FormsModule,
         HttpClientTestingModule,
         ReactiveFormsModule,
