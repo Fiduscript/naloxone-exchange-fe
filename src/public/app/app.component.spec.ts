@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ShareButtonsModule } from '@ngx-share/buttons';
 
+import { CookieService } from 'ngx-cookie-service';
 import { AccountModule } from './account/account.module';
 import { AppComponent } from './app.component';
 import { MockComponent } from './util/mock-component';
@@ -22,7 +23,8 @@ describe('AppComponent', () => {
         ShareButtonsModule.forRoot(),
       ],
       providers: [
-        {provide: APP_BASE_HREF, useValue: ''}
+        {provide: APP_BASE_HREF, useValue: ''},
+        CookieService
       ]
     }).compileComponents();
   }));

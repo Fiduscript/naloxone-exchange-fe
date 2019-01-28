@@ -2,6 +2,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { CookieService } from 'ngx-cookie-service';
+import { LOCATION } from '../../../util/window-injections';
 import { AccountSettingsComponent } from '../account-settings/account-settings.component';
 import { AddressFormComponent } from '../address-form/address-form.component';
 import { AddressComponent } from '../address/address.component';
@@ -37,6 +39,10 @@ describe('ProfileComponent', () => {
         FormsModule,
         HttpClientTestingModule,
         ReactiveFormsModule,
+      ],
+      providers: [
+        {provide: LOCATION, useValue: {replace: (location: string) => {}}},
+        CookieService
       ]
     })
     .compileComponents();
