@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { v4 as uuid } from 'uuid';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {v4 as uuid} from 'uuid';
 
-import { IState, STATES } from '../../../../../common/constant/states';
-import { ErrorMessage } from '../../../common/message-response';
-import { IAddress } from '../../model/address';
-import { UserService } from '../user.service';
+import {IState, STATES} from '../../../../../common/constant/states';
+import {ErrorMessage} from '../../../common/message-response';
+import {IUserAddress} from '../../model/user-address';
+import {UserService} from '../user.service';
 
 @Component({
   selector: 'app-address-form',
@@ -14,14 +14,14 @@ import { UserService } from '../user.service';
 })
 export class AddressFormComponent implements OnInit {
 
-  @Input() public address: IAddress = {weekendOkay: true} as IAddress;
+  @Input() public address: IUserAddress = {weekendOkay: true} as IUserAddress;
   public error?: ErrorMessage = null;
   public form: FormGroup;
   @Input() public sucessCallback: () => {};
 
-  public constructor(
-    private fb: FormBuilder,
-    private service: UserService) { }
+  public constructor(private fb: FormBuilder,
+                     private service: UserService) {
+  }
 
   public getStates(): IState[] {
     return STATES;
@@ -30,7 +30,7 @@ export class AddressFormComponent implements OnInit {
   public ngOnInit(): void {
     this.form = this.fb.group({
       name: [this.address.name, Validators.required],
-      street1: [this.address.street1, Validators.required],
+      street: [this.address.street, Validators.required],
       street2: [this.address.street2],
       city: [this.address.city, Validators.required],
       state: [this.address.state, Validators.required],
@@ -57,11 +57,11 @@ export class AddressFormComponent implements OnInit {
     this.error = null;
     this.form.disable();
 
-    const address: IAddress = {
+    const address: IUserAddress = {
       userId: '', // this will be set in the service
       addressId: this.address.addressId || uuid(),
       name: this.form.get('name').value,
-      street1: this.form.get('street1').value,
+      street: this.form.get('street').value,
       street2: this.form.get('street2').value,
       city: this.form.get('city').value,
       state: this.form.get('state').value,
@@ -71,12 +71,13 @@ export class AddressFormComponent implements OnInit {
       weekendOkay: this.form.get('weekendOkay').value,
     };
 
-    this.service.setAddress(address).subscribe(
-      this.sucessCallback,
-      (error: ErrorMessage) => {
-        this.error = error;
-        this.form.enable();
-      }
-    );
+    // TODO fix
+    // this.service.setAddress(address).subscribe(
+    //   this.sucessCallback,
+    //   (error: ErrorMessage) => {
+    //     this.error = error;
+    //     this.form.enable();
+    //   }
+    // );
   }
 }

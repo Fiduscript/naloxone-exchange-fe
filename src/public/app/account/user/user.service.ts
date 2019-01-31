@@ -1,12 +1,10 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {FiduServiceBase} from '../../common/fidu-service-base';
 import {IUserAddress, UserAddress} from '../model/user-address';
 
 import {SuccessMessage} from '../../common/message-response';
-import {IAddress} from '../model/address';
 
 
 @Injectable({
@@ -57,9 +55,10 @@ export class UserService extends FiduServiceBase {
   }
 
   // TODO remove
-  public setAddress(address: IAddress): Observable<SuccessMessage> {
-    ADDRESSSES[address.addressId] = address;
-    return of(new SuccessMessage('Success was had here'));
+  public setAddress(address: IUserAddress): Observable<SuccessMessage> {
+    return null;
+    // ADDRESSSES[address.addressId] = address;
+    // return of(new SuccessMessage('Success was had here'));
   }
 
 
