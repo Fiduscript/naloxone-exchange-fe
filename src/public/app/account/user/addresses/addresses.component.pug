@@ -1,4 +1,13 @@
 .card
   h5.card-header Addresses
-  .card-body
-    .alert.alert-warning TODO
+  ul.list-group.list-group-flush
+    li.list-group-item(*ngFor="let address of addresses")
+      app-address("[editable]"="true" "[address]"="address" "[changedCallback]"="fetchAddresses")
+  .card-footer
+    button.btn.btn-sm.btn-primary.pull-right("(click)"="addAddress(addAddressModal)") Add Address
+
+ng-template(#addAddressModal let-modal)
+  .modal-header
+    h4.modal-title Add Address
+  .modal-body
+    app-address-form("[sucessCallback]"="closeModal")

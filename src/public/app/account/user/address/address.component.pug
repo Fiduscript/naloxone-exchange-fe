@@ -1,0 +1,35 @@
+.d-flex.justify-content-between
+  ul.list-unstyled
+    li
+      strong.less-strong {{address.name}}
+    li(*ngIf="address.street1 != ''")
+      span {{address.street1}}
+    li(*ngIf="address.street2 != ''")
+      span {{address.street2}}
+    li
+      span {{address.city}}, {{address.state}} {{address.zip}}
+    li(*ngIf="address.phoneNumber != null")
+      span Phone number: {{address.phoneNumber}}
+    li(*ngIf="address.specialInstructions != null")
+      span Special Instructions:
+      .pl-4.pr-4
+        em {{address.specialInstructions}}
+    li(*ngIf="!address.weekendOkay")
+      small Only deliver Monday through Friday.
+
+  .align-self-center(*ngIf="editable")
+    .d-flex.align-self-end.flex-column
+      button.btn.btn-sm.btn-secondary(
+          "(click)"="editAddress(editModal)"
+          title="Edit this address.") Edit
+      button.btn.btn-sm.btn-secondary.mt-2(
+          "(click)"="deleteAddress()"
+          title="Delete this address.") Delete
+
+.alert.alert-danger.mt-3(*ngIf="error != null") {{error.message}}. Please try again.
+
+ng-template(#editModal let-modal)
+  .modal-header
+    h4.modal-title Edit Address
+  .modal-body
+    app-address-form("[address]"="address" "[sucessCallback]"="editSuccessCallback")

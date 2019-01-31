@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 
+import { CookieService } from 'ngx-cookie-service';
 import { LOCATION } from '../../util/window-injections';
 import { AccountService } from '../account.service';
 
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit {
   private returnRoute: string;
 
   public constructor(
+      private cookieService: CookieService,
       @Inject(LOCATION) private location: Location,
       private fb: FormBuilder,
       private route: ActivatedRoute,
@@ -35,7 +37,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.service.login(this.loginForm.value).subscribe(
-      (): void => { this.location.replace(this.returnRoute); },
+      (): void => { this.service.redirectUserOnLogin(); },
       (error: Error): void => {
         this.loginForm.get('Password').reset();
         this.error = error.message;
@@ -45,11 +47,18 @@ export class LoginComponent implements OnInit {
 
   public ngOnInit() {
     this.route.queryParams.subscribe((params: Params) => {
-      this.returnRoute = params['returnTo'] || '/';
+      this.returnRoute = this.cookieService.get('returnTo');
     });
   }
 
   public socialSignIn(socialPlatform: string) {
-    console.log(`login with ${socialPlatform}`);
+    this.service.authorizeSocial(socialPlatform).subscribe(
+      (): void => {
+        // do nothing
+      },
+      (error: Error): void => {
+        this.error = error.message;
+      }
+    );
   }
 }

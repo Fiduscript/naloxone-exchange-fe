@@ -1,0 +1,9 @@
+.modal-header
+  h4.modal-title Privacy Policy
+  button.close((click)="activeModal.dismiss()")
+    span(aria-hidden="true") &times;
+.modal-body {{privacyPolicy.policy}}
+  //- TODO @Gavin: pipe versionDate when moment pipe is created
+  .small.text-center last updated: {{privacyPolicy.versionDate}}
+.modal-footer
+  button.btn.btn-light((click)="activeModal.close()") Close
