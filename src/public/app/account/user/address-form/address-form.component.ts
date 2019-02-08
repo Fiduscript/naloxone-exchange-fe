@@ -58,7 +58,7 @@ export class AddressFormComponent implements OnInit {
     this.form.disable();
 
     const address: IUserAddress = {
-      userId: '', // this will be set in the service
+      userId: 'Google_104750118722624768139', // TODO this will be set in the service
       addressId: this.address.addressId || uuid(),
       name: this.form.get('name').value,
       street: this.form.get('street').value,
@@ -72,12 +72,12 @@ export class AddressFormComponent implements OnInit {
     };
 
     // TODO fix
-    // this.service.setAddress(address).subscribe(
-    //   this.sucessCallback,
-    //   (error: ErrorMessage) => {
-    //     this.error = error;
-    //     this.form.enable();
-    //   }
-    // );
+    this.service.saveAddress(address).subscribe(
+      this.sucessCallback,
+      (error: ErrorMessage) => {
+        this.error = error;
+        this.form.enable();
+      }
+    );
   }
 }

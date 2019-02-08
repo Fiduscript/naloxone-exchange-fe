@@ -26,7 +26,7 @@ export class UserService extends FiduServiceBase {
   }
 
   public getAddresses(userId: string): Observable<IUserAddress[]> {
-    const path: string = '/api/users/getAddresses/' + userId;
+    const path: string = '/api/users/getAddresses/';
 
     return this.http.get<UserAddress[]>(path).pipe(
       this.deserializeArray(UserAddress),

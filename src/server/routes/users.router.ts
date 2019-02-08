@@ -51,16 +51,18 @@ const validateUserIdAddressId: ValidationChain[] = [
 ];
 
 /**
- * GET: /api/users/getAddresses/:userId
+ * GET: /api/users/getAddresses/
  * @param userId
  */
-router.get('/getAddresses/:userId', (req: Request, res: Response) => {
-    if (!req.params.userId) {
-      res.status(400).json('Must provide userId');
-      return;
-    }
+router.get('/getAddresses', (req: Request, res: Response) => {
+    // if (!req.params.userId) {
+    //   res.status(400).json('Must provide userId');
+    //   return;
+    // }
+
+    log.warn(JSON.stringify(res.locals));
     const users_dao = UsersDao.create();
-    users_dao.getAddressesForUser(req.params.userId).then((addresses: IUserAddress[]) => {
+    users_dao.getAddressesForUser(res.locals.user.id).then((addresses: IUserAddress[]) => {
       res.status(200).json(addresses);
     }).catch((err) => {
       res.status(500).json(err);
@@ -79,7 +81,8 @@ router.put('/saveAddress',
     users_dao.saveAddress(req.body).then( (address: IUserAddress) => {
       res.status(201).json(address);
     }).catch((err) => {
-      log.error(`Failed to save address \`${req.body}\`.`, err.message, err);
+      log.error(err.message);
+      log.error(`Failed to save address \`${req.body}\`.`, [err.message, err]); // TODO fix?
       res.status(500).json(err);
     });
   });

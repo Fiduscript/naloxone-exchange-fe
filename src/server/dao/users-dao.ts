@@ -1,5 +1,6 @@
 import { DataMapper } from '@aws/dynamodb-data-mapper';
-import { DynamoDB } from 'aws-sdk/clients/all';
+import {Logger} from '../util/logger';
+
 import * as _ from 'lodash';
 import { IUserAddress } from '../../public/app/account/model/user-address';
 import { AWSProvider } from '../provider/aws-provider';
@@ -8,6 +9,7 @@ import { attribute, hashKey, rangeKey, table } from '@aws/dynamodb-data-mapper-a
 
 const uuidV4 = require('uuid/v4');
 const TABLE_NAME = 'user_address_test_two';
+const log = Logger.create(module);
 
 @table(TABLE_NAME)
 class AddressDdbEntity implements IUserAddress {
@@ -28,7 +30,7 @@ class AddressDdbEntity implements IUserAddress {
   phoneNumber: string;
 
   @attribute()
-  specialInstructions: string;
+  specialInstructions?: string;
 
   @attribute()
   state: string;
@@ -37,7 +39,7 @@ class AddressDdbEntity implements IUserAddress {
   street: string;
 
   @attribute()
-  street2: string;
+  street2?: string;
 
   @hashKey()
   userId: string;
@@ -75,6 +77,7 @@ export class UsersDao {
 
 
   async getAddressesForUser(userId: string): Promise<IUserAddress[]> {
+    log.warn("userID: " +  userId);
     const total = [];
     const iterator = this.mapper.query(AddressDdbEntity, {'userId': userId});
     for await (const address of iterator) {
@@ -85,6 +88,7 @@ export class UsersDao {
 
 
   async saveAddress(address: IUserAddress): Promise<IUserAddress> {
+    log.info("trying to save: " + JSON.stringify(address));
     return this.mapper.put(Object.assign(new AddressDdbEntity, address));
   }
 }
