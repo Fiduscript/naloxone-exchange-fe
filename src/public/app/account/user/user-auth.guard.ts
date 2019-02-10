@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { CognitoUserSession } from 'amazon-cognito-identity-js';
+import * as moment from 'moment';
+import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 
 import { map } from 'rxjs/operators';
@@ -9,7 +11,10 @@ import { AccountService } from '../account.service';
 @Injectable()
 export class UserAuthGuard implements CanActivate {
 
+  private readonly DEFAULT_EXPIRATION_MILLIS: number = moment.duration(1, 'minute').asMilliseconds();
+
   public constructor(
+      private cookieService: CookieService,
       private service: AccountService,
       private router: Router) {
   }
@@ -26,11 +31,20 @@ export class UserAuthGuard implements CanActivate {
       map((session?: CognitoUserSession): boolean => {
         const loggedIn: boolean = session != null && session.isValid();
         if (!loggedIn) {
-          this.router.navigate(['/account/login'],  { queryParams: { returnTo: state.url } });
+          this.cookieService.set('LoginRedirectLocation', state.url, this.getReturnCookieExpiration(), '/');
+          this.router.navigate(['/account/login']);
         }
         return loggedIn;
       })
     );
+  }
+
+  private getReturnCookieExpiration(): Date {
+    const now = new Date();
+    const time = now.getTime();
+    const expireTime = time + this.DEFAULT_EXPIRATION_MILLIS;
+    now.setTime(expireTime);
+    return now;
   }
 
 }

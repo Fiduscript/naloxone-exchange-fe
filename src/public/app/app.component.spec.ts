@@ -1,10 +1,10 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { async, TestBed } from '@angular/core/testing';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ShareButtonsModule } from '@ngx-share/buttons';
 
+import { CookieService } from 'ngx-cookie-service';
 import { AccountModule } from './account/account.module';
 import { AppComponent } from './app.component';
 import { MockComponent } from './util/mock-component';
@@ -17,14 +17,14 @@ describe('AppComponent', () => {
         MockComponent.mock({selector: 'app-update-subscriber'}),
       ],
       imports: [
-        BrowserModule,
         AccountModule,
         NgbModule,
         RouterModule.forRoot([]),
         ShareButtonsModule.forRoot(),
       ],
       providers: [
-        {provide: APP_BASE_HREF, useValue: ''}
+        {provide: APP_BASE_HREF, useValue: ''},
+        CookieService
       ]
     }).compileComponents();
   }));

@@ -1,6 +1,7 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ErrorMessage, SuccessMessage } from '../../common/message-response';
 import { ContactService } from './contact.service';
 
 @Component({
@@ -33,11 +34,11 @@ export class ContactComponent implements OnInit {
   public submitContactUsForm(form: any) {
     this.contactForm.disable();
     this.service.contact(form).subscribe(
-     (msg: string): void => {
+     (response: SuccessMessage): void => {
        this.sentMsg = true;
-     }, (error: HttpResponse<any>): void => {
-        this.contactForm.enable();
-        alert(error.body().message);
+     }, (error: ErrorMessage): void => {
+       alert(error.message);
+       this.contactForm.enable();
      });
   }
 

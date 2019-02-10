@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
 
 import { PharmacyService } from './pharmacy.service';
@@ -10,7 +10,7 @@ describe('PharmacyService', () => {
         PharmacyService
       ],
       imports: [
-        HttpClientModule
+        HttpClientTestingModule
       ]
     });
   });
