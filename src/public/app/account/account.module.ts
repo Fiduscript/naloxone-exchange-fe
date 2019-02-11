@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbDatepickerModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { FiduCommonModule } from '../common/fidu-common.module';
 import { NgbMomentAdapterProvider } from '../util/moment-utils';
 import { LOCATION } from '../util/window-injections';
 import { AccountRoutingModule } from './account-routing.module';
@@ -32,6 +33,7 @@ import { UserAuthGuard } from './user/user-auth.guard';
     CommonModule,
     AccountRoutingModule,
     FormsModule,
+    FiduCommonModule,
     ReactiveFormsModule,
     HttpClientModule,
     NgbDatepickerModule,

@@ -24,10 +24,8 @@ export class RelationFormComponent implements OnInit {
   public error?: ErrorMessage = null;
   public form: FormGroup;
   public name: string = '';
-  public readonly OTHER: string = 'Other';
-  public otherSelected: boolean = false;
   @Input() public relation: IUserRelation = {} as IUserRelation;
-  @Input() public sucessCallback: () => {};
+  @Input() public successCallback: () => {};
 
   private user: UserInfo = new UserInfo();
 
@@ -50,9 +48,6 @@ export class RelationFormComponent implements OnInit {
       this.user = user;
     });
 
-    this.otherSelected = !_.isEmpty(this.relation.relation) &&
-       !RELATIONS.includes(this.relation.relation);
-
     const momentValidator = new MomentRangeValidator('MMM YYYY',
         moment().subtract(100, 'years').startOf('month'),
         moment().startOf('month'));
@@ -68,8 +63,7 @@ export class RelationFormComponent implements OnInit {
     this.seedEmptyFormArray(allergies);
 
     this.form = this.fb.group({
-      relation: [this.otherSelected ? this.OTHER : this.relation.relation, Validators.required],
-      otherRelation: [this.relation.relation, Validators.required],
+      relation: [this.relation.relation, Validators.required],
       name: [this.relation.name, Validators.required],
       biologicalSex: [this.relation.biologicalSex, Validators.required],
       birthDate: [this.relation.birthDate, [momentValidator]],
@@ -90,11 +84,7 @@ export class RelationFormComponent implements OnInit {
   }
 
   public relationChanged(): void {
-    const relation = this.form.get('relation').value;
-    this.otherSelected = relation === this.OTHER;
-    this.form.get('otherRelation').setValue(this.otherSelected ? '' : relation);
-
-    if (relation === 'Myself' && !_.isEmpty(this.user.name)) {
+    if (this.form.get('relation').value === 'Myself' && !_.isEmpty(this.user.name)) {
       this.form.get('name').setValue(this.user.name);
       this.name = this.user.name;
     }
@@ -136,7 +126,7 @@ export class RelationFormComponent implements OnInit {
     }
 
     const relation: IUserRelation = {
-      relation: this.form.get('otherRelation').value,
+      relation: this.form.get('relation').value,
       name: this.form.get('name').value,
       biologicalSex: this.form.get('biologicalSex').value,
       birthDate: this.form.get('birthDate').value,
@@ -146,7 +136,7 @@ export class RelationFormComponent implements OnInit {
     };
 
     this.service.updateCreateRelation(new UserRelation(relation)).subscribe(
-      this.sucessCallback,
+      this.successCallback,
       (error: ErrorMessage): void => {
         this.error = error;
         this.form.enable();
@@ -155,7 +145,7 @@ export class RelationFormComponent implements OnInit {
   }
 
   private getSanatizedFormArrayValue(formControlName: string): string[] {
-    return _(this.form.get('medicalConditions').value)
+    return _(this.form.get(formControlName).value)
         .map(_.trim)
         .reject(_.isEmpty)
         .value();

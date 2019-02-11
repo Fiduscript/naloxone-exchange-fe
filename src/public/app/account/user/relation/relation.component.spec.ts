@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbDatepickerModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
+import { FiduCommonModule } from 'src/public/app/common/fidu-common.module';
 import { RELATIONS, UserRelation } from '../model/user-relation';
 import { RelationFormComponent } from '../relation-form/relation-form.component';
 import { RelationComponent } from './relation.component';
@@ -19,6 +20,7 @@ describe('RelationComponent', () => {
         RelationFormComponent,
       ],
       imports: [
+        FiduCommonModule,
         FormsModule,
         HttpClientTestingModule,
         NgbDatepickerModule,
