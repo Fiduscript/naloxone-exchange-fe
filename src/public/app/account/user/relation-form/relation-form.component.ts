@@ -27,7 +27,7 @@ export class RelationFormComponent implements OnInit {
   public readonly OTHER: string = 'Other';
   public otherSelected: boolean = false;
   @Input() public relation: IUserRelation = {} as IUserRelation;
-  @Input() public sucessCallback: () => {};
+  @Input() public successCallback: () => {};
 
   private user: UserInfo = new UserInfo();
 
@@ -130,7 +130,7 @@ export class RelationFormComponent implements OnInit {
     this.error = null;
     this.form.disable();
 
-    const allergies = this.getSanatizedFormArrayValue('allergies');
+    const allergies = this.getSanitizedFormArrayValue('allergies');
     if (this.form.get('narcanAllergy').value === 'true') {
       allergies.unshift(RelationFormComponent.NARCAN_ALLERGY_INDICATOR);
     }
@@ -140,13 +140,13 @@ export class RelationFormComponent implements OnInit {
       name: this.form.get('name').value,
       biologicalSex: this.form.get('biologicalSex').value,
       birthDate: this.form.get('birthDate').value,
-      medicalConditions: this.getSanatizedFormArrayValue('medicalConditions'),
+      medicalConditions: this.getSanitizedFormArrayValue('medicalConditions'),
       allergies: allergies,
       id: this.relation.id || uuid()
     };
 
     this.service.updateCreateRelation(new UserRelation(relation)).subscribe(
-      this.sucessCallback,
+      this.successCallback,
       (error: ErrorMessage): void => {
         this.error = error;
         this.form.enable();
@@ -154,8 +154,8 @@ export class RelationFormComponent implements OnInit {
     );
   }
 
-  private getSanatizedFormArrayValue(formControlName: string): string[] {
-    return _(this.form.get('medicalConditions').value)
+  private getSanitizedFormArrayValue(formControlName: string): string[] {
+    return _(this.form.get(formControlName).value)
         .map(_.trim)
         .reject(_.isEmpty)
         .value();
