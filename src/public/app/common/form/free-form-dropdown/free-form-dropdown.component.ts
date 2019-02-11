@@ -15,6 +15,7 @@ import * as _ from 'lodash';
   ]
 })
 export class FreeFormDropdownComponent implements OnInit, ControlValueAccessor {
+  private static readonly DEBOUNCE_KEYDOWN_MILLIS: number = 300;
 
   public form: FormGroup;
   @Input() public label: string;
@@ -27,7 +28,11 @@ export class FreeFormDropdownComponent implements OnInit, ControlValueAccessor {
   private propagateTouched: (value: string) => void = _.identity();
   private value: string = '';
 
-  public constructor(private fb: FormBuilder) { }
+  public constructor(private fb: FormBuilder) {
+    this.otherTextChanged = _.debounce(
+        this.otherTextChanged.bind(this),
+        FreeFormDropdownComponent.DEBOUNCE_KEYDOWN_MILLIS);
+  }
 
   public ngOnInit(): void {
     this.otherSelected = !_.isEmpty(this.value) && !this.options.includes(this.value);
@@ -53,6 +58,11 @@ export class FreeFormDropdownComponent implements OnInit, ControlValueAccessor {
 
   public onTouch(): void {
     this.propagateTouched(this.value);
+  }
+
+  public otherTextChanged() {
+    this.value = this.form.get('other').value;
+    this.propagateChange(this.value);
   }
 
   public registerOnChange(fn: (value: string) => void): void {

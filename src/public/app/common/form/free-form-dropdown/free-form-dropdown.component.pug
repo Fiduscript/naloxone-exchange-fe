@@ -17,6 +17,7 @@
         formControlName="other"
         "(blur)"="propagateTouched()"
         "(change)"="onChange()"
+        "(keyup)"="otherTextChanged()"
         type="text"
         "[ngClass]"="{ 'is-invalid': form.get('other').touched && form.get('other').invalid }")
     .invalid-feedback Please specify other {{name}}.
