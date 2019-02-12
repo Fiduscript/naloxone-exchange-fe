@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
+import { FiduCommonModule } from '../../../common/fidu-common.module';
 import { BuyService } from '../../buy.service';
 import { PurchaseOrderFormComponent } from './purchase-order-form.component';
 
@@ -26,6 +27,7 @@ describe('PurchaseOrderFormComponent', () => {
     TestBed.configureTestingModule({
       declarations: [PurchaseOrderFormComponent],
       imports: [
+        FiduCommonModule,
         FormsModule,
         HttpClientTestingModule,
         ReactiveFormsModule,

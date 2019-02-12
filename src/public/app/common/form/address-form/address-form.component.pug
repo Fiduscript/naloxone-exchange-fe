@@ -1,0 +1,53 @@
+form("[formGroup]"="addressForm")
+
+  .form-group
+    label Full Name
+    input.form-control(
+        formControlName="name"
+        type="text"
+        placeholder="Full name"
+        "[ngClass]"="{ 'is-invalid': sectionInvalid('name') }")
+    .invalid-feedback(*ngIf="sectionInvalid('name')") Name is required.
+
+  .form-group
+    label Street Address
+    input.form-control(
+        formControlName="street1"
+        type="text"
+        placeholder="street and number"
+        "[ngClass]"="{ 'is-invalid': sectionInvalid('street1') }")
+    .invalid-feedback(*ngIf="sectionInvalid('street1')") Street is required.
+
+  .form-group
+    input.form-control(
+        formControlName="street2"
+        type="text"
+        placeholder="apartment, suite, unit, building, floor, etc")
+
+  .form-group.form-row
+    .col-sm-12.col-md-6
+      label City
+      input.form-control(
+          formControlName="city"
+          type="text"
+          placeholder="City"
+          "[ngClass]"="{ 'is-invalid': sectionInvalid('city') }")
+      .invalid-feedback(*ngIf="sectionInvalid('city')") City is required.
+      div.mb-2.d-md-none.d-lg-none
+
+    .col
+      label State
+      select.form-control.state-input(
+          formControlName="state"
+          "[ngClass]"="{ 'is-invalid': sectionInvalid('state') }")
+        option(value="" selected disabled) State
+        option(*ngFor="let state of getStates()" "[value]"="state.name") {{state.name}}
+      .invalid-feedback(*ngIf="sectionInvalid('state')") State is required.
+
+    .col
+      label Zip Code
+      input.form-control(
+          formControlName="zip"
+          type="text"
+          "[ngClass]"="{ 'is-invalid': sectionInvalid('zip') }")
+      .invalid-feedback(*ngIf="sectionInvalid('zip')") A valid zip code is required.

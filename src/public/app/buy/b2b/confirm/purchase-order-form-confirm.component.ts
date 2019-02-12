@@ -33,7 +33,6 @@ export class PurchaseOrderFormConfirmComponent implements OnInit {
         this.orderExists = exists;
       },
       (error: Error): void => {
-        console.log(error.message);
         this.error = error.message;
       }
     );

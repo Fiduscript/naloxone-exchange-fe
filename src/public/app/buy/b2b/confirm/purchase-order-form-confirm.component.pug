@@ -1,5 +1,5 @@
 section#general.scroll-section
-  .container(*ngIf="orderExists")
+  .container.text-center(*ngIf="orderExists")
     !=require('./purchase-order-form-confirm-faq.component.pug')
-  .container(*ngIf="!orderExists")
+  .container.center(*ngIf="!orderExists")
     !=require('./purchase-order-form-confirm-invalid.component.pug')

@@ -1,15 +1,19 @@
 header.mb-4
   h1.text-center Thank you! Your request has been submitted.
 section
-  .container
-    .container.text-center.h5 Your order reference ID is
-      code.ml-1 {{orderId}}
-      | .
-    h5 What happens next?
-    p We will reach out to you to confirm your order. Expect to hear from us within the next business day at your preferred form of contact.
-    h5 What if I need to make changes to my order or have questions?
-    p Please reach out to us at
-      a.ml-1.mr-1(href="mailTo:{{getContactEmail()}}") {{getContactEmail()}}
-      | or our
-      a.ml-1.mr-1(href='/about-us#app-contact' target='_blank') contact us
-      | page and include your order reference ID. We will respond as soon as possible.
+  .container.text-center.h5 Your order reference ID is
+    code.ml-1 {{orderId}}
+    | .
+br
+section
+  .container.text-left
+    .row.justify-content-md-center
+      .col-md-8
+        h5 What happens next?
+        p We will reach out to you to confirm your order. Expect to hear from us within the next business day at your preferred form of contact.
+        h5 What if I need to make changes to my order or have questions?
+        p Please reach out to us at
+          a.ml-1.mr-1(href="mailTo:{{getContactEmail()}}") {{getContactEmail()}}
+          | or our
+          a.ml-1.mr-1(href='/about-us#app-contact' target='_blank') contact us
+          | page and include your order reference ID. We will respond as soon as possible.

@@ -14,7 +14,6 @@ import { UserInfo } from '../model/user-info';
   styleUrls: ['./register.component.styl']
 })
 export class RegisterComponent implements OnInit {
-
   public registerForm: FormGroup;
   public error: string = null;
 

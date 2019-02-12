@@ -36,7 +36,6 @@ export class B2bService extends FiduServiceBase {
    */
   public businessPurchaseOrderExists(id: string): Observable<boolean> {
     const path: string = `/api/b2b/exists/${id}`;
-    console.log(path);
     return this.http.get<boolean>(path).pipe(
       this.logErrors()
     );

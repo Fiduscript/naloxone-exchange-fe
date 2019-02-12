@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -13,20 +15,25 @@ import { B2bService } from '../b2b.service';
 })
 export class PurchaseOrderFormComponent implements OnInit {
 
+  private static readonly usPhoneNumberRegex = /^\(?([0-9]{3})\)?[\s-]?([0-9]{3})[\s-]?[0-9]{4}$/;
+
   private static readonly ATTRIBUTION_SOURCES: string[] = [
     'Facebook Advertisement',
     'Twitter Advertisement',
     'Google Advertisement',
     'Word of Mouth',
-    'Other'
+    'Other',
+    'I choose not to answer'
   ];
 
+  private static readonly MAX_MESSAGE_LENGTH: number = 500;
+
   private static readonly ORGANIZATION_TYPES: string[] = [
-    'Community center or business location',
+    'Community center',
+    'Business location',
     'EMS Responders',
     'Police Precinct',
-    'Fire Department',
-    'Other'
+    'Fire Department'
   ];
 
   private static readonly QUANTITIES: string[] = [
@@ -60,16 +67,17 @@ export class PurchaseOrderFormComponent implements OnInit {
     this.purchaseOrderForm = this.fb.group({
       organizationName: ['', Validators.required],
       organizationType: ['', Validators.required],
-      signeeName: ['', Validators.required],
+      signeeName: [''],
       contactName: ['', Validators.required],
-      contactPhoneNumber: ['', Validators.required],
-      contactEmail: ['', Validators.required],
+      contactPhoneNumber: ['', [Validators.required, Validators.pattern(PurchaseOrderFormComponent.usPhoneNumberRegex)]],
+      contactEmail: ['', [Validators.required, Validators.email]],
       requestedProductId: ['', Validators.required],
       quantityRange: ['', Validators.required],
       needByDate: ['', Validators.required],
       paidByGrant: ['', Validators.required],
       attributionSource: ['', Validators.required],
       preferredContactType: ['', Validators.required],
+      message: ['', Validators.maxLength(PurchaseOrderFormComponent.MAX_MESSAGE_LENGTH)],
     });
   }
 
@@ -79,6 +87,8 @@ export class PurchaseOrderFormComponent implements OnInit {
 
   public submit(form: any): void {
     if (this.purchaseOrderForm.invalid) {
+      console.log('invalid');
+      this.markFormGroupTouched(this.purchaseOrderForm);
       return;
     }
 
@@ -112,7 +122,25 @@ export class PurchaseOrderFormComponent implements OnInit {
     return PurchaseOrderFormComponent.QUANTITIES;
   }
 
+  public getMaxMessageLength() {
+    return PurchaseOrderFormComponent.MAX_MESSAGE_LENGTH;
+  }
+
+  public sectionInvalid(fieldName: string): boolean {
+    return this.purchaseOrderForm.get(fieldName).touched
+      && this.purchaseOrderForm.get(fieldName).invalid;
+  }
+
   private setProducts(products: Products): void {
     this.products = products;
+  }
+
+  /**
+   * Recursively mark all controls as touched.
+   * @param formGroup - The form group to touch
+   */
+  private markFormGroupTouched(formGroup: FormGroup) {
+    _.values(formGroup.controls).forEach(control =>
+      control.controls ? this.markFormGroupTouched(control) : control.markAsTouched());
   }
 }

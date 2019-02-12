@@ -1,5 +1,6 @@
 import { JsonObject, JsonProperty } from 'json2typescript';
 import * as _ from 'lodash';
+import { IAddress } from '../../common/model/address';
 
 export interface IBusinessPurchaseOrder {
   attributionSource: string;
@@ -15,6 +16,7 @@ export interface IBusinessPurchaseOrder {
   preferredContactType: string;
   quantityRange: string;
   requestedProductId: string;
+  shippingAddress: IAddress;
   signeeName: string;
   version: number;
 }
@@ -40,6 +42,9 @@ export class BusinessPurchaseOrder implements IBusinessPurchaseOrder {
   @JsonProperty('id', String)
   public readonly id: string = '';
 
+  @JsonProperty('message', String)
+  public readonly message: string = '';
+
   @JsonProperty('needByDate', String)
   public readonly needByDate: string = '';
 
@@ -60,6 +65,9 @@ export class BusinessPurchaseOrder implements IBusinessPurchaseOrder {
 
   @JsonProperty('requestedProductId', String)
   public readonly requestedProductId: string = '';
+
+  @JsonProperty('shippingAddress', String)
+  public readonly shippingAddress: IAddress;
 
   @JsonProperty('signeeName', String)
   public readonly signeeName: string = '';
