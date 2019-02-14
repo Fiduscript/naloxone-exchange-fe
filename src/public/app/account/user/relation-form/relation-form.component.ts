@@ -120,7 +120,7 @@ export class RelationFormComponent implements OnInit {
     this.error = null;
     this.form.disable();
 
-    const allergies = this.getSanatizedFormArrayValue('allergies');
+    const allergies = this.getSanitizedFormArrayValue('allergies');
     if (this.form.get('narcanAllergy').value === 'true') {
       allergies.unshift(RelationFormComponent.NARCAN_ALLERGY_INDICATOR);
     }
@@ -130,7 +130,7 @@ export class RelationFormComponent implements OnInit {
       name: this.form.get('name').value,
       biologicalSex: this.form.get('biologicalSex').value,
       birthDate: this.form.get('birthDate').value,
-      medicalConditions: this.getSanatizedFormArrayValue('medicalConditions'),
+      medicalConditions: this.getSanitizedFormArrayValue('medicalConditions'),
       allergies: allergies,
       id: this.relation.id || uuid()
     };
@@ -144,7 +144,7 @@ export class RelationFormComponent implements OnInit {
     );
   }
 
-  private getSanatizedFormArrayValue(formControlName: string): string[] {
+  private getSanitizedFormArrayValue(formControlName: string): string[] {
     return _(this.form.get(formControlName).value)
         .map(_.trim)
         .reject(_.isEmpty)
