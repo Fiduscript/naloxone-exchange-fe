@@ -1,57 +1,5 @@
 header
-  nav.navbar.navbar-expand-md.navbar-light.bg-light
-    a.navbar-brand.pr-4.pl-4(routerLink="/")
-      img(src="/assets/logo/logo.png" alt="Naloxone Exchange" height="50px")
-      sup
-        small
-          em beta
-    button.navbar-toggler(
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation",
-        "(click)"="toggleMenu()")
-      span.navbar-toggler-icon
-
-    #navbarSupportedContent.collapse.navbar-collapse("[ngbCollapse]"="isCollapsed")
-      ul.navbar-nav.flex
-        li.nav-item
-          a.nav-link.text-sm-left.text-md-center
-            span.bg-danger.text-white.get-naloxone.text-nowrap(routerLink="/buy" "(click)"="toggleMenu()") Get Naloxone
-        li.nav-item(ngbDropdown)
-          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/training") Training
-          .dropdown-menu.text-center(ngbDropdownMenu)
-            a.dropdown-item.nav-link(routerLink="/training" fragment="training-video" "(click)"="toggleMenu()") Training Video
-            a.dropdown-item.nav-link(routerLink="/training" fragment="overdose-recognition" "(click)"="toggleMenu()") Overdose Recognition
-            a.dropdown-item.nav-link(routerLink="/training" fragment="administer" "(click)"="toggleMenu()") Administering Naloxone
-            a.dropdown-item.nav-link(routerLink="/training" fragment="aftercare" "(click)"="toggleMenu()") Aftercare
-        li.nav-item(ngbDropdown)
-          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/faq")  FAQs
-          .dropdown-menu.text-center(ngbDropdownMenu)
-            a.dropdown-item.nav-link(routerLink="/faq" fragment="general" "(click)"="toggleMenu()") General
-            a.dropdown-item.nav-link(routerLink="/faq" fragment="privacy-hipaa" "(click)"="toggleMenu()") Privacy and HIPAA
-        li.nav-item(ngbDropdown)
-          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/about-us") About Us
-          .dropdown-menu.text-center(ngbDropdownMenu)
-            a.dropdown-item.nav-link(routerLink="/about-us" fragment="summary" "(click)"="toggleMenu()") Summary
-            a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-mission" "(click)"="toggleMenu()") Mission
-            a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-history" "(click)"="toggleMenu()") History
-            a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-our-sponsors" "(click)"="toggleMenu()") Our Sponsors
-            a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-our-team" "(click)"="toggleMenu()") Our Team
-            a.dropdown-item.nav-link(routerLink="/about-us" fragment="app-contact" "(click)"="toggleMenu()") Contact Us
-        li.nav-item
-          a.nav-link.text-sm-left.text-md-center(routerLink="/pharmacy" "(click)"="toggleMenu()") Pharmacies
-        li.nav-item(*ngIf="!user.isAuthenticated()")
-          a.nav-link.text-sm-left.text-md-center(routerLink="/account/login" "(click)"="toggleMenu()") Login
-        li.nav-item(ngbDropdown *ngIf="user.isAuthenticated()")
-          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle) {{user.name}}
-          .dropdown-menu.text-center(ngbDropdownMenu)
-            a.dropdown-item.nav-link(routerLink="/account/user/profile") My Account
-            a.dropdown-item.nav-link(routerLink="/account/logout") Logout
-
-  .alert.alert-info(*ngIf="showCrisis" role="alert")
+  .alert.alert-danger.mb-0(*ngIf="showCrisis" role="alert")
     .container
       .d-flex.justify-content-between.flex-nowrap
         span
@@ -62,9 +10,50 @@ header
           | or a suicide hotline (
           a.alert-link.mr-1(href="tel:1-800-273-8255") 1-800-273-8255
           | is the national hotline).
-
         button.close.ml-2(type="button" "(click)"="dismissCrisis()")
           span(aria-hidden="true") &times;
+
+  nav.navbar.navbar-expand-md.navbar-light.bg-light
+    .container
+      a.navbar-brand.pr-4.pl-4(routerLink="/")
+        img(src="/assets/logo/logo.png" alt="Naloxone Exchange" height="50px")
+        sup
+          small
+            em beta
+      button.navbar-toggler(
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation",
+          "(click)"="toggleMenu()")
+        span.navbar-toggler-icon
+
+      #navbarSupportedContent.collapse.navbar-collapse("[ngbCollapse]"="isCollapsed")
+        ul.navbar-nav.flex
+          li.nav-item
+            a.nav-link.text-sm-left.text-md-center
+              span.bg-danger.text-white.get-naloxone.text-nowrap(routerLink="/buy" "(click)"="toggleMenu()") Get Naloxone
+
+          li.nav-item
+            a.nav-link.text-sm-left.text-md-center(routerLink="contact") Contact Us
+
+          li.nav-item(ngbDropdown)
+            a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/training") Training
+            .dropdown-menu.text-center(ngbDropdownMenu)
+              a.dropdown-item.nav-link(routerLink="/training" fragment="training-video" "(click)"="toggleMenu()") Training Video
+              a.dropdown-item.nav-link(routerLink="/training" fragment="overdose-recognition" "(click)"="toggleMenu()") Overdose Recognition
+              a.dropdown-item.nav-link(routerLink="/training" fragment="administer" "(click)"="toggleMenu()") Administering Naloxone
+              a.dropdown-item.nav-link(routerLink="/training" fragment="aftercare" "(click)"="toggleMenu()") Aftercare
+          li.nav-item(*ngIf="!user.isAuthenticated()")
+            a.nav-link.text-sm-left.text-md-center(routerLink="/account/login" "(click)"="toggleMenu()") Login
+
+          li.nav-item(ngbDropdown *ngIf="user.isAuthenticated()")
+            a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle) {{user.name}}
+            .dropdown-menu.text-center(ngbDropdownMenu)
+              a.dropdown-item.nav-link(routerLink="/account/user/profile") My Account
+              a.dropdown-item.nav-link(routerLink="/account/logout") Logout
 
 section.content-section
   //- content area

@@ -1,45 +1,48 @@
-header.mb-5
-  h1.text-center Contact Us
+section.scroll-section
+  .container
+    header.mb-5
+      h1.text-center Contact Us
 
-section
-  .row
-    .col-lg-12
-      .alert.alert-success(*ngIf="sentMsg") Message Sent!
-        a.pull-right.alert-link(routerLink="/about-us" fragment="app-contact" "(click)"="reset()") Reset
-      form("[formGroup]"="contactForm" "(ngSubmit)"="submitContactUsForm(contactForm.value)")
-        .form-row
-          .form-group.col-md-6.col-sm-12
-            label Name:
-            input.form-control(
-              formControlName="name"
-              "[ngClass]"="{ 'is-invalid': contactForm.get('name').touched && contactForm.get('name').invalid }"
-              placeholder='Enter Name'
-              required
-              type='text')
-            .invalid-feedback You must add a valid name.
+    section
+      .row
+        .col-lg-12
+          .alert.alert-success(*ngIf="sentMsg") Message Sent!
+            a.pull-right.alert-link(routerLink="/about-us" fragment="app-contact" "(click)"="reset()") Reset
+          form("[formGroup]"="contactForm" "(ngSubmit)"="submitContactUsForm(contactForm.value)")
 
-        .form-row
-          .form-group.col-md-6.col-sm-12
-            label Email:
-            input.form-control(
-              formControlName="email"
-              "[ngClass]"="{ 'is-invalid': contactForm.get('email').touched && contactForm.get('email').invalid }"
-              placeholder='Enter Email Address'
-              required
-              type='email')
-            .invalid-feedback You must add a valid email address.
-        .form-row
-          .form-group.col-md-12
-            label Message:
-            textarea.form-control(
-              formControlName="message"
-              placeholder='Enter Message'
-              "[ngClass]"="{ 'is-invalid': contactForm.get('message').touched && contactForm.get('message').invalid }"
-              required
-              rows=10
-              type='text')
-            .invalid-feedback You must add a valid message.
-          .form-group(*ngIf="!sentMsg")
-            button.btn.btn-primary(
-              "[disabled]"="!contactForm.valid||contactForm.disabled"
-              type='submit') Contact Us
+            .form-group.form-row
+              .col-md-6.col-sm-12
+                label Name:
+                input.form-control(
+                  formControlName="name"
+                  "[ngClass]"="{ 'is-invalid': contactForm.get('name').touched && contactForm.get('name').invalid }"
+                  placeholder='Enter Name'
+                  required
+                  type='text')
+                .invalid-feedback You must add a valid name.
+
+              .col-md-6.col-sm-12
+                label Email:
+                input.form-control(
+                  formControlName="email"
+                  "[ngClass]"="{ 'is-invalid': contactForm.get('email').touched && contactForm.get('email').invalid }"
+                  placeholder='Enter Email Address'
+                  required
+                  type='email')
+                .invalid-feedback You must add a valid email address.
+
+            .form-group
+              label Message:
+              textarea.form-control(
+                formControlName="message"
+                placeholder='Enter Message'
+                "[ngClass]"="{ 'is-invalid': contactForm.get('message').touched && contactForm.get('message').invalid }"
+                required
+                rows=10
+                type='text')
+              .invalid-feedback You must add a valid message.
+
+            .form-group(*ngIf="!sentMsg")
+              button.btn.btn-primary(
+                "[disabled]"="!contactForm.valid||contactForm.disabled"
+                type='submit') Contact Us
