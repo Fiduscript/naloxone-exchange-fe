@@ -44,13 +44,13 @@ export class FreeFormDropdownComponent implements OnInit, ControlValueAccessor {
   }
 
   public onChange(): void {
-    const val = this.form.get('option').value;
-    this.otherSelected = val === this.OTHER;
+    const selectedOption = this.form.get('option').value;
+    this.otherSelected = selectedOption === this.OTHER;
 
     if (this.otherSelected) {
       this.value = this.form.get('other').value;
     } else {
-      this.value = this.form.get('option').value;
+      this.value = selectedOption;
     }
 
     this.propagateChange(this.value);
