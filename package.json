@@ -5,7 +5,7 @@
     "ng": "ng",
     "build": "ng build --prod && npm run grunt",
     "test": "ng test",
-    "build-test": "ng lint && ng test --watch=false --source-map=false",
+    "build-test": "ng lint && ng test --watch=false --source-map=false && ng e2e",
     "lint": "ng lint",
     "grunt": "grunt",
     "e2e": "ng e2e",
@@ -65,7 +65,7 @@
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.10.7",
+    "@angular-devkit/build-angular": "^0.13.1",
     "@angular/cli": "^7.1.0",
     "@angular/compiler-cli": "^7.1.1",
     "@angular/language-service": "^7.1.1",
