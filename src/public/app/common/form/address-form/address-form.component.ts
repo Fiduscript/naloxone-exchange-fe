@@ -10,17 +10,10 @@ import { ErrorMessage } from '../../message-response';
   styleUrls: ['./address-form.component.styl']
 })
 export class AddressFormComponent implements OnInit {
-  public address: FormBuilder;
-
-  @Input()
-  public formName: string;
-
-  @Input()
-  public parentForm: FormGroup;
-  public error?: ErrorMessage = null;
-  public form: FormGroup;
-
   public addressForm: FormGroup;
+  public error?: ErrorMessage = null;
+  @Input() public formName: string;
+  @Input() public parentForm: FormGroup;
 
   public constructor(
     private fb: FormBuilder) { }

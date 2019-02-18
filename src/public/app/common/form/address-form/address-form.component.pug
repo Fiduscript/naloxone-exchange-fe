@@ -1,11 +1,11 @@
 form("[formGroup]"="addressForm")
 
   .form-group
-    label Full Name
+    label Name
     input.form-control(
         formControlName="name"
         type="text"
-        placeholder="Full name"
+        placeholder="name"
         "[ngClass]"="{ 'is-invalid': sectionInvalid('name') }")
     .invalid-feedback(*ngIf="sectionInvalid('name')") Name is required.
 
