@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CustomValidatorsDirective } from '../../../common/form/customer-validators/custom-validators.directive';
 import { BuyService } from '../../buy.service';
 import { IBusinessPurchaseOrder } from '../../model/businessPurchaseOrder';
 import { Products } from '../../model/products';
@@ -14,9 +15,6 @@ import { B2bService } from '../b2b.service';
   styleUrls: ['./purchase-order-form.component.styl']
 })
 export class PurchaseOrderFormComponent implements OnInit {
-
-  private static readonly usPhoneNumberRegex = /^\(?([0-9]{3})\)?[\s-]?([0-9]{3})[\s-]?[0-9]{4}$/;
-
   private static readonly ATTRIBUTION_SOURCES: string[] = [
     'Facebook Advertisement',
     'Twitter Advertisement',
@@ -40,6 +38,7 @@ export class PurchaseOrderFormComponent implements OnInit {
     'I am not sure',
     '1-50',
     '51-100',
+    '101-499',
     '500-1000',
     'More than 1,000'
   ];
@@ -69,8 +68,8 @@ export class PurchaseOrderFormComponent implements OnInit {
       organizationType: ['', Validators.required],
       signeeName: [''],
       contactName: ['', Validators.required],
-      contactPhoneNumber: ['', [Validators.required, Validators.pattern(PurchaseOrderFormComponent.usPhoneNumberRegex)]],
-      contactEmail: ['', [Validators.required, Validators.email]],
+      contactPhoneNumber: ['', [Validators.required, CustomValidatorsDirective.usPhoneNumber]],
+      contactEmail: ['', [Validators.required, CustomValidatorsDirective.email]],
       requestedProductId: ['', Validators.required],
       quantityRange: ['', Validators.required],
       needByDate: ['', Validators.required],

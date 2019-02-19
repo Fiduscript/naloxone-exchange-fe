@@ -1,7 +1,7 @@
 form("[formGroup]"="addressForm")
 
   .form-group
-    label Name
+    label(required) Name
     input.form-control(
         formControlName="name"
         type="text"
@@ -10,7 +10,7 @@ form("[formGroup]"="addressForm")
     .invalid-feedback(*ngIf="sectionInvalid('name')") Name is required.
 
   .form-group
-    label Street Address
+    label(required) Street Address
     input.form-control(
         formControlName="street1"
         type="text"
@@ -26,7 +26,7 @@ form("[formGroup]"="addressForm")
 
   .form-group.form-row
     .col-sm-12.col-md-6
-      label City
+      label(required) City
       input.form-control(
           formControlName="city"
           type="text"
@@ -36,7 +36,7 @@ form("[formGroup]"="addressForm")
       div.mb-2.d-md-none.d-lg-none
 
     .col
-      label State
+      label(required) State
       select.form-control.state-input(
           formControlName="state"
           "[ngClass]"="{ 'is-invalid': sectionInvalid('state') }")
@@ -45,7 +45,7 @@ form("[formGroup]"="addressForm")
       .invalid-feedback(*ngIf="sectionInvalid('state')") State is required.
 
     .col
-      label Zip Code
+      label(required) Zip Code
       input.form-control(
           formControlName="zip"
           type="text"

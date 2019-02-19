@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { Duration } from 'moment';
 
 import { IState, STATES } from '../../../common/constant/states';
+import { CustomValidatorsDirective } from '../common/form/customer-validators/custom-validators.directive';
 import { MessageResponse } from '../common/message-response';
 import { jsonConvert } from '../util/json-convert-provider';
 import { SubscriptionState } from './model/subscription-state';
@@ -30,7 +31,7 @@ export class UpdateSubscriberComponent implements OnInit {
       private fb: FormBuilder,
       private service: UpdateSubscriberService) {
     this.subscribeForm = fb.group({
-      email : ['', Validators.email],
+      email : ['', CustomValidatorsDirective.email],
       state: ['', Validators.required],
     });
   }

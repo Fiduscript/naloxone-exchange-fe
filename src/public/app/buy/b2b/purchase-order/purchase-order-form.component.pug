@@ -10,45 +10,44 @@
       form(
       "[formGroup]"="purchaseOrderForm"
       "(ngSubmit)"="submit(purchaseOrderForm.value)")
-        .form-row.text-left
+        .row.justify-content-center.text-left
           .col-sm-12.col-md-5
             .form-group
-              label(for='organizationName') Organization Name
+              label(for='organizationName' required) Organization Name
               input#organizationName.form-control(
-              type="text"
               formControlName="organizationName"
               placeholder="Name of your organization"
+              type="text"
               "[ngClass]"="{ 'is-invalid': sectionInvalid('organizationName') }")
-
-          .col-sm-12.col-md-5.ml-md-auto
+          .col-sm-12.col-md-5
             app-free-form-dropdown(
-            formControlName="organizationType"
             "[label]"="'Organization Type'"
-            "[name]"="'Organization Type'"
-            "[options]"="getOrganizationTypes()")
-        hr
-        .form-row.text-left
+            "[name]"="'organization type'"
+            "[options]"="getOrganizationTypes()"
+            formControlName="organizationType")
+        hr.col-9
+        .row.justify-content-center.text-left
           .col-sm-12.col-md-5
             .form-group
-              label(for='contactName') Contact Name
+              label(for='contactName' required) Contact Name
               input#contactName.form-control(
               type="text"
               formControlName="contactName"
               placeholder="First and last name"
               "[ngClass]"="{ 'is-invalid': sectionInvalid('contactName') }")
-          .col-sm-12.col-md-5.ml-md-auto
+          .col-sm-12.col-md-5
             .form-group
-              label(for='contactPhoneNumber') Contact Phone Number
+              label(for='contactPhoneNumber' required) Contact Phone Number
               input#contactPhoneNumber.form-control(
               type="text"
               formControlName="contactPhoneNumber"
               placeholder="(555) 555-5555"
               "[ngClass]"="{ 'is-invalid': sectionInvalid('contactPhoneNumber') }")
 
-        .form-row.text-left
+        .row.justify-content-center.text-left
           .col-sm-12.col-md-5
             .form-group
-              label(for='contactEmail') Email Address
+              label(for='contactEmail' required) Email Address
               input#contactEmail.form-control(
               formControlName="contactEmail"
               placeholder="Contact email address"
@@ -57,9 +56,9 @@
               "[ngClass]"="{ 'is-invalid': sectionInvalid('contactEmail')}")
               .invalid-feedback(*ngIf="sectionInvalid('contactEmail')")
                 .text-left Enter a valid email address
-          .col-sm-12.col-md-5.ml-md-auto
+          .col-sm-12.col-md-5
             .form-group
-              label(for='preferredContactType') Preferred Form of Contact
+              label(for='preferredContactType' required) Preferred Form of Contact
               select#preferredContactType.form-control(
               formControlName="preferredContactType"
               required
@@ -69,8 +68,8 @@
                 option(value="phone") Phone
               small.form-text.text-danger(*ngIf="sectionInvalid('preferredContactType')")
                 | You must select an answer to this question.
-        hr
-        .form-row.text-left
+        hr.col-9
+        .row.justify-content-center.text-left
           .col-sm-12.col-md-5
             .form-group
               label(for='signeeName') Signee Name
@@ -85,9 +84,9 @@
             app-address-form(
               "[formName]"="'shippingAddress'"
               "[parentForm]"="purchaseOrderForm")
-          .col-sm-12.col-md-5.ml-md-auto
+          .col-sm-12.col-md-5
             .form-group
-              label(for='requestedProductId') Product Type
+              label(for='requestedProductId' required) Product Type
               select#requestedProductId.form-control(
               formControlName="requestedProductId"
               required
@@ -99,7 +98,7 @@
               small.form-text.text-danger(*ngIf="sectionInvalid('requestedProductId')")
                 | You must select an answer to this question.
             .form-group
-              label(for='quantityRange') Product Quantity
+              label(for='quantityRange' required) Product Quantity
               select#quantityRange.form-control(
               formControlName="quantityRange"
               required
@@ -109,7 +108,7 @@
               small.form-text.text-danger(*ngIf="sectionInvalid('quantityRange')")
                 | You must select an answer to this question.
             .form-group
-              label(for='needByDate') How soon do you need your order?
+              label(for='needByDate' required) How soon do you need your order?
               select#needByDate.form-control(
               formControlName="needByDate"
               required
@@ -119,7 +118,7 @@
               small.form-text.text-danger(*ngIf="sectionInvalid('needByDate')")
                 | You must select an answer to this question.
             .form-group
-              label(for='paidByGrant') Is this order paid for by a grant?
+              label(for='paidByGrant' required) Is this order paid for by a grant?
               select#paidByGrant.form-control(
               formControlName="paidByGrant"
               required
@@ -130,18 +129,13 @@
               small.form-text.text-danger(*ngIf="sectionInvalid('paidByGrant')")
                 | You must select an answer to this question.
             .form-group
-              label(for='attributionSource') How did you hear about us?
-              select#attributionSource.form-control(
-              formControlName="attributionSource"
-              required
-              "[ngClass]"="{ 'is-invalid': sectionInvalid('attributionSource') }")
-                option(value="" selected disabled) Select
-                option(*ngFor="let attributionSource of getAttributionSources();" "[value]"="attributionSource") {{attributionSource}}
-              small.form-text.text-danger(*ngIf="sectionInvalid('attributionSource')")
-                | You must select an answer to this question.
+              app-free-form-dropdown(
+              "[label]"="'How did you hear about us?'"
+              "[options]"="getAttributionSources()"
+              formControlName="attributionSource")
 
-        .form-row.text-left
-          .col-sm-12
+        .row.justify-content-center.text-left
+          .col-sm-10
             .form-group
               label(for='message') Message
               textarea#message.form-control(
@@ -151,8 +145,8 @@
               placeholder="Add additional details about your order"
               "[ngClass]"="{ 'is-invalid': sectionInvalid('message') }")
               small.form-text(
-                "[ngClass]"="{ 'invalid-feedback': sectionInvalid('organizationName') }")
-                | You message should be less than {{getMaxMessageLength()}} characters long
+                "[ngClass]"="{ 'invalid-feedback': sectionInvalid('message') }")
+                | {{purchaseOrderForm.get('message').value.length}}/{{getMaxMessageLength()}} characters
 
         .form-group.button-group("(click)"="purchaseOrderForm.markAsTouched()")
           button.btn.btn-primary(
