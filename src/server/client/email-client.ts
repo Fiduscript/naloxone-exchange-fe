@@ -1,32 +1,33 @@
-const nodemailer = require('nodemailer');
-
-const smtpConfig = {
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
-  auth: {
-    user: 'nxeemailer@gmail.com',
-    pass: 'nxe123123'
-  }
-};
-
-const transporter = nodemailer.createTransport(smtpConfig);
+import * as SES from 'aws-sdk/clients/ses';
+import { AWSProvider } from '../provider/aws-provider';
+const config = require('config');
+const SOURCE_EMAIL_ADDR = config.get('contactUs.emailAddr');
 
 export const sendEmail = (toEmail: string, fromEmail: string, subject: string, text: string): Promise<any> => {
-  const mailOptions = {
-    to: toEmail,
-    from: fromEmail,
-    subject: subject,
-    text: text
-  }
 
-  return new Promise((resolve, reject) => {
-    transporter.sendMail(mailOptions, function(err, res) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve();
+  const params: SES.Types.SendEmailRequest = {
+    Destination: {
+      ToAddresses: [
+        toEmail
+      ]
+    },
+    Message: {
+      Body: {
+        Text: {
+          Charset: 'UTF-8',
+          Data: text
+        }
+      },
+      Subject: {
+        Charset: 'UTF-8',
+        Data: subject
       }
-    });
-  });
+    },
+    Source: SOURCE_EMAIL_ADDR,
+    ReplyToAddresses: [
+      fromEmail
+    ],
+  };
+
+  return AWSProvider.getSesClient().sendEmail(params).promise();
 };
