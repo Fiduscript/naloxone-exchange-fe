@@ -13,6 +13,8 @@ export class AddressFormComponent implements OnInit {
   public addressForm: FormGroup;
   public error?: ErrorMessage = null;
   @Input() public formName: string;
+  @Input() public nameLabel: string;
+  @Input() public namePlaceholder: string;
   @Input() public parentForm: FormGroup;
 
   public constructor(

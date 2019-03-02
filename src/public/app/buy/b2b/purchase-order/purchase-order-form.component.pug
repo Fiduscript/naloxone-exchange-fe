@@ -11,20 +11,6 @@
       "[formGroup]"="purchaseOrderForm"
       "(ngSubmit)"="submit(purchaseOrderForm.value)")
         .row.justify-content-center.text-left
-          .col-sm-12.col-md-5
-            .form-group
-              label(for='organizationName' required) Organization Name
-              input#organizationName.form-control(
-              formControlName="organizationName"
-              placeholder="Name of your organization"
-              type="text"
-              "[ngClass]"="{ 'is-invalid': sectionInvalid('organizationName') }")
-          .col-sm-12.col-md-5
-            app-free-form-dropdown(
-            "[label]"="'Organization Type'"
-            "[name]"="'organization type'"
-            "[options]"="getOrganizationTypes()"
-            formControlName="organizationType")
         hr.col-9
         .row.justify-content-center.text-left
           .col-sm-12.col-md-5
@@ -37,16 +23,6 @@
               "[ngClass]"="{ 'is-invalid': sectionInvalid('contactName') }")
           .col-sm-12.col-md-5
             .form-group
-              label(for='contactPhoneNumber' required) Contact Phone Number
-              input#contactPhoneNumber.form-control(
-              type="text"
-              formControlName="contactPhoneNumber"
-              placeholder="(555) 555-5555"
-              "[ngClass]"="{ 'is-invalid': sectionInvalid('contactPhoneNumber') }")
-
-        .row.justify-content-center.text-left
-          .col-sm-12.col-md-5
-            .form-group
               label(for='contactEmail' required) Email Address
               input#contactEmail.form-control(
               formControlName="contactEmail"
@@ -56,9 +32,18 @@
               "[ngClass]"="{ 'is-invalid': sectionInvalid('contactEmail')}")
               .invalid-feedback(*ngIf="sectionInvalid('contactEmail')")
                 .text-left Enter a valid email address
-          .col-sm-12.col-md-5
+        .row.justify-content-center.text-left
+          .col-sm-12.col-md-3
             .form-group
-              label(for='preferredContactType' required) Preferred Form of Contact
+              label(for='contactPhoneNumber' required) Contact Phone Number
+              input#contactPhoneNumber.form-control(
+              type="text"
+              formControlName="contactPhoneNumber"
+              placeholder="(555) 555-5555"
+              "[ngClass]"="{ 'is-invalid': sectionInvalid('contactPhoneNumber') }")
+          .col-sm-12.col-md-2
+            .form-group
+              label(for='preferredContactType' required) Preferred Contact
               select#preferredContactType.form-control(
               formControlName="preferredContactType"
               required
@@ -68,6 +53,12 @@
                 option(value="phone") Phone
               small.form-text.text-danger(*ngIf="sectionInvalid('preferredContactType')")
                 | You must select an answer to this question.
+          .col-sm-12.col-md-5
+            app-free-form-dropdown(
+            "[label]"="'Organization Type'"
+            "[name]"="'organization type'"
+            "[options]"="getOrganizationTypes()"
+            formControlName="organizationType")
         hr.col-9
         .row.justify-content-center.text-left
           .col-sm-12.col-md-5
@@ -83,6 +74,8 @@
                 | Person authorized to execute the purchase or receiving of an order (may not apply to your organization).
             app-address-form(
               "[formName]"="'shippingAddress'"
+              "[nameLabel]"="'Organization Name'"
+              "[namePlaceholder]"="'name of your organization'"
               "[parentForm]"="purchaseOrderForm")
           .col-sm-12.col-md-5
             .form-group

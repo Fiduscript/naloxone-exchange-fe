@@ -91,7 +91,7 @@ export class PurchaseOrderFormComponent implements OnInit {
       return;
     }
 
-    this.b2bService.createBusinessPurchaseOrder(form).subscribe(
+    this.b2bService.creatingBusinessPurchaseOrder(form).subscribe(
       (businessPurchaseOrder: IBusinessPurchaseOrder): void => {
         this.router.navigate([`/buy/b2b/confirm/${businessPurchaseOrder.id}`]);
       },

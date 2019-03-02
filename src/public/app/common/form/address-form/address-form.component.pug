@@ -1,11 +1,11 @@
 form("[formGroup]"="addressForm")
 
   .form-group
-    label(required) Name
+    label(required) {{nameLabel || 'Name'}}
     input.form-control(
         formControlName="name"
         type="text"
-        placeholder="name"
+        placeholder="{{namePlaceholder || 'name'}}"
         "[ngClass]"="{ 'is-invalid': sectionInvalid('name') }")
     .invalid-feedback(*ngIf="sectionInvalid('name')") Name is required.
 
