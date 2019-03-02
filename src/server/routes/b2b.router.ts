@@ -42,7 +42,7 @@ router.get('/exists/:id',
  * @api PUT /api/b2b
  */
 router.put('', (req: Request, res: Response) => {
-  dao.createBusinessPurchaseOrder(req.body)
+  dao.creatingBusinessPurchaseOrder(req.body)
       .then((businessPurchaseOrder: IBusinessPurchaseOrder) => res.json(businessPurchaseOrder))
       .catch((error: Error) => {
         const msg: string = `An error occurred while create business purchase order. ${JSON.stringify(req.body)}`;

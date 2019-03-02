@@ -79,7 +79,7 @@ export class BusinessPurchaseOrderDao {
    */
   private constructor(private mapper: DataMapper) {}
 
-  async createBusinessPurchaseOrder(businessPurchaseOrder: IBusinessPurchaseOrder) {
+  async creatingBusinessPurchaseOrder(businessPurchaseOrder: IBusinessPurchaseOrder) {
     FormUtils.trimInputs(businessPurchaseOrder);
     return this.mapper.put(Object.assign(new BusinessPurchaseOrderEntity(), businessPurchaseOrder));
   }

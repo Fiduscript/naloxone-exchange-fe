@@ -13,7 +13,11 @@ export class PurchaseOrderFormConfirmComponent implements OnInit {
   private static readonly contactEmail = 'sales@fiduscript.com';
 
   public orderId: string;
-  public orderExists: boolean;
+
+  /**
+   * TODO: Show an empty page or loading icon before this is set.
+   */
+  public orderExists: boolean = true;
   public error: string;
 
   public constructor(

@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     ts: {
       app: {
         files: [{
-          src: ["src/server/\*\*/\*.ts", "src/common/\*\*/\*.ts", "!src/public/\*\*/\*.ts", "!src/server/.baseDir.ts"],
+          src: ["src/server/\*\*/\*.ts", "src/common/\*\*/\*.ts", "!\*\*/\*.spec.ts", "!src/public/\*\*/\*.ts", "!src/server/.baseDir.ts"],
           dest: "./dist/server"
         }],
         tsconfig: './src/server/tsconfig.server.json',
@@ -14,7 +14,7 @@ module.exports = function(grunt) {
     },
     watch: {
       ts: {
-        files: ["src/server/\*\*/\*.ts", "src/common/\*\*/\*.ts"],
+        files: ["src/server/\*\*/\*.ts", "!\*\*/\*.spec.ts", "src/common/\*\*/\*.ts"],
         tasks: ["ts"],
       }
     }

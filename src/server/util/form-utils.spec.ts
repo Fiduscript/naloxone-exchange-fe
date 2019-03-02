@@ -1,5 +1,5 @@
 import { FormUtils } from './form-utils';
-import { expect, should } from 'chai';
+import { expect } from 'chai';
 
 describe('FormUtils', () => {
 

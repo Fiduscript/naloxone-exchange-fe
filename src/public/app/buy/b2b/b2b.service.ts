@@ -22,7 +22,7 @@ export class B2bService extends FiduServiceBase {
    * @param businessPurchaseOrder purchase order form.
    * @return generated id of the new purchase order form.
    */
-  public createBusinessPurchaseOrder(businessPurchaseOrder: any): Observable<IBusinessPurchaseOrder> {
+  public creatingBusinessPurchaseOrder(businessPurchaseOrder: any): Observable<IBusinessPurchaseOrder> {
     const path: string = '/api/b2b';
     return this.http.put<IBusinessPurchaseOrder>(path, businessPurchaseOrder).pipe(
       this.logErrors()
