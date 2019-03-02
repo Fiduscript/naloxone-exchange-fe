@@ -64,7 +64,7 @@ export class PurchaseOrderFormComponent implements OnInit {
   ) {
     this.setProducts = this.setProducts.bind(this);
     this.purchaseOrderForm = this.fb.group({
-      organizationName: ['', Validators.required],
+      // organizationName: ['', Validators.required],
       organizationType: ['', Validators.required],
       signeeName: [''],
       contactName: ['', Validators.required],

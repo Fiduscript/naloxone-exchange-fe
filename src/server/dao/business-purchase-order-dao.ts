@@ -80,7 +80,13 @@ export class BusinessPurchaseOrderDao {
   private constructor(private mapper: DataMapper) {}
 
   async creatingBusinessPurchaseOrder(businessPurchaseOrder: IBusinessPurchaseOrder) {
-    FormUtils.trimInputs(businessPurchaseOrder);
+    businessPurchaseOrder = FormUtils.trimInputs(businessPurchaseOrder);
+
+    // Organization name was removed from the form in favor of the address name. Set it here.
+    if (!businessPurchaseOrder.organizationName) {
+      businessPurchaseOrder.organizationName = businessPurchaseOrder.shippingAddress.name;
+    }
+
     return this.mapper.put(Object.assign(new BusinessPurchaseOrderEntity(), businessPurchaseOrder));
   }
 
