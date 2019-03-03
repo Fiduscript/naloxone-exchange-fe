@@ -61,17 +61,17 @@ export class UserService extends FiduServiceBase {
   public deleteAddress(addressId: string): Observable<SuccessMessage> {
     const success: boolean = delete ADDRESSSES[addressId];
     if (success) {
-      return of(new SuccessMessage(`Successfully deleted address ${addressId}.`));
+      return of(new SuccessMessage(`Successfully deleted address.`));
     }
-    return throwError(new ErrorMessage(`Failed to deleted address ${addressId}.`));
+    return throwError(new ErrorMessage(`Failed to deleted address.`));
   }
 
   public deleteRelation(relationId: string): Observable<SuccessMessage> {
     const success: boolean = delete relations[relationId];
     if (success) {
-      return of(new SuccessMessage(`Successfully deleted relation ${relationId}.`));
+      return of(new SuccessMessage(`Successfully deleted relation.`));
     }
-    return throwError(new ErrorMessage(`Failed to deleted relation ${relationId}.`));
+    return throwError(new ErrorMessage(`Failed to deleted relation.`));
   }
 
   public getAddressses(): Observable<IAddress[]> {

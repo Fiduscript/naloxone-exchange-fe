@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { Moment } from 'moment';
 import { v4 as uuid } from 'uuid';
 
 import { ErrorMessage } from 'src/public/app/common/message-response';
@@ -17,6 +18,8 @@ import { UserService } from '../user.service';
   styleUrls: ['./relation-form.component.styl']
 })
 export class RelationFormComponent implements OnInit {
+  private static readonly EARLIEST_AGE: Moment = moment().subtract(100, 'years').startOf('month');
+  private static readonly LATEST_AGE: Moment = moment().startOf('month');
 
   private static readonly NARCAN_ALLERGY_INDICATOR: string = 'This patient has an allergy to Naloxone, Evzio, or Narcan.';
 
@@ -41,7 +44,7 @@ export class RelationFormComponent implements OnInit {
   }
 
   public getRelations(): string[] {
-    return RELATIONS;
+    return Object.keys(RELATIONS);
   }
 
   public ngOnInit(): void {
@@ -51,11 +54,11 @@ export class RelationFormComponent implements OnInit {
     });
 
     this.otherSelected = !_.isEmpty(this.relation.relation) &&
-       !RELATIONS.includes(this.relation.relation);
+       !this.getRelations().includes(this.relation.relation);
 
     const momentValidator = new MomentRangeValidator('MMM YYYY',
-        moment().subtract(100, 'years').startOf('month'),
-        moment().startOf('month'));
+        RelationFormComponent.EARLIEST_AGE,
+        RelationFormComponent.LATEST_AGE);
 
     const medicalConditions: FormControl[] = (this.relation.medicalConditions || []).map((v) => this.fb.control(v));
     this.seedEmptyFormArray(medicalConditions);
@@ -94,7 +97,7 @@ export class RelationFormComponent implements OnInit {
     this.otherSelected = relation === this.OTHER;
     this.form.get('otherRelation').setValue(this.otherSelected ? '' : relation);
 
-    if (relation === 'Myself' && !_.isEmpty(this.user.name)) {
+    if (relation === RELATIONS.Myself && !_.isEmpty(this.user.name)) {
       this.form.get('name').setValue(this.user.name);
       this.name = this.user.name;
     }

@@ -6,12 +6,12 @@ import { MomentConverter } from 'src/public/app/util/moment-utils';
 import { safeMerge } from '../../../../../common/safe-merge';
 import { JsonInitialize } from '../../../util/json-convert-provider';
 
-export const RELATIONS: string[] = [
+export const RELATIONS: {[k: string]: string} = _.keyBy([
   'Myself',
   'Family Member',
   'Friend',
   'Loved one'
-];
+], _.identity);
 
 export interface IUserRelation {
   allergies: string[];
