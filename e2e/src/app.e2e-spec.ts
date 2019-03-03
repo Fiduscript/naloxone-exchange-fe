@@ -9,6 +9,6 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to fiduscript!');
+    expect(page.getParagraphText()).toEqual('Get Naloxone Delivered to Your Doorstep');
   });
 });

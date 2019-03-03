@@ -1,1 +1,100 @@
-p relation-form works!
+.container-fluid
+  form("[formGroup]"="form" "(ngSubmit)"="submit()")
+
+    //- Relation Info:
+    app-free-form-dropdown(
+      formControlName="relation"
+      "[name]"="'Relation'"
+      "[label]"="'Your Relation to Patient'"
+      "[options]"="getRelations()"
+      "(change)"="relationChanged()"
+    )
+
+    //- Personal Info:
+    .form-group(*ngIf="editingExisting || form.get('relation').valid")
+      h6 Personal Info
+      .form-row
+        .col-sm-12.col-md-12.col-lg-6
+          label Name
+          input.form-control(
+              formControlName="name"
+              "(change)"="setName()"
+              type="text"
+              placeholder="Patient's Name"
+              "[ngClass]"="{ 'is-invalid': sectionInvalid('name') }")
+          .invalid-feedback Name is required.
+          div.mb-2.d-lg-none
+
+        .col-sm-12.col-md-6.col-lg-3
+          .form-group
+            label Biological Sex
+            select.form-control(
+                formControlName="biologicalSex"
+                "[ngClass]"="{ 'is-invalid': sectionInvalid('biologicalSex') }")
+              option(value="" selected disabled) Select one
+              option(value="female") Female
+              option(value="male") Male
+            .invalid-feedback The patient's biological sex is required.
+            small
+              a Why do we need this?
+          div.mb-2.d-md-none.d-lg-none
+
+        .col-sm-12.col-md-6.col-lg-3
+          .form-group
+            label Date of Birth
+            .input-group
+              input.form-control(
+                placeholder="YYYY-MM-DD"
+                type="text"
+                ngbDatepicker
+                formControlName="birthDate"
+                "[ngClass]"="{ 'is-invalid': sectionInvalid('birthDate') }"
+                #d="ngbDatepicker")
+              .input-group-append
+                button.btn.btn-outline-secondary("(click)"="d.toggle()" type="button")
+                  span.fa.fa-calendar-alt
+              .invalid-feedback(*ngFor="let error of form.get('birthDate').errors | keyvalue") {{error.value}}
+            small
+              a Why do we need this?
+
+    //- hide unless name, biological sex, and birthday are valid
+    .form-group(*ngIf="personalInfoReady()" formArrayName="medicalConditions")
+      h6 Medical Conditions
+        button.btn.btn-sm.ml-2("(click)"="addFormArrayElement('medicalConditions')" type="button") Add
+        small.d-block Please list any medical conditions {{name}} has.
+          small.ml-2
+            em high blood pressure, low cholesterol, etc.
+      .d-flex.justify-contents-between.w-100(*ngFor="let condition of form.get('medicalConditions').controls; let i=index")
+        input.form-control.mb-1(type="text" "[formControlName]"="i")
+        .align-self-center
+          button.btn(title="{{i === 0 ? 'Clear' : 'Remove'}} medical condition." "(click)"="removeFormArrayElement('medicalConditions', i)" type="button")
+            span.fas.fa-times-circle(*ngIf="i === 0 && form.get('medicalConditions').length === 1")
+            span.fa.fa-close(*ngIf="i !== 0 || form.get('medicalConditions').length > 1")
+
+    .form-group(*ngIf="personalInfoReady()" formArrayName="allergies")
+      h6 Allergies
+        button.btn.btn-sm.ml-2("(click)"="addFormArrayElement('allergies')" type="button") Add
+        small.d-block Please list any allergies {{name}} has.
+      .d-flex.justify-contents-between(*ngFor="let condition of form.get('allergies').controls; let i=index")
+        input.form-control.mb-1(type="text" "[formControlName]"="i")
+        .align-self-center
+          button.btn(title="{{i === 0 ? 'Clear' : 'Remove'}} allergy." "(click)"="removeFormArrayElement('allergies', i)" type="button")
+            span.fas.fa-times-circle(*ngIf="i === 0 && form.get('allergies').length === 1")
+            span.fa.fa-close(*ngIf="i !== 0 || form.get('allergies').length > 1")
+
+    .form-group.form-inline(*ngIf="personalInfoReady()")
+      label Is {{name}} alergic to Naloxone, Evzio, or Narcan?
+        small.ml-2.d-block
+          em These are the same active ingredient.
+      select.form-control.ml-2(
+          formControlName="narcanAllergy"
+          "[ngClass]"="{ 'is-invalid': sectionInvalid('narcanAllergy') }")
+        option(value="" selected disabled) Select
+        option(value="true" selected) Yes
+        option(value="false" selected) No
+
+    .alert.alert-danger(*ngIf="error != null") {{error.message}}
+
+    .form-group
+      button.btn.btn-primary.pull-right("[disabled]"="form.invalid||form.disabled" type="submit") Submit
+      button.btn.btn-secondary.pull-right.mr-2("(click)"="reset()" type="button") reset

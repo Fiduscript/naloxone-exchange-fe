@@ -33,7 +33,7 @@ export class AddressesComponent implements OnInit {
   }
 
   public fetchAddresses(): void {
-    this.service.getAddressses().subscribe((addresses: IAddress[]) => {
+    this.service.getAddresses().subscribe((addresses: IAddress[]) => {
       this.addresses = addresses;
     });
   }
