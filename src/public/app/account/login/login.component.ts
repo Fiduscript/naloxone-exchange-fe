@@ -15,7 +15,6 @@ export class LoginComponent implements OnInit {
 
   public error: string = null;
   public loginForm: FormGroup;
-  public user: string = 'User';
 
   private returnRoute: string;
 

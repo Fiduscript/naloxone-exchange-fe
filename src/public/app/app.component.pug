@@ -58,13 +58,20 @@ section("[ngStyle]"="{'margin-top': getMainHeaderHeight(mainHeader)}")
 
 footer.bg-white.text-dark
   .bg-primary
-    app-update-subscriber(*ngIf="!showSubscribe()")
+    app-update-subscriber
   .container.mt-5
     .row.border-light.border-bottom.pb-5
       .col
-        img.img-fluid(src="/assets/img/dot-pharmacy.png")
-        p.text-muted Learn about the team and mission by visiting
+        p.mb-5.text-muted Learn about the team and mission by visiting
           a.ml-1(href="https://www.fiduscript.com/") Fiduscript.com
+        img.img-fluid(src="/assets/img/dot-pharmacy.png")
+
+      .col-sm-12.col-md-6
+        h4 About
+        p
+          | The Naloxone Exchange, a company of
+          a.ml-1(href='http://www.fiduscript.com' target='_blank') Fiduscript
+          |, is an online marketplace where you can purchase Naloxone without a prescription. Naloxone Exchange (NE) is a HIPAA-compliant website for both desktop and mobile that allows any person to order Naloxone online and have it shipped straight to their door!
 
       .col
         h4 Social
@@ -73,12 +80,6 @@ footer.bg-white.text-dark
           "[showText]"="true"
           "[include]"="['facebook','twitter','reddit','pinterest','linkedin']"
           "[autoSetMeta]"="true")
-      .col-sm-12.col-md-6
-        h4 About
-        p
-          | The Naloxone Exchange, a company of
-          a.ml-1(href='http://www.fiduscript.com' target='_blank') Fiduscript
-          |, is an online marketplace where you can purchase Naloxone without a prescription. Naloxone Exchange (NE) is a HIPAA-compliant website for both desktop and mobile that allows any person to order Naloxone online and have it shipped straight to their door!
 
     .d-flex.justify-content-around.justify-content-md-between.justify-content-lg-between.flex-wrap.align-items-center.mt-3.mb-3
         span.text-muted

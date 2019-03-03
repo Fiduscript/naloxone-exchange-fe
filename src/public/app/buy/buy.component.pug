@@ -1,36 +1,37 @@
-.container.mt-5
-  .row
-    .col-md-4.text-center.text-primary.pt-5
-      h4 Some Questions Before We Proceed...
-      i.fas.fa-question-circle.fa-5x
-    .col-md-7
-      form([formGroup]="form" "(ngSubmit)"="navigate()")
-        .form-group
-          label Who are you buying for?
-          select.form-control(formControlName="reason" required)
-            option(value="" selected disabled) Select Recipient
-            option(*ngFor="let reason of getReasons();" "[value]"="reason") {{reason}}
-          small.form-text.text-danger(*ngIf="form.touched && form.get('reason').invalid") You must select an answer to this question.
-            i.pl-1 You may select 'prefer not to answer'.
-          small.form-text.text-muted
-            | Answering this question can help us improve our offerings and help others get the help they need!
-            | This data is collected anonymously, your privacy is protected.
-        .form-group
-          label Which state/region are you buying in?
-          select.form-control(formControlName="state" required)
-            option(value="" selected disabled) Select State/Region
-            option(*ngFor="let state of getStates();" "[value]"="state.name") {{state.name}}
-          small.form-text.text-danger(*ngIf="form.touched && form.get('state').invalid") You must select a state.
-          small.form-text.text-muted
-            | State governments have different laws concerning the sale of Naloxone.
-            | We require this information to show you the products avaialble in your area.
-          small.form-text.text-muted
-            b.pr-1 Is your state or region not listed?
-            | Please let us know by
-            a.pl-1(routerLink="/about-us" fragment="app-contact") contacting us here
-            | !
-        .form-group.button-group("(click)"="form.markAsTouched()")
-          button.btn.btn-primary(
-              "(click)"="form.markAsTouched()"
-              title="Go to buy page!"
-              type="submit") Go!
+header.full-header.text-center
+  h1 Some Questions Before We Proceed
+    i.ml-2.fas.fa-question-circle
+
+.container.header-eater.bg-white.w-50.mb-5
+  form([formGroup]="form" "(ngSubmit)"="navigate()")
+    .form-group
+      label Who are you buying for?
+      select.form-control(formControlName="reason" required)
+        option(value="" selected disabled) Select Recipient
+        option(*ngFor="let reason of getReasons();" "[value]"="reason") {{reason}}
+      small.form-text.text-danger(*ngIf="form.touched && form.get('reason').invalid") You must select an answer to this question.
+        i.pl-1 You may select 'prefer not to answer'.
+      small.form-text.text-muted
+        | Answering this question can help us improve our offerings and help others get the help they need!
+        | This data is collected anonymously, your privacy is protected.
+
+    .form-group
+      label Which state/region are you buying in?
+      select.form-control(formControlName="state" required)
+        option(value="" selected disabled) Select State/Region
+        option(*ngFor="let state of getStates();" "[value]"="state.name") {{state.name}}
+      small.form-text.text-danger(*ngIf="form.touched && form.get('state').invalid") You must select a state.
+      small.form-text.text-muted
+        | State governments have different laws concerning the sale of Naloxone.
+        | We require this information to show you the products avaialble in your area.
+      small.form-text.text-muted
+        b.pr-1 Is your state or region not listed?
+        | Please let us know by
+        a.pl-1(routerLink="/about-us" fragment="app-contact") contacting us here
+        | !
+
+    .form-group.button-group("(click)"="form.markAsTouched()")
+      button.btn.btn-primary(
+          "(click)"="form.markAsTouched()"
+          title="Go to buy page!"
+          type="submit") Go!

@@ -1,86 +1,89 @@
-.container.text-center
-  h3.mb-3 User Registration
-  .container.register-container.text-center.mb-3
-    form(
-        "[formGroup]"="registerForm" 
-        "(ngSubmit)"="register()")
-      .form-group.row.text-center
-        label.col-sm-4.col-form-label.text-left First Name 
-        .col-sm-8
-          input.form-control(
-              type="text"
-              formControlName="firstName"
-              "[ngClass]"="{ 'is-invalid': registerForm.get('firstName').touched && registerForm.get('firstName').invalid }")
-          .invalid-feedback(*ngIf="registerForm.get('firstName').touched && registerForm.get('firstName').invalid")
-            .text-left First name is required
+header.full-header
+  h1  User Registration
 
-      .form-group.row.text-center
-        label.col-sm-4.col-form-label.text-left Last Name 
-        .col-sm-8
-          input.form-control(
-              type="text"
-              formControlName="lastName"
-              "[ngClass]"="{ 'is-invalid': registerForm.get('lastName').touched && registerForm.get('lastName').invalid }")
-          .invalid-feedback(*ngIf="registerForm.get('lastName').touched && registerForm.get('lastName').invalid")
-            .text-left Last name is required
+.container.header-eater.bg-white.register-container.mb-3
+  form(
+      "[formGroup]"="registerForm"
+      "(ngSubmit)"="register()")
+    .form-group.row.text-center
+      label.col-sm-4.col-form-label.text-left First Name
+      .col-sm-8
+        input.form-control(
+            type="text"
+            formControlName="firstName"
+            "[ngClass]"="{ 'is-invalid': registerForm.get('firstName').touched && registerForm.get('firstName').invalid }")
+        .invalid-feedback(*ngIf="registerForm.get('firstName').touched && registerForm.get('firstName').invalid")
+          .text-left First name is required
 
-      .form-group.row.text-center
-        label.col-sm-4.col-form-label.text-left Email 
-        .col-sm-8
-          input.form-control(
-              type="email"
-              formControlName="email"
-              "[ngClass]"="{ 'is-invalid': registerForm.get('email').touched && registerForm.get('email').invalid }")
-          .invalid-feedback(*ngIf="registerForm.get('email').touched && registerForm.get('email').invalid")
-            .text-left Enter a valid email address
+    .form-group.row.text-center
+      label.col-sm-4.col-form-label.text-left Last Name
+      .col-sm-8
+        input.form-control(
+            type="text"
+            formControlName="lastName"
+            "[ngClass]"="{ 'is-invalid': registerForm.get('lastName').touched && registerForm.get('lastName').invalid }")
+        .invalid-feedback(*ngIf="registerForm.get('lastName').touched && registerForm.get('lastName').invalid")
+          .text-left Last name is required
 
-      .form-group.row.text-center
-        label.col-sm-4.col-form-label.text-left Confirm Email 
-        .col-sm-8
-          input.form-control(
-              type="email"
-              formControlName="confirmEmail"
-              "[ngClass]"="{ 'is-invalid': registerForm.get('confirmEmail').touched && registerForm.get('confirmEmail').hasError('compare')}")
-          .invalid-feedback(*ngIf="registerForm.get('confirmEmail').touched && registerForm.get('confirmEmail').hasError('compare')")
-            .text-left Email does not match
+    .form-group.row.text-center
+      label.col-sm-4.col-form-label.text-left Email
+      .col-sm-8
+        input.form-control(
+            type="email"
+            formControlName="email"
+            "[ngClass]"="{ 'is-invalid': registerForm.get('email').touched && registerForm.get('email').invalid }")
+        .invalid-feedback(*ngIf="registerForm.get('email').touched && registerForm.get('email').invalid")
+          .text-left Enter a valid email address
 
-      .form-group.row.text-center
-        label.col-sm-4.col-form-label.text-left Password 
-        .col-sm-8
-          input.form-control(
-              type="password"
-              formControlName="password"
-              "[ngClass]"="{ 'is-invalid': registerForm.get('password').touched && registerForm.get('password').invalid }")
-          .invalid-feedback(*ngIf="registerForm.get('password').touched && registerForm.get('password').invalid")
-            .text-left(*ngFor="let error of registerForm.get('password').errors | keyvalue") {{error.value}}
+    .form-group.row.text-center
+      label.col-sm-4.col-form-label.text-left Confirm Email
+      .col-sm-8
+        input.form-control(
+            type="email"
+            formControlName="confirmEmail"
+            "[ngClass]"="{ 'is-invalid': registerForm.get('confirmEmail').touched && registerForm.get('confirmEmail').hasError('compare')}")
+        .invalid-feedback(*ngIf="registerForm.get('confirmEmail').touched && registerForm.get('confirmEmail').hasError('compare')")
+          .text-left Email does not match
 
-      .form-group.row.text-center
-        label.col-sm-4.col-form-label.text-left Confirm Password 
-        .col-sm-8
-          input.form-control(
-              type="password"
-              formControlName="confirmPassword"
-              "[ngClass]"="{ 'is-invalid': registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').hasError('compare')}")
-          .invalid-feedback(*ngIf="registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').hasError('compare')")
-            .text-left Password does not match
+    .form-group.row.text-center
+      label.col-sm-4.col-form-label.text-left Password
+      .col-sm-8
+        input.form-control(
+            type="password"
+            formControlName="password"
+            "[ngClass]"="{ 'is-invalid': registerForm.get('password').touched && registerForm.get('password').invalid }")
+        .invalid-feedback(*ngIf="registerForm.get('password').touched && registerForm.get('password').invalid")
+          .text-left(*ngFor="let error of registerForm.get('password').errors | keyvalue") {{error.value}}
 
-      .form-group
-        .alert.alert-danger.text-left(*ngIf="error") {{error}}
+    .form-group.row.text-center
+      label.col-sm-4.col-form-label.text-left Confirm Password
+      .col-sm-8
+        input.form-control(
+            type="password"
+            formControlName="confirmPassword"
+            "[ngClass]"="{ 'is-invalid': registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').hasError('compare')}")
+        .invalid-feedback(*ngIf="registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').hasError('compare')")
+          .text-left Password does not match
 
-      .form-group.text-left
-        div
-          input.mr-2(type="checkbox" formControlName="privacyAgree" checked)
-          span.small
-            | I have read and agree to the 
-            strong((click)="openPrivacyModal()") Privacy Policy
-            | .
-        div
-          input.mr-2(type="checkbox" formControlName="subscribeAgree" checked)
-          span.small Stay informed about naloxone products and services. (Optional)
-      .form-group.mt-4
-        button.btn.btn-primary.w-100(type="submit" "[disabled]"="registerForm.invalid") Sign Up
+    .form-group
+      .alert.alert-danger.text-left(*ngIf="error") {{error}}
 
-    p Already have an account? Sign in 
-      a(routerLink="/account/login") here!
-    p Do you want to be a partner pharmacy? Please 
-      a(routerLink="/about-us" fragment="app-contact") contact us!
+    .form-group.text-left
+      div
+        input.mr-2(type="checkbox" formControlName="privacyAgree" checked)
+        span.small
+          | I have read and agree to the
+          strong.act-like-link.ml-1((click)="openPrivacyModal()") Privacy Policy
+          | .
+      div
+        input.mr-2(type="checkbox" formControlName="subscribeAgree" checked)
+        span.small Stay informed about naloxone products and services. (Optional)
+    .form-group.mt-4
+      button.btn.btn-primary.w-100(type="submit" "[disabled]"="registerForm.invalid") Sign Up
+
+  p
+    b.mr-1 Already have an account?
+    a(routerLink="/account/login") Sign in here
+  p
+    b.mr-1 Do you want to be a partner pharmacy?
+    a(routerLink="/about-us" fragment="app-contact") Contact us

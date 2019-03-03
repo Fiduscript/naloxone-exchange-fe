@@ -1,14 +1,15 @@
-.container.mb-5
-  header.mb-5
-    h1.text-center Hello {{user.name}}
-  section
-    .form-row
-      .col-12.col-lg-6
-        app-user-account-settings([user]="user")
-      .col-12.col-lg-6.mt-2.mt-lg-0
-        app-orders
-    .form-row.mt-2
-      .col-12.col-lg-6
-        app-addresses
-      .col-12.col-lg-6.mt-2.mt-lg-0
-        app-relations
+header.half-header.bg-white
+  h1 Hello {{user.name}}
+  h5 Manage and view your account details here
+
+.container
+  .form-row
+    .col-12.col-lg-6
+      app-user-account-settings([user]="user")
+    .col-12.col-lg-6.mt-2.mt-lg-0
+      app-orders
+  .form-row.mt-2
+    .col-12.col-lg-6
+      app-addresses
+    .col-12.col-lg-6.mt-2.mt-lg-0
+      app-relations

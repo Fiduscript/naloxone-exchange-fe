@@ -40,10 +40,6 @@ export class AppComponent implements OnInit {
     });
   }
 
-  public showSubscribe(): boolean {
-    return window.location.pathname.includes('/buy');
-  }
-
   public toggleMenu(mainHeader: HTMLElement): void {
     this.isCollapsed = !this.isCollapsed;
     _.defer(_.partial(this.updateMainHeaderHeight, mainHeader));

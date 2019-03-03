@@ -30,3 +30,43 @@
 .navbar-light .nav-link.active {
   border-color: $gray-900;
 }
+
+header.half-header {
+  background-color: $white;
+  text-align: center;
+  height: 170px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+header.full-header {
+  background-color: $light;
+  text-align: center;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.header-eater {
+  position: relative;
+  top: -90px;
+  padding: 20px;
+}
+
+span.act-like-link,
+strong.act-like-link {
+  color: $link-color;
+  text-decoration: $link-decoration;
+  cursor: pointer;
+}
+
+span.act-like-link:hover,
+strong.act-like-link:hover {
+  color: $link-hover-color;
+  text-decoration: $link-hover-decoration;
+  cursor: pointer;
+}
