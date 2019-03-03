@@ -2,28 +2,16 @@
   form("[formGroup]"="form" "(ngSubmit)"="submit()")
 
     //- Relation Info:
-    .form-group.form-row
-      .col-sm-12.col-md-6
-        label Your Relation to Patient
-        select.form-control(
-            "(change)"="relationChanged()"
-            formControlName="relation"
-            "[ngClass]"="{ 'is-invalid': sectionInvalid('relation') }")
-          option(value="" selected disabled) Select one
-          option(*ngFor="let relation of getRelations()" "[value]"="relation") {{relation}}
-          option(value="{{OTHER}}") {{OTHER}}
-        .invalid-feedback Relation is required.
-
-      .col-sm-12.col-md-6(*ngIf="otherSelected")
-        label Please specify
-        input.form-control(
-            formControlName="otherRelation"
-            type="text"
-            "[ngClass]"="{ 'is-invalid': sectionInvalid('otherRelation') }")
-        .invalid-feedback Please specify relation to patient.
+    app-free-form-dropdown(
+      formControlName="relation"
+      "[name]"="'Relation'"
+      "[label]"="'Your Relation to Patient'"
+      "[options]"="getRelations()"
+      "(change)"="relationChanged()"
+    )
 
     //- Personal Info:
-    .form-group(*ngIf="editingExisting || form.get('otherRelation').valid")
+    .form-group(*ngIf="editingExisting || form.get('relation').valid")
       h6 Personal Info
       .form-row
         .col-sm-12.col-md-12.col-lg-6

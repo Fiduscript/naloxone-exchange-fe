@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbDatepickerModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CookieService } from 'ngx-cookie-service';
 
+import { FiduCommonModule } from 'src/public/app/common/fidu-common.module';
 import { LOCATION } from '../../../util/window-injections';
 import { RelationFormComponent } from './relation-form.component';
 
@@ -17,6 +18,7 @@ describe('RelationFormComponent', () => {
         RelationFormComponent,
       ],
       imports: [
+        FiduCommonModule,
         FormsModule,
         HttpClientTestingModule,
         NgbDatepickerModule,

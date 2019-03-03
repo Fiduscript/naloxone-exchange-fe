@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbDatepickerModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CookieService } from 'ngx-cookie-service';
+import { FiduCommonModule } from 'src/public/app/common/fidu-common.module';
 import { LOCATION } from '../../../util/window-injections';
 import { AccountSettingsComponent } from '../account-settings/account-settings.component';
 import { AddressFormComponent } from '../address-form/address-form.component';
@@ -37,9 +38,10 @@ describe('ProfileComponent', () => {
         UpdatePasswordComponent,
       ],
       imports: [
+        FiduCommonModule,
+        FormsModule,
         NgbDatepickerModule,
         NgbModalModule,
-        FormsModule,
         HttpClientTestingModule,
         ReactiveFormsModule,
       ],
