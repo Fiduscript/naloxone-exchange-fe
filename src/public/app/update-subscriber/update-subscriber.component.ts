@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as _ from 'lodash';
 import * as moment from 'moment';
 import { Duration } from 'moment';
 
@@ -19,16 +20,16 @@ export class UpdateSubscriberComponent implements OnInit {
   private static readonly DISMISS_LIMIT: Duration = moment.duration(1, 'week');
   private static readonly LS_KEY: string = 'updateSubscriber';
 
+  public form: FormGroup;
   @Input() public selectedState: string = null;
   public show: boolean = false;
   @Input() public showClose: boolean = true;
-  public subscribeForm: FormGroup;
 
   public constructor(
       private fb: FormBuilder,
       private service: UpdateSubscriberService) {
-    this.subscribeForm = fb.group({
-      email : ['', Validators.email],
+    this.form = fb.group({
+      email : ['', [Validators.email, Validators.required]],
       state: ['', Validators.required],
     });
   }
@@ -43,7 +44,7 @@ export class UpdateSubscriberComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.subscribeForm.setValue({
+    this.form.setValue({
       email: '',
       state: this.selectedState || ''
     });
@@ -61,8 +62,17 @@ export class UpdateSubscriberComponent implements OnInit {
     }
   }
 
+  public sectionInvalid(section: string): boolean {
+    return this.form.get(section).touched && this.form.get(section).invalid;
+  }
+
   public subscribe(): void {
-    this.service.subscribe(this.subscribeForm.value).subscribe(
+    if (this.form.invalid) {
+      _.each(this.form.controls, (c => c.markAsTouched()));
+      return;
+    }
+
+    this.service.subscribe(this.form.value).subscribe(
         (msg: MessageResponse): void => {
           this.show = false;
           alert(msg.message);

@@ -6,28 +6,28 @@
         h6 Name
         span {{user.name}}
       div.align-self-center
-        button.btn.btn-sm.btn-secondary("(click)"="editAttribute('name', editModal)") Edit
+        button.btn.btn-sm.btn-dark("(click)"="editAttribute('name', editModal)") Edit
 
     li.list-group-item.d-flex.justify-content-between
       div
         h6 Email
         span {{user.email}}
       div.align-self-center
-        button.btn.btn-sm.btn-secondary("(click)"="editAttribute('email', editModal)") Edit
+        button.btn.btn-sm.btn-dark("(click)"="editAttribute('email', editModal)") Edit
 
     li.list-group-item.d-flex.justify-content-between
       div
         h6 Password
         strong ••••••••••
       div.align-self-center
-        button.btn.btn-sm.btn-secondary("(click)"="editAttribute('password', editModal)") Edit
+        button.btn.btn-sm.btn-dark("(click)"="editAttribute('password', editModal)") Edit
 
     li.list-group-item.d-flex.justify-content-between
       div
         h6 Subscription Settings
         span Subscribed to all notifications
       div.align-self-center
-        button.btn.btn-sm.btn-secondary Edit
+        button.btn.btn-sm.btn-dark Edit
 
 ng-template(#editModal let-modal class="modal-lg")
   .modal-header

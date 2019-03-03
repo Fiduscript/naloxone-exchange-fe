@@ -1,31 +1,27 @@
-.container-fluid.pt-1.pb-1(*ngIf="show")
-  form("[formGroup]"="subscribeForm" "(ngSubmit)"="subscribe()")
-    .form-row
-      .form-group.col-md-12.col-lg-4.text-center.text-lg-left
-        h5 Subscribe for updates!
-        small.form-text We will never share this information with third parties.
+.container.pt-5.pb-5(*ngIf="show")
+  h2.text-center Subscribe for Updates
+  h6.text-center Subscribe to get updates about Naloxone Exchange in your state.
 
-      .form-group.col-md.col-lg-4
+  form.mt-5("[formGroup]"="form" "(ngSubmit)"="subscribe()")
+    .form-row.text-center
+      .col-md-6
         input.form-control.email-input(
+            formControlName="email"
             type="email"
-            placeholder="john.doe@email.com"
-            name="email"
-            "[formControl]"="subscribeForm.controls['email']"
-            required)
-        small.form-text.text-danger(*ngIf="subscribeForm.touched && subscribeForm.get('email').invalid")
-          | A valid email address is required.
+            placeholder="Email Address"
+            "[ngClass]"="{ 'is-invalid': sectionInvalid('email') }")
+        .invalid-feedback A valid email address is required.
 
-      .form-group.col-8.col-sm-8.col-md
+      .col-md-4
         select.form-control.state-input(
-            name="state"
-            "[formControl]"="subscribeForm.controls['state']"
-            required)
-            option(value="" selected disabled) State
-            option(*ngFor="let state of getStates()" "[value]"="state.name") {{state.name}}
-        small.form-text.text-danger(*ngIf="subscribeForm.touched && subscribeForm.get('state').invalid") State is required.
+            formControlName="state"
+            "[ngClass]"="{ 'is-invalid': sectionInvalid('state') }"
+            name="state")
+          option(value="" selected disabled) State
+          option(*ngFor="let state of getStates()" "[value]"="state.name") {{state.name}}
+        .invalid-feedback State is required.
 
-      .form-group.col-4.col-sm-4.col-md-2
-        button.btn.btn-primary.float-right.float-lg-none(
-            "[disabled]"="!subscribeForm.valid"
+      .col-md-2
+        button.btn.btn-dark(
             title="subscribe for updates"
             type="submit") Subscribe

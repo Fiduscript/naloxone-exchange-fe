@@ -1,4 +1,4 @@
-header
+header.fixed-top.border-light.border-bottom.bg-white(#mainHeader)
   .alert.alert-danger.mb-0(*ngIf="showCrisis" role="alert")
     .container
       .d-flex.justify-content-between.flex-nowrap
@@ -10,68 +10,82 @@ header
           | or a suicide hotline (
           a.alert-link.mr-1(href="tel:1-800-273-8255") 1-800-273-8255
           | is the national hotline).
-        button.close.ml-2(type="button" "(click)"="dismissCrisis()")
+        button.close.ml-2(type="button" "(click)"="dismissCrisis(mainHeader)")
           span(aria-hidden="true") &times;
 
-  nav.navbar.navbar-expand-md.navbar-light.bg-light
-    .container
-      a.navbar-brand.pr-4.pl-4(routerLink="/")
+  .container
+    nav.main-nav.navbar.navbar-expand-lg.navbar-light
+      a.navbar-brand(routerLink="/")
         img(src="/assets/logo/logo.png" alt="Naloxone Exchange" height="50px")
-        sup
-          small
-            em beta
+
       button.navbar-toggler(
           type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation",
-          "(click)"="toggleMenu()")
+          "(click)"="toggleMenu(mainHeader)")
         span.navbar-toggler-icon
 
-      #navbarSupportedContent.collapse.navbar-collapse("[ngbCollapse]"="isCollapsed")
-        ul.navbar-nav.flex
+      .collapse.navbar-collapse.text-uppercase("[ngbCollapse]"="isCollapsed")
+        ul.navbar-nav.ml-auto
           li.nav-item
-            a.nav-link.text-sm-left.text-md-center
-              span.bg-danger.text-white.get-naloxone.text-nowrap(routerLink="/buy" "(click)"="toggleMenu()") Get Naloxone
+            a.nav-link
+              span.bg-danger.text-white.get-naloxone.text-nowrap(routerLink="/buy" "(click)"="toggleMenu(mainHeader)") Get Naloxone
 
           li.nav-item
-            a.nav-link.text-sm-left.text-md-center(routerLink="contact") Contact Us
+            a.nav-link(routerLink="contact") Contact Us
 
           li.nav-item(ngbDropdown)
-            a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/training") Training
-            .dropdown-menu.text-center(ngbDropdownMenu)
-              a.dropdown-item.nav-link(routerLink="/training" fragment="training-video" "(click)"="toggleMenu()") Training Video
-              a.dropdown-item.nav-link(routerLink="/training" fragment="overdose-recognition" "(click)"="toggleMenu()") Overdose Recognition
-              a.dropdown-item.nav-link(routerLink="/training" fragment="administer" "(click)"="toggleMenu()") Administering Naloxone
-              a.dropdown-item.nav-link(routerLink="/training" fragment="aftercare" "(click)"="toggleMenu()") Aftercare
+            a.nav-link.dropdown-toggle(ngbDropdownToggle) Training
+            .dropdown-menu.text-capitalize(ngbDropdownMenu)
+              a.dropdown-item.nav-item(routerLink="/training" "(click)"="toggleMenu(mainHeader)") See All
+              a.dropdown-item.nav-item(routerLink="/training" fragment="training-video" "(click)"="toggleMenu(mainHeader)") Training Video
+              a.dropdown-item.nav-item(routerLink="/training" fragment="overdose-recognition" "(click)"="toggleMenu(mainHeader)") Overdose Recognition
+              a.dropdown-item.nav-item(routerLink="/training" fragment="administer" "(click)"="toggleMenu(mainHeader)") Administering Naloxone
+              a.dropdown-item.nav-item(routerLink="/training" fragment="aftercare" "(click)"="toggleMenu(mainHeader)") Aftercare
+
           li.nav-item(*ngIf="!user.isAuthenticated()")
-            a.nav-link.text-sm-left.text-md-center(routerLink="/account/login" "(click)"="toggleMenu()") Login
+            a.nav-link(routerLink="/account/login" "(click)"="toggleMenu(mainHeader)") Login
 
           li.nav-item(ngbDropdown *ngIf="user.isAuthenticated()")
-            a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle) {{user.name}}
-            .dropdown-menu.text-center(ngbDropdownMenu)
-              a.dropdown-item.nav-link(routerLink="/account/user/profile") My Account
-              a.dropdown-item.nav-link(routerLink="/account/logout") Logout
+            a.nav-link.dropdown-toggle(ngbDropdownToggle) {{user.name}}
+            .dropdown-menu.text-capitalize(ngbDropdownMenu)
+              a.dropdown-item.nav-item(routerLink="/account/user/profile") My Account
+              a.dropdown-item.nav-item(routerLink="/account/logout") Logout
 
-section.content-section
+section("[ngStyle]"="{'margin-top': getMainHeaderHeight(mainHeader)}")
   //- content area
   router-outlet
 
-footer.footer.bg-light
-  .container
+footer.bg-white.text-dark
+  .bg-primary
     app-update-subscriber(*ngIf="!showSubscribe()")
-  .container
-    .container-fluid
-      .d-flex.justify-content-around.justify-content-md-between.justify-content-lg-between.flex-wrap.align-items-center
-        small.text-muted
+  .container.mt-5
+    .row.border-light.border-bottom.pb-5
+      .col.text-center
+        img.img-fluid(src="/assets/img/dot-pharmacy.png")
+        p.text-muted Learn about the team and mission by visiting
+          a.ml-1(href="https://www.fiduscript.com/") Fiduscript.com
+
+      .col.text-center
+        h4 Social
+        share-buttons.share-buttons(
+          "[theme]"="'outline-dark'"
+          "[showText]"="true"
+          "[include]"="['facebook','twitter','reddit','pinterest','linkedin']"
+          "[autoSetMeta]"="true")
+      .col-sm-12.col-md-6.text-center
+        h4 About
+        p
+          | Over
+          a.ml-1.mr-1(href='https://www.theguardian.com/us-news/2018/aug/16/us-drug-overdose-deaths-opioids-fentanyl-cdc' target='_blank') 72,000 people in the U.S. died
+          | in 2017 of drug overdose due to opioid-related substances. The Naloxone Exchange, a company of
+          a.ml-1(href='http://www.fiduscript.com' target='_blank') Fiduscript
+          |, is an online marketplace where you can purchase Naloxone without a prescription. Naloxone Exchange (NE) is a HIPAA-compliant website for both desktop and mobile that allows any person to order Naloxone online and have it shipped straight to their door!
+        p Former prescription laws for the medication required a visit to the doctor, and the prescription to be filled at a local pharmacy. Over the past few years several states implemented progressive policies make accessing Naloxone easier. This provides a unique opportunity to expand Naloxone, both in the brick and mortar pharmacy, and online.
+
+    .d-flex.justify-content-around.justify-content-md-between.justify-content-lg-between.flex-wrap.align-items-center.mt-3.mb-3
+        span.text-muted
           i.far.fa-copyright.mr-1
-          | Naloxone Exchange 2018
-        small.text-muted
+          | Naloxone Exchange 2019
+        span.text-muted
           | 4220 S King Dr. 1S, Chicago IL 60653 US
-        share-buttons(
-              "[theme]"="'circles-dark'"
-              "[include]"="['facebook','twitter','reddit','pinterest','linkedin']"
-              "[size]"="-7"
-              "[autoSetMeta]"="false")

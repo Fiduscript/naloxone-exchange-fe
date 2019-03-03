@@ -1,0 +1,32 @@
+/* You can add global styles to this file if they require the use of bootstrap variables */
+@import 'custom-variables';
+@import '~bootstrap-scss/bootstrap';
+@import '~bootstrap-scss/_variables';
+
+@include media-breakpoint-up(md) {
+  .main-nav .nav-item + .nav-item::before {
+    content: '|';
+    color: #6e6e6e;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
+.main-nav .nav-link {
+  display: inline-block;
+  border-bottom: 3px solid transparent;
+  letter-spacing: 1px;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  transition: border-color 0.2s linear;
+
+  .dropdown-item.nav-item {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+}
+
+.navbar-light .nav-link:hover,
+.navbar-light .nav-link.active {
+  border-color: $gray-900;
+}
