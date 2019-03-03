@@ -1,4 +1,16 @@
 .card
   h5.card-header Relations
-  .card-body
-    .alert.alert-warning TODO
+  ul.list-group.list-group-flush
+    li.list-group-item(*ngFor="let relation of relations.relations")
+      app-relation(
+          "[relation]"="relation"
+          "[editable]"="true"
+          "[changedCallback]"="fetchRelations")
+  .card-footer
+    button.btn.btn-sm.btn-primary.pull-right("(click)"="addRelation(addRelationModal)") Add Relation
+
+ng-template(#addRelationModal let-modal)
+  .modal-header
+    h4.modal-title Add Relation
+  .modal-body
+    app-relation-form("[successCallback]"="closeModal")
