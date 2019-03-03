@@ -13,7 +13,7 @@ import { UserService } from '../user.service';
 })
 export class RelationComponent implements OnInit {
 
-  @Input() public changedCallback: () => void = _.identity();
+  @Input() public changedCallback: () => void = _.identity;
   @Input() public editable: boolean = false;
   public error?: ErrorMessage = null;
   @Input() public relation: UserRelation;
