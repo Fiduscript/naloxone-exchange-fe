@@ -12,6 +12,12 @@
   }
 }
 
+@include media-breakpoint-up(lg) {
+  .w-lg-50 {
+    width: 50%;
+  }
+}
+
 .main-nav .nav-link {
   display: inline-block;
   border-bottom: 3px solid transparent;
