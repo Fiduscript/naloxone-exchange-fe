@@ -87,6 +87,7 @@ export class RelationFormComponent implements OnInit {
   }
 
   public relationChanged(): void {
+    const relation = this.form.get('relation').value;
     if (relation === RELATIONS.Myself && !_.isEmpty(this.user.name)) {
       this.form.get('name').setValue(this.user.name);
       this.name = this.user.name;
@@ -132,7 +133,6 @@ export class RelationFormComponent implements OnInit {
       relation: this.form.get('relation').value,
       name: this.form.get('name').value,
       biologicalSex: this.form.get('biologicalSex').value,
-      
       birthDate: this.form.get('birthDate').value,
       medicalConditions: this.getSanitizedFormArrayValue('medicalConditions'),
       allergies: allergies,

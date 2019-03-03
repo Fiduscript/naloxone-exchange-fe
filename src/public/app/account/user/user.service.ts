@@ -10,7 +10,7 @@ import { jsonConvert } from '../../util/json-convert-provider';
 import { IAddress } from '../model/address';
 import { RELATIONS, UserRelation, UserRelations } from './model/user-relation';
 
-const ADDRESSSES: {[key: string]: IAddress} = _.keyBy([
+const ADDRESSES: {[key: string]: IAddress} = _.keyBy([
   {
     addressId: 'ADDY-123',
     userId: 'USER-123',
@@ -40,11 +40,11 @@ const ADDRESSSES: {[key: string]: IAddress} = _.keyBy([
 
 const relations = _.keyBy([
   {id: '1', birthDate: moment(), name: 'Jake', biologicalSex: 'male',
-      medicalConditions: [], allergies: [], relation: RELATIONS[0] },
+      medicalConditions: [], allergies: [], relation: RELATIONS['Myself'] },
   {id: '2', birthDate: moment(), name: 'Andrea', biologicalSex: 'female',
-      medicalConditions: [], allergies: [], relation: RELATIONS[1]},
+      medicalConditions: [], allergies: [], relation: RELATIONS['Family Member']},
   {id: '4', birthDate: moment(), name: 'Cassy', biologicalSex: 'female',
-      medicalConditions: [], allergies: [], relation: RELATIONS[3]},
+      medicalConditions: [], allergies: [], relation: RELATIONS['Friend']},
   {id: '3', birthDate: moment(), name: 'Dave', biologicalSex: 'male',
       medicalConditions: [], allergies: [], relation: 'RELATIONS[2]'},
 ], 'id');
@@ -59,7 +59,7 @@ export class UserService extends FiduServiceBase {
   }
 
   public deleteAddress(addressId: string): Observable<SuccessMessage> {
-    const success: boolean = delete ADDRESSSES[addressId];
+    const success: boolean = delete ADDRESSES[addressId];
     if (success) {
       return of(new SuccessMessage(`Successfully deleted address.`));
     }
@@ -74,8 +74,8 @@ export class UserService extends FiduServiceBase {
     return throwError(new ErrorMessage(`Failed to deleted relation.`));
   }
 
-  public getAddressses(): Observable<IAddress[]> {
-    return of(_.values(ADDRESSSES));
+  public getAddresses(): Observable<IAddress[]> {
+    return of(_.values(ADDRESSES));
   }
 
   public getRelations(): Observable<UserRelations> {
@@ -83,7 +83,7 @@ export class UserService extends FiduServiceBase {
   }
 
   public setAddress(address: IAddress): Observable<SuccessMessage> {
-    ADDRESSSES[address.addressId] = address;
+    ADDRESSES[address.addressId] = address;
     return of(new SuccessMessage('Success was had here'));
   }
 
