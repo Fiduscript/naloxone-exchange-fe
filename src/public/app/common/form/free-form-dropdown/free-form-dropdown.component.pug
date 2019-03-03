@@ -3,7 +3,7 @@
     label {{label}}
     select.form-control(
         "(change)"="onChange()"
-        "(blur)"="propagateTouched()"
+        "(blur)"="onTouch()"
         formControlName="option"
         "[ngClass]"="{ 'is-invalid': form.get('option').touched && form.get('option').invalid }")
       option(value="" selected disabled) Select one
@@ -15,7 +15,7 @@
     label Please specify
     input.form-control(
         formControlName="other"
-        "(blur)"="propagateTouched()"
+        "(blur)"="onTouch()"
         "(change)"="onChange()"
         "(keyup)"="otherTextChanged()"
         type="text"
