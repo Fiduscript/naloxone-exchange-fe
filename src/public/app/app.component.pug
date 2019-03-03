@@ -61,19 +61,19 @@ footer.bg-white.text-dark
     app-update-subscriber(*ngIf="!showSubscribe()")
   .container.mt-5
     .row.border-light.border-bottom.pb-5
-      .col.text-center
+      .col
         img.img-fluid(src="/assets/img/dot-pharmacy.png")
         p.text-muted Learn about the team and mission by visiting
           a.ml-1(href="https://www.fiduscript.com/") Fiduscript.com
 
-      .col.text-center
+      .col
         h4 Social
         share-buttons.share-buttons(
           "[theme]"="'outline-dark'"
           "[showText]"="true"
           "[include]"="['facebook','twitter','reddit','pinterest','linkedin']"
           "[autoSetMeta]"="true")
-      .col-sm-12.col-md-6.text-center
+      .col-sm-12.col-md-6
         h4 About
         p
           | The Naloxone Exchange, a company of
