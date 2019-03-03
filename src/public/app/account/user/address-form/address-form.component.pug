@@ -84,5 +84,5 @@
     .alert.alert-danger(*ngIf="error != null") {{error.message}}
 
     .form-group
-      button.btn.btn-primary.pull-right("[disabled]"="form.invalid||form.disabled" type="submit") Submit
-      button.btn.btn-secondary.pull-right.mr-2("(click)"="reset()" type="button") reset
+      button.btn.btn-primary("[disabled]"="form.invalid||form.disabled" type="submit") Submit
+      button.btn.btn-dark.ml-2("(click)"="reset()" type="button") reset
