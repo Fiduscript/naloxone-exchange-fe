@@ -59,26 +59,24 @@ section("[ngStyle]"="{'margin-top': getMainHeaderHeight(mainHeader)}")
 footer.bg-white.text-dark
   .bg-primary
     app-update-subscriber
-  .container.mt-5
-    .row.border-light.border-bottom.pb-5
-      .col
-        p.mb-5.text-muted Learn about the team and mission by visiting
-          a.ml-1(href="https://www.fiduscript.com/") Fiduscript.com
+  .container
+    .row.border-light.border-bottom
+      .col.mt-5
         img.img-fluid(src="/assets/img/dot-pharmacy.png")
 
-      .col-sm-12.col-md-6
+      .col-sm-12.col-md-6.mt-5
         h4 About
-        p
+        p.text-muted
           | The Naloxone Exchange, a company of
           a.ml-1(href='http://www.fiduscript.com' target='_blank') Fiduscript
           |, is an online marketplace where you can purchase Naloxone without a prescription. Naloxone Exchange (NE) is a HIPAA-compliant website for both desktop and mobile that allows any person to order Naloxone online and have it shipped straight to their door!
 
-      .col
+      .col.mt-5
         h4 Social
         share-buttons.share-buttons(
           "[theme]"="'outline-dark'"
           "[showText]"="true"
-          "[include]"="['facebook','twitter','reddit','pinterest','linkedin']"
+          "[include]"="['facebook','twitter','reddit','linkedin']"
           "[autoSetMeta]"="true")
 
     .d-flex.justify-content-around.justify-content-md-between.justify-content-lg-between.flex-wrap.align-items-center.mt-3.mb-3
