@@ -3,12 +3,24 @@
 @import '~bootstrap-scss/bootstrap';
 @import '~bootstrap-scss/_variables';
 
-@include media-breakpoint-up(md) {
+@include media-breakpoint-up(lg) {
   .main-nav .nav-item + .nav-item::before {
     content: '|';
     color: #6e6e6e;
     padding-left: 1.25rem;
     padding-right: 1.25rem;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  nav.main-nav .dropdown-menu {
+    border: 0px;
+    .nav-item {
+      color: #6e6e6e;
+      padding-top: 1.25rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px $gray-200 solid;
+    }
   }
 }
 
