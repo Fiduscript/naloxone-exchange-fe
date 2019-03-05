@@ -1,0 +1,148 @@
+.container.text-center
+  h3.mb-3 Purchase Naloxone for your Organization
+  .conatiner
+    .row.justify-content-sm-center
+      .col-sm-10.col-md-8
+        p Please complete the form below. Once submitted, we will reach out to at your preferred form of contact within the
+          |  next business day to confirm your order.
+  .b2b-form-container
+    .container.mb-3
+      form(
+      "[formGroup]"="purchaseOrderForm"
+      "(ngSubmit)"="submit(purchaseOrderForm.value)")
+        .row.justify-content-center.text-left
+        hr.col-9
+        .row.justify-content-center.text-left
+          .col-sm-12.col-md-5
+            .form-group
+              label(for='contactName' required) Contact Name
+              input#contactName.form-control(
+              type="text"
+              formControlName="contactName"
+              placeholder="First and last name"
+              "[ngClass]"="{ 'is-invalid': sectionInvalid('contactName') }")
+          .col-sm-12.col-md-5
+            .form-group
+              label(for='contactEmail' required) Email Address
+              input#contactEmail.form-control(
+              formControlName="contactEmail"
+              placeholder="Contact email address"
+              required
+              type="email"
+              "[ngClass]"="{ 'is-invalid': sectionInvalid('contactEmail')}")
+              .invalid-feedback(*ngIf="sectionInvalid('contactEmail')")
+                .text-left Enter a valid email address
+        .row.justify-content-center.text-left
+          .col-sm-12.col-md-3
+            .form-group
+              label(for='contactPhoneNumber' required) Contact Phone Number
+              input#contactPhoneNumber.form-control(
+              type="text"
+              formControlName="contactPhoneNumber"
+              placeholder="(555) 555-5555"
+              "[ngClass]"="{ 'is-invalid': sectionInvalid('contactPhoneNumber') }")
+          .col-sm-12.col-md-2
+            .form-group
+              label(for='preferredContactType' required) Preferred Contact
+              select#preferredContactType.form-control(
+              formControlName="preferredContactType"
+              required
+              "[ngClass]"="{ 'is-invalid': sectionInvalid('preferredContactType') }")
+                option(value="" selected disabled) Select
+                option(value="email") Email
+                option(value="phone") Phone
+              small.form-text.text-danger(*ngIf="sectionInvalid('preferredContactType')")
+                | You must select an answer to this question.
+          .col-sm-12.col-md-5
+            app-free-form-dropdown(
+            "[label]"="'Organization Type'"
+            "[name]"="'organization type'"
+            "[options]"="getOrganizationTypes()"
+            formControlName="organizationType")
+        hr.col-9
+        .row.justify-content-center.text-left
+          .col-sm-12.col-md-5
+            .form-group
+              label(for='signeeName') Signee Name
+              input#signeeName.form-control(
+              type="text"
+              formControlName="signeeName"
+              placeholder="First and last name of signee"
+              "[ngClass]"="{ 'is-invalid': sectionInvalid('signeeName') }")
+              small.form-text.text-left(
+              "[ngClass]"="{ 'invalid-feedback': sectionInvalid('signeeName') }")
+                | Person authorized to execute the purchase or receiving of an order (may not apply to your organization).
+            app-address-form(
+              "[formName]"="'shippingAddress'"
+              "[nameLabel]"="'Organization Name'"
+              "[namePlaceholder]"="'name of your organization'"
+              "[parentForm]"="purchaseOrderForm")
+          .col-sm-12.col-md-5
+            .form-group
+              label(for='requestedProductId' required) Product Type
+              select#requestedProductId.form-control(
+              formControlName="requestedProductId"
+              required
+              "[ngClass]"="{ 'is-invalid': sectionInvalid('requestedProductId') }")
+                option(value="" selected disabled) Select
+                option(*ngFor="let product of getProducts().items;" "[value]"="product.id") {{product.title}}
+                option(value="priceDependent") Depends on price
+                option(value="unsure") I am unsure
+              small.form-text.text-danger(*ngIf="sectionInvalid('requestedProductId')")
+                | You must select an answer to this question.
+            .form-group
+              label(for='quantityRange' required) Product Quantity
+              select#quantityRange.form-control(
+              formControlName="quantityRange"
+              required
+              "[ngClass]"="{ 'is-invalid': sectionInvalid('quantityRange') }")
+                option(value="" selected disabled) Select
+                option(*ngFor="let quantity of getQuantities();" "[value]"="quantity") {{quantity}}
+              small.form-text.text-danger(*ngIf="sectionInvalid('quantityRange')")
+                | You must select an answer to this question.
+            .form-group
+              label(for='needByDate' required) How soon do you need your order?
+              select#needByDate.form-control(
+              formControlName="needByDate"
+              required
+              "[ngClass]"="{ 'is-invalid': sectionInvalid('needByDate') }")
+                option(value="" selected disabled) Select
+                option(*ngFor="let date of getNeedByDates();" "[value]"="date") {{date}}
+              small.form-text.text-danger(*ngIf="sectionInvalid('needByDate')")
+                | You must select an answer to this question.
+            .form-group
+              label(for='paidByGrant' required) Is this order paid for by a grant?
+              select#paidByGrant.form-control(
+              formControlName="paidByGrant"
+              required
+              "[ngClass]"="{ 'is-invalid': sectionInvalid('paidByGrant') }")
+                option(value="" selected disabled) Select
+                option(value="true") Yes
+                option(value="false") No
+              small.form-text.text-danger(*ngIf="sectionInvalid('paidByGrant')")
+                | You must select an answer to this question.
+            .form-group
+              app-free-form-dropdown(
+              "[label]"="'How did you hear about us?'"
+              "[options]"="getAttributionSources()"
+              formControlName="attributionSource")
+
+        .row.justify-content-center.text-left
+          .col-sm-10
+            .form-group
+              label(for='message') Message
+              textarea#message.form-control(
+              rows=5
+              type="text"
+              formControlName="message"
+              placeholder="Add additional details about your order"
+              "[ngClass]"="{ 'is-invalid': sectionInvalid('message') }")
+              small.form-text(
+                "[ngClass]"="{ 'invalid-feedback': sectionInvalid('message') }")
+                | {{purchaseOrderForm.get('message').value.length}}/{{getMaxMessageLength()}} characters
+
+        .form-group.button-group("(click)"="purchaseOrderForm.markAsTouched()")
+          button.btn.btn-primary(
+          "(click)"="purchaseOrderForm.markAsTouched()"
+          title="Submit"
+          type="submit") Submit

@@ -4,6 +4,11 @@ import { Router } from '@angular/router';
 
 import { IState, STATES } from '../../../common/constant/states';
 
+enum REASON_TYPE {
+  BUSINESS,
+  PERSONAL,
+}
+
 @Component({
   selector: 'app-buy',
   templateUrl: './buy.component.pug',
@@ -11,16 +16,23 @@ import { IState, STATES } from '../../../common/constant/states';
 })
 export class BuyComponent {
 
-  private static readonly REASONS: string[] = [
-      'Self',
-      'Family member',
-      'Friend',
-      'Loved One',
-      'Community center or business location',
-      'EMS Responders',
-      'Police Precinct',
-      'Fire Department',
-      'Prefer not to answer'];
+  private static readonly REASONS: Object = {
+    'Self': REASON_TYPE.PERSONAL,
+    'Family member': REASON_TYPE.PERSONAL,
+    'Friend': REASON_TYPE.PERSONAL,
+    'Loved One': REASON_TYPE.PERSONAL,
+    'Community center or business location': REASON_TYPE.BUSINESS,
+    'EMS Responders': REASON_TYPE.BUSINESS,
+    'Police Precinct': REASON_TYPE.BUSINESS,
+    'Fire Department': REASON_TYPE.BUSINESS,
+    'Prefer not to answer': REASON_TYPE.PERSONAL,
+    'Other': REASON_TYPE.BUSINESS
+  };
+
+  private static readonly VALID_STATES: string[] = [
+    'Texas',
+  ];
+
 
   public form: FormGroup;
 
@@ -38,12 +50,22 @@ export class BuyComponent {
   }
 
   public getReasons(): string[] {
-    return BuyComponent.REASONS;
+    return Object.keys(BuyComponent.REASONS);
+  }
+
+  private getReasonType(reason: string) {
+    return BuyComponent.REASONS[reason];
   }
 
   public navigate(): void {
     if (this.form.invalid) { return; }
-    this.router.navigate(['buy', this.form.get('state').value]);
+
+    if (this.getReasonType(this.form.get('reason').value) === REASON_TYPE.BUSINESS
+      && BuyComponent.VALID_STATES.includes(this.form.get('state').value)) {
+      this.router.navigate(['buy/b2b']);
+    } else {
+      this.router.navigate(['buy', this.form.get('state').value]);
+    }
   }
 
 }

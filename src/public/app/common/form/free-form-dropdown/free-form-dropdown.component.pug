@@ -1,0 +1,25 @@
+.form-group.form-row("[formGroup]"="form")
+  .col-sm-12.col-md-12
+    .form-group
+      label(required) {{label}}
+      select.form-control(
+      "(change)"="onChange()"
+      "(blur)"="propagateTouched()"
+      formControlName="option"
+      "[ngClass]"="{ 'is-invalid': form.get('option').touched && form.get('option').invalid }")
+        option(value="" selected disabled) Select one
+        option(*ngFor="let option of options" "[value]"="option") {{option}}
+        option(value="{{OTHER}}") {{OTHER}}
+      .invalid-feedback {{name || 'This field'}} is required.
+
+  .col-sm-12.col-md-12(*ngIf="otherSelected")
+    .form-group
+      label Please specify
+      input.form-control(
+      formControlName="other"
+      "(blur)"="propagateTouched()"
+      "(change)"="onChange()"
+      "(keyup)"="otherTextChanged()"
+      type="text"
+      "[ngClass]"="{ 'is-invalid': form.get('other').touched && form.get('other').invalid }")
+      .invalid-feedback Please specify other{{name ? ' ' + name + '.' : '.'}}

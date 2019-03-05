@@ -5,6 +5,7 @@ import { AccountService } from '../account.service';
 
 import { MatchValidator } from 'src/common/validator/match-validator';
 import { StrongPasswordValidator } from 'src/common/validator/strong-password-validator';
+import { CustomValidatorsDirective } from '../../common/form/customer-validators/custom-validators.directive';
 import { IUserCredentials } from '../model/user-credentials';
 import { UserInfo } from '../model/user-info';
 
@@ -14,7 +15,6 @@ import { UserInfo } from '../model/user-info';
   styleUrls: ['./register.component.styl']
 })
 export class RegisterComponent implements OnInit {
-
   public registerForm: FormGroup;
   public error: string = null;
 
@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, CustomValidatorsDirective.email]],
       confirmEmail: ['', [Validators.required, new MatchValidator('email')]],
       password: ['', [new StrongPasswordValidator()]],
       confirmPassword: ['', [Validators.required, new MatchValidator('password')]]

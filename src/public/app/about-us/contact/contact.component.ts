@@ -1,6 +1,6 @@
-import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CustomValidatorsDirective } from '../../common/form/customer-validators/custom-validators.directive';
 import { ErrorMessage, SuccessMessage } from '../../common/message-response';
 import { ContactService } from './contact.service';
 
@@ -18,7 +18,7 @@ export class ContactComponent implements OnInit {
     this.sentMsg = false;
     this.contactForm = fb.group({
       'name' : [null, [Validators.required, Validators.maxLength(200)]],
-      'email' : [null, [Validators.required, Validators.email, Validators.maxLength(200)]],
+      'email' : [null, [Validators.required, CustomValidatorsDirective.email]],
       'message' : [null, [Validators.required, Validators.maxLength(4000)]],
     });
   }
