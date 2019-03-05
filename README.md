@@ -61,6 +61,19 @@ Front end smoke tests are required. These tests only verify that a component can
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
+# Releasing
+
+Code intending to be deployed directly to naloxoneexchange.com should use:
+  Git base branch: release
+  Pipeline name: [NaloxoneExchangeFrontend](https://us-east-2.console.aws.amazon.com/codesuite/codepipeline/pipelines/NaloxoneExchangeFrontend/view?region=us-east-2)
+  Beta Url: beta.naloxoneexchange.com
+  Prod Url: naloxoneexchange.com
+  
+If developing against the feature branch:
+  Git base branch: master
+  Pipeline name: [NaloxoneExchangeFrontend-Feature](https://us-east-2.console.aws.amazon.com/codesuite/codepipeline/pipelines/NaloxoneExchangeFrontend-Feature/view?region=us-east-2)
+  Feature Url: feature.naloxoneexchange.com
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
