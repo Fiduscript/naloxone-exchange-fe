@@ -63,16 +63,17 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 # Releasing
 
-Code intending to be deployed directly to naloxoneexchange.com should use:
-  Git base branch: release
-  Pipeline name: [NaloxoneExchangeFrontend](https://us-east-2.console.aws.amazon.com/codesuite/codepipeline/pipelines/NaloxoneExchangeFrontend/view?region=us-east-2)
-  Beta Url: beta.naloxoneexchange.com
-  Prod Url: naloxoneexchange.com
+Code intending to be deployed to [Prod](naloxoneexchange.com) should use:
+- Git base branch: release
+- Pipeline name: [NaloxoneExchangeFrontend](https://us-east-2.console.aws.amazon.com/codesuite/codepipeline/pipelines/NaloxoneExchangeFrontend/view?region=us-east-2)
+- Beta Url: beta.naloxoneexchange.com
+- Prod Url: naloxoneexchange.com
   
 If developing against the feature branch:
-  Git base branch: master
-  Pipeline name: [NaloxoneExchangeFrontend-Feature](https://us-east-2.console.aws.amazon.com/codesuite/codepipeline/pipelines/NaloxoneExchangeFrontend-Feature/view?region=us-east-2)
-  Feature Url: feature.naloxoneexchange.com
+- Git base branch: master
+- Pipeline name: [NaloxoneExchangeFrontend-Feature](https://us-east-2.console.aws.amazon.com/codesuite/codepipeline/pipelines/NaloxoneExchangeFrontend-Feature/view?region=us-east-2)
+- Feature Url: feature.naloxoneexchange.com
+
 
 ## Further help
 
