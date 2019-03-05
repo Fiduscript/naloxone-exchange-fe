@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
-import {IUserAddress} from '../../model/user-address';
+import { UserAddress } from '../../model/user-address';
 import { UserService } from '../user.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { UserService } from '../user.service';
 })
 export class AddressesComponent implements OnInit {
 
-  public addresses: IUserAddress[] = [];
+  public addresses: UserAddress[] = [];
   private modal?: NgbModalRef = null;
 
   public constructor(
@@ -33,8 +33,7 @@ export class AddressesComponent implements OnInit {
   }
 
   public fetchAddresses(): void {
-    // TODO change to retrieve ID from cognito
-    this.service.getAddresses('testUserId').subscribe((addresses: IUserAddress[]) => {
+    this.service.getAddresses().subscribe((addresses: UserAddress[]) => {
       this.addresses = addresses;
     });
   }

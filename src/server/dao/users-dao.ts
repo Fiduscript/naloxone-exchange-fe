@@ -1,55 +1,58 @@
 import { DataMapper } from '@aws/dynamodb-data-mapper';
-import {Logger} from '../util/logger';
 
 import * as _ from 'lodash';
-import { IUserAddress } from '../../public/app/account/model/user-address';
+import { UserAddress } from '../../public/app/account/model/user-address';
 import { AWSProvider } from '../provider/aws-provider';
 
 import { attribute, hashKey, rangeKey, table } from '@aws/dynamodb-data-mapper-annotations';
 
 const uuidV4 = require('uuid/v4');
 const TABLE_NAME = 'user_address_test_two';
-const log = Logger.create(module);
 
 @table(TABLE_NAME)
-class AddressDdbEntity implements IUserAddress {
+export class UserAddressDdb extends UserAddress {
 
   @rangeKey({defaultProvider: () => uuidV4()})
-  addressId: string;
+  public addressId: string = undefined;
 
   @attribute()
-  city: string;
+  public city: string = undefined;
 
   @attribute({defaultProvider: () => new Date()})
-  createdOn: Date;
+  public createdOn?: Date = undefined;
 
   @attribute()
-  name: string;
+  public name: string = undefined;
 
   @attribute()
-  phoneNumber: string;
+  public phoneNumber?: string = undefined;
 
   @attribute()
-  specialInstructions?: string;
+  public specialInstructions?: string = undefined;
 
   @attribute()
-  state: string;
+  public state: string = undefined;
 
   @attribute()
-  street: string;
+  public street: string = undefined;
 
   @attribute()
-  street2?: string;
+  public street2?: string = undefined;
 
   @hashKey()
-  userId: string;
+  public userId: string = undefined;
 
   @attribute()
-  weekendOkay: boolean;
+  public weekendOkay?: boolean = true;
 
   @attribute()
-  zip: string;
+  public zip: string = undefined;
+
+  public constructor(address: UserAddress = {} as UserAddress) {
+    super(address);
+  }
 }
+
 
 export class UsersDao {
 
@@ -57,12 +60,9 @@ export class UsersDao {
     return new UsersDao(new DataMapper({ client: AWSProvider.getDynamoClient() }));
   });
 
-  private constructor( private mapper: DataMapper ) {
-    // this.mapper = mapper;
-  }
+  private constructor( private mapper: DataMapper ) {}
 
-
-  async deleteAddress(userId: string, addressId: string): Promise<IUserAddress> {
+  async deleteAddress(userId: string, addressId: string): Promise<UserAddress> {
     if (!userId) {
       return Promise.reject('Must provide userId');
     }
@@ -70,25 +70,32 @@ export class UsersDao {
       return Promise.reject('Must provide addressId');
     }
     return this.mapper.delete(Object.assign(
-      new AddressDdbEntity,
+      new UserAddressDdb(),
       {userId: userId, addressId: addressId}
     ));
   }
 
-
-  async getAddressesForUser(userId: string): Promise<IUserAddress[]> {
-    log.warn("userID: " +  userId);
+  async getAddressesForUser(userId: string): Promise<UserAddress[]> {
     const total = [];
-    const iterator = this.mapper.query(AddressDdbEntity, {'userId': userId});
+    const iterator = this.mapper.query(UserAddressDdb, {'userId': userId});
     for await (const address of iterator) {
       total.push(address);
     }
     return total;
   }
 
-
-  async saveAddress(address: IUserAddress): Promise<IUserAddress> {
-    log.info("trying to save: " + JSON.stringify(address));
-    return this.mapper.put(Object.assign(new AddressDdbEntity, address));
+  async saveAddress(address: UserAddress): Promise<UserAddress> {
+    // stupid ddb hack - null causes problems during serialization
+    if (address.street2 == null) {
+      address.street2 = '';
+    }
+    if (address.specialInstructions == null) {
+      address.specialInstructions = '';
+    }
+    if (address.phoneNumber == null) {
+      address.phoneNumber = '';
+    }
+    return this.mapper.put(Object.assign(new UserAddressDdb, address));
   }
+
 }

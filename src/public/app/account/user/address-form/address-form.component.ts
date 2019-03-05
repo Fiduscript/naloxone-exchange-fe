@@ -4,7 +4,7 @@ import {v4 as uuid} from 'uuid';
 
 import {IState, STATES} from '../../../../../common/constant/states';
 import {ErrorMessage} from '../../../common/message-response';
-import {IUserAddress} from '../../model/user-address';
+import { UserAddress } from '../../model/user-address';
 import {UserService} from '../user.service';
 
 @Component({
@@ -14,7 +14,7 @@ import {UserService} from '../user.service';
 })
 export class AddressFormComponent implements OnInit {
 
-  @Input() public address: IUserAddress = {weekendOkay: true} as IUserAddress;
+  @Input() public address: UserAddress = {weekendOkay: true} as UserAddress;
   public error?: ErrorMessage = null;
   public form: FormGroup;
   @Input() public sucessCallback: () => {};
@@ -57,9 +57,9 @@ export class AddressFormComponent implements OnInit {
     this.error = null;
     this.form.disable();
 
-    const address: IUserAddress = {
-      userId: 'Google_104750118722624768139', // TODO this will be set in the service
-      addressId: this.address.addressId || uuid(),
+    const address: UserAddress = {
+      userId: null, // set on server
+      addressId: this.address.addressId,
       name: this.form.get('name').value,
       street: this.form.get('street').value,
       street2: this.form.get('street2').value,

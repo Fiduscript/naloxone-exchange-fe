@@ -1,10 +1,8 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {FiduServiceBase} from '../../common/fidu-service-base';
-import {IUserAddress, UserAddress} from '../model/user-address';
-
-import {SuccessMessage} from '../../common/message-response';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { FiduServiceBase } from '../../common/fidu-service-base';
+import { UserAddress } from '../model/user-address';
 
 
 @Injectable({
@@ -16,22 +14,16 @@ export class UserService extends FiduServiceBase {
     super();
   }
 
-  public deleteAddress(address: IUserAddress): Observable<IUserAddress> {
+  public deleteAddress(address: UserAddress): Observable<UserAddress> {
     const path: string = '/api/users/deleteAddress/';
 
-    return this.http.put<UserAddress>(path, {userId: address.userId, addressId: address.addressId}).pipe(
-      this.deserialize(UserAddress),
-      this.logErrors()
-    );
+    return this.http.put<UserAddress>(path, {userId: address.userId, addressId: address.addressId});
   }
 
-  public getAddresses(userId: string): Observable<IUserAddress[]> {
+  public getAddresses(): Observable<UserAddress[]> {
     const path: string = '/api/users/getAddresses/';
 
-    return this.http.get<UserAddress[]>(path).pipe(
-      this.deserializeArray(UserAddress),
-      this.logErrors()
-    );
+    return this.http.get<UserAddress[]>(path);
   }
 
 
@@ -45,21 +37,9 @@ export class UserService extends FiduServiceBase {
   }
 
   // TODO return success msg?
-  public saveAddress(address: IUserAddress): Observable<IUserAddress> {
+  public saveAddress(address: UserAddress): Observable<UserAddress> {
     const path: string = '/api/users/saveAddress/';
 
-    return this.http.put<UserAddress>(path, address).pipe(
-      this.deserialize(UserAddress),
-      this.logErrors()
-    );
+    return this.http.put<UserAddress>(path, address);
   }
-
-  // TODO remove
-  public setAddress(address: IUserAddress): Observable<SuccessMessage> {
-    return null;
-    // ADDRESSSES[address.addressId] = address;
-    // return of(new SuccessMessage('Success was had here'));
-  }
-
-
 }

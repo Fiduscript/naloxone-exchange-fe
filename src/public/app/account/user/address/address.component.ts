@@ -3,7 +3,7 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import * as _ from 'lodash';
 
 import {ErrorMessage} from '../../../common/message-response';
-import {IUserAddress} from '../../model/user-address';
+import {UserAddress } from '../../model/user-address';
 import {UserService} from '../user.service';
 
 @Component({
@@ -13,7 +13,7 @@ import {UserService} from '../user.service';
 })
 export class AddressComponent implements OnInit {
 
-  @Input() public address: IUserAddress;
+  @Input() public address: UserAddress;
   @Input() public changedCallback: () => void = _.identity();
   @Input() public editable: boolean = false;
 
