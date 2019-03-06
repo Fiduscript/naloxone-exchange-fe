@@ -13,6 +13,7 @@
     "postinstall": "node ./ng-add-pug-loader.js",
     "dev-server": "concurrently --kill-others \"npm run grunt w\" \"NODE_ENV=development PORT=4200 nodemon ./bin/www --watch dist/server\" \"ng serve --proxy-config proxy.conf.json --no-progress --disable-host-check\"",
     "prod-server": "node ./bin/www",
+    "release": "npm run build && npm run build-test",
     "start": "npm run build ; node ./bin/www"
   },
   "private": true,
