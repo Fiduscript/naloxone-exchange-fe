@@ -11,10 +11,13 @@ import { CookieService } from 'ngx-cookie-service';
 import { bindNodeCallback, MonoTypeOperatorFunction, Observable, ObservableInput, Observer, of, throwError } from 'rxjs';
 import { catchError, flatMap, map } from 'rxjs/operators';
 
+import { AccountType } from '../../../common/account-types';
+import { CognitoConfig } from '../../../common/config/cognito';
 import { FiduServiceBase } from '../common/fidu-service-base';
 import { SuccessMessage } from '../common/message-response';
 import { LOCATION } from '../util/window-injections';
 import { PrivacyPolicy } from './model/privacy-policy';
+import { UserAuthenticationData } from './model/user-authentication-data';
 import { IUserConfirmation } from './model/user-confirmation';
 import { UserInfo } from './model/user-info';
 
@@ -23,8 +26,10 @@ import { UserInfo } from './model/user-info';
 })
 export class AccountService extends FiduServiceBase {
 
-  private static readonly COGNITO_CLIENT_ID = '7dum3ivsqng75jdve4sc39tve4';
-  private static readonly COGNITO_POOL_ID = 'us-east-2_ej6SB5BPr';
+  // We only allow OAuth login for consumer accounts, so we can leave this slightly hard-coded here for now
+  private static readonly CONSUMER_COGNITO_CONFIG = CognitoConfig.getConfig(AccountType.Consumer);
+
+  private static readonly COOKIE_EXPIRATION_DAYS: number = moment.duration(1, 'year').asDays();
 
   private static readonly COOKIE_STORAGE: CookieStorage = new CookieStorage({
     domain: window.location.hostname,
@@ -35,24 +40,16 @@ export class AccountService extends FiduServiceBase {
   private static readonly NOT_LOGGED_IN: string = 'No valid user logged in.';
 
   private static oAuthOptions = {
-    ClientId : AccountService.COGNITO_CLIENT_ID,
+    ClientId : AccountService.CONSUMER_COGNITO_CONFIG.appClientId,
     AppWebDomain : 'naloxone-exchange-customer-user-pool-test.auth.us-east-2.amazoncognito.com',
     TokenScopesArray : [],
     RedirectUriSignIn : `https://${AccountService.DOMAIN}/oauth/signin`,
     RedirectUriSignOut : `https://${AccountService.DOMAIN}/account/signout`,
     IdentityProvider : '',
-    UserPoolId : AccountService.COGNITO_POOL_ID,
+    UserPoolId : AccountService.CONSUMER_COGNITO_CONFIG.userPoolId,
     AdvancedSecurityDataCollectionFlag : true,
     Storage: AccountService.COOKIE_STORAGE
   };
-
-  // This is the "customer-user-pool-test" user pool
-  // TODO: needs to be provided via config
-  private static readonly  USER_POOL: CognitoUserPool = new CognitoUserPool({
-    UserPoolId : AccountService.COGNITO_POOL_ID,
-    ClientId : AccountService.COGNITO_CLIENT_ID,
-    Storage: AccountService.COOKIE_STORAGE
-  });
 
   public constructor(
     private cookieService: CookieService,
@@ -98,7 +95,7 @@ export class AccountService extends FiduServiceBase {
   }
 
   public confirmRegistration(confirmForm: IUserConfirmation): Observable<SuccessMessage> {
-    const cognitoUser = AccountService.createCognitoUser(confirmForm.username);
+    const cognitoUser = this.createCognitoUser(confirmForm.username);
 
     return Observable.create((observer: Observer<SuccessMessage>) => {
       cognitoUser.confirmRegistration(confirmForm.code, true, (err, result) => {
@@ -133,7 +130,11 @@ export class AccountService extends FiduServiceBase {
 
   }
 
-  public login(credentials: IAuthenticationDetailsData): Observable<CognitoUserSession> {
+  public login(credentials: UserAuthenticationData): Observable<CognitoUserSession> {
+    this.cookieService.set(
+      'AccountType', credentials.AccountType.toString(), AccountService.COOKIE_EXPIRATION_DAYS,
+      '/', null, window.location.protocol === 'https:');
+
     return this.createAuthenticateUserObservable(credentials)
         .pipe(this.logErrors());
   }
@@ -141,6 +142,7 @@ export class AccountService extends FiduServiceBase {
   public logout(): Observable<SuccessMessage> {
     return this.operateOnUser((user: CognitoUser) => {
       user.signOut();
+      this.cookieService.delete('AccountType');
       return of(new SuccessMessage('Sucessfully logged out.'));
     }).pipe(
       this.defaultIfNotLoggedIn(new SuccessMessage('Already logged out.')),
@@ -156,7 +158,7 @@ export class AccountService extends FiduServiceBase {
 
   public register(credentials: IAuthenticationDetailsData, userInfo: UserInfo): Observable<SuccessMessage> {
     return Observable.create((observer: Observer<SuccessMessage>) => {
-      AccountService.USER_POOL.signUp(
+      this.getUserPool().signUp(
           credentials.Username,
           credentials.Password,
           userInfo.cognitoUserAttributes(),
@@ -231,7 +233,7 @@ export class AccountService extends FiduServiceBase {
       cognitoUser?: CognitoUser): Observable<CognitoUserSession> {
 
     const user: CognitoUser = cognitoUser == null ?
-        AccountService.createCognitoUser(credentials.Username) :
+        this.createCognitoUser(credentials.Username) :
         cognitoUser;
 
     return Observable.create((observer) => {
@@ -267,6 +269,14 @@ export class AccountService extends FiduServiceBase {
     });
   }
 
+  private createCognitoUser(username: string): CognitoUser {
+    return new CognitoUser({
+      Username : username,
+      Pool : this.getUserPool(),
+      Storage: AccountService.COOKIE_STORAGE
+    });
+  }
+
   /**
    * Helper to be used with operateOnUser. If there is no valid user session this utility can provide a default value instead.
    * @param defaultValue
@@ -291,7 +301,7 @@ export class AccountService extends FiduServiceBase {
       return this.getMemoized(key);
     }
 
-    const user: CognitoUser = AccountService.USER_POOL.getCurrentUser();
+    const user: CognitoUser = this.getUserPool().getCurrentUser();
     if (user == null) {
       return of(null);
     } else {
@@ -311,6 +321,13 @@ export class AccountService extends FiduServiceBase {
     );
   }
 
+  private getUserPool(): CognitoUserPool {
+    const accountType: AccountType = Number(this.cookieService.get('AccountType'));
+    const cognitoConfig: CognitoConfig = CognitoConfig.getConfig(accountType);
+
+    return AccountService.createCognitoUserPool(cognitoConfig);
+  }
+
   /**
    * Helper method that handles operating on a user with a valid session.
    * @param operation operation to do with user object
@@ -326,10 +343,10 @@ export class AccountService extends FiduServiceBase {
     );
   }
 
-  private static createCognitoUser(username: string): CognitoUser {
-    return new CognitoUser({
-      Username : username,
-      Pool : AccountService.USER_POOL,
+  private static createCognitoUserPool(config: CognitoConfig): CognitoUserPool {
+    return new CognitoUserPool({
+      UserPoolId : config.userPoolId,
+      ClientId : config.appClientId,
       Storage: AccountService.COOKIE_STORAGE
     });
   }

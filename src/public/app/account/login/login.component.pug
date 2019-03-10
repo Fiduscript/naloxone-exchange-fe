@@ -12,6 +12,12 @@
     form(
         "[formGroup]"="loginForm"
         "(ngSubmit)"="login()")
+
+      .form-group
+        select.form-control(formControlName="AccountType")
+          option(value="" selected disabled) Account Type
+          option(*ngFor="let typeKey of accountTypeKeys" "[value]"="typeKey") {{accountTypeEnum[typeKey]}}
+          
       .form-group
         input.form-control(
             type="text"
