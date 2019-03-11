@@ -35,6 +35,14 @@ export class FiduServiceBase {
   }
 
   /**
+   * Supplies a mapping function which deserializes raw json into a typescript class.
+   * Should be called in a 'pipe' function.
+   */
+  protected deserializeArray<T, R>(clazz: { new (): R; }): OperatorFunction<T[], R[]> {
+    return map((input: T[]) => jsonConvert.deserializeArray(input, clazz));
+  }
+
+  /**
    * Returns an observable of a memoized object.
    * @param key
    */

@@ -32,7 +32,7 @@ describe('AddressComponent', () => {
       userId: 'USER-123',
       name: 'Lewis Black c/o Amazon.com',
       state: 'Colorado',
-      street1: '551 boren ave N',
+      street: '551 boren ave N',
       street2: '',
       city: 'Seattle',
       zip: '98109',

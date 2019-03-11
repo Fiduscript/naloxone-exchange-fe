@@ -13,11 +13,11 @@
     .form-group
       label Street Address
       input.form-control(
-          formControlName="street1"
+          formControlName="street"
           type="text"
           placeholder="street and number"
-          "[ngClass]"="{ 'is-invalid': sectionInvalid('street1') }")
-      .invalid-feedback(*ngIf="sectionInvalid('street1')") Street is required.
+          "[ngClass]"="{ 'is-invalid': sectionInvalid('street') }")
+      .invalid-feedback(*ngIf="sectionInvalid('street')") Street is required.
 
     .form-group
       input.form-control(

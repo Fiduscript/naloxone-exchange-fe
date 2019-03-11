@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
-
 import { UserService } from './user.service';
+import { expect } from '@angular/core/testing/src/testing_internal';
 
 describe('UserService', () => {
   beforeEach(() => {

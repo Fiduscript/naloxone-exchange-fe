@@ -12,7 +12,7 @@ import { Logger } from '../util/logger';
 
 const log = Logger.create(module);
 const router: Router = express.Router();
-const ddb: DynamoDB = AWSProvider.getDynmoClient();
+const ddb: DynamoDB = AWSProvider.getDynamoClient();
 
 const validateSubscribe: ValidationChain[] = [
   body('email')

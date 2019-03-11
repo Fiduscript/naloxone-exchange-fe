@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faHandHoldingUsd, faPrescriptionBottleAlt, faUserShield, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHandHoldingUsd,
+  faPrescriptionBottleAlt,
+  faUserShield,
+  IconDefinition
+} from '@fortawesome/free-solid-svg-icons';
 import * as _ from 'lodash';
 
 @Component({
@@ -14,10 +19,10 @@ export class HomeComponent implements OnInit {
   public faUsd: IconDefinition = faHandHoldingUsd;
   public faUser: IconDefinition = faUserShield;
 
-  public constructor(private route: ActivatedRoute) { }
+  public constructor(private route: ActivatedRoute) {
+  }
 
   public ngOnInit(): void {
-
     // defer this task until the DOM has been rendered so there
     // is something to scroll to
     _.delay(_.bind(this.scrollToAnchor, this), 200);

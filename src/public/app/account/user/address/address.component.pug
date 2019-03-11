@@ -2,8 +2,8 @@
   ul.list-unstyled
     li
       strong.less-strong {{address.name}}
-    li(*ngIf="address.street1 != ''")
-      span {{address.street1}}
+    li(*ngIf="address.street != ''")
+      span {{address.street}}
     li(*ngIf="address.street2 != ''")
       span {{address.street2}}
     li
