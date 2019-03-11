@@ -1,19 +1,23 @@
 import { JsonObject, JsonProperty } from 'json2typescript';
 import * as _ from 'lodash';
-import { JsonInitialize } from 'src/public/app/util/json-convert-provider';
+import { Moment } from 'moment';
 
-export const RELATIONS: string[] = [
+import { MomentConverter } from 'src/public/app/util/moment-utils';
+import { safeMerge } from '../../../../../common/safe-merge';
+import { JsonInitialize } from '../../../util/json-convert-provider';
+
+export const RELATIONS: {[k: string]: string} = _.keyBy([
   'Myself',
-  'Family Memeber',
+  'Family Member',
   'Friend',
   'Loved one'
-];
+], _.identity);
 
 export interface IUserRelation {
   allergies: string[];
   biologicalSex: string;
+  birthDate: Moment;
   id: string;
-  insuranceId?: string; // TBD: separate insurance from dependent?
   medicalConditions: string[];
   name: string;
   relation: string;
@@ -29,11 +33,11 @@ export class UserRelation implements IUserRelation {
   @JsonProperty('biologicalSex', String)
   public readonly biologicalSex: string = undefined;
 
+  @JsonProperty('birthDate', MomentConverter)
+  public readonly birthDate: Moment = undefined;
+
   @JsonProperty('id', String)
   public readonly id: string = undefined;
-
-  @JsonProperty('insuranceId', String, true)
-  public readonly insuranceId?: string = undefined;
 
   @JsonProperty('medicalConditions', [String])
   public readonly medicalConditions: string[] = [];
@@ -48,13 +52,14 @@ export class UserRelation implements IUserRelation {
   public readonly userId?: string;
 
   public constructor(userRelation: IUserRelation = {} as IUserRelation) {
-    _.merge(this, userRelation);
+    safeMerge(this, userRelation);
   }
 
 }
 
-@JsonObject
+@JsonObject('UserRelations')
 export class UserRelations implements JsonInitialize {
+
   @JsonProperty('relations', [UserRelation])
   public readonly relations: UserRelation[] = [];
 

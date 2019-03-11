@@ -77,8 +77,9 @@ export class FiduServiceBase {
           e = new ErrorMessage(error.message);
         }
       } else {
-        console.error('Unexpected Error: ', error);
-        e = new ErrorMessage('Unexpected Error.');
+        console.error('Unexpected Error', error);
+        const message = error.message ? error.message : 'Unexpected error; please try again later.';
+        e = new ErrorMessage(message);
       }
       throw e; // propegate translated error message
     });

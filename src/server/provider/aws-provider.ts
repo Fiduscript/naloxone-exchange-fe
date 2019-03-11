@@ -1,5 +1,5 @@
 import * as awsConfig from 'aws-config';
-import { DynamoDB } from 'aws-sdk/clients/all';
+import { DynamoDB, SES } from 'aws-sdk/clients/all';
 import * as _ from 'lodash';
 
 import { Logger } from '../util/logger';
@@ -31,6 +31,16 @@ export module AWSProvider {
     sslEnabled: true,
     maxRetries: 2,
   }));
+
+  // SES not available in us-east-2, use us-east-1
+  const SES_CONFIG = _.assign(awsConfig(extendWithAWSConfig()), {region: 'us-east-1'});
+
+  /**
+   * @return singleton SES client.
+   */
+  export const getSesClient: () => SES = _.memoize(() => {
+    return new SES(SES_CONFIG);
+  });
 
   /**
    * @return singleton DynamoDB client.

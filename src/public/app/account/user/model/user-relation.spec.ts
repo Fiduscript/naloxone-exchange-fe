@@ -1,11 +1,17 @@
+import * as moment from 'moment';
+
 import { jsonConvert } from '../../../util/json-convert-provider';
 import { UserRelation, UserRelations } from './user-relation';
 
 const json = {relations: [
-  {id: '1', name: 'B', biologicalSex: 'yes please', medicalConditions: [], allergies: [], relation: 'Loved One'},
-  {id: '2', name: 'A', biologicalSex: 'yes please', medicalConditions: [], allergies: [], relation: 'Loved One'},
-  {id: '3', name: 'D', biologicalSex: 'yes please', medicalConditions: [], allergies: [], relation: 'Loved One'},
-  {id: '4', name: 'C', biologicalSex: 'yes please', medicalConditions: [], allergies: [], relation: 'Loved One'}
+  {id: '1', name: 'B', birthDate: moment(),
+      biologicalSex: 'yes please', medicalConditions: [], allergies: [], relation: 'Loved One'},
+  {id: '2', name: 'A', birthDate: moment(),
+      biologicalSex: 'yes please', medicalConditions: [], allergies: [], relation: 'Loved One'},
+  {id: '3', name: 'D', birthDate: moment(),
+      biologicalSex: 'yes please', medicalConditions: [], allergies: [], relation: 'Loved One'},
+  {id: '4', name: 'C', birthDate: moment(),
+      biologicalSex: 'yes please', medicalConditions: [], allergies: [], relation: 'Loved One'}
 ]};
 
 describe('UserRelations', () => {

@@ -20,7 +20,7 @@ const validateUserAddress: ValidationChain[] = [
     .isString()
     .isLength({min: 1})
     .withMessage('Must provide street'),
-  body('city')git
+  body('city')
     .isString()
     .isLength({min: 1})
     .withMessage('Must provide city'),

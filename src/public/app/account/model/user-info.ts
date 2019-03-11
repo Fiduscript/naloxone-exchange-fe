@@ -10,7 +10,10 @@ export interface IUserInfo {
   subscriptionSetting: String;
 }
 export class UserInfo implements IUserInfo {
-  private static CUSTOM_PREFIX: string = 'custom:';
+  // These properties are managed by Cognito, don't try to write to them
+  private static BLACKLISTED_PROPS: Set<string> = new Set(['id']);
+
+  private static CUSTOM_PREFIX: String = 'custom:';
   private static CUSTOM_PREFIX_MATCHER: RegExp = /^custom\:/;
   private static CUSTOM_PROPS: Set<string> = new Set(['privacyAgreement', 'subscriptionSetting']);
 
@@ -38,6 +41,8 @@ export class UserInfo implements IUserInfo {
     return _.map(this, (value: any, prop: string) => {
         const name = UserInfo.CUSTOM_PROPS.has(prop) ? `${UserInfo.CUSTOM_PREFIX}${prop}` : prop;
         return {Name: name, Value: value};
+    }).filter((value: any) => {
+        return !UserInfo.BLACKLISTED_PROPS.has(value.Name);
     });
   }
 
