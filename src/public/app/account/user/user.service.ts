@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FiduServiceBase } from '../../common/fidu-service-base';
-import { UserAddress } from '../model/user-address';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { Observable, of, throwError } from 'rxjs';
+import { FiduServiceBase } from '../../common/fidu-service-base';
+import { UserAddress } from '../model/user-address';
 
 import { ErrorMessage, SuccessMessage } from '../../common/message-response';
 import { jsonConvert } from '../../util/json-convert-provider';
@@ -36,6 +36,14 @@ export class UserService extends FiduServiceBase {
     return this.http.put<UserAddress>(path, {userId: address.userId, addressId: address.addressId});
   }
 
+  public deleteRelation(relationId: string): Observable<SuccessMessage> {
+    const success: boolean = delete relations[relationId];
+    if (success) {
+      return of(new SuccessMessage(`Successfully deleted relation.`));
+    }
+    return throwError(new ErrorMessage(`Failed to deleted relation.`));
+  }
+
   public getAddresses(): Observable<UserAddress[]> {
     const path: string = '/api/users/getAddresses/';
 
@@ -52,6 +60,10 @@ export class UserService extends FiduServiceBase {
     // should this be here? might make more sense to have an OrdersService
   }
 
+  public getRelations(): Observable<UserRelations> {
+    return of(jsonConvert.deserialize({relations: _.values(relations)}, UserRelations));
+  }
+
   // TODO return success msg?
   public saveAddress(address: UserAddress): Observable<UserAddress> {
     const path: string = '/api/users/saveAddress/';
@@ -59,20 +71,8 @@ export class UserService extends FiduServiceBase {
     return this.http.put<UserAddress>(path, address);
   }
 
-  public getRelations(): Observable<UserRelations> {
-    return of(jsonConvert.deserialize({relations: _.values(relations)}, UserRelations));
-  }
-
   public updateCreateRelation(relation: UserRelation): Observable<SuccessMessage> {
     relations[relation.id] = jsonConvert.serialize(relation);
     return of(new SuccessMessage('Success'));
-  }
-
-  public deleteRelation(relationId: string): Observable<SuccessMessage> {
-    const success: boolean = delete relations[relationId];
-    if (success) {
-      return of(new SuccessMessage(`Successfully deleted relation.`));
-    }
-    return throwError(new ErrorMessage(`Failed to deleted relation.`));
   }
 }
