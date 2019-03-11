@@ -1,10 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import { Component, Input, OnInit } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import * as _ from 'lodash';
 
-import {ErrorMessage} from '../../../common/message-response';
-import {UserAddress } from '../../model/user-address';
-import {UserService} from '../user.service';
+import { ErrorMessage } from '../../../common/message-response';
+import { UserAddress } from '../../model/user-address';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-address',

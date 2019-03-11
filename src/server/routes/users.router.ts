@@ -14,18 +14,22 @@ const router: Router = express.Router();
 const validateUserAddress: ValidationChain[] = [
   body('name')
     .isString()
+    .trim()
     .isLength({min: 1})
     .withMessage('Must provide name'),
   body('street')
     .isString()
+    .trim()
     .isLength({min: 1})
     .withMessage('Must provide street'),
   body('city')
     .isString()
+    .trim()
     .isLength({min: 1})
     .withMessage('Must provide city'),
   body('zip')
     .isString()
+    .trim()
     .isLength({min: 3, max: 15})
     .withMessage('Must provide valid ZIP'),
   body('state')
@@ -46,7 +50,6 @@ const validateAddressId: ValidationChain[] = [
  * GET: /api/users/getAddresses/
  */
 router.get('/getAddresses', (req: Request, res: Response) => {
-    log.warn(JSON.stringify(res.locals));
     const users_dao = UsersDao.create();
     users_dao.getAddressesForUser(res.locals.user.id).then((addresses: UserAddress[]) => {
       res.status(200).json(addresses);

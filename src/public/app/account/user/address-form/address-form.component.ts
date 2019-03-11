@@ -1,11 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {v4 as uuid} from 'uuid';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import {IState, STATES} from '../../../../../common/constant/states';
-import {ErrorMessage} from '../../../common/message-response';
+import { IState, STATES } from '../../../../../common/constant/states';
+import { ErrorMessage } from '../../../common/message-response';
 import { UserAddress } from '../../model/user-address';
-import {UserService} from '../user.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-address-form',
@@ -71,7 +70,6 @@ export class AddressFormComponent implements OnInit {
       weekendOkay: this.form.get('weekendOkay').value,
     };
 
-    // TODO fix
     this.service.saveAddress(address).subscribe(
       this.sucessCallback,
       (error: ErrorMessage) => {
