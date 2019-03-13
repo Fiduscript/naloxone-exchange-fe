@@ -1,24 +1,28 @@
 header
   nav.navbar.navbar-expand-sm.navbar-light.bg-light
-    a.navbar-brand.pr-4.pl-4(routerLink="/")
+    a.navbar-brand.pr-md-4.pl-md-4(routerLink="/")
       img(src="/assets/logo/logo.png" alt="Naloxone Exchange" height="50px")
       sup
         small
           em beta
-    button.navbar-toggler(
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation",
-        "(click)"="toggleMenu()")
-      span.navbar-toggler-icon
+    #get-naloxone.d-flex.order-sm-1.order-md-2
+      ul.navbar-nav
+        li.nav-item
+          a.nav-link
+            span.bg-danger.text-white.get-naloxone.text-nowrap(routerLink="/buy") Get Naloxone
 
-    a.text-sm-center.d-flex.flex-row.order-2
-      span.bg-danger.text-white.get-naloxone.text-nowrap(routerLink="/buy") Get Naloxone
+    div.order-sm-2
+      button.navbar-toggler(
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation",
+          "(click)"="toggleMenu()")
+        span.navbar-toggler-icon
 
-    #navbarSupportedContent.order-3.collapse.navbar-collapse("[ngbCollapse]"="isCollapsed")
+    div#navbarSupportedContent.order-3.order-lg-2.collapse.navbar-collapse("[ngbCollapse]"="isCollapsed")
       ul.navbar-nav.flex
         li.nav-item(ngbDropdown)
           a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/training") Training
