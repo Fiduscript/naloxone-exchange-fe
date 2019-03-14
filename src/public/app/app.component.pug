@@ -36,8 +36,10 @@ header
           .dropdown-menu.text-center(ngbDropdownMenu)
             a.dropdown-item.nav-link(routerLink="/faq" fragment="general" "(click)"="toggleMenu()") General
             a.dropdown-item.nav-link(routerLink="/faq" fragment="privacy-hipaa" "(click)"="toggleMenu()") Privacy and HIPAA
-        li.nav-item(ngbDropdown)
+        li.nav-item
           a.nav-link.text-sm-left.text-md-center(routerLink="/about-us") About Us
+        li.nav-item
+            a.nav-link(routerLink="contact") Contact Us
         //- Block comment out pharmacy tab
           li.nav-item
             a.nav-link.text-sm-left.text-md-center(routerLink="/pharmacy" "(click)"="toggleMenu()") Pharmacies
