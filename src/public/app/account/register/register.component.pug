@@ -2,10 +2,10 @@
   h3.mb-3 User Registration
   .container.register-container.text-center.mb-3
     form(
-        "[formGroup]"="registerForm" 
+        "[formGroup]"="registerForm"
         "(ngSubmit)"="register()")
       .form-group.row.text-center
-        label.col-sm-4.col-form-label.text-left First Name 
+        label.col-sm-4.col-form-label.text-left First Name
         .col-sm-8
           input.form-control(
               type="text"
@@ -15,7 +15,7 @@
             .text-left First name is required
 
       .form-group.row.text-center
-        label.col-sm-4.col-form-label.text-left Last Name 
+        label.col-sm-4.col-form-label.text-left Last Name
         .col-sm-8
           input.form-control(
               type="text"
@@ -25,7 +25,7 @@
             .text-left Last name is required
 
       .form-group.row.text-center
-        label.col-sm-4.col-form-label.text-left Email 
+        label.col-sm-4.col-form-label.text-left Email
         .col-sm-8
           input.form-control(
               type="email"
@@ -35,7 +35,7 @@
             .text-left Enter a valid email address
 
       .form-group.row.text-center
-        label.col-sm-4.col-form-label.text-left Confirm Email 
+        label.col-sm-4.col-form-label.text-left Confirm Email
         .col-sm-8
           input.form-control(
               type="email"
@@ -45,7 +45,7 @@
             .text-left Email does not match
 
       .form-group.row.text-center
-        label.col-sm-4.col-form-label.text-left Password 
+        label.col-sm-4.col-form-label.text-left Password
         .col-sm-8
           input.form-control(
               type="password"
@@ -55,7 +55,7 @@
             .text-left(*ngFor="let error of registerForm.get('password').errors | keyvalue") {{error.value}}
 
       .form-group.row.text-center
-        label.col-sm-4.col-form-label.text-left Confirm Password 
+        label.col-sm-4.col-form-label.text-left Confirm Password
         .col-sm-8
           input.form-control(
               type="password"
@@ -70,7 +70,7 @@
       .form-group.mt-4
         button.btn.btn-primary.w-100(type="submit" "[disabled]"="registerForm.invalid") Sign Up
 
-    p Already have an account? Sign in 
+    p Already have an account? Sign in
       a(routerLink="/account/login") here!
-    p Do you want to be a partner pharmacy? Please 
-      a(routerLink="/about-us" fragment="app-contact") contact us!
+    p Do you want to be a partner pharmacy? Please
+      a(routerLink="contact") contact us!
