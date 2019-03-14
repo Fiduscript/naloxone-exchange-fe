@@ -13,6 +13,7 @@ import { BuyModule } from './buy/buy.module';
 import { FaqModule } from './faq/faq.module';
 import { HomeModule } from './home/home.module';
 import { PharmacyModule } from './pharmacy/pharmacy.module';
+import { PrivacyComponent } from './privacy/privacy.component';
 import { TrainingComponent } from './training/training.component';
 import { UpdateSubscriberModule } from './update-subscriber/update-subscriber.module';
 import { AuthorizationInterceptor } from './util/authorization-interceptor';
@@ -37,6 +38,7 @@ import { AuthorizationInterceptor } from './util/authorization-interceptor';
   ],
   declarations: [
     AppComponent,
+    PrivacyComponent,
     TrainingComponent
   ],
   providers: [{
