@@ -31,15 +31,12 @@ header
             a.dropdown-item.nav-link(routerLink="/training" fragment="overdose-recognition" "(click)"="toggleMenu()") Overdose Recognition
             a.dropdown-item.nav-link(routerLink="/training" fragment="administer" "(click)"="toggleMenu()") Administering Naloxone
             a.dropdown-item.nav-link(routerLink="/training" fragment="aftercare" "(click)"="toggleMenu()") Aftercare
-        li.nav-item(ngbDropdown)
-          a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/faq")  FAQs
-          .dropdown-menu.text-center(ngbDropdownMenu)
-            a.dropdown-item.nav-link(routerLink="/faq" fragment="general" "(click)"="toggleMenu()") General
-            a.dropdown-item.nav-link(routerLink="/faq" fragment="privacy-hipaa" "(click)"="toggleMenu()") Privacy and HIPAA
+        li.nav-item
+          a.nav-link.text-sm-left.text-md-center(routerLink="/faq") FAQ
         li.nav-item
           a.nav-link.text-sm-left.text-md-center(routerLink="/about-us") About Us
         li.nav-item
-            a.nav-link(routerLink="contact") Contact Us
+            a.nav-link.text-sm-left.text-md-center(routerLink="/contact") Contact Us
         //- Block comment out pharmacy tab
           li.nav-item
             a.nav-link.text-sm-left.text-md-center(routerLink="/pharmacy" "(click)"="toggleMenu()") Pharmacies
@@ -82,10 +79,11 @@ footer.footer.bg-light
           | Naloxone Exchange 2018
         small.text-muted
           | 4220 S King Dr. 1S, Chicago IL 60653 US
+        a.nav-link(routerLink="privacy") Privacy
         a(href="https://www.safe.pharmacy" target='_blank')
           img(src="/assets/img/dot-pharmacy.png" alt=".pharmacy information" height="50px")
         share-buttons(
               "[theme]"="'circles-dark'"
-              "[include]"="['facebook','twitter','reddit','pinterest','linkedin']"
+              "[include]"="['facebook','twitter','reddit','linkedin']"
               "[size]"="-7"
               "[autoSetMeta]"="false")
