@@ -11,10 +11,9 @@
             option(value="" selected disabled) Select Recipient
             option(*ngFor="let reason of getReasons();" "[value]"="reason") {{reason}}
           small.form-text.text-danger(*ngIf="form.touched && form.get('reason').invalid") You must select an answer to this question.
-            i.pl-1 You may select 'prefer not to answer'.
           small.form-text.text-muted
             | Answering this question can help us improve our offerings and help others get the help they need!
-            | This data is collected anonymously, your privacy is protected.
+            | This data is collected anonymously and your privacy is protected.
         .form-group
           label Which state/region are you buying in?
           select.form-control(formControlName="state" required)
@@ -23,7 +22,7 @@
           small.form-text.text-danger(*ngIf="form.touched && form.get('state').invalid") You must select a state.
           small.form-text.text-muted
             | State governments have different laws concerning the sale of Naloxone.
-            | We require this information to show you the products avaialble in your area.
+            | We require this information to show you the products available in your area.
           small.form-text.text-muted
             b.pr-1 Is your state or region not listed?
             | Please let us know by

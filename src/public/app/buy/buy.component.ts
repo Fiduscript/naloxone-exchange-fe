@@ -17,16 +17,8 @@ enum REASON_TYPE {
 export class BuyComponent {
 
   private static readonly REASONS: Object = {
-    'Self': REASON_TYPE.PERSONAL,
-    'Family member': REASON_TYPE.PERSONAL,
-    'Friend': REASON_TYPE.PERSONAL,
-    'Loved One': REASON_TYPE.PERSONAL,
-    'Community center or business location': REASON_TYPE.BUSINESS,
-    'EMS Responders': REASON_TYPE.BUSINESS,
-    'Police Precinct': REASON_TYPE.BUSINESS,
-    'Fire Department': REASON_TYPE.BUSINESS,
-    'Prefer not to answer': REASON_TYPE.PERSONAL,
-    'Other': REASON_TYPE.BUSINESS
+    'Self or Other Person': REASON_TYPE.PERSONAL,
+    'Organization or Business': REASON_TYPE.BUSINESS
   };
 
   private static readonly VALID_STATES: string[] = [
@@ -41,7 +33,7 @@ export class BuyComponent {
       private router: Router) {
     this.form = fb.group({
       'reason': ['', [Validators.required]],
-      'state': ['', [Validators.required]],
+      'state': ['Texas', [Validators.required]],
     });
   }
 
