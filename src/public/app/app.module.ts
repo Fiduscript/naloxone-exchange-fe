@@ -28,7 +28,7 @@ import { AuthorizationInterceptor } from './util/authorization-interceptor';
     NgbModule,
     AccountModule,
     BuyModule,
-    PharmacyModule,
+    //PharmacyModule,
     AboutUsModule,
     ReactiveFormsModule,
     FaqModule,
