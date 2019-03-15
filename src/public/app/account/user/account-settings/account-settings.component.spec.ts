@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
 
 import { UserInfo } from '../../model/user-info';
 import { UpdateAttributeComponent } from '../update-attribute/update-attribute.component';
@@ -22,6 +23,9 @@ describe('AccountSettingsComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule
+      ],
+      providers: [
+        CookieService
       ]
     })
     .compileComponents();

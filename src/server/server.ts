@@ -9,6 +9,8 @@ import * as methodOverride from 'method-override';
 import * as requestLogger from 'morgan';
 import * as path from 'path';
 
+import { AccountType } from '../common/account-types';
+import { CognitoConfig } from '../common/config/cognito';
 import { IUserInfo, UserInfo } from '../public/app/account/model/user-info';
 import { ApiRouter } from './routes/api.router';
 import { Env } from './util/env';
@@ -22,12 +24,6 @@ const log = Logger.create(module);
  */
 export class Server {
 
-  // TODO: get these from configuration
-  private static readonly cognitoExpress = new CognitoExpress({
-    region: 'us-east-2',
-    cognitoUserPoolId: 'us-east-2_ej6SB5BPr',
-    tokenUse: 'id'
-  });
   private static readonly root: string = path.join(__dirname, '../../../public/naloxone-exchange');
 
   public app: Application;
@@ -77,14 +73,15 @@ export class Server {
     // Validate Cognito session token if provided in the request
     this.app.use((req: Request, res: Response, next: NextFunction) => {
       const authToken = req.headers.authorization;
+      const accountType: AccountType = req.cookies['AccountType'];
 
       if (authToken) {
-        Server.cognitoExpress.validate(authToken, <T extends IUserInfo>(err, response: T) => {
+        this.getCognitoExpress(Number(accountType)).validate(authToken, <T extends IUserInfo>(err, response: T) => {
           if (response != null) {
             res.locals.user = new UserInfo(response);
-            log.audit(`Authenticated request to ${req.originalUrl} from user ${res.locals.user.id}`);
+            log.audit(`Authenticated request to ${req.originalUrl} from user ${res.locals.user.id} for account type ${AccountType[accountType]}`);
           } else {
-            log.audit(`Couldn't validate auth token in request to ${req.originalUrl}: ${err.message}`);
+            log.audit(`Couldn't validate auth token in request to ${req.originalUrl} for account type ${AccountType[accountType]}: ${err.message}`);
           }
           next();
         });
@@ -113,6 +110,16 @@ export class Server {
 
   private sendIndex(req: Request, res: Response): void {
       res.sendFile('index.html', {root: Server.root});
+  }
+
+  private getCognitoExpress(accountType: AccountType): CognitoExpress {
+    const cognitoConfig = CognitoConfig.getConfig(accountType);
+    
+    return new CognitoExpress({
+      region: cognitoConfig.region,
+      cognitoUserPoolId: cognitoConfig.userPoolId,
+      tokenUse: 'id'
+    });
   }
 
   /**

@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
-
 import { CookieService } from 'ngx-cookie-service';
+
+import { AccountType } from '../../../../common/account-types';
 import { LOCATION } from '../../util/window-injections';
 import { AccountService } from '../account.service';
 
@@ -13,6 +14,8 @@ import { AccountService } from '../account.service';
 })
 export class LoginComponent implements OnInit {
 
+  public accountTypeEnum = AccountType;
+  public accountTypeKeys: any[];
   public error: string = null;
   public loginForm: FormGroup;
   public user: string = 'User';
@@ -27,8 +30,10 @@ export class LoginComponent implements OnInit {
       private service: AccountService) {
     this.loginForm = this.fb.group({
       Username: ['', Validators.required],
-      Password: ['', Validators.required]
+      Password: ['', Validators.required],
+      AccountType: ['', Validators.required]
     });
+    this.accountTypeKeys = Object.keys(AccountType).filter(f => !isNaN(Number(f)));
   }
 
   public login(): void {

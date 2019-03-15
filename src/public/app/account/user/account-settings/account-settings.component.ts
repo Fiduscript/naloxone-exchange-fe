@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
+import { AccountTypeService } from '../../account-type.service';
 import { UserInfo } from '../../model/user-info';
 
 @Component({
@@ -15,7 +16,7 @@ export class AccountSettingsComponent implements OnInit {
   private editingAttribute?: string = null;
   private modal?: NgbModalRef = null;
 
-  public constructor(private modalService: NgbModal) {
+  public constructor(private modalService: NgbModal, public accountTypeService: AccountTypeService) {
     this.clearAttrs = this.clearAttrs.bind(this);
   }
 

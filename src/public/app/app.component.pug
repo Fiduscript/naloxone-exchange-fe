@@ -19,7 +19,7 @@ header
       ul.navbar-nav.flex
         li.nav-item
           a.nav-link.text-sm-left.text-md-center
-            span.bg-danger.text-white.get-naloxone.text-nowrap(routerLink="/buy" "(click)"="toggleMenu()") Get Naloxone
+            span.bg-danger.text-white.get-naloxone.text-nowrap(routerLink="{{buyLink}}" "(click)"="toggleMenu()") Get Naloxone
         li.nav-item(ngbDropdown)
           a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle routerLink="/training") Training
           .dropdown-menu.text-center(ngbDropdownMenu)
@@ -48,7 +48,7 @@ header
         li.nav-item(ngbDropdown *ngIf="user.isAuthenticated()")
           a.nav-link.dropdown-toggle.text-sm-left.text-md-center(ngbDropdownToggle) {{user.name}}
           .dropdown-menu.text-center(ngbDropdownMenu)
-            a.dropdown-item.nav-link(routerLink="/account/user/profile") My Account
+            a.dropdown-item.nav-link(routerLink="/account/user/profile") My {{accountType}} Account
             a.dropdown-item.nav-link(routerLink="/account/logout") Logout
 
   .alert.alert-info(*ngIf="showCrisis" role="alert")
